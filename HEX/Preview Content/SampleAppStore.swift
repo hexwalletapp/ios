@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import web3
 
 #if DEBUG
 
@@ -13,5 +14,5 @@ import ComposableArchitecture
 
     let sampleAppStore = Store(initialState: AppState(),
                                reducer: appReducer,
-                               environment: AppEnvironment())
+                               environment: AppEnvironment(client: EthereumClient(url: URL(string: "")!)))
 #endif

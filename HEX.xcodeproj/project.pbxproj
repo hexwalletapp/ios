@@ -19,6 +19,8 @@
 		ED94773026E44655003162D4 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = ED94772F26E44655003162D4 /* ComposableArchitecture */; };
 		ED94773226E4468E003162D4 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94773126E4468E003162D4 /* AppReducer.swift */; };
 		ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94773326E448A1003162D4 /* SampleAppStore.swift */; };
+		EDCC3A8426E46E4A00A576B2 /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = EDCC3A8326E46E4A00A576B2 /* web3.swift */; };
+		EDCC3A8726E4772F00A576B2 /* HEXABI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCC3A8626E4772F00A576B2 /* HEXABI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,7 @@
 		ED94772426E44559003162D4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ED94773126E4468E003162D4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		ED94773326E448A1003162D4 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
+		EDCC3A8626E4772F00A576B2 /* HEXABI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXABI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDCC3A8426E46E4A00A576B2 /* web3.swift in Frameworks */,
 				ED94773026E44655003162D4 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -100,15 +104,16 @@
 		ED94771C26E44559003162D4 /* HEX */ = {
 			isa = PBXGroup;
 			children = (
+				EDCC3A8526E4771800A576B2 /* Contract */,
 				ED47345826E4595A003B1BB2 /* HTML */,
 				ED47344E26E4548A003B1BB2 /* Calculator */,
 				ED47344D26E45485003B1BB2 /* Stakes */,
 				ED47344C26E45478003B1BB2 /* Charts */,
 				ED94771D26E44559003162D4 /* App.swift */,
+				ED94773126E4468E003162D4 /* AppReducer.swift */,
 				ED94771F26E44559003162D4 /* ContentView.swift */,
 				ED94772126E44559003162D4 /* Assets.xcassets */,
 				ED94772326E44559003162D4 /* Preview Content */,
-				ED94773126E4468E003162D4 /* AppReducer.swift */,
 			);
 			path = HEX;
 			sourceTree = "<group>";
@@ -120,6 +125,14 @@
 				ED94773326E448A1003162D4 /* SampleAppStore.swift */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EDCC3A8526E4771800A576B2 /* Contract */ = {
+			isa = PBXGroup;
+			children = (
+				EDCC3A8626E4772F00A576B2 /* HEXABI.swift */,
+			);
+			path = Contract;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +153,7 @@
 			name = HEX;
 			packageProductDependencies = (
 				ED94772F26E44655003162D4 /* ComposableArchitecture */,
+				EDCC3A8326E46E4A00A576B2 /* web3.swift */,
 			);
 			productName = HEX;
 			productReference = ED94771A26E44559003162D4 /* HEX.app */;
@@ -171,6 +185,7 @@
 			mainGroup = ED94771126E44559003162D4;
 			packageReferences = (
 				ED94772E26E44655003162D4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				EDCC3A8226E46E4A00A576B2 /* XCRemoteSwiftPackageReference "web3" */,
 			);
 			productRefGroup = ED94771B26E44559003162D4 /* Products */;
 			projectDirPath = "";
@@ -203,6 +218,7 @@
 				ED94773226E4468E003162D4 /* AppReducer.swift in Sources */,
 				ED47345026E454A3003B1BB2 /* CalculatorView.swift in Sources */,
 				ED94772026E44559003162D4 /* ContentView.swift in Sources */,
+				EDCC3A8726E4772F00A576B2 /* HEXABI.swift in Sources */,
 				ED47345226E454AD003B1BB2 /* StakesView.swift in Sources */,
 				ED94771E26E44559003162D4 /* App.swift in Sources */,
 				ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */,
@@ -345,7 +361,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -375,7 +391,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -421,6 +437,14 @@
 				minimumVersion = 0.9.0;
 			};
 		};
+		EDCC3A8226E46E4A00A576B2 /* XCRemoteSwiftPackageReference "web3" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argentlabs/web3.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -428,6 +452,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ED94772E26E44655003162D4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		EDCC3A8326E46E4A00A576B2 /* web3.swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDCC3A8226E46E4A00A576B2 /* XCRemoteSwiftPackageReference "web3" */;
+			productName = web3.swift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
