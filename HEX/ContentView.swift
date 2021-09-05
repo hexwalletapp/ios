@@ -19,16 +19,21 @@ struct ContentView: View {
                         Image(systemName: "chart.pie.fill")
                         Text("Charts")
                     }
+                    .tag(Tab.charts)
+                
                 StakesView()
                     .tabItem {
                         Image(systemName: "banknote.fill")
                         Text("Stakes")
                     }
+                    .tag(Tab.stakes)
+
                 CalculatorView()
                     .tabItem {
                         Image(systemName: "plus.app.fill")
                         Text("Calculator")
                     }
+                    .tag(Tab.calculator)
             }
         }
     }

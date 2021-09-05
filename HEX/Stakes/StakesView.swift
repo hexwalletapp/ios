@@ -11,9 +11,21 @@ import ComposableArchitecture
 struct StakesView: View {
     var body: some View {
         NavigationView {
-            Text("Stakes")
+            List {
+                Text("Stakes")
+                    .badge(10)
+                Text("Stakes")
+                Text("Stakes")
+            }
+            .navigationTitle("Stakes")
+            .toolbar {
+                Button {
+                    print("add address")
+                } label: {
+                    Image(systemName: "person.crop.circle.badge.plus")
+                }
+            }
         }
-        .navigationTitle("Stakes")
     }
 }
 
