@@ -1,5 +1,5 @@
 //
-//  HEXApp.swift
+//  App.swift
 //  HEX
 //
 //  Created by Joe Blau on 9/4/21.
