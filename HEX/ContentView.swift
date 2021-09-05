@@ -14,17 +14,17 @@ struct ContentView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             TabView(selection: viewStore.binding(keyPath: \.selectedTab, send: AppAction.form)) {
-                Text("The First Tab")
+                ChartsView()
                     .tabItem {
                         Image(systemName: "chart.pie.fill")
                         Text("Charts")
                     }
-                Text("Another Tab")
+                StakesView()
                     .tabItem {
                         Image(systemName: "banknote.fill")
                         Text("Stakes")
                     }
-                Text("The Last Tab")
+                CalculatorView()
                     .tabItem {
                         Image(systemName: "plus.app.fill")
                         Text("Calculator")
