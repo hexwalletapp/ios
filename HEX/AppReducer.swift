@@ -8,9 +8,20 @@
 import Foundation
 import ComposableArchitecture
 
-struct AppState: Equatable {}
+enum Tab {
+    case charts
+    case stakes
+    case calculator
+}
 
-enum AppAction: Equatable {}
+struct AppState: Equatable {
+    var selectedTab: Tab = .charts
+}
+
+enum AppAction: Equatable {
+    
+    case form(BindingAction<AppState>)
+}
 
 struct AppEnvironment {}
 
