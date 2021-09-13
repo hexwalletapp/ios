@@ -11,6 +11,8 @@ import web3
 
 @main
 struct HEXApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+
     let store = Store(initialState: AppState(),
                       reducer: appReducer,
                       environment: AppEnvironment(
@@ -22,6 +24,18 @@ struct HEXApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(store: store)
+        }
+        .onChange(of: scenePhase) { phase in
+            switch phase {
+            case .background:
+                ViewStore(store).send(.onBackground)
+            case .inactive:
+                ViewStore(store).send(.onInactive)
+            case .active:
+                ViewStore(store).send(.onActive)
+            @unknown default:
+                fatalError("invalid scene phase")
+            }
         }
     }
 }
