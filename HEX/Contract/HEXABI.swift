@@ -51,13 +51,13 @@ struct StakeLists_Parameter: ABIFunction {
     }
     
     // MARK: - Response
-    struct Respone: ABIResponse, Equatable, Identifiable {
+    struct Response: ABIResponse, Equatable, Identifiable {
         static var types: [ABIType.Type] = [BigUInt.self, BigUInt.self, BigUInt.self, UInt16.self, UInt16.self, UInt16.self, Bool.self]
         
         var id: BigUInt { stakeId }
         let stakeId: BigUInt
         let stakedHearts: BigUInt
-        let stakeShares: BigInt
+        let stakeShares: BigUInt
         let lockedDay: UInt16
         let stakedDays: UInt16
         let unlockedDay: UInt16

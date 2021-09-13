@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		ED1E970226EEDCE5009C469A /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1E970126EEDCE5009C469A /* PlanView.swift */; };
+		ED3C9EFC26EF196800D01257 /* BigUInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C9EFB26EF196800D01257 /* BigUInt+Extensions.swift */; };
 		ED47345026E454A3003B1BB2 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47344F26E454A3003B1BB2 /* CalculatorView.swift */; };
 		ED47345226E454AD003B1BB2 /* StakesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345126E454AD003B1BB2 /* StakesView.swift */; };
 		ED47345526E454C1003B1BB2 /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345426E454C1003B1BB2 /* ChartsView.swift */; };
 		ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345626E457CF003B1BB2 /* TradingviewChartView.swift */; };
 		ED47345A26E4596F003B1BB2 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = ED47345926E4596F003B1BB2 /* index.html */; };
+		ED507A4F26EF2CC500D1A022 /* NSNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */; };
 		ED94771E26E44559003162D4 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94771D26E44559003162D4 /* App.swift */; };
 		ED94772026E44559003162D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94771F26E44559003162D4 /* ContentView.swift */; };
 		ED94772226E44559003162D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED94772126E44559003162D4 /* Assets.xcassets */; };
@@ -26,11 +28,13 @@
 
 /* Begin PBXFileReference section */
 		ED1E970126EEDCE5009C469A /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
+		ED3C9EFB26EF196800D01257 /* BigUInt+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigUInt+Extensions.swift"; sourceTree = "<group>"; };
 		ED47344F26E454A3003B1BB2 /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
 		ED47345126E454AD003B1BB2 /* StakesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakesView.swift; sourceTree = "<group>"; };
 		ED47345426E454C1003B1BB2 /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		ED47345626E457CF003B1BB2 /* TradingviewChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingviewChartView.swift; sourceTree = "<group>"; };
 		ED47345926E4596F003B1BB2 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Extensions.swift"; sourceTree = "<group>"; };
 		ED94771A26E44559003162D4 /* HEX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED94771D26E44559003162D4 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		ED94771F26E44559003162D4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 				ED94771F26E44559003162D4 /* ContentView.swift */,
 				ED94772126E44559003162D4 /* Assets.xcassets */,
 				ED94772326E44559003162D4 /* Preview Content */,
+				ED3C9EFB26EF196800D01257 /* BigUInt+Extensions.swift */,
+				ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */,
 			);
 			path = HEX;
 			sourceTree = "<group>";
@@ -231,7 +237,9 @@
 				ED94772026E44559003162D4 /* ContentView.swift in Sources */,
 				EDCC3A8726E4772F00A576B2 /* HEXABI.swift in Sources */,
 				ED47345226E454AD003B1BB2 /* StakesView.swift in Sources */,
+				ED3C9EFC26EF196800D01257 /* BigUInt+Extensions.swift in Sources */,
 				ED94771E26E44559003162D4 /* App.swift in Sources */,
+				ED507A4F26EF2CC500D1A022 /* NSNumber+Extensions.swift in Sources */,
 				ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */,
 				ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */,
 				ED1E970226EEDCE5009C469A /* PlanView.swift in Sources */,
