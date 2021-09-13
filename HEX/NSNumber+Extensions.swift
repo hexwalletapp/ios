@@ -9,20 +9,20 @@ import Foundation
 
 extension NSNumber {
     
-    var hex: String {
+    var hexString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.positiveSuffix = " ʜᴇx"
         return formatter.string(from: self) ?? ""
     }
     
-    var tshares: String {
+    var tshareString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.positiveSuffix = " ᴛsʜᴀʀᴇs"
         return formatter.string(from: self) ?? ""
     }
-    var currency: String {
+    var currencyString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.positiveSuffix = " ᴜsᴅ"

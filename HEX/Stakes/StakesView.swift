@@ -18,7 +18,7 @@ struct StakesView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 ScrollView {
-                    stakeHeaderView(totals: viewStore.totals)
+                    stakeHeaderView(total: viewStore.total)
                     ForEach(viewStore.stakes) { stake in
                         NavigationLink {
                             Text("hi")
@@ -33,10 +33,12 @@ struct StakesView: View {
                 //                }
                 .navigationTitle("Stakes")
                 .toolbar {
-                    Button {
-                        print("add address")
-                    } label: {
-                        Image(systemName: "person.crop.circle.badge.plus")
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button {} label: { Image(systemName: "person.crop.circle.badge.plus") }
+                    }
+                    
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Button {} label: { Image(systemName: "arrow.up.arrow.down") }
                     }
                 }
             }
@@ -45,21 +47,25 @@ struct StakesView: View {
     
     func stakeView(stake: StakeLists_Parameter.Response) -> some View {
         LazyVGrid(columns: columns, alignment: .trailing, spacing: 8) {
-            Text( stake.stakedHearts.hexAt(price: ViewStore(store).hexPrice).currency).foregroundColor(.primary)
-            Text( stake.stakeShares.tShares.tshares).foregroundColor(.primary)
-            Text( stake.stakedHearts.hex.hex).foregroundColor(.secondary)
+            Text( stake.stakedHearts.hexAt(price: ViewStore(store).hexPrice).currencyString).foregroundColor(.primary)
+            Text( stake.stakeShares.tShares.tshareString).foregroundColor(.primary)
+            Text( stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
             Text("")
         }
         .font(.body.monospacedDigit())
         .padding(.horizontal)
     }
     
-    func stakeHeaderView(totals: StakeTotals) -> some View {
+    func stakeHeaderView(total: StakeTotal) -> some View {
         LazyVGrid(columns: columns, alignment: .trailing, spacing: 8) {
-            Text("$10,000/day")
+            Text( total.stakeHearts.hexAt(price: ViewStore(store).hexPrice).currencyString).foregroundColor(.primary)
+            Text( total.stakeShares.tShares.tshareString).foregroundColor(.primary)
+            Text( total.stakeHearts.hex.hexString).foregroundColor(.secondary)
         }
+        .padding()
+
+        .background(Color(.secondarySystemBackground))
         .font(.body.monospacedDigit())
-        .padding(.horizontal)
     }
 }
 

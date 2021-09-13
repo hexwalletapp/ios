@@ -16,9 +16,29 @@ enum Tab: Int, Equatable  {
     case calculator = 2
 }
 
-struct StakeTotals: Equatable {
-    var tShares: BigUInt = 0
-    var hex: BigUInt = 0
+struct HEXPrice: Codable, Equatable {
+    var lastUpdated: Date
+    var hexEth: Double
+    var hexUsd: Double
+    var hexBtc: Double
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        
+        let date = try container.decode(String.self, forKey: .lastUpdated)
+
+        lastUpdated = dateFormatter.date(from: date) ?? Date()
+        hexEth =  Double(try container.decode(String.self, forKey: .hexEth)) ?? 0
+        hexUsd =  Double(try container.decode(String.self, forKey: .hexUsd)) ?? 0
+        hexBtc =  Double(try container.decode(String.self, forKey: .hexBtc)) ?? 0
+    }
+}
+
+struct StakeTotal: Equatable {
+    var stakeShares: BigUInt = 0
+    var stakeHearts: BigUInt = 0
 }
 
 struct AppState: Equatable {
@@ -26,13 +46,17 @@ struct AppState: Equatable {
     var hexPrice = 0.388328718
     var stakeCount = 0
     var stakes = [StakeLists_Parameter.Response]()
-    var totals = StakeTotals()
+    var total = StakeTotal()
 }
 
 enum AppAction: Equatable {
+    case onBackground
+    case onInactive
+    case onActive
     case getStakes
     case updateStakeIDs([BigUInt])
     case updateStake(StakeLists_Parameter.Response)
+    case updateHexPrice(HEXPrice)
     case form(BindingAction<AppState>)
 }
 
@@ -44,6 +68,26 @@ struct AppEnvironment {
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
     switch action {
+    case .onBackground:
+        return .none
+        
+    case .onInactive:
+        return .none
+        
+    case .onActive:
+        return .future { completion in
+            Task {
+                do {
+                    let hexPrice = try await HEXRESTAPI.fetchHexPrice()
+                    environment.mainQueue.schedule {
+                        completion(.success(.updateHexPrice(hexPrice)))
+                    }
+                } catch {
+                    fatalError()
+                }
+            }
+        }
+        
     case let .updateStakeIDs(stakeIDs):
         state.stakeCount = stakeIDs.count
         state.stakes = [StakeLists_Parameter.Response]()
@@ -74,6 +118,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     
     case let .updateStake(stake):
         state.stakes.append(stake)
+        if state.stakes.count == state.stakeCount {
+            state.total.stakeHearts = state.stakes.reduce(0, { $0 + $1.stakedHearts })
+            state.total.stakeShares = state.stakes.reduce(0, { $0 + $1.stakeShares })
+        }
+        
         return .none
         
     case .getStakes:
@@ -98,6 +147,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             }
         }
         
+    case let .updateHexPrice(hexPrice):
+        state.hexPrice = hexPrice.hexUsd
+        return .none
+        
     case .form(\.selectedTab):
         switch state.selectedTab {
         case .charts:
@@ -115,3 +168,5 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     }
 }
     .binding(action: /AppAction.form)
+
+

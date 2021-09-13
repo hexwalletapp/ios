@@ -15,6 +15,7 @@
 		ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345626E457CF003B1BB2 /* TradingviewChartView.swift */; };
 		ED47345A26E4596F003B1BB2 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = ED47345926E4596F003B1BB2 /* index.html */; };
 		ED507A4F26EF2CC500D1A022 /* NSNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */; };
+		ED507A5226EF97DA00D1A022 /* HEXRESTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */; };
 		ED94771E26E44559003162D4 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94771D26E44559003162D4 /* App.swift */; };
 		ED94772026E44559003162D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94771F26E44559003162D4 /* ContentView.swift */; };
 		ED94772226E44559003162D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED94772126E44559003162D4 /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 		ED47345626E457CF003B1BB2 /* TradingviewChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingviewChartView.swift; sourceTree = "<group>"; };
 		ED47345926E4596F003B1BB2 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Extensions.swift"; sourceTree = "<group>"; };
+		ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXRESTAPI.swift; sourceTree = "<group>"; };
 		ED94771A26E44559003162D4 /* HEX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED94771D26E44559003162D4 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		ED94771F26E44559003162D4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				ED94772326E44559003162D4 /* Preview Content */,
 				ED3C9EFB26EF196800D01257 /* BigUInt+Extensions.swift */,
 				ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */,
+				ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */,
 			);
 			path = HEX;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */,
 				ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */,
 				ED1E970226EEDCE5009C469A /* PlanView.swift in Sources */,
+				ED507A5226EF97DA00D1A022 /* HEXRESTAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
