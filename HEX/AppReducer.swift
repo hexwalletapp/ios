@@ -20,13 +20,18 @@ enum StakeFilter: Int, Equatable, CaseIterable, CustomStringConvertible {
     case total = 0
     case list = 1
     
-    
     var description: String {
         switch self {
         case .total: return "Total"
         case .list: return "List"
         }
     }
+}
+
+struct DailyData: Equatable {
+    let payout: BigUInt
+    let shares: BigUInt
+    let sats: BigUInt
 }
 
 struct HEXPrice: Codable, Equatable {
@@ -41,7 +46,7 @@ struct HEXPrice: Codable, Equatable {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
         let date = try container.decode(String.self, forKey: .lastUpdated)
-
+        
         lastUpdated = dateFormatter.date(from: date) ?? Date()
         hexEth =  Double(try container.decode(String.self, forKey: .hexEth)) ?? 0
         hexUsd =  Double(try container.decode(String.self, forKey: .hexUsd)) ?? 0
@@ -57,10 +62,14 @@ struct StakeTotal: Equatable {
 struct AppState: Equatable {
     var selectedTab = Tab.charts
     var selectedStakeSegment = StakeFilter.total
-    var hexPrice = 0.388328718
+    var hexPrice = 0.0
     var stakeCount = 0
+    var currentDay: BigUInt? = nil
+    var stakesBeginDay = UInt16.max
+    var stakesEndDay = UInt16.min
     var stakes = [StakeLists_Parameter.Response]()
     var total = StakeTotal()
+    var dailyDataList = [DailyData]()
 }
 
 enum AppAction: Equatable {
@@ -68,16 +77,21 @@ enum AppAction: Equatable {
     case onInactive
     case onActive
     case getStakes
+    case getCurrentDay
+    case getDailyDataRange(UInt16, UInt16)
+    
     case updateStakeIDs([BigUInt])
     case updateStake(StakeLists_Parameter.Response)
     case updateHexPrice(HEXPrice)
+    case updateDay(BigUInt)
+    case updateDailyData([DailyData])
     case form(BindingAction<AppState>)
 }
 
 struct AppEnvironment {
     let client: EthereumClient
     var mainQueue: AnySchedulerOf<DispatchQueue>
-
+    
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
@@ -89,18 +103,21 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .none
         
     case .onActive:
-        return .future { completion in
-            Task {
-                do {
-                    let hexPrice = try await HEXRESTAPI.fetchHexPrice()
-                    environment.mainQueue.schedule {
-                        completion(.success(.updateHexPrice(hexPrice)))
+        return .merge(
+            Effect(value: .getCurrentDay),
+            .future { completion in
+                Task {
+                    do {
+                        let hexPrice = try await HEXRESTAPI.fetchHexPrice()
+                        environment.mainQueue.schedule {
+                            completion(.success(.updateHexPrice(hexPrice)))
+                        }
+                    } catch {
+                        fatalError()
                     }
-                } catch {
-                    fatalError()
                 }
             }
-        }
+        )
         
     case let .updateStakeIDs(stakeIDs):
         state.stakeCount = stakeIDs.count
@@ -129,21 +146,27 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 }
             }
         )
-    
+        
     case let .updateStake(stake):
         state.stakes.append(stake)
-        if state.stakes.count == state.stakeCount {
+        state.stakesBeginDay = min(state.stakesBeginDay, stake.lockedDay)
+        state.stakesEndDay = max(state.stakesEndDay, stake.lockedDay + stake.stakedDays)
+        
+        switch state.stakes.count == state.stakeCount {
+        case true:
             state.total.stakeHearts = state.stakes.reduce(0, { $0 + $1.stakedHearts })
             state.total.stakeShares = state.stakes.reduce(0, { $0 + $1.stakeShares })
+            guard let currentDay = state.currentDay else { return .none }
+            return Effect(value: .getDailyDataRange(state.stakesBeginDay, min(state.stakesEndDay, UInt16(currentDay))))
+        case false:
+            return .none
         }
         
-        return .none
-        
     case .getStakes:
-        return .future { result in
-            let getStakes = StakeCount_Parameter(stakeAddress: EthereumAddress("***REMOVED***"))
-            getStakes.call(withClient: environment.client,
-                           responseType: StakeCount_Parameter.Response.self) { (error, response) in
+        return .future { completion in
+            let stakes = StakeCount_Parameter(stakeAddress: EthereumAddress("***REMOVED***"))
+            stakes.call(withClient: environment.client,
+                        responseType: StakeCount_Parameter.Response.self) { (error, response) in
                 switch error {
                 case let .some(err):
                     print(err)
@@ -152,7 +175,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                     case let .some(count):
                         let stakes = (0..<count).map { BigUInt($0) }
                         environment.mainQueue.schedule {
-                            result(.success(.updateStakeIDs(stakes)))
+                            completion(.success(.updateStakeIDs(stakes)))
                         }
                     case .none:
                         print("no stakes")
@@ -161,8 +184,70 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             }
         }
         
+    case let .getDailyDataRange(begin, end):
+        return .future { completion in
+            let dailyDataRange = DailyDataRange_Parameter(beginDay: BigUInt(begin), endDay: BigUInt(end))
+            dailyDataRange.call(withClient: environment.client,
+                                responseType: DailyDataRange_Parameter.Response.self) { (error, response) in
+                switch error {
+                case let .some(err):
+                    print(err)
+                case .none:
+                    switch response?.list {
+                    case let .some(list):
+                        let dailyDataList = list.map { dayData -> DailyData in
+                            var dailyData = dayData
+                            let payout = dailyData & Constant.HEARTS_MASK
+                            dailyData >>= Constant.HEARTS_UINT_SHIFT
+                            let shares = dailyData & Constant.HEARTS_MASK
+                            dailyData >>= Constant.HEARTS_UINT_SHIFT
+                            let sats = dailyData & Constant.SATS_MASK
+                            
+                            return DailyData(payout: payout,
+                                      shares: shares,
+                                      sats: sats)
+                        }
+
+                                            environment.mainQueue.schedule {
+                                                completion(.success(.updateDailyData(dailyDataList)))
+                                            }
+                    case .none:
+                        print("no stakes")
+                    }
+                }
+            }
+        }
+
+    case .getCurrentDay:
+        return .future { completion in
+            let currentDay = CurrentDay()
+            currentDay.call(withClient: environment.client,
+                            responseType: CurrentDay.Response.self) { (error, response) in
+                switch error {
+                case let .some(err):
+                    print(err)
+                case .none:
+                    switch response?.day {
+                    case let .some(day):
+                        environment.mainQueue.schedule {
+                            completion(.success(.updateDay(day)))
+                        }
+                    case .none:
+                        print("no stakes")
+                    }
+                }
+            }
+        }
+    case let .updateDay(day):
+        state.currentDay = day
+        return .none
+        
     case let .updateHexPrice(hexPrice):
         state.hexPrice = hexPrice.hexUsd
+        return .none
+        
+    case let .updateDailyData(dailyData):
+        state.dailyDataList = dailyData
         return .none
         
     case .form(\.selectedTab):
@@ -171,12 +256,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             print("show charts")
         case .stakes:
             return Effect(value: .getStakes)
-
+            
         case .calculator:
             print("show calculator")
         }
         return .none
-    
+        
     case .form:
         return .none
     }

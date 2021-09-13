@@ -16,6 +16,10 @@
 		ED47345A26E4596F003B1BB2 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = ED47345926E4596F003B1BB2 /* index.html */; };
 		ED507A4F26EF2CC500D1A022 /* NSNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */; };
 		ED507A5226EF97DA00D1A022 /* HEXRESTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */; };
+		ED507A5426EFC9D600D1A022 /* StakeCountABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5326EFC9D600D1A022 /* StakeCountABIFunction.swift */; };
+		ED507A5626EFC9FA00D1A022 /* StakeListsABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5526EFC9FA00D1A022 /* StakeListsABIFunction.swift */; };
+		ED507A5826EFD3A000D1A022 /* CurrentDayABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5726EFD3A000D1A022 /* CurrentDayABIFunction.swift */; };
+		ED507A5A26EFDE5F00D1A022 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5926EFDE5F00D1A022 /* Constants.swift */; };
 		ED94771E26E44559003162D4 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94771D26E44559003162D4 /* App.swift */; };
 		ED94772026E44559003162D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94771F26E44559003162D4 /* ContentView.swift */; };
 		ED94772226E44559003162D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED94772126E44559003162D4 /* Assets.xcassets */; };
@@ -24,7 +28,7 @@
 		ED94773226E4468E003162D4 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94773126E4468E003162D4 /* AppReducer.swift */; };
 		ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94773326E448A1003162D4 /* SampleAppStore.swift */; };
 		EDCC3A8426E46E4A00A576B2 /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = EDCC3A8326E46E4A00A576B2 /* web3.swift */; };
-		EDCC3A8726E4772F00A576B2 /* HEXABI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCC3A8626E4772F00A576B2 /* HEXABI.swift */; };
+		EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +41,10 @@
 		ED47345926E4596F003B1BB2 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Extensions.swift"; sourceTree = "<group>"; };
 		ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXRESTAPI.swift; sourceTree = "<group>"; };
+		ED507A5326EFC9D600D1A022 /* StakeCountABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCountABIFunction.swift; sourceTree = "<group>"; };
+		ED507A5526EFC9FA00D1A022 /* StakeListsABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeListsABIFunction.swift; sourceTree = "<group>"; };
+		ED507A5726EFD3A000D1A022 /* CurrentDayABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDayABIFunction.swift; sourceTree = "<group>"; };
+		ED507A5926EFDE5F00D1A022 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		ED94771A26E44559003162D4 /* HEX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED94771D26E44559003162D4 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		ED94771F26E44559003162D4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,7 +52,7 @@
 		ED94772426E44559003162D4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ED94773126E4468E003162D4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		ED94773326E448A1003162D4 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
-		EDCC3A8626E4772F00A576B2 /* HEXABI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXABI.swift; sourceTree = "<group>"; };
+		EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataRangeABIFunction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				ED1E970026EEDCDB009C469A /* Plan */,
-				EDCC3A8526E4771800A576B2 /* Contract */,
+				EDCC3A8526E4771800A576B2 /* HEXContract */,
 				ED47345826E4595A003B1BB2 /* HTML */,
 				ED47344E26E4548A003B1BB2 /* Calculator */,
 				ED47344D26E45485003B1BB2 /* Stakes */,
@@ -134,6 +142,7 @@
 				ED3C9EFB26EF196800D01257 /* BigUInt+Extensions.swift */,
 				ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */,
 				ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */,
+				ED507A5926EFDE5F00D1A022 /* Constants.swift */,
 			);
 			path = HEX;
 			sourceTree = "<group>";
@@ -147,12 +156,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		EDCC3A8526E4771800A576B2 /* Contract */ = {
+		EDCC3A8526E4771800A576B2 /* HEXContract */ = {
 			isa = PBXGroup;
 			children = (
-				EDCC3A8626E4772F00A576B2 /* HEXABI.swift */,
+				EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */,
+				ED507A5326EFC9D600D1A022 /* StakeCountABIFunction.swift */,
+				ED507A5526EFC9FA00D1A022 /* StakeListsABIFunction.swift */,
+				ED507A5726EFD3A000D1A022 /* CurrentDayABIFunction.swift */,
 			);
-			path = Contract;
+			path = HEXContract;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,16 +247,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED47345526E454C1003B1BB2 /* ChartsView.swift in Sources */,
+				ED507A5A26EFDE5F00D1A022 /* Constants.swift in Sources */,
 				ED94773226E4468E003162D4 /* AppReducer.swift in Sources */,
 				ED47345026E454A3003B1BB2 /* CalculatorView.swift in Sources */,
 				ED94772026E44559003162D4 /* ContentView.swift in Sources */,
-				EDCC3A8726E4772F00A576B2 /* HEXABI.swift in Sources */,
+				EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */,
 				ED47345226E454AD003B1BB2 /* StakesView.swift in Sources */,
 				ED3C9EFC26EF196800D01257 /* BigUInt+Extensions.swift in Sources */,
 				ED94771E26E44559003162D4 /* App.swift in Sources */,
+				ED507A5626EFC9FA00D1A022 /* StakeListsABIFunction.swift in Sources */,
+				ED507A5826EFD3A000D1A022 /* CurrentDayABIFunction.swift in Sources */,
 				ED507A4F26EF2CC500D1A022 /* NSNumber+Extensions.swift in Sources */,
 				ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */,
 				ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */,
+				ED507A5426EFC9D600D1A022 /* StakeCountABIFunction.swift in Sources */,
 				ED1E970226EEDCE5009C469A /* PlanView.swift in Sources */,
 				ED507A5226EF97DA00D1A022 /* HEXRESTAPI.swift in Sources */,
 			);
