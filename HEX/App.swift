@@ -14,7 +14,8 @@ struct HEXApp: App {
     let store = Store(initialState: AppState(),
                       reducer: appReducer,
                       environment: AppEnvironment(
-                        client: EthereumClient(url: URL(string: "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213")!)
+                        client: EthereumClient(url: URL(string: "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213")!),
+                        mainQueue: DispatchQueue.main.eraseToAnyScheduler()
                       )
     )
     

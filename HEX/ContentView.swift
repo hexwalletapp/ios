@@ -21,7 +21,7 @@ struct ContentView: View {
                     }
                     .tag(Tab.charts)
                 
-                StakesView()
+                StakesView(store: store)
                     .tabItem {
                         Image(systemName: "banknote.fill")
                         Text("Stakes")

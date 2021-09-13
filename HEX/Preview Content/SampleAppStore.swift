@@ -14,5 +14,6 @@ import web3
 
     let sampleAppStore = Store(initialState: AppState(),
                                reducer: appReducer,
-                               environment: AppEnvironment(client: EthereumClient(url: URL(string: "")!)))
+                               environment: AppEnvironment(client: EthereumClient(url: URL(string: "")!),
+                                                           mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
 #endif

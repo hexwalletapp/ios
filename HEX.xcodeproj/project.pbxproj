@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED1E970226EEDCE5009C469A /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1E970126EEDCE5009C469A /* PlanView.swift */; };
 		ED47345026E454A3003B1BB2 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47344F26E454A3003B1BB2 /* CalculatorView.swift */; };
 		ED47345226E454AD003B1BB2 /* StakesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345126E454AD003B1BB2 /* StakesView.swift */; };
 		ED47345526E454C1003B1BB2 /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345426E454C1003B1BB2 /* ChartsView.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ED1E970126EEDCE5009C469A /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
 		ED47344F26E454A3003B1BB2 /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
 		ED47345126E454AD003B1BB2 /* StakesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakesView.swift; sourceTree = "<group>"; };
 		ED47345426E454C1003B1BB2 /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
@@ -52,6 +54,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED1E970026EEDCDB009C469A /* Plan */ = {
+			isa = PBXGroup;
+			children = (
+				ED1E970126EEDCE5009C469A /* PlanView.swift */,
+			);
+			path = Plan;
+			sourceTree = "<group>";
+		};
 		ED47344C26E45478003B1BB2 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +114,7 @@
 		ED94771C26E44559003162D4 /* HEX */ = {
 			isa = PBXGroup;
 			children = (
+				ED1E970026EEDCDB009C469A /* Plan */,
 				EDCC3A8526E4771800A576B2 /* Contract */,
 				ED47345826E4595A003B1BB2 /* HTML */,
 				ED47344E26E4548A003B1BB2 /* Calculator */,
@@ -223,6 +234,7 @@
 				ED94771E26E44559003162D4 /* App.swift in Sources */,
 				ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */,
 				ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */,
+				ED1E970226EEDCE5009C469A /* PlanView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
