@@ -14,16 +14,37 @@ struct StakesView: View {
         GridItem(.flexible()),
         GridItem(.flexible()),
     ]
+    
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
-                ScrollView {
-                    stakeHeaderView(total: viewStore.total)
-                    ForEach(viewStore.stakes) { stake in
-                        NavigationLink {
-                            Text("hi")
-                        } label: {
-                            stakeView(stake: stake)
+                VStack {
+                    switch viewStore.selectedStakeSegment {
+                    case .total:
+                        ScrollView {
+                            LazyVStack(spacing: 10, pinnedViews: [.sectionHeaders]) {
+                                Section {
+                                    stakeHeaderView(total: viewStore.total)
+                                } header: {
+                                    stakeFilterView
+                                }
+                            }
+                        }
+                    case .list:
+                        ScrollView {
+                            LazyVStack(spacing: 10, pinnedViews: [.sectionHeaders]) {
+                                Section {
+                                    ForEach(viewStore.stakes) { stake in
+                                        NavigationLink {
+                                            Text("hi")
+                                        } label: {
+                                            stakeView(stake: stake)
+                                        }
+                                    }
+                                } header: {
+                                    stakeFilterView
+                                }
+                            }
                         }
                     }
                 }
@@ -39,6 +60,7 @@ struct StakesView: View {
                     
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Button {} label: { Image(systemName: "arrow.up.arrow.down") }
+                        .disabled(viewStore.selectedStakeSegment == .total)
                     }
                 }
             }
@@ -62,10 +84,20 @@ struct StakesView: View {
             Text( total.stakeShares.tShares.tshareString).foregroundColor(.primary)
             Text( total.stakeHearts.hex.hexString).foregroundColor(.secondary)
         }
-        .padding()
-
-        .background(Color(.secondarySystemBackground))
         .font(.body.monospacedDigit())
+        .padding(.horizontal)
+    }
+    
+    var stakeFilterView: some View {
+        Picker("Select stake filter",
+               selection: ViewStore(store).binding(keyPath: \.selectedStakeSegment, send: AppAction.form)) {
+            ForEach(StakeFilter.allCases, id: \.self) { stakeFilter in
+                Text(stakeFilter.description).tag(stakeFilter)
+            }
+        }
+        .pickerStyle(.segmented)
+        .padding()
+        .background(Color(.systemBackground))
     }
 }
 

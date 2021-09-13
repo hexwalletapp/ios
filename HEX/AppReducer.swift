@@ -16,6 +16,19 @@ enum Tab: Int, Equatable  {
     case calculator = 2
 }
 
+enum StakeFilter: Int, Equatable, CaseIterable, CustomStringConvertible {
+    case total = 0
+    case list = 1
+    
+    
+    var description: String {
+        switch self {
+        case .total: return "Total"
+        case .list: return "List"
+        }
+    }
+}
+
 struct HEXPrice: Codable, Equatable {
     var lastUpdated: Date
     var hexEth: Double
@@ -43,6 +56,7 @@ struct StakeTotal: Equatable {
 
 struct AppState: Equatable {
     var selectedTab = Tab.charts
+    var selectedStakeSegment = StakeFilter.total
     var hexPrice = 0.388328718
     var stakeCount = 0
     var stakes = [StakeLists_Parameter.Response]()
