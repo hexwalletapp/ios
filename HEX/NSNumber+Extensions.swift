@@ -19,7 +19,7 @@ extension NSNumber {
     var tshareString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.positiveSuffix = " ᴛsʜᴀʀᴇs"
+        formatter.positiveSuffix = " ᴛ-sʜᴀʀᴇs"
         return formatter.string(from: self) ?? ""
     }
     var currencyString: String {

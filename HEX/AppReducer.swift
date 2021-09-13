@@ -67,6 +67,7 @@ struct StakeTotal: Equatable {
     var stakeShares: BigUInt = 0
     var stakeHearts: BigUInt = 0
     var interestHearts: BigUInt = 0
+    var interestSevenDayHearts: BigUInt = 0
 }
 
 struct AppState: Equatable {
@@ -255,9 +256,15 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             
             state.stakes[index].interestHearts = state.dailyDataList[startIndex..<endIndex]
                 .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
+            
+            let minusWeekIndex = max(endIndex - 7, startIndex)
+            
+            state.stakes[index].interestSevenDayHearts = state.dailyDataList[minusWeekIndex..<endIndex]
+                .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
         }
         
         state.total.interestHearts = state.stakes.reduce(0, { $0 + $1.interestHearts })
+        state.total.interestSevenDayHearts = state.stakes.reduce(0, { $0 + $1.interestSevenDayHearts }) / Constant.ONE_WEEK
         
         return .none
         
