@@ -80,9 +80,11 @@ struct StakesView: View {
     
     func stakeHeaderView(total: StakeTotal) -> some View {
         LazyVGrid(columns: columns, alignment: .trailing, spacing: 8) {
-            Text( total.stakeHearts.hexAt(price: ViewStore(store).hexPrice).currencyString).foregroundColor(.primary)
-            Text( total.stakeShares.tShares.tshareString).foregroundColor(.primary)
-            Text( total.stakeHearts.hex.hexString).foregroundColor(.secondary)
+            Text(total.interestHearts.hexAt(price: ViewStore(store).hexPrice).currencyString).foregroundColor(.primary)
+            Text(total.stakeHearts.hexAt(price: ViewStore(store).hexPrice).currencyString).foregroundColor(.primary)
+            Text(total.interestHearts.hex.hexString).foregroundColor(.secondary)
+            Text(total.stakeHearts.hex.hexString).foregroundColor(.secondary)
+            Text(total.stakeShares.tShares.tshareString).foregroundColor(.primary)
         }
         .font(.body.monospacedDigit())
         .padding(.horizontal)

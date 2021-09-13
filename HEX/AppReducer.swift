@@ -32,6 +32,15 @@ struct DailyData: Equatable {
     let payout: BigUInt
     let shares: BigUInt
     let sats: BigUInt
+    
+    init(dayData: BigUInt) {
+        var dailyData = dayData
+        payout = dailyData & Constant.HEARTS_MASK
+        dailyData >>= Constant.HEARTS_UINT_SHIFT
+        shares = dailyData & Constant.HEARTS_MASK
+        dailyData >>= Constant.HEARTS_UINT_SHIFT
+        sats = dailyData & Constant.SATS_MASK
+    }
 }
 
 struct HEXPrice: Codable, Equatable {
@@ -57,6 +66,7 @@ struct HEXPrice: Codable, Equatable {
 struct StakeTotal: Equatable {
     var stakeShares: BigUInt = 0
     var stakeHearts: BigUInt = 0
+    var interestHearts: BigUInt = 0
 }
 
 struct AppState: Equatable {
@@ -68,6 +78,7 @@ struct AppState: Equatable {
     var stakesBeginDay = UInt16.max
     var stakesEndDay = UInt16.min
     var stakes = [StakeLists_Parameter.Response]()
+    var sharesPerDay = [BigUInt]()
     var total = StakeTotal()
     var dailyDataList = [DailyData]()
 }
@@ -195,29 +206,17 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 case .none:
                     switch response?.list {
                     case let .some(list):
-                        let dailyDataList = list.map { dayData -> DailyData in
-                            var dailyData = dayData
-                            let payout = dailyData & Constant.HEARTS_MASK
-                            dailyData >>= Constant.HEARTS_UINT_SHIFT
-                            let shares = dailyData & Constant.HEARTS_MASK
-                            dailyData >>= Constant.HEARTS_UINT_SHIFT
-                            let sats = dailyData & Constant.SATS_MASK
-                            
-                            return DailyData(payout: payout,
-                                      shares: shares,
-                                      sats: sats)
+                        let dailyDataList = list.map { DailyData(dayData: $0) }
+                        environment.mainQueue.schedule {
+                            completion(.success(.updateDailyData(dailyDataList)))
                         }
-
-                                            environment.mainQueue.schedule {
-                                                completion(.success(.updateDailyData(dailyDataList)))
-                                            }
                     case .none:
                         print("no stakes")
                     }
                 }
             }
         }
-
+        
     case .getCurrentDay:
         return .future { completion in
             let currentDay = CurrentDay()
@@ -248,6 +247,18 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         
     case let .updateDailyData(dailyData):
         state.dailyDataList = dailyData
+        
+        guard let currentDay = state.currentDay else { return .none }
+        state.stakes.enumerated().forEach { (index, stake) in
+            let startIndex = Int(stake.lockedDay - state.stakesBeginDay)
+            let endIndex = Int(currentDay - BigUInt(state.stakesBeginDay))
+            
+            state.stakes[index].interestHearts = state.dailyDataList[startIndex..<endIndex]
+                .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
+        }
+        
+        state.total.interestHearts = state.stakes.reduce(0, { $0 + $1.interestHearts })
+        
         return .none
         
     case .form(\.selectedTab):

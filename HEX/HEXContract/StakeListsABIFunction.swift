@@ -37,6 +37,7 @@ struct StakeLists_Parameter: ABIFunction {
         let stakedDays: UInt16
         let unlockedDay: UInt16
         let isAutoStake: Bool
+        var interestHearts: BigUInt = 0
         
         init?(values: [ABIDecoder.DecodedValue]) throws {
             stakeId = try values[0].decoded()
@@ -49,3 +50,4 @@ struct StakeLists_Parameter: ABIFunction {
         }
     }
 }
+
