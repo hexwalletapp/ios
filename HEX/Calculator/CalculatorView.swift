@@ -9,11 +9,29 @@ import SwiftUI
 import ComposableArchitecture
 
 struct CalculatorView: View {
+    @State var stakeAmount: String = ""
+    @State var numberOfDays: String = ""
     var body: some View {
         NavigationView {
-            Text("Calculator")
+            Form {
+                TextField("HEX Stake Amount", text: $stakeAmount, prompt: Text("HEX Stake Amount"))
+                    .submitLabel(.next)
+                    .disableAutocorrection(true)
+                    .keyboardType(.numberPad)
+                
+                TextField("# of Days (1-5555)", text: $numberOfDays, prompt: Text("Number of Days (1-5555)"))
+                    .submitLabel(.go)
+                    .disableAutocorrection(true)
+                    .keyboardType(.numberPad)
+                
+                Button {
+                    UIApplication.shared.keyWindow?.endEditing(true)
+                } label: {
+                    Text("Calculate")
+                }
+            }
+            .navigationTitle("Calculator")
         }
-        .navigationTitle("Calculator")
     }
 }
 

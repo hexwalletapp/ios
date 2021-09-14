@@ -28,12 +28,12 @@ struct ContentView: View {
                     }
                     .tag(Tab.stakes)
 
-                CalculatorView()
-                    .tabItem {
-                        Image(systemName: "plus.app.fill")
-                        Text("Calculator")
-                    }
-                    .tag(Tab.calculator)
+//                CalculatorView()
+//                    .tabItem {
+//                        Image(systemName: "plus.app.fill")
+//                        Text("Calculator")
+//                    }
+//                    .tag(Tab.calculator)
             }
         }
     }
