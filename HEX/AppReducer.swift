@@ -71,7 +71,7 @@ struct StakeTotal: Equatable {
 }
 
 struct AppState: Equatable {
-    var selectedTab = Tab.charts
+    var selectedTab = Tab.stakes
     var selectedStakeSegment = StakeFilter.total
     var hexPrice = 0.0
     var stakeCount = 0
@@ -166,6 +166,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         
         switch state.stakes.count == state.stakeCount {
         case true:
+            state.stakes.sort(by: { $0.lockedDay + $0.stakedDays < $1.lockedDay + $1.stakedDays })
             state.total.stakeHearts = state.stakes.reduce(0, { $0 + $1.stakedHearts })
             state.total.stakeShares = state.stakes.reduce(0, { $0 + $1.stakeShares })
             guard let currentDay = state.currentDay else { return .none }

@@ -12,52 +12,33 @@ import BigInt
 struct StakesView: View {
     let store: Store<AppState, AppAction>
     let columns = [
-        GridItem(.flexible(), spacing: 1),
-        GridItem(.flexible(), spacing: 1),
+        GridItem(.flexible()),
+        GridItem(.fixed(92)),
     ]
     
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
-                VStack {
-                    Spacer(minLength: 1)
+                List {
                     switch viewStore.selectedStakeSegment {
                     case .total:
-                        ScrollView {
-                            LazyVStack(spacing: 1, pinnedViews: [.sectionHeaders]) {
-                                Section {
-                                    stakeHeaderView(total: viewStore.total)
-                                } header: {
-                                    stakeFilterView
-                                }
-                            }
-                        }
-                        .background(Color(.systemGroupedBackground))
+                        dataCardHearts(title: "7-Day Average Earnings", hearts: viewStore.total.interestSevenDayHearts)
+                        dataCardHearts(title: "HEX Staked", hearts: viewStore.total.stakeHearts)
+                        dataCardHearts(title: "HEX Locked", hearts: viewStore.total.stakeHearts + viewStore.total.interestHearts)
+                        dataCardHearts(title: "HEX Earned", hearts: viewStore.total.interestHearts)
+                        dataCardShares(title: "T-Shares", shares: viewStore.total.stakeShares)
+                        
                     case .list:
-                        ScrollView {
-                            LazyVStack(spacing: 1, pinnedViews: [.sectionHeaders]) {
-                                Section {
-                                    ForEach(viewStore.stakes) { stake in
-                                        NavigationLink {
-                                            Text("hi")
-                                        } label: {
-                                            stakeView(stake: stake)
-                                        }
-                                    }
-                                } header: {
-                                    stakeFilterView
+                            ForEach(viewStore.stakes) { stake in
+                                NavigationLink {
+                                    Text("hi")
+                                } label: {
+                                    stakeView(stake: stake)
                                 }
                             }
-                        }
-                        .background(Color(.systemGroupedBackground))
                     }
-                    Spacer(minLength: 1)
                 }
-                
-                //                .refreshable {
-                //                    viewStore.send(.getStakes)
-                //                }
-                .navigationTitle("Stakes")
+                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         Button {} label: { Image(systemName: "person.crop.circle.badge.plus") }
@@ -67,65 +48,50 @@ struct StakesView: View {
                         Button {} label: { Image(systemName: "arrow.up.arrow.down") }
                         .disabled(viewStore.selectedStakeSegment == .total)
                     }
+                    
+                    ToolbarItemGroup(placement: .principal) {
+                        stakeFilterView
+                    }
                 }
             }
         }
     }
-    
     func stakeView(stake: StakeLists_Parameter.Response) -> some View {
-        LazyVGrid(columns: columns, alignment: .trailing, spacing: 1) {
+        LazyVGrid(columns: columns, alignment: .trailing) {
             VStack(alignment: .trailing) {
                 Text(stake.stakedHearts.hexAt(price: ViewStore(store).hexPrice).currencyString).foregroundColor(.primary)
                 Text(stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
             }
-            VStack(alignment: .trailing) {
-                Text( stake.stakeShares.tShares.tshareString).foregroundColor(.primary)
-                Text("-").foregroundColor(.secondary)
-            }
+            Text(stake.stakeShares.tShares.tshareString).font(.caption).foregroundColor(.secondary)
         }
-        .padding(4)
-        .background(.background)
-        .font(.body.monospacedDigit())
-    }
-    
-    func stakeHeaderView(total: StakeTotal) -> some View {
-        LazyVGrid(columns: columns, alignment: .trailing, spacing: 1) {
-            dataCardHearts(title: "7-Day Average Earnings", hearts: total.interestSevenDayHearts)
-            dataCardHearts(title: "HEX Staked", hearts: total.stakeHearts)
-            dataCardHearts(title: "HEX Locked", hearts: total.stakeHearts + total.interestHearts)
-            dataCardHearts(title: "HEX Earned", hearts: total.interestHearts)
-            dataCardShares(title: "T-Shares", shares: total.stakeShares)
-        }
-        .font(.body.monospacedDigit())
-        .padding(.horizontal, 1)
+            .font(.body.monospacedDigit())
+            .frame(maxWidth: .infinity, alignment: .trailing)
     }
     
     func dataCardHearts(title: String, hearts: BigUInt) -> some View {
-        VStack(alignment: .trailing,  spacing: 4) {
-            HStack {
-                Text(title).font(.caption).foregroundColor(.secondary)
-                Spacer()
+        Section {
+            VStack(alignment: .trailing) {
+                Text(hearts.hexAt(price: ViewStore(store).hexPrice).currencyString).foregroundColor(.primary)
+                Text(hearts.hex.hexString).foregroundColor(.secondary)
             }
-            Text(hearts.hexAt(price: ViewStore(store).hexPrice).currencyString).foregroundColor(.primary)
-            Text(hearts.hex.hexString).foregroundColor(.secondary)
+            .font(.body.monospacedDigit())
+            .frame(maxWidth: .infinity, alignment: .trailing)
+        } header: {
+            Text(title)
         }
-        .padding(4)
-        .background(.background)
-        
     }
     
     func dataCardShares(title: String, shares: BigUInt) -> some View {
-        VStack(alignment: .trailing, spacing: 4) {
-            HStack {
-                Text(title).font(.caption).foregroundColor(.secondary)
-                Spacer()
+        Section {
+            VStack(alignment: .trailing) {
+                Text(shares.tShares.tshareString).foregroundColor(.primary)
+                Text("-").foregroundColor(.secondary)
             }
-            Text(shares.tShares.tshareString).foregroundColor(.primary)
-            Text("-").foregroundColor(.secondary)
+            .font(.body.monospacedDigit())
+            .frame(maxWidth: .infinity, alignment: .trailing)
+        } header: {
+            Text(title)
         }
-        .padding(4)
-        .background(.background)
-        .font(.body.monospacedDigit())
     }
     
     
@@ -138,8 +104,6 @@ struct StakesView: View {
             }
         }
                .pickerStyle(.segmented)
-               .padding()
-               .background(Color(.systemBackground))
     }
 }
 
