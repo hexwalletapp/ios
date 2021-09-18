@@ -38,10 +38,16 @@ struct StakesView: View {
                             }
                     }
                 }
+                .sheet(isPresented: viewStore.binding(get: \.presentedEditAddress,
+                                                            send: .dismissEditAddress), content: {
+                    EditAddressView(store: store)
+                })
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
-                        Button {} label: { Image(systemName: "person.crop.circle.badge.plus") }
+                        Button {
+                            viewStore.send(.presentEditAddress)
+                        } label: { Image(systemName: "person.crop.circle.badge.plus") }
                     }
                     
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -56,6 +62,7 @@ struct StakesView: View {
             }
         }
     }
+    
     func stakeView(stake: StakeLists_Parameter.Response) -> some View {
         LazyVGrid(columns: columns, alignment: .trailing) {
             VStack(alignment: .trailing) {
@@ -94,8 +101,6 @@ struct StakesView: View {
         }
     }
     
-    
-    
     var stakeFilterView: some View {
         Picker("Select stake filter",
                selection: ViewStore(store).binding(keyPath: \.selectedStakeSegment, send: AppAction.form)) {
@@ -107,8 +112,10 @@ struct StakesView: View {
     }
 }
 
+#if DEBUG
 struct StakesView_Previews: PreviewProvider {
     static var previews: some View {
         StakesView(store: sampleAppStore)
     }
 }
+#endif
