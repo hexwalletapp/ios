@@ -6,23 +6,32 @@
 //
 
 import Foundation
-
+import Combine
 
 enum HEXRestError: Error {
     case invalidURL
+    case httpStatusError
 }
 
-class HEXRESTAPI {
-    static func fetchHexPrice() async throws -> HEXPrice {
+final class HEXRESTAPI {
+    static func fetchHexPrice() -> AnyPublisher<HEXPrice, Error> {
         guard let url = URL(string: "https://uniswapdataapi.azurewebsites.net/api/hexPrice") else {
-            throw HEXRestError.invalidURL
+            return Fail(error: HEXRestError.invalidURL).eraseToAnyPublisher()
         }
-        let (data, _) = try await URLSession.shared.data(from: url)
-        do {
-            return try JSONDecoder().decode(HEXPrice.self, from: data)
-        } catch {
-            fatalError("\(error)")
-        }
+        return URLSession.shared
+            .dataTaskPublisher(for: url)
+            .tryMap { (data, response) -> HEXPrice in
+                guard let httpResponse = response as? HTTPURLResponse,
+                      httpResponse.statusCode == 200 else {
+                          throw HEXRestError.httpStatusError
+                      }
+                do {
+                    return try JSONDecoder().decode(HEXPrice.self, from: data)
+                } catch {
+                    throw error
+                }
+            }
+            .eraseToAnyPublisher()
     }
-
+    
 }
