@@ -13,17 +13,7 @@ struct CalculatorView: View {
     @State var numberOfDays: String = ""
     var body: some View {
         NavigationView {
-            Form {
-                TextField("HEX Stake Amount", text: $stakeAmount, prompt: Text("HEX Stake Amount"))
-                    .submitLabel(.next)
-                    .disableAutocorrection(true)
-                    .keyboardType(.numberPad)
-                
-                TextField("# of Days (1-5555)", text: $numberOfDays, prompt: Text("Number of Days (1-5555)"))
-                    .submitLabel(.go)
-                    .disableAutocorrection(true)
-                    .keyboardType(.numberPad)
-                
+            Form {                
                 Button {
                     UIApplication.shared.keyWindow?.endEditing(true)
                 } label: {

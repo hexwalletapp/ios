@@ -75,7 +75,7 @@ struct AppState: Equatable {
     var ethereumAddress = UserDefaults.standard.string(forKey: Constant.ADDRESS_KEY) ?? ""
     var selectedTab = Tab.stakes
     var selectedStakeSegment = StakeFilter.total
-    var hexPrice = 0.0
+    var hexPrice: Double = 0
     var stakeCount = 0
     var currentDay: BigUInt? = nil
     var stakesBeginDay = UInt16.max
@@ -96,7 +96,7 @@ enum AppAction: Equatable {
     
     case updateStakeIDs([BigUInt])
     case updateStake(StakeLists_Parameter.Response)
-    case updateHexPrice(HEXPrice)
+    case updateHexPrice(Result<HEXPrice, NSError>)
     case updateDay(BigUInt)
     case updateDailyData([DailyData])
     case form(BindingAction<AppState>)
@@ -121,18 +121,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case .onActive:
         return .merge(
             Effect(value: .getCurrentDay),
-            .future { completion in
-                Task {
-                    do {
-                        let hexPrice = try await HEXRESTAPI.fetchHexPrice()
-                        environment.mainQueue.schedule {
-                            completion(.success(.updateHexPrice(hexPrice)))
-                        }
-                    } catch {
-                        fatalError()
-                    }
-                }
-            }
+            HEXRESTAPI.fetchHexPrice().receive(on: environment.mainQueue).mapError { $0 as NSError }.catchToEffect().map(AppAction.updateHexPrice)
         )
         
     case let .updateStakeIDs(stakeIDs):
@@ -251,8 +240,13 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         state.currentDay = day
         return .none
         
-    case let .updateHexPrice(hexPrice):
-        state.hexPrice = hexPrice.hexUsd
+    case let .updateHexPrice(result):
+        switch result {
+        case let .success(hexPrice):
+            state.hexPrice = hexPrice.hexUsd
+        case let .failure(error):
+            print(error)
+        }
         return .none
         
     case let .updateDailyData(dailyData):
