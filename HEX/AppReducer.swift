@@ -71,6 +71,8 @@ struct StakeTotal: Equatable {
 }
 
 struct AppState: Equatable {
+    var presentedEditAddress = false
+    var ethereumAddress = UserDefaults.standard.string(forKey: Constant.ADDRESS_KEY) ?? ""
     var selectedTab = Tab.stakes
     var selectedStakeSegment = StakeFilter.total
     var hexPrice = 0.0
@@ -98,6 +100,8 @@ enum AppAction: Equatable {
     case updateDay(BigUInt)
     case updateDailyData([DailyData])
     case form(BindingAction<AppState>)
+    case presentEditAddress
+    case dismissEditAddress
 }
 
 struct AppEnvironment {
@@ -134,10 +138,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case let .updateStakeIDs(stakeIDs):
         state.stakeCount = stakeIDs.count
         state.stakes = [StakeLists_Parameter.Response]()
+        let stakeAddress = EthereumAddress(state.ethereumAddress)
+        
         return .merge(
             stakeIDs.map { stakeID in
                 return .future { completion in
-                    let getStake = StakeLists_Parameter(stakeAddress: EthereumAddress("0xb6542DE25941D3ca4Eb839F6C9096823e09Ab5B4"),
+                    let getStake = StakeLists_Parameter(stakeAddress: stakeAddress,
                                                         stakeIndex: stakeID)
                     getStake.call(withClient: environment.client,
                                   responseType: StakeLists_Parameter.Response.self) { (error, response) in
@@ -176,8 +182,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         
     case .getStakes:
+        let stakeAddress = EthereumAddress(state.ethereumAddress)
+
         return .future { completion in
-            let stakes = StakeCount_Parameter(stakeAddress: EthereumAddress("0xb6542DE25941D3ca4Eb839F6C9096823e09Ab5B4"))
+            let stakes = StakeCount_Parameter(stakeAddress: stakeAddress)
             stakes.call(withClient: environment.client,
                         responseType: StakeCount_Parameter.Response.self) { (error, response) in
                 switch error {
@@ -267,6 +275,17 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         state.total.interestHearts = state.stakes.reduce(0, { $0 + $1.interestHearts })
         state.total.interestSevenDayHearts = state.stakes.reduce(0, { $0 + $1.interestSevenDayHearts }) / Constant.ONE_WEEK
         
+        return .none
+    case .presentEditAddress:
+        state.presentedEditAddress = true
+        return .none
+        
+    case .dismissEditAddress:
+        state.presentedEditAddress = false
+        return .none
+        
+    case .form(\.ethereumAddress):
+        UserDefaults.standard.setValue(state.ethereumAddress, forKey: Constant.ADDRESS_KEY)
         return .none
         
     case .form(\.selectedTab):
