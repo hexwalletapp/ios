@@ -71,10 +71,10 @@ struct StakeTotal: Equatable {
 }
 
 struct AppState: Equatable {
-    var presentedEditAddress = false
-    var ethereumAddress = UserDefaults.standard.string(forKey: Constant.ADDRESS_KEY) ?? ""
-    var selectedTab = Tab.stakes
-    var selectedStakeSegment = StakeFilter.total
+    @BindableState var presentedEditAddress = false
+    @BindableState var ethereumAddress = UserDefaults.standard.string(forKey: Constant.ADDRESS_KEY) ?? ""
+    @BindableState var selectedTab = Tab.stakes
+    @BindableState var selectedStakeSegment = StakeFilter.total
     var hexPrice: Double = 0
     var stakeCount = 0
     var currentDay: BigUInt? = nil
@@ -86,7 +86,7 @@ struct AppState: Equatable {
     var dailyDataList = [DailyData]()
 }
 
-enum AppAction: Equatable {
+enum AppAction: BindableAction, Equatable {
     case onBackground
     case onInactive
     case onActive
@@ -99,7 +99,7 @@ enum AppAction: Equatable {
     case updateHexPrice(Result<HEXPrice, NSError>)
     case updateDay(BigUInt)
     case updateDailyData([DailyData])
-    case form(BindingAction<AppState>)
+    case binding(BindingAction<AppState>)
     case presentEditAddress
     case dismissEditAddress
 }
@@ -121,7 +121,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case .onActive:
         return .merge(
             Effect(value: .getCurrentDay),
-            HEXRESTAPI.fetchHexPrice().receive(on: environment.mainQueue).mapError { $0 as NSError }.catchToEffect().map(AppAction.updateHexPrice)
+            HEXRESTAPI.fetchHexPrice()
+                .receive(on: environment.mainQueue)
+                .mapError { $0 as NSError }
+                .catchToEffect()
+                .map(AppAction.updateHexPrice)
         )
         
     case let .updateStakeIDs(stakeIDs):
@@ -278,26 +282,21 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         state.presentedEditAddress = false
         return .none
         
-    case .form(\.ethereumAddress):
+    case .binding(\.$ethereumAddress):
         UserDefaults.standard.setValue(state.ethereumAddress, forKey: Constant.ADDRESS_KEY)
         return .none
-        
-    case .form(\.selectedTab):
+
+    case .binding(\.$selectedTab):
         switch state.selectedTab {
-        case .charts:
-            print("show charts")
         case .stakes:
             return Effect(value: .getStakes)
-            
-        case .calculator:
-            print("show calculator")
+        case .calculator, .charts: return .none
         }
-        return .none
         
-    case .form:
+    case .binding:
         return .none
     }
 }
-    .binding(action: /AppAction.form)
+    .binding()
 
 

@@ -38,8 +38,7 @@ struct StakesView: View {
                             }
                     }
                 }
-                .sheet(isPresented: viewStore.binding(get: \.presentedEditAddress,
-                                                            send: .dismissEditAddress), content: {
+                .sheet(isPresented: viewStore.$presentedEditAddress, content: {
                     EditAddressView(store: store)
                 })
                 .navigationBarTitleDisplayMode(.inline)
@@ -103,7 +102,7 @@ struct StakesView: View {
     
     var stakeFilterView: some View {
         Picker("Select stake filter",
-               selection: ViewStore(store).binding(keyPath: \.selectedStakeSegment, send: AppAction.form)) {
+               selection: ViewStore(store).$selectedStakeSegment) {
             ForEach(StakeFilter.allCases, id: \.self) { stakeFilter in
                 Text(stakeFilter.description).tag(stakeFilter)
             }

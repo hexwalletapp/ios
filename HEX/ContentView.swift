@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            TabView(selection: viewStore.binding(keyPath: \.selectedTab, send: AppAction.form)) {
+            TabView(selection: viewStore.$selectedTab) {
                 ChartsView()
                     .tabItem {
                         Image(systemName: "chart.pie.fill")
