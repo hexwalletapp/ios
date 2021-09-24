@@ -10,14 +10,13 @@ import ComposableArchitecture
 
 struct EditAddressView: View {
     let store: Store<AppState, AppAction>
-    @State var username: String = ""
 
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 Form {
-                    TextField("Public Key or ENS Address", text:
-                                viewStore.$ethereumAddress)
+                    TextField("Public Key or ENS Address",
+                              text: viewStore.$ethereumAddress)
                 }
             }
         }

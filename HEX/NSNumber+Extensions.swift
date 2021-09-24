@@ -16,12 +16,24 @@ extension NSNumber {
         return formatter.string(from: self) ?? ""
     }
     
-    var tshareString: String {
+    var shareString: String {
+        let units = ["","ᴋ-","ᴍ-","ɢ-","ᴛ-","ᴘ-","ᴇ-"]
+        let numerator = log10(self.doubleValue)
+        let exp: Int
+        
+        switch numerator.sign {
+        case .minus: exp = 0
+        case .plus: exp = NSNumber(value: numerator / 3.0).intValue
+        }
+        
+        let roundedNumber = NSNumber(value: round(10 * self.doubleValue / pow(1000.0,Double(exp))) / 10)
+        
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.positiveSuffix = " ᴛ-sʜᴀʀᴇs"
-        return formatter.string(from: self) ?? ""
+        formatter.positiveSuffix = " \(units[exp])sʜᴀʀᴇs"
+        return formatter.string(from: roundedNumber) ?? ""
     }
+    
     var currencyString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
