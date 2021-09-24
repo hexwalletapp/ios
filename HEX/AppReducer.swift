@@ -10,15 +10,12 @@ import ComposableArchitecture
 import web3
 import BigInt
 
-enum Tab: Int, Equatable  {
-    case charts = 0
-    case stakes = 1
-    case calculator = 2
+enum Tab {
+    case charts, stakes, calculator
 }
 
-enum StakeFilter: Int, Equatable, CaseIterable, CustomStringConvertible {
-    case total = 0
-    case list = 1
+enum StakeFilter: Equatable, CaseIterable, CustomStringConvertible {
+    case total, list
     
     var description: String {
         switch self {
@@ -71,16 +68,16 @@ struct StakeTotal: Equatable {
 }
 
 struct AppState: Equatable {
-    @BindableState var presentedEditAddress = false
+    @BindableState var presentEditAddress = false
     @BindableState var ethereumAddress = UserDefaults.standard.string(forKey: Constant.ADDRESS_KEY) ?? ""
-    @BindableState var selectedTab = Tab.stakes
-    @BindableState var selectedStakeSegment = StakeFilter.total
+    @BindableState var selectedTab: Tab = .stakes
+    @BindableState var selectedStakeSegment: StakeFilter = .total
     var hexPrice: Double = 0
     var stakeCount = 0
     var currentDay: BigUInt? = nil
     var stakesBeginDay = UInt16.max
     var stakesEndDay = UInt16.min
-    var stakes = [StakeLists_Parameter.Response]()
+    var stakes = [Stake]()
     var sharesPerDay = [BigUInt]()
     var total = StakeTotal()
     var dailyDataList = [DailyData]()
@@ -93,15 +90,14 @@ enum AppAction: BindableAction, Equatable {
     case getStakes
     case getCurrentDay
     case getDailyDataRange(UInt16, UInt16)
+    case scheduleNotification
     
     case updateStakeIDs([BigUInt])
-    case updateStake(StakeLists_Parameter.Response)
+    case updateStake(Stake)
     case updateHexPrice(Result<HEXPrice, NSError>)
     case updateDay(BigUInt)
     case updateDailyData([DailyData])
     case binding(BindingAction<AppState>)
-    case presentEditAddress
-    case dismissEditAddress
 }
 
 struct AppEnvironment {
@@ -125,12 +121,15 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 .receive(on: environment.mainQueue)
                 .mapError { $0 as NSError }
                 .catchToEffect()
-                .map(AppAction.updateHexPrice)
+                .map(AppAction.updateHexPrice),
+            Effect(value: .getStakes)
+                .receive(on: environment.mainQueue)
+                .eraseToEffect()
         )
         
     case let .updateStakeIDs(stakeIDs):
         state.stakeCount = stakeIDs.count
-        state.stakes = [StakeLists_Parameter.Response]()
+        state.stakes = [Stake]()
         let stakeAddress = EthereumAddress(state.ethereumAddress)
         
         return .merge(
@@ -139,7 +138,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                     let getStake = StakeLists_Parameter(stakeAddress: stakeAddress,
                                                         stakeIndex: stakeID)
                     getStake.call(withClient: environment.client,
-                                  responseType: StakeLists_Parameter.Response.self) { (error, response) in
+                                  responseType: Stake.self) { (error, response) in
                         switch error {
                         case let .some(error):
                             print(error)
@@ -240,6 +239,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 }
             }
         }
+        
     case let .updateDay(day):
         state.currentDay = day
         return .none
@@ -251,6 +251,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case let .failure(error):
             print(error)
         }
+        return .none
+        
+    case .scheduleNotification:
+        
+        
         return .none
         
     case let .updateDailyData(dailyData):
@@ -274,24 +279,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         state.total.interestSevenDayHearts = state.stakes.reduce(0, { $0 + $1.interestSevenDayHearts }) / Constant.ONE_WEEK
         
         return .none
-    case .presentEditAddress:
-        state.presentedEditAddress = true
-        return .none
-        
-    case .dismissEditAddress:
-        state.presentedEditAddress = false
-        return .none
         
     case .binding(\.$ethereumAddress):
         UserDefaults.standard.setValue(state.ethereumAddress, forKey: Constant.ADDRESS_KEY)
         return .none
-
-    case .binding(\.$selectedTab):
-        switch state.selectedTab {
-        case .stakes:
-            return Effect(value: .getStakes)
-        case .calculator, .charts: return .none
-        }
         
     case .binding:
         return .none

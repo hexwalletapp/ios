@@ -10,8 +10,8 @@ import Foundation
 
 extension BigUInt {
     
-    var tShares: NSNumber {
-        NSNumber(value: Double(self / BigUInt(1_000_000_000_000) ))
+    var number: NSNumber {
+        NSNumber(value: Double(self))
     }
     
     var hex: NSNumber {

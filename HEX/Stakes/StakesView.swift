@@ -22,30 +22,37 @@ struct StakesView: View {
                 List {
                     switch viewStore.selectedStakeSegment {
                     case .total:
+                        HStack {
+                            Text("Price:")
+                            Spacer()
+                            Text(NSNumber(value: viewStore.hexPrice).currencyString)
+                        }
+                        .navigationBarTitle(StakeFilter.total.description)
                         dataCardHearts(title: "7-Day Average Earnings", hearts: viewStore.total.interestSevenDayHearts)
                         dataCardHearts(title: "HEX Staked", hearts: viewStore.total.stakeHearts)
                         dataCardHearts(title: "HEX Locked", hearts: viewStore.total.stakeHearts + viewStore.total.interestHearts)
                         dataCardHearts(title: "HEX Earned", hearts: viewStore.total.interestHearts)
-                        dataCardShares(title: "T-Shares", shares: viewStore.total.stakeShares)
+                        dataCardShares(title: "Shares", shares: viewStore.total.stakeShares)
                         
                     case .list:
-                            ForEach(viewStore.stakes) { stake in
-                                NavigationLink {
-                                    Text("hi")
-                                } label: {
-                                    stakeView(stake: stake)
-                                }
+                        ForEach(viewStore.stakes) { stake in
+                            NavigationLink {
+                                StakeDetailsView(stake: stake)
+                            } label: {
+                                stakeView(stake: stake)
                             }
+                        }
+                        .navigationBarTitle(StakeFilter.list.description)
                     }
                 }
-                .sheet(isPresented: viewStore.$presentedEditAddress, content: {
+                .sheet(isPresented: viewStore.$presentEditAddress, content: {
                     EditAddressView(store: store)
                 })
-                .navigationBarTitleDisplayMode(.inline)
+                .refreshable { viewStore.send(.getStakes) }
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         Button {
-                            viewStore.send(.presentEditAddress)
+                            viewStore.send(.binding(.set(\.$presentEditAddress, true)))
                         } label: { Image(systemName: "person.crop.circle.badge.plus") }
                     }
                     
@@ -62,16 +69,16 @@ struct StakesView: View {
         }
     }
     
-    func stakeView(stake: StakeLists_Parameter.Response) -> some View {
+    func stakeView(stake: Stake) -> some View {
         LazyVGrid(columns: columns, alignment: .trailing) {
             VStack(alignment: .trailing) {
                 Text(stake.stakedHearts.hexAt(price: ViewStore(store).hexPrice).currencyString).foregroundColor(.primary)
                 Text(stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
             }
-            Text(stake.stakeShares.tShares.tshareString).font(.caption).foregroundColor(.secondary)
+            Text(stake.stakeShares.number.shareString).font(.caption).foregroundColor(.secondary)
         }
-            .font(.body.monospacedDigit())
-            .frame(maxWidth: .infinity, alignment: .trailing)
+        .font(.body.monospacedDigit())
+        .frame(maxWidth: .infinity, alignment: .trailing)
     }
     
     func dataCardHearts(title: String, hearts: BigUInt) -> some View {
@@ -90,8 +97,7 @@ struct StakesView: View {
     func dataCardShares(title: String, shares: BigUInt) -> some View {
         Section {
             VStack(alignment: .trailing) {
-                Text(shares.tShares.tshareString).foregroundColor(.primary)
-                Text("-").foregroundColor(.secondary)
+                Text(shares.number.shareString).foregroundColor(.primary)
             }
             .font(.body.monospacedDigit())
             .frame(maxWidth: .infinity, alignment: .trailing)

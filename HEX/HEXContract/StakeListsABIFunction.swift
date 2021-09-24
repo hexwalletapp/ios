@@ -52,3 +52,4 @@ struct StakeLists_Parameter: ABIFunction {
     }
 }
 
+typealias Stake = StakeLists_Parameter.Response
