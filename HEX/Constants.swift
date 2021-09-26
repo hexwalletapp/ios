@@ -23,4 +23,11 @@ struct Constant {
         Color(red: 1.000, green: 0.059, blue: 0.435, opacity: 1.000),
         Color(red: 0.996, green: 0.004, blue: 0.980, opacity: 1.000)
     ]
+    static let PULSE_COLORS = [
+        Color(red: 1.000, green: 0.000, blue: 0.000, opacity: 1.000),
+        Color(red: 0.902, green: 0.098, blue: 0.902, opacity: 1.000),
+        Color(red: 0.502, green: 0.000, blue: 1.000, opacity: 1.000),
+        Color(red: 0.000, green: 0.502, blue: 1.000, opacity: 1.000),
+        Color(red: 0.000, green: 0.918, blue: 1.000, opacity: 1.000)
+    ]
 }
