@@ -26,7 +26,9 @@ enum StakeFilter: Equatable, CaseIterable, CustomStringConvertible {
     }
 }
 
-enum Chain {
+enum Chain: Identifiable, CaseIterable {
+    var id: Self { self }
+
     case ethereum, pulse
     
     var cardGradient: [Color] {

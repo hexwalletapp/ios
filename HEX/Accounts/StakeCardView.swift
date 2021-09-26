@@ -12,7 +12,8 @@ import ComposableArchitecture
 
 struct StakeCardView: View {
     let store: Store<AppState, AppAction>
-
+    let chain: Chain
+    
     @State private var cardRotation = 0.0
     @State private var showBack = false
     
@@ -33,7 +34,7 @@ struct StakeCardView: View {
         WithViewStore(store) { viewStore in
             ZStack {
                 Rectangle()
-                    .fill(LinearGradient(gradient: Gradient(colors: Constant.HEX_COLORS),
+                    .fill(LinearGradient(gradient: Gradient(colors: chain.cardGradient),
                                          startPoint: .bottomLeading,
                                          endPoint: .topTrailing))
                     .blurEffect()
@@ -147,7 +148,7 @@ struct StakeCardView: View {
 struct StakeCardView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id: \.self) {
-            StakeCardView(store: sampleAppStore)
+            StakeCardView(store: sampleAppStore, chain: .ethereum)
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .preferredColorScheme($0)

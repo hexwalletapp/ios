@@ -29,14 +29,12 @@ struct AccountsView: View {
                             }
                         } header: {
                             TabView() {
-                                StakeCardView(store: store)
-                                    .padding(.horizontal)
-                                    .padding(.top, Constant.CARD_PADDING_TOP)
-                                    .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
-                                StakeCardView(store: store)
-                                    .padding(.horizontal)
-                                    .padding(.top, Constant.CARD_PADDING_TOP)
-                                    .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
+                                ForEach(Chain.allCases) { chain in
+                                    StakeCardView(store: store, chain: chain)
+                                        .padding(.horizontal)
+                                        .padding(.top, Constant.CARD_PADDING_TOP)
+                                        .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
+                                }
                             }
                             .frame(height: ((UIScreen.main.bounds.width) / 1.586) + Constant.CARD_PADDING_BOTTOM + Constant.CARD_PADDING_TOP)
                             .tabViewStyle(PageTabViewStyle())
