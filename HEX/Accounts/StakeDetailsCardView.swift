@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct StakeDetailsCardView: View {
-    var stake: Stake
-    var hexPrice: Double
+    let stake: Stake
+    let hexPrice: Double
     
     var body: some View {
         
