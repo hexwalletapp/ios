@@ -29,21 +29,28 @@ struct AccountsView: View {
                                                      chain: viewStore.selectedChain)
                             }
                         } header: {
-                            TabView(selection: viewStore.binding(\.$selectedChain)) {
-                                ForEach(Chain.allCases) { chain in
-                                    StakeCardView(store: store, chain: chain)
-                                        .padding(.horizontal)
-                                        .padding(.top, Constant.CARD_PADDING_TOP)
-                                        .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
-                                        .tag(chain)
+                            switch viewStore.accounts {
+                            case let .some(accounts):
+                                TabView(selection: viewStore.binding(\.$selectedChain)) {
+                                    ForEach(accounts) { account in
+                                        
+                                        StakeCardView(store: store, account: account)
+                                            .padding(.horizontal)
+                                            .padding(.top, Constant.CARD_PADDING_TOP)
+                                            .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
+                                            .tag(account)
+                                    }
                                 }
+                                .frame(height: ((UIScreen.main.bounds.width) / 1.586) + Constant.CARD_PADDING_BOTTOM + Constant.CARD_PADDING_TOP)
+                                .tabViewStyle(PageTabViewStyle())
+                            case .none:
+                                EmptyView()
                             }
-                            .frame(height: ((UIScreen.main.bounds.width) / 1.586) + Constant.CARD_PADDING_BOTTOM + Constant.CARD_PADDING_TOP)
-                            .tabViewStyle(PageTabViewStyle())
                         }
                     }
                 }
-                .background(Color(.systemGroupedBackground)).edgesIgnoringSafeArea(.bottom)
+                .background(Color(.systemGroupedBackground))
+                //.edgesIgnoringSafeArea(.bottom)
                 .navigationBarTitle("Accounts")
                 .sheet(isPresented: viewStore.binding(\.$presentEditAddress), content: {
                     EditAddressView(store: store)

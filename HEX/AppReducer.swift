@@ -26,7 +26,7 @@ enum StakeFilter: Equatable, CaseIterable, CustomStringConvertible {
     }
 }
 
-enum Chain: Identifiable, CaseIterable, CustomStringConvertible {
+enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible {
     var id: Self { self }
 
     case ethereum, pulse
@@ -44,6 +44,13 @@ enum Chain: Identifiable, CaseIterable, CustomStringConvertible {
         case .pulse: return "Pulse"
         }
     }
+}
+
+struct Account: Codable, Hashable, Equatable, Identifiable {
+    var id: String { address + chain.description }
+    var name: String = ""
+    var address: String = ""
+    var chain: Chain = .ethereum
 }
 
 struct DailyData: Equatable {
@@ -90,10 +97,10 @@ struct StakeTotal: Equatable {
 
 struct AppState: Equatable {
     @BindableState var presentEditAddress = false
-    @BindableState var ethereumAddress = UserDefaults.standard.string(forKey: Constant.ADDRESS_KEY) ?? ""
     @BindableState var selectedTab: Tab = .accounts
     @BindableState var selectedStakeSegment: StakeFilter = .total
     @BindableState var selectedChain: Chain = .ethereum
+    @BindableState var accounts: [Account]? = nil
     var hexPrice: Double = 0
     var stakeCount = 0
     var currentDay: BigUInt? = nil
@@ -125,7 +132,8 @@ enum AppAction: BindableAction, Equatable {
 struct AppEnvironment {
     let client: EthereumClient
     var mainQueue: AnySchedulerOf<DispatchQueue>
-    
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
 }
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
@@ -137,6 +145,18 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .none
         
     case .onActive:
+        switch UserDefaults.standard.data(forKey: Constant.ACCOUNTS_KEY) {
+        case let .some(encodedAccounts):
+            do {
+                let decodedAccounts = try environment.decoder.decode([Account].self, from: encodedAccounts)
+                state.accounts = decodedAccounts
+            } catch {
+                print(error)
+            }
+        case .none:
+            print("here")
+        }
+        
         return .merge(
             Effect(value: .getCurrentDay),
             HEXRESTAPI.fetchHexPrice()
@@ -152,7 +172,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case let .updateStakeIDs(stakeIDs):
         state.stakeCount = stakeIDs.count
         state.stakes = [Stake]()
-        let stakeAddress = EthereumAddress(state.ethereumAddress)
+        guard let firstAccountAddress = state.accounts?.first?.address else { return .none }
+
+        let stakeAddress = EthereumAddress(firstAccountAddress)
         
         return .merge(
             stakeIDs.map { stakeID in
@@ -196,7 +218,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         
     case .getStakes:
-        let stakeAddress = EthereumAddress(state.ethereumAddress)
+        guard let firstAccountAddress = state.accounts?.first?.address else { return .none }
+        let stakeAddress = EthereumAddress(firstAccountAddress)
 
         return .future { completion in
             let stakes = StakeCount_Parameter(stakeAddress: stakeAddress)
@@ -276,8 +299,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .none
         
     case .scheduleNotification:
-        
-        
         return .none
         
     case let .updateDailyData(dailyData):
@@ -302,14 +323,20 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         
         return .none
         
+
     case .binding(\.$selectedTab):
         switch state.selectedTab {
         case .charts, .calculator: return .none
         case .accounts: return Effect(value: .getStakes)
         }
         
-    case .binding(\.$ethereumAddress):
-        UserDefaults.standard.setValue(state.ethereumAddress, forKey: Constant.ADDRESS_KEY)
+    case .binding(\.$accounts):
+        do {
+            let encodedAccounts = try environment.encoder.encode(state.accounts)
+            UserDefaults.standard.setValue(encodedAccounts, forKey: Constant.ACCOUNTS_KEY)
+        } catch {
+            print(error)
+        }
         return .none
         
     case .binding:
