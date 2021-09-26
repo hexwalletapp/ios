@@ -12,7 +12,7 @@ import ComposableArchitecture
 
 struct StakeCardView: View {
     let store: Store<AppState, AppAction>
-    let chain: Chain
+    let account: Account
     
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
     @State private var cardRotation = 0.0
@@ -35,7 +35,7 @@ struct StakeCardView: View {
         WithViewStore(store) { viewStore in
             ZStack {
                 Rectangle()
-                    .fill(LinearGradient(gradient: Gradient(colors: chain.gradient),
+                    .fill(LinearGradient(gradient: Gradient(colors: account.chain.gradient),
                                          startPoint: .bottomLeading,
                                          endPoint: .topTrailing))
                     .blurEffect()
@@ -46,7 +46,7 @@ struct StakeCardView: View {
                                    hearts: viewStore.total.interestSevenDayHearts,
                                    alignment: .leading)
                         Spacer()
-                        front(address: viewStore.ethereumAddress)
+                        front(address: account.address)
                     }
                     Spacer()
                     HStack(alignment: .bottom) {
@@ -61,7 +61,6 @@ struct StakeCardView: View {
                 }
                 .font(.body.monospacedDigit())
                 .padding()
-                
             }
             .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
@@ -73,7 +72,7 @@ struct StakeCardView: View {
 
             ZStack(alignment: .topLeading) {
             Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors: chain.gradient),
+                    .fill(LinearGradient(gradient: Gradient(colors: account.chain.gradient),
                                      startPoint: .bottomLeading,
                                      endPoint: .topTrailing))
                 .blurEffect()
@@ -84,13 +83,13 @@ struct StakeCardView: View {
                 .offset(y: MAGNETIC_STRIPE_HEIGHT)
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    Image(chain.description).resizable()
+                    Image(account.chain.description).resizable()
                         .scaledToFit()
                         .frame(height: 32)
                         .vibrancyEffect()
                         .vibrancyEffectStyle(.fill)
                     Spacer()
-                    description(text: chain.description)
+                    description(text: account.chain.description)
                 }
 
                 Spacer()
@@ -125,7 +124,7 @@ struct StakeCardView: View {
     
     func front(address: String) -> some View {
         Text("\(address.prefix(6).description)...\(address.suffix(4).description)" )
-            .font(.subheadline.monospacedDigit())
+            .font(.system(.subheadline, design: .monospaced))
             .padding(8)
             .background(Color(.displayP3, white: 1.0, opacity: 0.2))
             .clipShape(Capsule())
@@ -163,7 +162,7 @@ struct StakeCardView: View {
 struct StakeCardView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id: \.self) {
-            StakeCardView(store: sampleAppStore, chain: .ethereum)
+            StakeCardView(store: sampleAppStore, account: Account(name: "Test", address: "0x1234567890", chain: .ethereum))
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .preferredColorScheme($0)
