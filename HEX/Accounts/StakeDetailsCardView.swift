@@ -15,12 +15,16 @@ struct StakeDetailsCardView: View {
     var body: some View {
         GroupBox {
             HStack {
-                ActivityRingView(progress: stake.percentComplete,
-                                 ringRadius: 140.0,
-                                 thickness: 8.0,
-                                 startColor: chain.gradient.first!,
-                                 endColor: chain.gradient.last!)
-                    .frame(width: 32, height: 32)
+                ZStack {
+                    PercentageRingView(
+                        ringWidth: 8, percent: stake.percentComplete.doubleValue * 100,
+                        backgroundColor: chain.gradient.first!.opacity(0.15),
+                        foregroundColors: [chain.gradient.first!, chain.gradient.last!]
+                    )
+                        .frame(width: 56, height: 56)
+                    Text(stake.percentComplete.percentageString)
+                        .font(.caption.monospacedDigit())
+                }
                 Spacer()
                 VStack(alignment: .trailing) {
                     Text(stake.stakedHearts

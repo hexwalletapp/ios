@@ -293,7 +293,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
             state.stakes[index].interestSevenDayHearts = state.dailyDataList[minusWeekIndex..<endIndex]
                 .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
-            state.stakes[index].percentComplete = (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)
+            
+            state.stakes[index].percentComplete = NSNumber(value: (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays))
         }
         
         state.total.interestHearts = state.stakes.reduce(0, { $0 + $1.interestHearts })

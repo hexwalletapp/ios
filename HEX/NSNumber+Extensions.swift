@@ -46,4 +46,10 @@ extension NSNumber {
         formatter.numberStyle = .currency
         return formatter.string(from: self) ?? ""
     }
+    
+    var percentageString: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        return formatter.string(from: self) ?? ""
+    }
 }
