@@ -52,13 +52,13 @@ struct AccountsView: View {
     
     var accountList: some View {
         WithViewStore(store) { viewStore in
-            switch viewStore.selectedAccount {
-            case let .some(selectedAccount):
-                ForEach(selectedAccount.stakes) { stake in
+            switch viewStore.accounts.isEmpty {
+            case false:
+                ForEach(viewStore.accounts[viewStore.selectedIndex].stakes) { stake in 
                     StakeDetailsCardView(stake: stake,
-                                         account: selectedAccount)
+                                         account: viewStore.accounts[viewStore.selectedIndex])
                 }
-            case .none:
+            case true:
                 EmptyView()
             }
         }
@@ -66,20 +66,20 @@ struct AccountsView: View {
     
     var accountHeader: some View {
         WithViewStore(store) { viewStore in
-            switch viewStore.accounts {
-            case let .some(accounts):
-                TabView(selection: viewStore.binding(\.$selectedAccount)) {
-                    ForEach(accounts) { account in
+            switch viewStore.accounts.isEmpty {
+            case false:
+                TabView(selection: viewStore.binding(\.$selectedIndex)) {
+                    ForEach(Array(viewStore.accounts.enumerated()), id:\.element) { index, account in
                         StakeCardView(account: account)
                             .padding(.horizontal)
                             .padding(.top, Constant.CARD_PADDING_TOP)
                             .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
-                            .tag(account)
+                            .tag(index)
                     }
                 }
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + Constant.CARD_PADDING_BOTTOM + Constant.CARD_PADDING_TOP)
                 .tabViewStyle(PageTabViewStyle())
-            case .none:
+            case true:
                 EmptyView()
             }
         }

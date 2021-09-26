@@ -84,6 +84,7 @@ struct StakeCardView: View {
                         .vibrancyEffect()
                         .vibrancyEffectStyle(.fill)
                     Spacer()
+                    Text(account.name)
                     description(text: account.chain.description)
                 }
 

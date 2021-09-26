@@ -28,7 +28,7 @@ enum StakeFilter: Equatable, CaseIterable, CustomStringConvertible {
 
 enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible {
     var id: Self { self }
-
+    
     case ethereum, pulse
     
     var gradient: [Color] {
@@ -52,11 +52,16 @@ struct Account: Codable, Hashable, Equatable, Identifiable {
     var address: String = ""
     var chain: Chain = .ethereum
     var hexPrice: Double = 0
+    var stakeCount = 0
     var stakes = [Stake]()
     var total = StakeTotal()
+    var sharesPerDay = [BigUInt]()
+    var dailyDataList = [DailyData]()
+    var stakesBeginDay = UInt16.max
+    var stakesEndDay = UInt16.min
 }
 
-struct DailyData: Equatable {
+struct DailyData: Codable, Hashable, Equatable {
     let payout: BigUInt
     let shares: BigUInt
     let sats: BigUInt
@@ -101,16 +106,9 @@ struct StakeTotal: Codable, Hashable, Equatable {
 struct AppState: Equatable {
     @BindableState var presentEditAddress = false
     @BindableState var selectedTab: Tab = .accounts
-    @BindableState var selectedStakeSegment: StakeFilter = .total
-    @BindableState var selectedChain: Chain = .ethereum
-    @BindableState var selectedAccount: Account? = nil
-    @BindableState var accounts: [Account]? = nil
-    var stakeCount = 0
+    @BindableState var selectedIndex: Int = 0
+    @BindableState var accounts = [Account]()
     var currentDay: BigUInt? = nil
-    var stakesBeginDay = UInt16.max
-    var stakesEndDay = UInt16.min
-    var sharesPerDay = [BigUInt]()
-    var dailyDataList = [DailyData]()
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -119,14 +117,14 @@ enum AppAction: BindableAction, Equatable {
     case onActive
     case getStakes
     case getCurrentDay
-    case getDailyDataRange(UInt16, UInt16)
     case scheduleNotification
     
-    case updateStakeIDs([BigUInt])
-    case updateStake(Stake)
+    case getDailyDataRange(UInt16, UInt16, EthereumAddress)
+    case updateStakeIDs([BigUInt], EthereumAddress)
+    case updateStake(Stake, EthereumAddress)
     case updateHexPrice(Result<HEXPrice, NSError>)
     case updateDay(BigUInt)
-    case updateDailyData([DailyData])
+    case updateDailyData([DailyData], EthereumAddress)
     case binding(BindingAction<AppState>)
 }
 
@@ -171,83 +169,100 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 .eraseToEffect()
         )
         
-    case let .updateStakeIDs(stakeIDs):
-//        state.stakeCount = stakeIDs.count
-//        state.stakes = [Stake]()
-//        guard let firstAccountAddress = state.accounts?.first?.address else { return .none }
-//
-//        let stakeAddress = EthereumAddress(firstAccountAddress)
-//
-//        return .merge(
-//            stakeIDs.map { stakeID in
-//                return .future { completion in
-//                    let getStake = StakeLists_Parameter(stakeAddress: stakeAddress,
-//                                                        stakeIndex: stakeID)
-//                    getStake.call(withClient: environment.client,
-//                                  responseType: Stake.self) { (error, response) in
-//                        switch error {
-//                        case let .some(error):
-//                            print(error)
-//                        case .none:
-//                            switch response {
-//                            case let .some(stake):
-//                                environment.mainQueue.schedule {
-//                                    completion(.success(.updateStake(stake)))
-//                                }
-//                            case .none:
-//                                print("no stake")
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        )
-        return .none
+    case let .updateStakeIDs(stakeIDs, address):
+        guard let accountIndex = state.accounts.firstIndex(where: { $0.address.lowercased() == address.value.lowercased() }) else { return .none }
+        state.accounts[accountIndex].stakeCount = stakeIDs.count
+        state.accounts[accountIndex].stakes = [Stake]()
+        return .merge(
+            stakeIDs.map { stakeID in
+                return .future { completion in
+                    let getStake = StakeLists_Parameter(stakeAddress: address,
+                                                        stakeIndex: stakeID)
+                    getStake.call(withClient: environment.client,
+                                  responseType: Stake.self) { (error, response) in
+                        switch error {
+                        case let .some(error):
+                            print(error)
+                        case .none:
+                            switch response {
+                            case let .some(stake):
+                                environment.mainQueue.schedule {
+                                    completion(.success(.updateStake(stake, address)))
+                                }
+                            case .none:
+                                print("no stake")
+                            }
+                        }
+                    }
+                }
+            }
+        )
         
-    case let .updateStake(stake):
-//        state.stakes.append(stake)
-//        state.stakesBeginDay = min(state.stakesBeginDay, stake.lockedDay)
-//        state.stakesEndDay = max(state.stakesEndDay, stake.lockedDay + stake.stakedDays)
-//
-//        switch state.stakes.count == state.stakeCount {
-//        case true:
-//            state.stakes.sort(by: { $0.lockedDay + $0.stakedDays < $1.lockedDay + $1.stakedDays })
-//            state.total.stakeHearts = state.stakes.reduce(0, { $0 + $1.stakedHearts })
-//            state.total.stakeShares = state.stakes.reduce(0, { $0 + $1.stakeShares })
-//            guard let currentDay = state.currentDay else { return .none }
-//            return Effect(value: .getDailyDataRange(state.stakesBeginDay, min(state.stakesEndDay, UInt16(currentDay))))
-//        case false:
-//            return .none
-//        }
-        return .none
+    case let .updateStake(stake, address):
+        guard let accountIndex = state.accounts.firstIndex(where: { $0.address.lowercased() == address.value.lowercased() }) else { return .none }
+        var stake = stake
+        state.accounts[accountIndex].stakesBeginDay = min(state.accounts[accountIndex].stakesBeginDay, stake.lockedDay)
+        state.accounts[accountIndex].stakesEndDay =  max(state.accounts[accountIndex].stakesEndDay, stake.lockedDay + stake.stakedDays)
+        
+        state.accounts[accountIndex].stakes.append(stake)
+        
+        switch state.accounts[accountIndex].stakes.count == state.accounts[accountIndex].stakeCount {
+        case true:
+            state.accounts[accountIndex].stakes.sort(by: { $0.lockedDay + $0.stakedDays < $1.lockedDay + $1.stakedDays })
+            state.accounts[accountIndex].total.stakeHearts = state.accounts[accountIndex].stakes.reduce(0, { $0 + $1.stakedHearts })
+            state.accounts[accountIndex].total.stakeShares = state.accounts[accountIndex].stakes.reduce(0, { $0 + $1.stakeShares })
+            guard let currentDay = state.currentDay else { return .none }
+            return Effect(value: .getDailyDataRange(state.accounts[accountIndex].stakesBeginDay, min(state.accounts[accountIndex].stakesEndDay, UInt16(currentDay)), address))
+        case false:
+            return .none
+        }
+        //        state.accounts[accountIndex].sta
+        
+        //        state.stakes.append(stake)
+        //        state.stakesBeginDay = min(state.stakesBeginDay, stake.lockedDay)
+        //        state.stakesEndDay = max(state.stakesEndDay, stake.lockedDay + stake.stakedDays)
+        //
+        //        switch state.stakes.count == state.stakeCount {
+        //        case true:
+        //            state.stakes.sort(by: { $0.lockedDay + $0.stakedDays < $1.lockedDay + $1.stakedDays })
+        //            state.total.stakeHearts = state.stakes.reduce(0, { $0 + $1.stakedHearts })
+        //            state.total.stakeShares = state.stakes.reduce(0, { $0 + $1.stakeShares })
+        //            guard let currentDay = state.currentDay else { return .none }
+        //            return Effect(value: .getDailyDataRange(state.stakesBeginDay, min(state.stakesEndDay, UInt16(currentDay))))
+        //        case false:
+        //            return .none
+        //        }
+        //        return .none
         
     case .getStakes:
-//        guard let firstAccountAddress = state.accounts?.first?.address else { return .none }
-//        let stakeAddress = EthereumAddress(firstAccountAddress)
-//
-//        return .future { completion in
-//            let stakes = StakeCount_Parameter(stakeAddress: stakeAddress)
-//            stakes.call(withClient: environment.client,
-//                        responseType: StakeCount_Parameter.Response.self) { (error, response) in
-//                switch error {
-//                case let .some(err):
-//                    print(err)
-//                case .none:
-//                    switch response?.stakeCount {
-//                    case let .some(count):
-//                        let stakes = (0..<count).map { BigUInt($0) }
-//                        environment.mainQueue.schedule {
-//                            completion(.success(.updateStakeIDs(stakes)))
-//                        }
-//                    case .none:
-//                        print("no stakes")
-//                    }
-//                }
-//            }
-//        }
-        return .none
+        return .merge(
+            state.accounts.compactMap { account -> Effect<AppAction, Never>? in
+                let address = EthereumAddress(account.address)
+                return .future { completion in
+                    let stakes = StakeCount_Parameter(stakeAddress: address)
+                    stakes.call(withClient: environment.client,
+                                responseType: StakeCount_Parameter.Response.self) { (error, response) in
+                        switch error {
+                        case let .some(err):
+                            print(err)
+                        case .none:
+                            switch response?.stakeCount {
+                            case let .some(count):
+                                let stakes = (0..<count).map { BigUInt($0) }
+                                environment.mainQueue.schedule {
+                                    completion(.success(.updateStakeIDs(stakes, address)))
+                                }
+                            case .none:
+                                print("no stakes")
+                            }
+                        }
+                    }
+                }
+            }
+            
+        )
         
-    case let .getDailyDataRange(begin, end):
+    case let .getDailyDataRange(begin, end, address):
         return .future { completion in
             let dailyDataRange = DailyDataRange_Parameter(beginDay: BigUInt(begin), endDay: BigUInt(end))
             dailyDataRange.call(withClient: environment.client,
@@ -260,7 +275,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                     case let .some(list):
                         let dailyDataList = list.map { DailyData(dayData: $0) }
                         environment.mainQueue.schedule {
-                            completion(.success(.updateDailyData(dailyDataList)))
+                            completion(.success(.updateDailyData(dailyDataList, address)))
                         }
                     case .none:
                         print("no stakes")
@@ -295,40 +310,44 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .none
         
     case let .updateHexPrice(result):
-//        switch result {
-//        case let .success(hexPrice):
-//            state.hexPrice = hexPrice.hexUsd
-//        case let .failure(error):
-//            print(error)
-//        }
+        switch result {
+        case let .success(hexPrice):
+            (0..<state.accounts.count ).forEach { index in
+                state.accounts[index].hexPrice = hexPrice.hexUsd
+            }
+        case let .failure(error):
+            print(error)
+        }
         return .none
         
     case .scheduleNotification:
         return .none
         
-    case let .updateDailyData(dailyData):
-//        state.dailyDataList = dailyData
-//        
-//        guard let currentDay = state.currentDay else { return .none }
-//        state.stakes.enumerated().forEach { (index, stake) in
-//            let startIndex = Int(stake.lockedDay - state.stakesBeginDay)
-//            let endIndex = Int(currentDay - BigUInt(state.stakesBeginDay))
-//            let minusWeekIndex = max(endIndex - 7, startIndex)
-//            
-//            state.stakes[index].interestHearts = state.dailyDataList[startIndex..<endIndex]
-//                .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
-//            state.stakes[index].interestSevenDayHearts = state.dailyDataList[minusWeekIndex..<endIndex]
-//                .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
-//            
-//            state.stakes[index].percentComplete = (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)
-//        }
-//        
-//        state.total.interestHearts = state.stakes.reduce(0, { $0 + $1.interestHearts })
-//        state.total.interestSevenDayHearts = state.stakes.reduce(0, { $0 + $1.interestSevenDayHearts }) / Constant.ONE_WEEK
+    case let .updateDailyData(dailyData, address):
+        
+        guard let currentDay = state.currentDay,
+              let accountIndex = state.accounts.firstIndex(where: { $0.address.lowercased() == address.value.lowercased() }) else { return .none }
+        
+        state.accounts[accountIndex].dailyDataList = dailyData
+        state.accounts[accountIndex].stakes.enumerated().forEach { (index, stake) in
+            let startIndex = Int(stake.lockedDay - state.accounts[accountIndex].stakesBeginDay)
+            let endIndex = Int(currentDay - BigUInt(state.accounts[accountIndex].stakesBeginDay))
+            let minusWeekIndex = max(endIndex - 7, startIndex)
+            
+            state.accounts[accountIndex].stakes[index].interestHearts = state.accounts[accountIndex].dailyDataList[startIndex..<endIndex]
+                .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
+            state.accounts[accountIndex].stakes[index].interestSevenDayHearts = state.accounts[accountIndex].dailyDataList[minusWeekIndex..<endIndex]
+                .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
+            
+            state.accounts[accountIndex].stakes[index].percentComplete = (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)
+        }
+        
+        state.accounts[accountIndex].total.interestHearts = state.accounts[accountIndex].stakes.reduce(0, { $0 + $1.interestHearts })
+        state.accounts[accountIndex].total.interestSevenDayHearts = state.accounts[accountIndex].stakes.reduce(0, { $0 + $1.interestSevenDayHearts }) / Constant.ONE_WEEK
+        
         
         return .none
         
-
     case .binding(\.$selectedTab):
         switch state.selectedTab {
         case .charts, .calculator: return .none
