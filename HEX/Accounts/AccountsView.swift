@@ -23,29 +23,9 @@ struct AccountsView: View {
                 ScrollView {
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
                         Section {
-                            ForEach(viewStore.stakes) { stake in
-                                StakeDetailsCardView(stake: stake,
-                                                     hexPrice: ViewStore(store).hexPrice,
-                                                     chain: viewStore.selectedChain)
-                            }
+                            accountList
                         } header: {
-                            switch viewStore.accounts {
-                            case let .some(accounts):
-                                TabView(selection: viewStore.binding(\.$selectedChain)) {
-                                    ForEach(accounts) { account in
-                                        
-                                        StakeCardView(store: store, account: account)
-                                            .padding(.horizontal)
-                                            .padding(.top, Constant.CARD_PADDING_TOP)
-                                            .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
-                                            .tag(account)
-                                    }
-                                }
-                                .frame(height: ((UIScreen.main.bounds.width) / 1.586) + Constant.CARD_PADDING_BOTTOM + Constant.CARD_PADDING_TOP)
-                                .tabViewStyle(PageTabViewStyle())
-                            case .none:
-                                EmptyView()
-                            }
+                            accountHeader
                         }
                     }
                 }
@@ -66,6 +46,41 @@ struct AccountsView: View {
                         Button {} label: { Image(systemName: "arrow.up.arrow.down") }
                     }
                 }
+            }
+        }
+    }
+    
+    var accountList: some View {
+        WithViewStore(store) { viewStore in
+            switch viewStore.selectedAccount {
+            case let .some(selectedAccount):
+                ForEach(selectedAccount.stakes) { stake in
+                    StakeDetailsCardView(stake: stake,
+                                         account: selectedAccount)
+                }
+            case .none:
+                EmptyView()
+            }
+        }
+    }
+    
+    var accountHeader: some View {
+        WithViewStore(store) { viewStore in
+            switch viewStore.accounts {
+            case let .some(accounts):
+                TabView(selection: viewStore.binding(\.$selectedAccount)) {
+                    ForEach(accounts) { account in
+                        StakeCardView(account: account)
+                            .padding(.horizontal)
+                            .padding(.top, Constant.CARD_PADDING_TOP)
+                            .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
+                            .tag(account)
+                    }
+                }
+                .frame(height: ((UIScreen.main.bounds.width) / 1.586) + Constant.CARD_PADDING_BOTTOM + Constant.CARD_PADDING_TOP)
+                .tabViewStyle(PageTabViewStyle())
+            case .none:
+                EmptyView()
             }
         }
     }

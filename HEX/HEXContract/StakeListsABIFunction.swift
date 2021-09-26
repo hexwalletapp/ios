@@ -26,7 +26,7 @@ struct StakeLists_Parameter: ABIFunction {
     }
     
     // MARK: - Response
-    struct Response: ABIResponse, Equatable, Identifiable {
+    struct Response: ABIResponse, Codable, Hashable, Equatable, Identifiable {
         static var types: [ABIType.Type] = [BigUInt.self, BigUInt.self, BigUInt.self, UInt16.self, UInt16.self, UInt16.self, Bool.self]
         
         var id: BigUInt { stakeId }
@@ -37,7 +37,7 @@ struct StakeLists_Parameter: ABIFunction {
         let stakedDays: UInt16
         let unlockedDay: UInt16
         let isAutoStake: Bool
-        var percentComplete: NSNumber = 0.0
+        var percentComplete: Double = 0.0
         var interestHearts: BigUInt = 0
         var interestSevenDayHearts: BigUInt = 0
 

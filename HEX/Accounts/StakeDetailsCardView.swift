@@ -9,26 +9,25 @@ import SwiftUI
 
 struct StakeDetailsCardView: View {
     let stake: Stake
-    let hexPrice: Double
-    let chain: Chain
+    let account: Account
     
     var body: some View {
         GroupBox {
             HStack {
                 ZStack {
                     PercentageRingView(
-                        ringWidth: 8, percent: stake.percentComplete.doubleValue * 100,
-                        backgroundColor: chain.gradient.first!.opacity(0.15),
-                        foregroundColors: [chain.gradient.first!, chain.gradient.last!]
+                        ringWidth: 8, percent: stake.percentComplete * 100,
+                        backgroundColor: account.chain.gradient.first!.opacity(0.15),
+                        foregroundColors: [account.chain.gradient.first!, account.chain.gradient.last!]
                     )
                         .frame(width: 56, height: 56)
-                    Text(stake.percentComplete.percentageString)
+                    Text(NSNumber(value: stake.percentComplete).percentageString)
                         .font(.caption.monospacedDigit())
                 }
                 Spacer()
                 VStack(alignment: .trailing) {
                     Text(stake.stakedHearts
-                            .hexAt(price: hexPrice)
+                            .hexAt(price: account.hexPrice)
                             .currencyStringSuffix).foregroundColor(.primary)
                     Text(stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
                 }
