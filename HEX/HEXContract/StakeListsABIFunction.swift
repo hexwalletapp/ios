@@ -37,7 +37,7 @@ struct StakeLists_Parameter: ABIFunction {
         let stakedDays: UInt16
         let unlockedDay: UInt16
         let isAutoStake: Bool
-        var percentComplete: Double = 0.0
+        var percentComplete: NSNumber = 0.0
         var interestHearts: BigUInt = 0
         var interestSevenDayHearts: BigUInt = 0
 

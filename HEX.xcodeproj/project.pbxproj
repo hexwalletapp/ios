@@ -32,7 +32,8 @@
 		ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94773326E448A1003162D4 /* SampleAppStore.swift */; };
 		EDCC3A8426E46E4A00A576B2 /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = EDCC3A8326E46E4A00A576B2 /* web3.swift */; };
 		EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */; };
-		EDE9A6D02700CD25008B1F87 /* ActivityRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE9A6CF2700CD25008B1F87 /* ActivityRingView.swift */; };
+		EDE9A6D22700E751008B1F87 /* PercentageRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE9A6D12700E751008B1F87 /* PercentageRingView.swift */; };
+		EDE9A6D42700E789008B1F87 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE9A6D32700E789008B1F87 /* Double+Extensions.swift */; };
 		EDFFCC3D26FFF6E00017700F /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */; };
 		EDFFCC4026FFFB400017700F /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = EDFFCC3F26FFFB400017700F /* SwiftUIVisualEffects */; };
 		EDFFCC422700318A0017700F /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */; };
@@ -65,7 +66,8 @@
 		ED94773126E4468E003162D4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		ED94773326E448A1003162D4 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
 		EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataRangeABIFunction.swift; sourceTree = "<group>"; };
-		EDE9A6CF2700CD25008B1F87 /* ActivityRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRingView.swift; sourceTree = "<group>"; };
+		EDE9A6D12700E751008B1F87 /* PercentageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageRingView.swift; sourceTree = "<group>"; };
+		EDE9A6D32700E789008B1F87 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCardView.swift; sourceTree = "<group>"; };
 		EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
 		EDFFCC462700A28B0017700F /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
@@ -166,7 +168,8 @@
 				ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */,
 				ED507A5926EFDE5F00D1A022 /* Constants.swift */,
 				EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */,
-				EDE9A6CF2700CD25008B1F87 /* ActivityRingView.swift */,
+				EDE9A6D12700E751008B1F87 /* PercentageRingView.swift */,
+				EDE9A6D32700E789008B1F87 /* Double+Extensions.swift */,
 			);
 			path = HEX;
 			sourceTree = "<group>";
@@ -281,16 +284,17 @@
 				EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */,
 				EDFFCC3D26FFF6E00017700F /* StakeCardView.swift in Sources */,
 				ED47345226E454AD003B1BB2 /* AccountsView.swift in Sources */,
+				EDE9A6D22700E751008B1F87 /* PercentageRingView.swift in Sources */,
 				ED3C9EFC26EF196800D01257 /* BigUInt+Extensions.swift in Sources */,
 				ED047F5926F18E350062F47F /* EditAddressView.swift in Sources */,
 				EDFFCC472700A28B0017700F /* StakeDetailsCardView.swift in Sources */,
 				ED94771E26E44559003162D4 /* App.swift in Sources */,
 				ED38706526F7CCE300369175 /* SampleStakes.swift in Sources */,
+				EDE9A6D42700E789008B1F87 /* Double+Extensions.swift in Sources */,
 				ED38706326F7CB4200369175 /* StakeDetailsView.swift in Sources */,
 				ED507A5626EFC9FA00D1A022 /* StakeListsABIFunction.swift in Sources */,
 				ED507A5826EFD3A000D1A022 /* CurrentDayABIFunction.swift in Sources */,
 				ED507A4F26EF2CC500D1A022 /* NSNumber+Extensions.swift in Sources */,
-				EDE9A6D02700CD25008B1F87 /* ActivityRingView.swift in Sources */,
 				ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */,
 				ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */,
 				EDFFCC422700318A0017700F /* StakeGroupBoxStyle.swift in Sources */,
@@ -354,7 +358,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -409,7 +413,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -426,7 +430,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"HEX/Preview Content\"";
 				DEVELOPMENT_TEAM = K78G42H4U2;
 				ENABLE_PREVIEWS = YES;
@@ -438,7 +442,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -459,7 +463,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"HEX/Preview Content\"";
 				DEVELOPMENT_TEAM = K78G42H4U2;
 				ENABLE_PREVIEWS = YES;
@@ -471,7 +475,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
