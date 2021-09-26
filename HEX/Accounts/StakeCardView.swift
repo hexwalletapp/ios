@@ -11,7 +11,6 @@ import BigInt
 import ComposableArchitecture
 
 struct StakeCardView: View {
-    let store: Store<AppState, AppAction>
     let account: Account
     
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
@@ -32,7 +31,6 @@ struct StakeCardView: View {
     }
     
     var front: some View {
-        WithViewStore(store) { viewStore in
             ZStack {
                 Rectangle()
                     .fill(LinearGradient(gradient: Gradient(colors: account.chain.gradient),
@@ -43,7 +41,7 @@ struct StakeCardView: View {
                 VStack(alignment: .leading) {
                     HStack(alignment: .top) {
                         frontTotal(title: "Daily Payout",
-                                   hearts: viewStore.total.interestSevenDayHearts,
+                                   hearts: account.total.interestSevenDayHearts,
                                    alignment: .leading)
                         Spacer()
                         front(address: account.address)
@@ -51,11 +49,11 @@ struct StakeCardView: View {
                     Spacer()
                     HStack(alignment: .bottom) {
                         frontTotal(title: "Total Balance",
-                                   hearts: viewStore.total.stakeHearts + viewStore.total.interestHearts,
+                                   hearts: account.total.stakeHearts + account.total.interestHearts,
                                    alignment: .leading)
                         Spacer()
                         frontTotal(title: "Total Shares",
-                                   shares: viewStore.total.stakeShares,
+                                   shares: account.total.stakeShares,
                                    alignment: .trailing)
                     }
                 }
@@ -64,12 +62,9 @@ struct StakeCardView: View {
             }
             .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        }
     }
     
     var back: some View {
-        WithViewStore(store) { viewStore in
-
             ZStack(alignment: .topLeading) {
             Rectangle()
                     .fill(LinearGradient(gradient: Gradient(colors: account.chain.gradient),
@@ -94,9 +89,9 @@ struct StakeCardView: View {
 
                 Spacer()
                 VStack(alignment: .trailing) {
-                    backTotal(title: "Staked", hearts: viewStore.total.stakeHearts)
+                    backTotal(title: "Staked", hearts: account.total.stakeHearts)
                     Spacer()
-                    backTotal(title: "Earned", hearts: viewStore.total.interestHearts)
+                    backTotal(title: "Earned", hearts: account.total.interestHearts)
                 }
             }
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
@@ -105,12 +100,11 @@ struct StakeCardView: View {
         }
         .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        }
     }
     
     func frontTotal(title: String, hearts: BigUInt, alignment: HorizontalAlignment) -> some View {
         VStack(alignment: alignment) {
-            Text(hearts.hexAt(price: ViewStore(store).hexPrice).currencyString)
+            Text(hearts.hexAt(price: account.hexPrice).currencyString)
             description(text: title)
         }
     }
@@ -132,7 +126,7 @@ struct StakeCardView: View {
     
     func backTotal(title: String, hearts: BigUInt) -> some View {
         VStack(alignment: .trailing) {
-            Text(hearts.hexAt(price: ViewStore(store).hexPrice).currencyStringSuffix).foregroundColor(.primary)
+            Text(hearts.hexAt(price: account.hexPrice).currencyStringSuffix).foregroundColor(.primary)
             Text(hearts.hex.hexString).foregroundColor(.secondary)
             description(text: title)
         }
@@ -162,7 +156,7 @@ struct StakeCardView: View {
 struct StakeCardView_Previews: PreviewProvider {
     static var previews: some View {
         ForEach(ColorScheme.allCases, id: \.self) {
-            StakeCardView(store: sampleAppStore, account: Account(name: "Test", address: "0x1234567890", chain: .ethereum))
+            StakeCardView(account: Account(name: "Test", address: "0x1234567890", chain: .ethereum))
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .preferredColorScheme($0)
