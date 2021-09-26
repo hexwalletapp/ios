@@ -23,8 +23,8 @@ struct ContentView: View {
                 
                 StakesView(store: store)
                     .tabItem {
-                        Image(systemName: "banknote.fill")
-                        Text("Stakes")
+                        Image(systemName: "creditcard.fill")
+                        Text("Accounts")
                     }
                     .tag(Tab.stakes)
 

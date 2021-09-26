@@ -34,6 +34,7 @@
 		EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */; };
 		EDFFCC3D26FFF6E00017700F /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */; };
 		EDFFCC4026FFFB400017700F /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = EDFFCC3F26FFFB400017700F /* SwiftUIVisualEffects */; };
+		EDFFCC422700318A0017700F /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		ED94773326E448A1003162D4 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
 		EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataRangeABIFunction.swift; sourceTree = "<group>"; };
 		EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCardView.swift; sourceTree = "<group>"; };
+		EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,7 +144,6 @@
 		ED94771C26E44559003162D4 /* HEX */ = {
 			isa = PBXGroup;
 			children = (
-				EDFFCC2326FD75150017700F /* Ext */,
 				ED38706126F6683E00369175 /* Info.plist */,
 				ED1E970026EEDCDB009C469A /* Plan */,
 				EDCC3A8526E4771800A576B2 /* HEXContract */,
@@ -159,6 +160,7 @@
 				ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */,
 				ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */,
 				ED507A5926EFDE5F00D1A022 /* Constants.swift */,
+				EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */,
 			);
 			path = HEX;
 			sourceTree = "<group>";
@@ -182,13 +184,6 @@
 				ED507A5726EFD3A000D1A022 /* CurrentDayABIFunction.swift */,
 			);
 			path = HEXContract;
-			sourceTree = "<group>";
-		};
-		EDFFCC2326FD75150017700F /* Ext */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Ext;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,6 +285,7 @@
 				ED507A4F26EF2CC500D1A022 /* NSNumber+Extensions.swift in Sources */,
 				ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */,
 				ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */,
+				EDFFCC422700318A0017700F /* StakeGroupBoxStyle.swift in Sources */,
 				ED507A5426EFC9D600D1A022 /* StakeCountABIFunction.swift in Sources */,
 				ED1E970226EEDCE5009C469A /* PlanView.swift in Sources */,
 				ED507A5226EF97DA00D1A022 /* HEXRESTAPI.swift in Sources */,

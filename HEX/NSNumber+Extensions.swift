@@ -34,10 +34,16 @@ extension NSNumber {
         return formatter.string(from: roundedNumber) ?? ""
     }
     
-    var currencyString: String {
+    var currencyStringSuffix: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.positiveSuffix = " ᴜsᴅ"
+        return formatter.string(from: self) ?? ""
+    }
+    
+    var currencyString: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
         return formatter.string(from: self) ?? ""
     }
 }
