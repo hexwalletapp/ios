@@ -25,15 +25,17 @@ struct AccountsView: View {
                         Section {
                             ForEach(viewStore.stakes) { stake in
                                 StakeDetailsCardView(stake: stake,
-                                                     hexPrice: ViewStore(store).hexPrice)
+                                                     hexPrice: ViewStore(store).hexPrice,
+                                                     chain: viewStore.selectedChain)
                             }
                         } header: {
-                            TabView() {
+                            TabView(selection: viewStore.binding(\.$selectedChain)) {
                                 ForEach(Chain.allCases) { chain in
                                     StakeCardView(store: store, chain: chain)
                                         .padding(.horizontal)
                                         .padding(.top, Constant.CARD_PADDING_TOP)
                                         .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
+                                        .tag(chain)
                                 }
                             }
                             .frame(height: ((UIScreen.main.bounds.width) / 1.586) + Constant.CARD_PADDING_BOTTOM + Constant.CARD_PADDING_TOP)

@@ -26,15 +26,22 @@ enum StakeFilter: Equatable, CaseIterable, CustomStringConvertible {
     }
 }
 
-enum Chain: Identifiable, CaseIterable {
+enum Chain: Identifiable, CaseIterable, CustomStringConvertible {
     var id: Self { self }
 
     case ethereum, pulse
     
-    var cardGradient: [Color] {
+    var gradient: [Color] {
         switch self {
         case .ethereum: return Constant.HEX_COLORS
         case .pulse: return Constant.PULSE_COLORS
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .ethereum: return "Ethereum"
+        case .pulse: return "Pulse"
         }
     }
 }
@@ -86,6 +93,7 @@ struct AppState: Equatable {
     @BindableState var ethereumAddress = UserDefaults.standard.string(forKey: Constant.ADDRESS_KEY) ?? ""
     @BindableState var selectedTab: Tab = .accounts
     @BindableState var selectedStakeSegment: StakeFilter = .total
+    @BindableState var selectedChain: Chain = .ethereum
     var hexPrice: Double = 0
     var stakeCount = 0
     var currentDay: BigUInt? = nil
@@ -279,14 +287,13 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         state.stakes.enumerated().forEach { (index, stake) in
             let startIndex = Int(stake.lockedDay - state.stakesBeginDay)
             let endIndex = Int(currentDay - BigUInt(state.stakesBeginDay))
+            let minusWeekIndex = max(endIndex - 7, startIndex)
             
             state.stakes[index].interestHearts = state.dailyDataList[startIndex..<endIndex]
                 .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
-            
-            let minusWeekIndex = max(endIndex - 7, startIndex)
-            
             state.stakes[index].interestSevenDayHearts = state.dailyDataList[minusWeekIndex..<endIndex]
                 .reduce(0, { $0 + ((stake.stakeShares * $1.payout) / $1.shares) })
+            state.stakes[index].percentComplete = (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)
         }
         
         state.total.interestHearts = state.stakes.reduce(0, { $0 + $1.interestHearts })
