@@ -38,23 +38,19 @@ struct EditAddressView: View {
                                     .submitLabel(.done)
                         }
                         Section {
-                            switch viewStore.accounts {
-                            case let .some(acocunts):
-                                ForEach(acocunts) { account in
-                                    HStack {
-                                        Text(account.name)
-                                        Spacer()
-                                        Text("\(account.address.prefix(6).description)...\(account.address.suffix(4).description)")
-                                            .font(.system(.subheadline, design: .monospaced))
-                                            .padding([.horizontal], 12)
-                                            .padding([.vertical], 6)
-                                            .background(Color(.systemGray6))
-                                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                                    }
+                            ForEach(viewStore.accounts) { account in
+                                HStack {
+                                    Text(account.name)
+                                    Spacer()
+                                    Text("\(account.address.prefix(6).description)...\(account.address.suffix(4).description)")
+                                        .font(.system(.subheadline, design: .monospaced))
+                                        .padding([.horizontal], 12)
+                                        .padding([.vertical], 6)
+                                        .background(Color(.systemGray6))
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
                                 }
-                            case .none:
-                                EmptyView()
                             }
+                            .onDelete(perform: delete)
                         } header: {
                             Text("Accounts")
                         } footer: {
@@ -76,14 +72,9 @@ struct EditAddressView: View {
                     }
                     guard !account.address.isEmpty && !account.name.isEmpty else { return }
                     
-                    var existingAccounts: Set<Account>
-                    switch viewStore.accounts {
-                    case let .some(accounts): existingAccounts = Set(accounts)
-                    case .none: existingAccounts = Set<Account>()
-                    }
+                    var existingAccounts = Set(viewStore.accounts)
                     existingAccounts.insert(account)
-                    
-                
+
                     viewStore.send(.binding(.set(\.$accounts, Array(existingAccounts) )))
                 
                     account = Account()
@@ -96,6 +87,13 @@ struct EditAddressView: View {
                 }
             }
         }
+    }
+    
+    func delete(at offsets: IndexSet) {
+        let viewStore = ViewStore(store)
+        var remainingAccounts = viewStore.accounts
+        remainingAccounts.remove(atOffsets: offsets)
+        viewStore.send(.binding(.set(\.$accounts, remainingAccounts)))
     }
 }
 
