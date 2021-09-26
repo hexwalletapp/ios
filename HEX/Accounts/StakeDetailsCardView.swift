@@ -10,16 +10,16 @@ import SwiftUI
 struct StakeDetailsCardView: View {
     let stake: Stake
     let hexPrice: Double
+    let chain: Chain
     
     var body: some View {
-        
         GroupBox {
             HStack {
-                ActivityRingView(progress: 0.01,
+                ActivityRingView(progress: stake.percentComplete,
                                  ringRadius: 140.0,
                                  thickness: 8.0,
-                                 startColor: Constant.HEX_COLORS.first!,
-                                 endColor: Constant.HEX_COLORS.last!)
+                                 startColor: chain.gradient.first!,
+                                 endColor: chain.gradient.last!)
                     .frame(width: 32, height: 32)
                 Spacer()
                 VStack(alignment: .trailing) {

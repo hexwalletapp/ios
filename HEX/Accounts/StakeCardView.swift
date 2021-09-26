@@ -14,6 +14,7 @@ struct StakeCardView: View {
     let store: Store<AppState, AppAction>
     let chain: Chain
     
+    private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
     @State private var cardRotation = 0.0
     @State private var showBack = false
     
@@ -34,7 +35,7 @@ struct StakeCardView: View {
         WithViewStore(store) { viewStore in
             ZStack {
                 Rectangle()
-                    .fill(LinearGradient(gradient: Gradient(colors: chain.cardGradient),
+                    .fill(LinearGradient(gradient: Gradient(colors: chain.gradient),
                                          startPoint: .bottomLeading,
                                          endPoint: .topTrailing))
                     .blurEffect()
@@ -70,15 +71,27 @@ struct StakeCardView: View {
     var back: some View {
         WithViewStore(store) { viewStore in
 
-        ZStack {
+            ZStack(alignment: .topLeading) {
             Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors: Constant.HEX_COLORS),
+                .fill(LinearGradient(gradient: Gradient(colors: chain.gradient),
                                      startPoint: .bottomLeading,
                                      endPoint: .topTrailing))
                 .blurEffect()
                 .blurEffectStyle(.systemMaterial)
+            Rectangle()
+                .foregroundColor(.black)
+                .frame(height: MAGNETIC_STRIPE_HEIGHT)
+                .offset(y: MAGNETIC_STRIPE_HEIGHT)
             HStack(alignment: .top) {
-                Image(systemName: "folder.fill")
+                VStack(alignment: .leading) {
+                    switch chain {
+                    case .ethereum: Image("ethereum").resizable().scaledToFit().frame(height: 32)
+                    case .pulse: Image("pulse").resizable().scaledToFit().frame(height: 32)
+                    }
+                    Spacer()
+                    description(text: chain.description)
+                }
+
                 Spacer()
                 VStack(alignment: .trailing) {
                     backTotal(title: "Staked", hearts: viewStore.total.stakeHearts)
@@ -87,6 +100,7 @@ struct StakeCardView: View {
                 }
             }
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+            .padding([.top], MAGNETIC_STRIPE_HEIGHT * 2)
             .padding()
         }
         .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
@@ -127,7 +141,7 @@ struct StakeCardView: View {
     
     func description(text: String) -> some View {
         Text(text)
-            .font(.caption)
+            .font(.system(.caption, design: .monospaced))
             .vibrancyEffect()
             .vibrancyEffectStyle(.fill)
     }
