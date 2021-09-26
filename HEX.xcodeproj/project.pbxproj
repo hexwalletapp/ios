@@ -32,6 +32,8 @@
 		ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94773326E448A1003162D4 /* SampleAppStore.swift */; };
 		EDCC3A8426E46E4A00A576B2 /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = EDCC3A8326E46E4A00A576B2 /* web3.swift */; };
 		EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */; };
+		EDFFCC3D26FFF6E00017700F /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */; };
+		EDFFCC4026FFFB400017700F /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = EDFFCC3F26FFFB400017700F /* SwiftUIVisualEffects */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +62,7 @@
 		ED94773126E4468E003162D4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		ED94773326E448A1003162D4 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
 		EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataRangeABIFunction.swift; sourceTree = "<group>"; };
+		EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +72,7 @@
 			files = (
 				EDCC3A8426E46E4A00A576B2 /* web3.swift in Frameworks */,
 				ED94773026E44655003162D4 /* ComposableArchitecture in Frameworks */,
+				EDFFCC4026FFFB400017700F /* SwiftUIVisualEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +102,7 @@
 				ED47345126E454AD003B1BB2 /* StakesView.swift */,
 				ED047F5826F18E350062F47F /* EditAddressView.swift */,
 				ED38706226F7CB4200369175 /* StakeDetailsView.swift */,
+				EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */,
 			);
 			path = Stakes;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 			packageProductDependencies = (
 				ED94772F26E44655003162D4 /* ComposableArchitecture */,
 				EDCC3A8326E46E4A00A576B2 /* web3.swift */,
+				EDFFCC3F26FFFB400017700F /* SwiftUIVisualEffects */,
 			);
 			productName = HEX;
 			productReference = ED94771A26E44559003162D4 /* HEX.app */;
@@ -237,6 +243,7 @@
 			packageReferences = (
 				ED94772E26E44655003162D4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				EDCC3A8226E46E4A00A576B2 /* XCRemoteSwiftPackageReference "web3" */,
+				EDFFCC3E26FFFB400017700F /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */,
 			);
 			productRefGroup = ED94771B26E44559003162D4 /* Products */;
 			projectDirPath = "";
@@ -271,6 +278,7 @@
 				ED47345026E454A3003B1BB2 /* CalculatorView.swift in Sources */,
 				ED94772026E44559003162D4 /* ContentView.swift in Sources */,
 				EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */,
+				EDFFCC3D26FFF6E00017700F /* StakeCardView.swift in Sources */,
 				ED47345226E454AD003B1BB2 /* StakesView.swift in Sources */,
 				ED3C9EFC26EF196800D01257 /* BigUInt+Extensions.swift in Sources */,
 				ED047F5926F18E350062F47F /* EditAddressView.swift in Sources */,
@@ -511,6 +519,14 @@
 				minimumVersion = 0.8.1;
 			};
 		};
+		EDFFCC3E26FFFB400017700F /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lucasbrown/swiftui-visual-effects.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -523,6 +539,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EDCC3A8226E46E4A00A576B2 /* XCRemoteSwiftPackageReference "web3" */;
 			productName = web3.swift;
+		};
+		EDFFCC3F26FFFB400017700F /* SwiftUIVisualEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDFFCC3E26FFFB400017700F /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */;
+			productName = SwiftUIVisualEffects;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

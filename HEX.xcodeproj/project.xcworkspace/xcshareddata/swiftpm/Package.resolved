@@ -83,6 +83,15 @@
         }
       },
       {
+        "package": "SwiftUIVisualEffects",
+        "repositoryURL": "https://github.com/lucasbrown/swiftui-visual-effects.git",
+        "state": {
+          "branch": null,
+          "revision": "b26f8cebd55ff60ed8953768aa818dfb005b5838",
+          "version": "1.0.3"
+        }
+      },
+      {
         "package": "web3.swift",
         "repositoryURL": "https://github.com/argentlabs/web3.swift",
         "state": {
