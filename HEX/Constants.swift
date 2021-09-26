@@ -30,4 +30,6 @@ struct Constant {
         Color(red: 0.000, green: 0.502, blue: 1.000, opacity: 1.000),
         Color(red: 0.000, green: 0.918, blue: 1.000, opacity: 1.000)
     ]
+    static let CARD_PADDING_BOTTOM = CGFloat(48)
+    static let CARD_PADDING_TOP = CGFloat(12)
 }
