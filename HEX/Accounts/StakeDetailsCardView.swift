@@ -12,8 +12,15 @@ struct StakeDetailsCardView: View {
     var hexPrice: Double
     
     var body: some View {
+        
         GroupBox {
             HStack {
+                ActivityRingView(progress: 0.01,
+                                 ringRadius: 140.0,
+                                 thickness: 8.0,
+                                 startColor: Constant.HEX_COLORS.first!,
+                                 endColor: Constant.HEX_COLORS.last!)
+                    .frame(width: 32, height: 32)
                 Spacer()
                 VStack(alignment: .trailing) {
                     Text(stake.stakedHearts
@@ -27,7 +34,7 @@ struct StakeDetailsCardView: View {
             Label("Staked \(stake.stakedDays) Days", systemImage: "calendar")
         }
         .padding()
-        .groupBoxStyle(StakeGroupBoxStyle(color: .primary, destination: Text("Heart rate")))
+        .groupBoxStyle(StakeGroupBoxStyle(color: .primary, destination: StakeDetailsView(stake: stake)))
     }
 }
 
@@ -36,3 +43,4 @@ struct StakeDetailsCardView: View {
 //        StakeDetailsCardView()
 //    }
 //}
+

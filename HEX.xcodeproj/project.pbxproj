@@ -32,6 +32,7 @@
 		ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94773326E448A1003162D4 /* SampleAppStore.swift */; };
 		EDCC3A8426E46E4A00A576B2 /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = EDCC3A8326E46E4A00A576B2 /* web3.swift */; };
 		EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */; };
+		EDE9A6D02700CD25008B1F87 /* ActivityRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE9A6CF2700CD25008B1F87 /* ActivityRingView.swift */; };
 		EDFFCC3D26FFF6E00017700F /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */; };
 		EDFFCC4026FFFB400017700F /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = EDFFCC3F26FFFB400017700F /* SwiftUIVisualEffects */; };
 		EDFFCC422700318A0017700F /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */; };
@@ -64,6 +65,7 @@
 		ED94773126E4468E003162D4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		ED94773326E448A1003162D4 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
 		EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataRangeABIFunction.swift; sourceTree = "<group>"; };
+		EDE9A6CF2700CD25008B1F87 /* ActivityRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRingView.swift; sourceTree = "<group>"; };
 		EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCardView.swift; sourceTree = "<group>"; };
 		EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
 		EDFFCC462700A28B0017700F /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */,
 				ED507A5926EFDE5F00D1A022 /* Constants.swift */,
 				EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */,
+				EDE9A6CF2700CD25008B1F87 /* ActivityRingView.swift */,
 			);
 			path = HEX;
 			sourceTree = "<group>";
@@ -242,7 +245,6 @@
 				ED94772E26E44655003162D4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				EDCC3A8226E46E4A00A576B2 /* XCRemoteSwiftPackageReference "web3" */,
 				EDFFCC3E26FFFB400017700F /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */,
-				EDFFCC432700A1350017700F /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = ED94771B26E44559003162D4 /* Products */;
 			projectDirPath = "";
@@ -288,6 +290,7 @@
 				ED507A5626EFC9FA00D1A022 /* StakeListsABIFunction.swift in Sources */,
 				ED507A5826EFD3A000D1A022 /* CurrentDayABIFunction.swift in Sources */,
 				ED507A4F26EF2CC500D1A022 /* NSNumber+Extensions.swift in Sources */,
+				EDE9A6D02700CD25008B1F87 /* ActivityRingView.swift in Sources */,
 				ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */,
 				ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */,
 				EDFFCC422700318A0017700F /* StakeGroupBoxStyle.swift in Sources */,
@@ -351,7 +354,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -406,7 +409,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -435,7 +438,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -468,7 +471,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -528,14 +531,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
-			};
-		};
-		EDFFCC432700A1350017700F /* XCRemoteSwiftPackageReference "ChartView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AppPear/ChartView.git";
-			requirement = {
-				kind = exactVersion;
-				version = "2.0.0-beta.2";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -62,8 +62,6 @@ struct StakeCardView: View {
                 
             }
             .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
-
-//            .frame(width: 300, height: 200)
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
     }
@@ -91,7 +89,6 @@ struct StakeCardView: View {
             .padding()
         }
         .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
-//        .frame(width: 300, height: 200)
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
     }
@@ -129,7 +126,7 @@ struct StakeCardView: View {
     
     func description(text: String) -> some View {
         Text(text)
-            .font(.caption.monospaced())
+            .font(.caption)
             .vibrancyEffect()
             .vibrancyEffectStyle(.fill)
     }

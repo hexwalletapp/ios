@@ -9,9 +9,10 @@ import Foundation
 import ComposableArchitecture
 import web3
 import BigInt
+import SwiftUI
 
 enum Tab {
-    case charts, stakes, calculator
+    case charts, accounts, calculator
 }
 
 enum StakeFilter: Equatable, CaseIterable, CustomStringConvertible {
@@ -21,6 +22,17 @@ enum StakeFilter: Equatable, CaseIterable, CustomStringConvertible {
         switch self {
         case .total: return "Total"
         case .list: return "List"
+        }
+    }
+}
+
+enum Chain {
+    case ethereum, pulse
+    
+    var cardGradient: [Color] {
+        switch self {
+        case .ethereum: return Constant.HEX_COLORS
+        case .pulse: return Constant.PULSE_COLORS
         }
     }
 }
@@ -70,7 +82,7 @@ struct StakeTotal: Equatable {
 struct AppState: Equatable {
     @BindableState var presentEditAddress = false
     @BindableState var ethereumAddress = UserDefaults.standard.string(forKey: Constant.ADDRESS_KEY) ?? ""
-    @BindableState var selectedTab: Tab = .stakes
+    @BindableState var selectedTab: Tab = .accounts
     @BindableState var selectedStakeSegment: StakeFilter = .total
     var hexPrice: Double = 0
     var stakeCount = 0
@@ -279,6 +291,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         state.total.interestSevenDayHearts = state.stakes.reduce(0, { $0 + $1.interestSevenDayHearts }) / Constant.ONE_WEEK
         
         return .none
+        
+    case .binding(\.$selectedTab):
+        switch state.selectedTab {
+        case .charts, .calculator: return .none
+        case .accounts: return Effect(value: .getStakes)
+        }
         
     case .binding(\.$ethereumAddress):
         UserDefaults.standard.setValue(state.ethereumAddress, forKey: Constant.ADDRESS_KEY)

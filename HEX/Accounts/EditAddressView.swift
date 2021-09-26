@@ -16,11 +16,10 @@ struct EditAddressView: View {
             NavigationView {
                 Form {
                     TextField("Public Key or ENS Address",
-                              text: viewStore.$ethereumAddress)
+                              text: viewStore.binding(\.$ethereumAddress))
                 }
             }
         }
-
     }
 }
 
