@@ -10,7 +10,7 @@ import ComposableArchitecture
 import BigInt
 import SwiftUIVisualEffects
 
-struct StakesView: View {
+struct AccountsView: View {
     let store: Store<AppState, AppAction>
     let columns = [
         GridItem(.flexible()),
@@ -24,15 +24,21 @@ struct StakesView: View {
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
                         Section {
                             ForEach(viewStore.stakes) { stake in
-                                stakeView(stake: stake)
+                                StakeDetailsCardView(stake: stake,
+                                                     hexPrice: ViewStore(store).hexPrice)
                             }
                         } header: {
-                            
                             TabView() {
                                 StakeCardView(store: store)
-                                    .padding()
+                                    .padding(.horizontal)
+                                    .padding(.top, Constant.CARD_PADDING_TOP)
+                                    .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
+                                StakeCardView(store: store)
+                                    .padding(.horizontal)
+                                    .padding(.top, Constant.CARD_PADDING_TOP)
+                                    .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
                             }
-                            .frame(height: ((UIScreen.main.bounds.width) / 1.586) )
+                            .frame(height: ((UIScreen.main.bounds.width) / 1.586) + Constant.CARD_PADDING_BOTTOM + Constant.CARD_PADDING_TOP)
                             .tabViewStyle(PageTabViewStyle())
                         }
                     }
@@ -56,29 +62,12 @@ struct StakesView: View {
             }
         }
     }
-    
-    func stakeView(stake: Stake) -> some View {
-        GroupBox {
-            HStack {
-                Spacer()
-                VStack(alignment: .trailing) {
-                    Text(stake.stakedHearts.hexAt(price: ViewStore(store).hexPrice).currencyStringSuffix).foregroundColor(.primary)
-                    Text(stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
-                }
-            }
-            .font(.body.monospacedDigit())
-        } label: {
-            Label("Staked \(stake.stakedDays) Days", systemImage: "calendar")
-        }
-        .padding()
-        .groupBoxStyle(StakeGroupBoxStyle(color: .primary, destination: Text("Heart rate")))
-    }
 }
 
 #if DEBUG
-struct StakesView_Previews: PreviewProvider {
+struct AccountsView_Previews: PreviewProvider {
     static var previews: some View {
-        StakesView(store: sampleAppStore)
+        AccountsView(store: sampleAppStore)
     }
 }
 #endif

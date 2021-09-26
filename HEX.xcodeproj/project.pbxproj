@@ -13,7 +13,7 @@
 		ED38706526F7CCE300369175 /* SampleStakes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38706426F7CCE300369175 /* SampleStakes.swift */; };
 		ED3C9EFC26EF196800D01257 /* BigUInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C9EFB26EF196800D01257 /* BigUInt+Extensions.swift */; };
 		ED47345026E454A3003B1BB2 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47344F26E454A3003B1BB2 /* CalculatorView.swift */; };
-		ED47345226E454AD003B1BB2 /* StakesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345126E454AD003B1BB2 /* StakesView.swift */; };
+		ED47345226E454AD003B1BB2 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345126E454AD003B1BB2 /* AccountsView.swift */; };
 		ED47345526E454C1003B1BB2 /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345426E454C1003B1BB2 /* ChartsView.swift */; };
 		ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345626E457CF003B1BB2 /* TradingviewChartView.swift */; };
 		ED47345A26E4596F003B1BB2 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = ED47345926E4596F003B1BB2 /* index.html */; };
@@ -35,6 +35,7 @@
 		EDFFCC3D26FFF6E00017700F /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */; };
 		EDFFCC4026FFFB400017700F /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = EDFFCC3F26FFFB400017700F /* SwiftUIVisualEffects */; };
 		EDFFCC422700318A0017700F /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */; };
+		EDFFCC472700A28B0017700F /* StakeDetailsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC462700A28B0017700F /* StakeDetailsCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +46,7 @@
 		ED38706426F7CCE300369175 /* SampleStakes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleStakes.swift; sourceTree = "<group>"; };
 		ED3C9EFB26EF196800D01257 /* BigUInt+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigUInt+Extensions.swift"; sourceTree = "<group>"; };
 		ED47344F26E454A3003B1BB2 /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
-		ED47345126E454AD003B1BB2 /* StakesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakesView.swift; sourceTree = "<group>"; };
+		ED47345126E454AD003B1BB2 /* AccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsView.swift; sourceTree = "<group>"; };
 		ED47345426E454C1003B1BB2 /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		ED47345626E457CF003B1BB2 /* TradingviewChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingviewChartView.swift; sourceTree = "<group>"; };
 		ED47345926E4596F003B1BB2 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -65,6 +66,7 @@
 		EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataRangeABIFunction.swift; sourceTree = "<group>"; };
 		EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCardView.swift; sourceTree = "<group>"; };
 		EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
+		EDFFCC462700A28B0017700F /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,15 +100,16 @@
 			path = Charts;
 			sourceTree = "<group>";
 		};
-		ED47344D26E45485003B1BB2 /* Stakes */ = {
+		ED47344D26E45485003B1BB2 /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
-				ED47345126E454AD003B1BB2 /* StakesView.swift */,
+				ED47345126E454AD003B1BB2 /* AccountsView.swift */,
 				ED047F5826F18E350062F47F /* EditAddressView.swift */,
 				ED38706226F7CB4200369175 /* StakeDetailsView.swift */,
 				EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */,
+				EDFFCC462700A28B0017700F /* StakeDetailsCardView.swift */,
 			);
-			path = Stakes;
+			path = Accounts;
 			sourceTree = "<group>";
 		};
 		ED47344E26E4548A003B1BB2 /* Calculator */ = {
@@ -149,7 +152,7 @@
 				EDCC3A8526E4771800A576B2 /* HEXContract */,
 				ED47345826E4595A003B1BB2 /* HTML */,
 				ED47344E26E4548A003B1BB2 /* Calculator */,
-				ED47344D26E45485003B1BB2 /* Stakes */,
+				ED47344D26E45485003B1BB2 /* Accounts */,
 				ED47344C26E45478003B1BB2 /* Charts */,
 				ED94771D26E44559003162D4 /* App.swift */,
 				ED94773126E4468E003162D4 /* AppReducer.swift */,
@@ -239,6 +242,7 @@
 				ED94772E26E44655003162D4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				EDCC3A8226E46E4A00A576B2 /* XCRemoteSwiftPackageReference "web3" */,
 				EDFFCC3E26FFFB400017700F /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */,
+				EDFFCC432700A1350017700F /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = ED94771B26E44559003162D4 /* Products */;
 			projectDirPath = "";
@@ -274,9 +278,10 @@
 				ED94772026E44559003162D4 /* ContentView.swift in Sources */,
 				EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */,
 				EDFFCC3D26FFF6E00017700F /* StakeCardView.swift in Sources */,
-				ED47345226E454AD003B1BB2 /* StakesView.swift in Sources */,
+				ED47345226E454AD003B1BB2 /* AccountsView.swift in Sources */,
 				ED3C9EFC26EF196800D01257 /* BigUInt+Extensions.swift in Sources */,
 				ED047F5926F18E350062F47F /* EditAddressView.swift in Sources */,
+				EDFFCC472700A28B0017700F /* StakeDetailsCardView.swift in Sources */,
 				ED94771E26E44559003162D4 /* App.swift in Sources */,
 				ED38706526F7CCE300369175 /* SampleStakes.swift in Sources */,
 				ED38706326F7CB4200369175 /* StakeDetailsView.swift in Sources */,
@@ -427,6 +432,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -459,6 +465,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -521,6 +528,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
+			};
+		};
+		EDFFCC432700A1350017700F /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView.git";
+			requirement = {
+				kind = exactVersion;
+				version = "2.0.0-beta.2";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
