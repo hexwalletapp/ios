@@ -37,7 +37,8 @@ struct StakeDetailsCardView: View {
         } label: {
             Label("Staked \(stake.stakedDays) Days", systemImage: "calendar")
         }
-        .padding()
+        .padding([.horizontal], 20)
+        .padding([.vertical], 10)
         .groupBoxStyle(StakeGroupBoxStyle(color: .primary, destination: StakeDetailsView(stake: stake)))
     }
 }

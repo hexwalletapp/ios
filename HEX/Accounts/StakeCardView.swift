@@ -84,10 +84,11 @@ struct StakeCardView: View {
                 .offset(y: MAGNETIC_STRIPE_HEIGHT)
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    switch chain {
-                    case .ethereum: Image("ethereum").resizable().scaledToFit().frame(height: 32)
-                    case .pulse: Image("pulse").resizable().scaledToFit().frame(height: 32)
-                    }
+                    Image(chain.description).resizable()
+                        .scaledToFit()
+                        .frame(height: 32)
+                        .vibrancyEffect()
+                        .vibrancyEffectStyle(.fill)
                     Spacer()
                     description(text: chain.description)
                 }
