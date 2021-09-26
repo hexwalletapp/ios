@@ -45,7 +45,7 @@ struct AccountsView: View {
                 }
                 .background(Color(.systemGroupedBackground)).edgesIgnoringSafeArea(.bottom)
                 .navigationBarTitle("Accounts")
-                .sheet(isPresented: viewStore.$presentEditAddress, content: {
+                .sheet(isPresented: viewStore.binding(\.$presentEditAddress), content: {
                     EditAddressView(store: store)
                 })
                 .toolbar {

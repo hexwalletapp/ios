@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         WithViewStore(store) { viewStore in
-            TabView(selection: viewStore.$selectedTab) {
+            TabView(selection: viewStore.binding(\.$selectedTab)) {
                 ChartsView()
                     .tabItem {
                         Image(systemName: "chart.pie.fill")
@@ -26,7 +26,7 @@ struct ContentView: View {
                         Image(systemName: "creditcard.fill")
                         Text("Accounts")
                     }
-                    .tag(Tab.stakes)
+                    .tag(Tab.accounts)
 
 //                CalculatorView()
 //                    .tabItem {
