@@ -38,7 +38,7 @@ struct AccountsView: View {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         Button {
                             viewStore.send(.binding(.set(\.$presentEditAddress, true)))
-                        } label: { Image(systemName: "person.crop.circle.badge.plus") }
+                        } label: { Image(systemName: "person") }
                     }
                     
                     ToolbarItemGroup(placement: .navigationBarTrailing) {

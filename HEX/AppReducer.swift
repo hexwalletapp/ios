@@ -126,6 +126,8 @@ enum AppAction: BindableAction, Equatable {
     case updateHexPrice(Result<HEXPrice, NSError>)
     case updateDay(BigUInt)
     case binding(BindingAction<AppState>)
+    
+    case updateAccounts
 }
 
 struct AppEnvironment {
@@ -157,22 +159,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             break
         }
         
-        return .merge(
-            Effect(value: .getCurrentDay),
-            HEXRESTAPI.fetchHexPrice()
-                .receive(on: environment.mainQueue)
-                .mapError { $0 as NSError }
-                .catchToEffect()
-                .map(AppAction.updateHexPrice),
-            Effect(value: .getStakes)
-                .receive(on: environment.mainQueue)
-                .eraseToEffect()
-        )
+        return Effect(value: .updateAccounts)
         
     case let .updateStakeIDs(stakeIDs, id):
         guard let accountIndex = state.accounts.firstIndex(where: { $0.id == id }) else { return .none }
-        state.accounts[accountIndex].stakeCount = stakeIDs.count
         state.accounts[accountIndex].stakes = [Stake]()
+        state.accounts[accountIndex].stakeCount = stakeIDs.count
         let address = EthereumAddress(state.accounts[accountIndex].address)
         return .merge(
             stakeIDs.map { stakeID in
@@ -217,23 +209,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case false:
             return .none
         }
-        //        state.accounts[accountIndex].sta
-        
-        //        state.stakes.append(stake)
-        //        state.stakesBeginDay = min(state.stakesBeginDay, stake.lockedDay)
-        //        state.stakesEndDay = max(state.stakesEndDay, stake.lockedDay + stake.stakedDays)
-        //
-        //        switch state.stakes.count == state.stakeCount {
-        //        case true:
-        //            state.stakes.sort(by: { $0.lockedDay + $0.stakedDays < $1.lockedDay + $1.stakedDays })
-        //            state.total.stakeHearts = state.stakes.reduce(0, { $0 + $1.stakedHearts })
-        //            state.total.stakeShares = state.stakes.reduce(0, { $0 + $1.stakeShares })
-        //            guard let currentDay = state.currentDay else { return .none }
-        //            return Effect(value: .getDailyDataRange(state.stakesBeginDay, min(state.stakesEndDay, UInt16(currentDay))))
-        //        case false:
-        //            return .none
-        //        }
-        //        return .none
         
     case .getStakes:
         return .merge(
@@ -345,14 +320,32 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         
         state.accounts[accountIndex].total.interestHearts = state.accounts[accountIndex].stakes.reduce(0, { $0 + $1.interestHearts })
         state.accounts[accountIndex].total.interestSevenDayHearts = state.accounts[accountIndex].stakes.reduce(0, { $0 + $1.interestSevenDayHearts }) / Constant.ONE_WEEK
-        
-        
         return .none
+        
+    case .updateAccounts:
+        return .merge(
+            Effect(value: .getCurrentDay),
+            HEXRESTAPI.fetchHexPrice()
+                .receive(on: environment.mainQueue)
+                .mapError { $0 as NSError }
+                .catchToEffect()
+                .map(AppAction.updateHexPrice),
+            Effect(value: .getStakes)
+                .receive(on: environment.mainQueue)
+                .eraseToEffect()
+        )
         
     case .binding(\.$selectedTab):
         switch state.selectedTab {
         case .charts, .calculator: return .none
-        case .accounts: return Effect(value: .getStakes)
+        case .accounts:
+            return Effect(value: .updateAccounts)
+        }
+        
+    case .binding(\.$presentEditAddress):
+        switch state.presentEditAddress {
+        case false: return Effect(value: .updateAccounts)
+        case true: return .none
         }
         
     case .binding(\.$accounts):

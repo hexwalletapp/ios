@@ -45,10 +45,13 @@ struct EditAddressView: View {
                         Section {
                             ForEach(viewStore.accounts) { account in
                                 HStack {
+                                    Image(account.chain.description).resizable()
+                                        .scaledToFit()
+                                        .frame(width: 16, height: 16)
                                     Text(account.name)
                                     Spacer()
                                     Text("\(account.address.prefix(6).description)...\(account.address.suffix(4).description)")
-                                        .font(.system(.subheadline, design: .monospaced))
+                                        .font(.system(.caption, design: .monospaced))
                                         .padding([.horizontal], 12)
                                         .padding([.vertical], 6)
                                         .background(Color(.systemGray6))
@@ -82,6 +85,13 @@ struct EditAddressView: View {
                     account = Account()
                 }
                 .navigationTitle("Manage Accounts")
+                .toolbar {
+//                    ToolbarItemGroup(placement: .navigationBarLeading) {
+//                        Button {
+//                            viewStore.send(.binding(.set(\.$presentEditAddress, false)))
+//                        } label: { Image(systemName: "xmark") }
+//                    }
+                }
             }
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
