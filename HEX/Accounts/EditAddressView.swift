@@ -24,12 +24,13 @@ struct EditAddressView: View {
                 Form {
                     List {
                         Section("Add Account") {
-                            Picker("Current Page", selection: $account.chain) {
+                            Picker(selection: $account.chain) {
                                 ForEach(Chain.allCases) { page in
                                     Text(page.description)
                                 }
+                            } label: {
+                                Text("Chain")
                             }
-                            .pickerStyle(.segmented)
                             TextField("Wallet Name",
                                       text: $account.name,
                                       prompt: Text("Wallet Name"))
@@ -75,6 +76,10 @@ struct EditAddressView: View {
                     case .name: focusedField = .address
                     case .address: break
                     }
+                    
+                    account.address = account.address.trimmingCharacters(in: .whitespaces)
+                    account.name = account.name.trimmingCharacters(in: .whitespaces)
+                    
                     guard !account.address.isEmpty && !account.name.isEmpty else { return }
                     
                     var existingAccounts = Set(viewStore.accounts)
