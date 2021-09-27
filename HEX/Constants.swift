@@ -15,7 +15,6 @@ struct Constant {
     static let SATS_UINT_SHIFT = BigUInt(56)
     static let SATS_MASK = (BigUInt(1) << SATS_UINT_SHIFT) - BigUInt(1)
     static let ONE_WEEK = BigUInt(7)
-    static let ADDRESS_KEY = "hex_address_key"
     static let ACCOUNTS_KEY = "evm_account_key"
     static let HEX_COLORS = [
         Color(red: 1.000, green: 0.859, blue: 0.004, opacity: 1.000),
