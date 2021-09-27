@@ -47,7 +47,7 @@ enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible {
 }
 
 struct Account: Codable, Hashable, Equatable, Identifiable {
-    var id: String { address + chain.description }
+    var id: String { address.lowercased() + chain.description.lowercased() }
     var name: String = ""
     var address: String = ""
     var chain: Chain = .ethereum
@@ -119,12 +119,12 @@ enum AppAction: BindableAction, Equatable {
     case getCurrentDay
     case scheduleNotification
     
-    case getDailyDataRange(UInt16, UInt16, EthereumAddress)
-    case updateStakeIDs([BigUInt], EthereumAddress)
-    case updateStake(Stake, EthereumAddress)
+    case getDailyDataRange(UInt16, UInt16, String)
+    case updateStakeIDs([BigUInt], String)
+    case updateStake(Stake, String)
+    case updateDailyData([DailyData], String)
     case updateHexPrice(Result<HEXPrice, NSError>)
     case updateDay(BigUInt)
-    case updateDailyData([DailyData], EthereumAddress)
     case binding(BindingAction<AppState>)
 }
 
@@ -169,10 +169,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 .eraseToEffect()
         )
         
-    case let .updateStakeIDs(stakeIDs, address):
-        guard let accountIndex = state.accounts.firstIndex(where: { $0.address.lowercased() == address.value.lowercased() }) else { return .none }
+    case let .updateStakeIDs(stakeIDs, id):
+        guard let accountIndex = state.accounts.firstIndex(where: { $0.id == id }) else { return .none }
         state.accounts[accountIndex].stakeCount = stakeIDs.count
         state.accounts[accountIndex].stakes = [Stake]()
+        let address = EthereumAddress(state.accounts[accountIndex].address)
         return .merge(
             stakeIDs.map { stakeID in
                 return .future { completion in
@@ -187,7 +188,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                             switch response {
                             case let .some(stake):
                                 environment.mainQueue.schedule {
-                                    completion(.success(.updateStake(stake, address)))
+                                    completion(.success(.updateStake(stake, id)))
                                 }
                             case .none:
                                 print("no stake")
@@ -198,8 +199,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             }
         )
         
-    case let .updateStake(stake, address):
-        guard let accountIndex = state.accounts.firstIndex(where: { $0.address.lowercased() == address.value.lowercased() }) else { return .none }
+    case let .updateStake(stake, id):
+        guard let accountIndex = state.accounts.firstIndex(where: { $0.id == id }) else { return .none }
         var stake = stake
         state.accounts[accountIndex].stakesBeginDay = min(state.accounts[accountIndex].stakesBeginDay, stake.lockedDay)
         state.accounts[accountIndex].stakesEndDay =  max(state.accounts[accountIndex].stakesEndDay, stake.lockedDay + stake.stakedDays)
@@ -212,7 +213,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             state.accounts[accountIndex].total.stakeHearts = state.accounts[accountIndex].stakes.reduce(0, { $0 + $1.stakedHearts })
             state.accounts[accountIndex].total.stakeShares = state.accounts[accountIndex].stakes.reduce(0, { $0 + $1.stakeShares })
             guard let currentDay = state.currentDay else { return .none }
-            return Effect(value: .getDailyDataRange(state.accounts[accountIndex].stakesBeginDay, min(state.accounts[accountIndex].stakesEndDay, UInt16(currentDay)), address))
+            return Effect(value: .getDailyDataRange(state.accounts[accountIndex].stakesBeginDay, min(state.accounts[accountIndex].stakesEndDay, UInt16(currentDay)), id))
         case false:
             return .none
         }
@@ -250,7 +251,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                             case let .some(count):
                                 let stakes = (0..<count).map { BigUInt($0) }
                                 environment.mainQueue.schedule {
-                                    completion(.success(.updateStakeIDs(stakes, address)))
+                                    completion(.success(.updateStakeIDs(stakes, account.id)))
                                 }
                             case .none:
                                 print("no stakes")
@@ -323,10 +324,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case .scheduleNotification:
         return .none
         
-    case let .updateDailyData(dailyData, address):
+    case let .updateDailyData(dailyData, id):
         
         guard let currentDay = state.currentDay,
-              let accountIndex = state.accounts.firstIndex(where: { $0.address.lowercased() == address.value.lowercased() }) else { return .none }
+              let accountIndex = state.accounts.firstIndex(where: { $0.id == id }) else { return .none }
         
         state.accounts[accountIndex].dailyDataList = dailyData
         state.accounts[accountIndex].stakes.enumerated().forEach { (index, stake) in

@@ -22,20 +22,25 @@ struct EditAddressView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 Form {
-
                     List {
                         Section("Add Account") {
-                                TextField("Wallet Name",
-                                          text: $account.name,
-                                          prompt: Text("Wallet Name"))
-                                    .focused($focusedField, equals: .name)
-                                    .submitLabel(.next)
-                                
-                                TextField("Public Key",
-                                          text: $account.address,
-                                          prompt: Text("Public Key"))
-                                    .focused($focusedField, equals: .address)
-                                    .submitLabel(.done)
+                            Picker("Current Page", selection: $account.chain) {
+                                ForEach(Chain.allCases) { page in
+                                    Text(page.description)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                            TextField("Wallet Name",
+                                      text: $account.name,
+                                      prompt: Text("Wallet Name"))
+                                .focused($focusedField, equals: .name)
+                                .submitLabel(.next)
+                            
+                            TextField("Public Key",
+                                      text: $account.address,
+                                      prompt: Text("Public Key"))
+                                .focused($focusedField, equals: .address)
+                                .submitLabel(.done)
                         }
                         Section {
                             ForEach(viewStore.accounts) { account in
@@ -54,13 +59,10 @@ struct EditAddressView: View {
                         } header: {
                             Text("Accounts")
                         } footer: {
-                            EmptyView()
-//                            switch !viewStore.accounts?.isEmpty {
-//                            case .some:
-//                                Label("No accounts", systemImage: "person")
-//                            case .none:
-//                                EmptyView()
-//                            }
+                            switch viewStore.accounts.count {
+                            case 0:Label("No accounts", systemImage: "person")
+                            default: EmptyView()
+                            }
                         }
                     }
                 }
@@ -74,9 +76,9 @@ struct EditAddressView: View {
                     
                     var existingAccounts = Set(viewStore.accounts)
                     existingAccounts.insert(account)
-
+                    
                     viewStore.send(.binding(.set(\.$accounts, Array(existingAccounts) )))
-                
+                    
                     account = Account()
                 }
                 .navigationTitle("Manage Accounts")
