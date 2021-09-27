@@ -67,12 +67,12 @@ struct AccountsView: View {
                     ForEach(Array(viewStore.accounts.enumerated()), id: \.element) { index, account in
                         StakeCardView(account: account)
                             .padding(.horizontal)
-                            .padding(.top, Constant.CARD_PADDING_TOP)
-                            .padding(.bottom, Constant.CARD_PADDING_BOTTOM)
+                            .padding(.top, k.CARD_PADDING_TOP)
+                            .padding(.bottom, k.CARD_PADDING_BOTTOM)
                             .tag(index)
                     }
                 }
-                .frame(height: ((UIScreen.main.bounds.width) / 1.586) + Constant.CARD_PADDING_BOTTOM + Constant.CARD_PADDING_TOP)
+                .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_TOP)
                 .tabViewStyle(PageTabViewStyle())
             case true:
                 EmptyView()

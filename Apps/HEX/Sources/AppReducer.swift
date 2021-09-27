@@ -29,8 +29,8 @@ enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible {
 
     var gradient: [Color] {
         switch self {
-        case .ethereum: return Constant.HEX_COLORS
-        case .pulse: return Constant.PULSE_COLORS
+        case .ethereum: return k.HEX_COLORS
+        case .pulse: return k.PULSE_COLORS
         }
     }
 
@@ -64,11 +64,11 @@ struct DailyData: Codable, Hashable, Equatable {
 
     init(dayData: BigUInt) {
         var dailyData = dayData
-        payout = dailyData & Constant.HEARTS_MASK
-        dailyData >>= Constant.HEARTS_UINT_SHIFT
-        shares = dailyData & Constant.HEARTS_MASK
-        dailyData >>= Constant.HEARTS_UINT_SHIFT
-        sats = dailyData & Constant.SATS_MASK
+        payout = dailyData & k.HEARTS_MASK
+        dailyData >>= k.HEARTS_UINT_SHIFT
+        shares = dailyData & k.HEARTS_MASK
+        dailyData >>= k.HEARTS_UINT_SHIFT
+        sats = dailyData & k.SATS_MASK
     }
 }
 
@@ -142,13 +142,13 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .none
 
     case .onActive:
-        switch UserDefaults.standard.data(forKey: Constant.ACCOUNTS_KEY) {
+        switch UserDefaults.standard.data(forKey: k.ACCOUNTS_KEY) {
         case let .some(encodedAccounts):
             do {
                 let decodedAccounts = try environment.decoder.decode([Account].self, from: encodedAccounts)
                 state.accounts = decodedAccounts
             } catch {
-                UserDefaults.standard.removeObject(forKey: Constant.ACCOUNTS_KEY)
+                UserDefaults.standard.removeObject(forKey: k.ACCOUNTS_KEY)
                 print(error)
             }
         case .none:
@@ -314,7 +314,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
 
         state.accounts[accountIndex].total.interestHearts = state.accounts[accountIndex].stakes.reduce(0) { $0 + $1.interestHearts }
-        state.accounts[accountIndex].total.interestSevenDayHearts = state.accounts[accountIndex].stakes.reduce(0) { $0 + $1.interestSevenDayHearts } / Constant.ONE_WEEK
+        state.accounts[accountIndex].total.interestSevenDayHearts = state.accounts[accountIndex].stakes.reduce(0) { $0 + $1.interestSevenDayHearts } / k.ONE_WEEK
         return .none
 
     case .updateAccounts:
@@ -346,9 +346,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case .binding(\.$accounts):
         do {
             let encodedAccounts = try environment.encoder.encode(state.accounts)
-            UserDefaults.standard.setValue(encodedAccounts, forKey: Constant.ACCOUNTS_KEY)
+            UserDefaults.standard.setValue(encodedAccounts, forKey: k.ACCOUNTS_KEY)
         } catch {
-            UserDefaults.standard.removeObject(forKey: Constant.ACCOUNTS_KEY)
+            UserDefaults.standard.removeObject(forKey: k.ACCOUNTS_KEY)
         }
         return .none
 
