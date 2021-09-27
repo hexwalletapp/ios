@@ -1,0 +1,64 @@
+name: HEX
+
+settings:
+  DEVELOPMENT_TEAM: K78G42H4U2
+  CURRENT_PROJECT_VERSION: 6
+  MARKETING_VERSION: 0.1.0
+
+options:
+  bundleIdPrefix: com.joeblau
+  deploymentTarget:
+    iOS: "15.0"
+  createIntermediateGroups: true
+  preGenCommand: .github/scripts/pre.sh
+  postGenCommand: .github/scripts/post.sh
+
+packages:
+  swift-composable-architecture:
+    url: https://github.com/pointfreeco/swift-composable-architecture.git
+    from: 0.17.0
+  swiftui-visual-effects:   
+    url: https://github.com/lucasbrown/swiftui-visual-effects.git
+    from: 1.0.3
+  web3-swift:   
+    url: https://github.com/argentlabs/web3.swift.git
+    from: 0.8.1
+
+targets:
+  HEX:
+    type: application
+    platform: iOS
+    sources:
+      - path: Apps/HEX
+        excludes:
+          - Apps/HEX/PreviewContent/*
+      - path: Apps/HEX/Resources/
+        buildPhase: resources
+    settings:
+      OTHER_LDFLAGS: -ObjC
+      DEVELOPMENT_ASSET_PATHS: Apps/HEX/PreviewContent
+      PRODUCT_BUNDLE_IDENTIFIER: com.joeblau.HEX
+      ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      TARGETED_DEVICE_FAMILY: 1
+      VALIDATE_WORKSPACE: true
+    dependencies:
+      # - target: HEXSmartContract
+      - package: swift-composable-architecture
+        product: ComposableArchitecture
+      - package: swiftui-visual-effects
+        product: SwiftUIVisualEffects
+      - package: web3-swift
+        product: web3.swift
+
+  # HEXSmartContract:
+  #   type: framework
+  #   platform: iOS
+  #   sources:
+  #     - path: Library/HEXSmartContract
+  #       excludes:
+  #         - Library/HEXSmartContract/HEXSmartContract.docc/*
+  #   dependencies:
+  #     - package: swift-composable-architecture
+  #       product: ComposableArchitecture
+  #     - package: web3-swift
+  #       product: web3.swift
