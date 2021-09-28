@@ -1,12 +1,8 @@
-//
-//  StakeTotalModel.swift
-//  HEX
-//
-//  Created by Joe Blau on 9/28/21.
-//
+// StakeTotalModel.swift
+// Copyright (c) 2021 Joe Blau
 
-import Foundation
 import BigInt
+import Foundation
 
 struct StakeTotal: Codable, Hashable, Equatable {
     var stakeShares: BigUInt = 0

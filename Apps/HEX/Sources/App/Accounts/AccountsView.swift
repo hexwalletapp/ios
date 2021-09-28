@@ -47,12 +47,12 @@ struct AccountsView: View {
 
     var accountList: some View {
         WithViewStore(store) { viewStore in
-            switch (viewStore.accounts.isEmpty, viewStore.accounts[id: viewStore.selectedId]) {
-            case (false, let .some(account)):
-                ForEach(account.stakes) { stake in
+            switch (viewStore.accountsData.isEmpty, viewStore.accountsData[id: viewStore.selectedId]) {
+            case (false, let .some(accountData)):
+                ForEach(accountData.stakes) { stake in
                     StakeDetailsCardView(hexPrice: viewStore.hexPrice,
                                          stake: stake,
-                                         account: account)
+                                         account: accountData.account)
                 }
             default:
                 EmptyView()
@@ -62,16 +62,16 @@ struct AccountsView: View {
 
     var accountHeader: some View {
         WithViewStore(store) { viewStore in
-            switch viewStore.accounts.isEmpty {
+            switch viewStore.accountsData.isEmpty {
             case false:
                 TabView(selection: viewStore.binding(\.$selectedId)) {
-                    ForEach(viewStore.accounts) { account in
+                    ForEach(viewStore.accountsData) { accountData in
                         StakeCardView(hexPrice: viewStore.hexPrice,
-                                      account: account)
+                                      accountData: accountData)
                             .padding(.horizontal)
                             .padding(.top, k.CARD_PADDING_TOP)
                             .padding(.bottom, k.CARD_PADDING_BOTTOM)
-                            .tag(account.id)
+                            .tag(accountData.id)
                     }
                 }
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_TOP)

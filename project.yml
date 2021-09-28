@@ -25,7 +25,8 @@ packages:
     from: 1.0.3
 
 localPackages:
-  - ./Packages/HEXSmartContract/  
+  - ./Packages/hex-smart-contract/  
+  - ./Packages/hex-rest/  
 
 targets:
   HEX:
@@ -45,7 +46,10 @@ targets:
       TARGETED_DEVICE_FAMILY: 1
       VALIDATE_WORKSPACE: true
     dependencies:
-      - package: HEXSmartContract
+      - package: hex-smart-contract
+        product: HEXSmartContract
+      - package: hex-rest
+        product: HEXREST
       - package: swift-composable-architecture
         product: ComposableArchitecture
       - package: swift-identified-collections

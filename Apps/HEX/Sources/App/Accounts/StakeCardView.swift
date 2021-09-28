@@ -3,12 +3,13 @@
 
 import BigInt
 import ComposableArchitecture
+import HEXREST
 import SwiftUI
 import SwiftUIVisualEffects
 
 struct StakeCardView: View {
     let hexPrice: HEXPrice
-    let account: Account
+    let accountData: AccountData
 
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
     @State private var cardRotation = 0.0
@@ -30,7 +31,7 @@ struct StakeCardView: View {
     var front: some View {
         ZStack {
             Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors: account.chain.gradient),
+                .fill(LinearGradient(gradient: Gradient(colors: accountData.account.chain.gradient),
                                      startPoint: .bottomLeading,
                                      endPoint: .topTrailing))
                 .blurEffect()
@@ -38,19 +39,19 @@ struct StakeCardView: View {
             VStack(alignment: .leading) {
                 HStack(alignment: .top) {
                     frontTotal(title: "Daily Payout",
-                               hearts: account.total.interestSevenDayHearts,
+                               hearts: accountData.total.interestSevenDayHearts,
                                alignment: .leading)
                     Spacer()
-                    front(address: account.address)
+                    front(address: accountData.account.address)
                 }
                 Spacer()
                 HStack(alignment: .bottom) {
                     frontTotal(title: "Total Balance",
-                               hearts: account.total.stakedHearts + account.total.interestHearts,
+                               hearts: accountData.total.stakedHearts + accountData.total.interestHearts,
                                alignment: .leading)
                     Spacer()
                     frontTotal(title: "Total Shares",
-                               shares: account.total.stakeShares,
+                               shares: accountData.total.stakeShares,
                                alignment: .trailing)
                 }
             }
@@ -64,7 +65,7 @@ struct StakeCardView: View {
     var back: some View {
         ZStack(alignment: .topLeading) {
             Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors: account.chain.gradient),
+                .fill(LinearGradient(gradient: Gradient(colors: accountData.account.chain.gradient),
                                      startPoint: .bottomLeading,
                                      endPoint: .topTrailing))
                 .blurEffect()
@@ -75,21 +76,21 @@ struct StakeCardView: View {
                 .offset(y: MAGNETIC_STRIPE_HEIGHT)
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    Image(account.chain.description).resizable()
+                    Image(accountData.account.chain.description).resizable()
                         .scaledToFit()
                         .frame(height: 32)
                         .vibrancyEffect()
                         .vibrancyEffectStyle(.fill)
                     Spacer()
-                    Text(account.name)
-                    description(text: account.chain.description)
+                    Text(accountData.account.name)
+                    description(text: accountData.account.chain.description)
                 }
 
                 Spacer()
                 VStack(alignment: .trailing) {
-                    backTotal(title: "Staked", hearts: account.total.stakedHearts)
+                    backTotal(title: "Staked", hearts: accountData.total.stakedHearts)
                     Spacer()
-                    backTotal(title: "Earned", hearts: account.total.interestHearts)
+                    backTotal(title: "Earned", hearts: accountData.total.interestHearts)
                 }
             }
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))

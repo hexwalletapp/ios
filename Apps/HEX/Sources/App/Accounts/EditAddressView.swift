@@ -3,6 +3,7 @@
 
 import ComposableArchitecture
 import SwiftUI
+import HEXSmartContract
 
 struct EditAddressView: View {
     let store: Store<AppState, AppAction>
@@ -40,14 +41,14 @@ struct EditAddressView: View {
                                 .submitLabel(.done)
                         }
                         Section {
-                            ForEach(viewStore.accounts) { account in
+                            ForEach(viewStore.accountsData) { accountData in
                                 HStack {
-                                    Image(account.chain.description).resizable()
+                                    Image(accountData.account.chain.description).resizable()
                                         .scaledToFit()
                                         .frame(width: 16, height: 16)
-                                    Text(account.name)
+                                    Text(accountData.account.name)
                                     Spacer()
-                                    Text("\(account.address.prefix(6).description)...\(account.address.suffix(4).description)")
+                                    Text("\(accountData.account.address.prefix(6).description)...\(accountData.account.address.suffix(4).description)")
                                         .font(.system(.caption, design: .monospaced))
                                         .padding([.horizontal], 12)
                                         .padding([.vertical], 6)
@@ -59,7 +60,7 @@ struct EditAddressView: View {
                         } header: {
                             Text("Accounts")
                         } footer: {
-                            switch viewStore.accounts.count {
+                            switch viewStore.accountsData.count {
                             case 0: Label("No accounts", systemImage: "person")
                             default: EmptyView()
                             }
@@ -77,21 +78,21 @@ struct EditAddressView: View {
                     account.name = account.name.trimmingCharacters(in: .whitespaces)
 
                     guard !account.address.isEmpty, !account.name.isEmpty else { return }
+                    
+                    var existingAccounts = viewStore.accountsData
+                    existingAccounts.updateOrAppend(AccountData(account: account))
 
-                    var existingAccounts = viewStore.accounts
-                    existingAccounts.updateOrAppend(account)
-
-                    viewStore.send(.binding(.set(\.$accounts, existingAccounts)))
+                    viewStore.send(.binding(.set(\.$accountsData, existingAccounts)))
 
                     account = Account()
                 }
                 .navigationTitle("Manage Accounts")
                 .toolbar {
-//                    ToolbarItemGroup(placement: .navigationBarLeading) {
-//                        Button {
-//                            viewStore.send(.binding(.set(\.$presentEditAddress, false)))
-//                        } label: { Image(systemName: "xmark") }
-//                    }
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button {
+                            viewStore.send(.binding(.set(\.$presentEditAddress, false)))
+                        } label: { Image(systemName: "xmark") }
+                    }
                 }
             }
             .onAppear {
@@ -104,9 +105,9 @@ struct EditAddressView: View {
 
     func delete(at offsets: IndexSet) {
         let viewStore = ViewStore(store)
-        var remainingAccounts = viewStore.accounts
+        var remainingAccounts = viewStore.accountsData
         remainingAccounts.remove(atOffsets: offsets)
-        viewStore.send(.binding(.set(\.$accounts, remainingAccounts)))
+        viewStore.send(.binding(.set(\.$accountsData, remainingAccounts)))
     }
 }
 
