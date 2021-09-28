@@ -3,208 +3,249 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		ED047F5926F18E350062F47F /* EditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED047F5826F18E350062F47F /* EditAddressView.swift */; };
-		ED1E970226EEDCE5009C469A /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1E970126EEDCE5009C469A /* PlanView.swift */; };
-		ED38706326F7CB4200369175 /* StakeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38706226F7CB4200369175 /* StakeDetailsView.swift */; };
-		ED38706526F7CCE300369175 /* SampleStakes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED38706426F7CCE300369175 /* SampleStakes.swift */; };
-		ED3C9EFC26EF196800D01257 /* BigUInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3C9EFB26EF196800D01257 /* BigUInt+Extensions.swift */; };
-		ED47345026E454A3003B1BB2 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47344F26E454A3003B1BB2 /* CalculatorView.swift */; };
-		ED47345226E454AD003B1BB2 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345126E454AD003B1BB2 /* AccountsView.swift */; };
-		ED47345526E454C1003B1BB2 /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345426E454C1003B1BB2 /* ChartsView.swift */; };
-		ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47345626E457CF003B1BB2 /* TradingviewChartView.swift */; };
-		ED47345A26E4596F003B1BB2 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = ED47345926E4596F003B1BB2 /* index.html */; };
-		ED507A4F26EF2CC500D1A022 /* NSNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */; };
-		ED507A5226EF97DA00D1A022 /* HEXRESTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */; };
-		ED507A5426EFC9D600D1A022 /* StakeCountABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5326EFC9D600D1A022 /* StakeCountABIFunction.swift */; };
-		ED507A5626EFC9FA00D1A022 /* StakeListsABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5526EFC9FA00D1A022 /* StakeListsABIFunction.swift */; };
-		ED507A5826EFD3A000D1A022 /* CurrentDayABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5726EFD3A000D1A022 /* CurrentDayABIFunction.swift */; };
-		ED507A5A26EFDE5F00D1A022 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED507A5926EFDE5F00D1A022 /* Constants.swift */; };
-		ED94771E26E44559003162D4 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94771D26E44559003162D4 /* App.swift */; };
-		ED94772026E44559003162D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94771F26E44559003162D4 /* ContentView.swift */; };
-		ED94772226E44559003162D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED94772126E44559003162D4 /* Assets.xcassets */; };
-		ED94772526E44559003162D4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED94772426E44559003162D4 /* Preview Assets.xcassets */; };
-		ED94773026E44655003162D4 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = ED94772F26E44655003162D4 /* ComposableArchitecture */; };
-		ED94773226E4468E003162D4 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94773126E4468E003162D4 /* AppReducer.swift */; };
-		ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94773326E448A1003162D4 /* SampleAppStore.swift */; };
-		EDCC3A8426E46E4A00A576B2 /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = EDCC3A8326E46E4A00A576B2 /* web3.swift */; };
-		EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */; };
-		EDE9A6D22700E751008B1F87 /* PercentageRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE9A6D12700E751008B1F87 /* PercentageRingView.swift */; };
-		EDE9A6D42700E789008B1F87 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE9A6D32700E789008B1F87 /* Double+Extensions.swift */; };
-		EDFFCC3D26FFF6E00017700F /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */; };
-		EDFFCC4026FFFB400017700F /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = EDFFCC3F26FFFB400017700F /* SwiftUIVisualEffects */; };
-		EDFFCC422700318A0017700F /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */; };
-		EDFFCC472700A28B0017700F /* StakeDetailsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFFCC462700A28B0017700F /* StakeDetailsCardView.swift */; };
+		03694F4DCB471E2C274C2E03 /* ChainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E33AE5E4828C3C88DF6F6F /* ChainModel.swift */; };
+		0C9100B388BAF2D76BBF2E35 /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE9CB8137688323C8FFC4EE /* StakeCardView.swift */; };
+		15A5B14F56E424F987EB628D /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */; };
+		2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */; };
+		2684BD9DA6E8D146AC9D88F8 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 8F7AE487FA8A9A78D1CA7AF7 /* index.html */; };
+		2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */; };
+		35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7254A74580879CE1D57F0B5B /* NSNumber+Extensions.swift */; };
+		51BEC3410EA964A987483EA2 /* HEXRESTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D1360766F77C7E34479748 /* HEXRESTAPI.swift */; };
+		52FD3F03A19D6F64F11DC1B9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */; };
+		5640CA4996A75E410A4FEFF6 /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FF74EF0E5ACE4B4C0343F7 /* StakeGroupBoxStyle.swift */; };
+		5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */; };
+		6EA19F3CD0493B47350F99B5 /* StakeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44318D06F6DDFBF8A8D1DC2 /* StakeDetailsView.swift */; };
+		6EE3C4E0E462E75622B3E7D0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF517C36EF212BA45BD85E /* App.swift */; };
+		7D8422D8310166D060476217 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */; };
+		8762623629706852978DE029 /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */; };
+		8CC28AD8FA67541669EE6E62 /* StakeDetailsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7595C261643D69745596A63 /* StakeDetailsCardView.swift */; };
+		8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */; };
+		8FF1FF204F7F1C29DC6CD982 /* TradingviewChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD8D64D146F25708B3C880D /* TradingviewChartView.swift */; };
+		98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97BE07A876D006551CAE25 /* SampleAppStore.swift */; };
+		B56A142149154BF2D807874D /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2A73BE4CFB08841463C67 /* HEXSmartContractReducer.swift */; };
+		CC785C19F759BA0622686E2E /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE5DD68DC35DC77B0F7158 /* AppView.swift */; };
+		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
+		D1192A21070C9A0B4E9C2F3A /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8661A897741D9F7E22369293 /* ChartsView.swift */; };
+		E116B69A06FF2F29A1C24AD4 /* AppViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159508FDC797208E635EE0A7 /* AppViewReducer.swift */; };
+		E55F9524A6B501613D0A68B5 /* EditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDABA209A6840CC44EA2DB01 /* EditAddressView.swift */; };
+		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
+		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
+		EB07FC8C061C9EE62D12B1A5 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F566D219A3EE9DD765B2A15A /* AccountsView.swift */; };
+		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
+		F529BC6F4DA1C825F82C1220 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 444317EC2D324F520CBE85B9 /* ComposableArchitecture */; };
+		F9D31BABEB128F709FF24E19 /* SampleStakes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D23AAE8F6F76901D1F55EE2 /* SampleStakes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		ED047F5826F18E350062F47F /* EditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressView.swift; sourceTree = "<group>"; };
-		ED1E970126EEDCE5009C469A /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
-		ED38706126F6683E00369175 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		ED38706226F7CB4200369175 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
-		ED38706426F7CCE300369175 /* SampleStakes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleStakes.swift; sourceTree = "<group>"; };
-		ED3C9EFB26EF196800D01257 /* BigUInt+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigUInt+Extensions.swift"; sourceTree = "<group>"; };
-		ED47344F26E454A3003B1BB2 /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
-		ED47345126E454AD003B1BB2 /* AccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsView.swift; sourceTree = "<group>"; };
-		ED47345426E454C1003B1BB2 /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
-		ED47345626E457CF003B1BB2 /* TradingviewChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingviewChartView.swift; sourceTree = "<group>"; };
-		ED47345926E4596F003B1BB2 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Extensions.swift"; sourceTree = "<group>"; };
-		ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXRESTAPI.swift; sourceTree = "<group>"; };
-		ED507A5326EFC9D600D1A022 /* StakeCountABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCountABIFunction.swift; sourceTree = "<group>"; };
-		ED507A5526EFC9FA00D1A022 /* StakeListsABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeListsABIFunction.swift; sourceTree = "<group>"; };
-		ED507A5726EFD3A000D1A022 /* CurrentDayABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDayABIFunction.swift; sourceTree = "<group>"; };
-		ED507A5926EFDE5F00D1A022 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		ED94771A26E44559003162D4 /* HEX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED94771D26E44559003162D4 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
-		ED94771F26E44559003162D4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		ED94772126E44559003162D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		ED94772426E44559003162D4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		ED94773126E4468E003162D4 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
-		ED94773326E448A1003162D4 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
-		EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataRangeABIFunction.swift; sourceTree = "<group>"; };
-		EDE9A6D12700E751008B1F87 /* PercentageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageRingView.swift; sourceTree = "<group>"; };
-		EDE9A6D32700E789008B1F87 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
-		EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCardView.swift; sourceTree = "<group>"; };
-		EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
-		EDFFCC462700A28B0017700F /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
+		117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigUInt+Extensions.swift"; sourceTree = "<group>"; };
+		159508FDC797208E635EE0A7 /* AppViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewReducer.swift; sourceTree = "<group>"; };
+		1DD8D64D146F25708B3C880D /* TradingviewChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingviewChartView.swift; sourceTree = "<group>"; };
+		1DDF517C36EF212BA45BD85E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DE9CB8137688323C8FFC4EE /* StakeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCardView.swift; sourceTree = "<group>"; };
+		3EF2A73BE4CFB08841463C67 /* HEXSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXSmartContractReducer.swift; sourceTree = "<group>"; };
+		4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		6D23AAE8F6F76901D1F55EE2 /* SampleStakes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleStakes.swift; sourceTree = "<group>"; };
+		7254A74580879CE1D57F0B5B /* NSNumber+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Extensions.swift"; sourceTree = "<group>"; };
+		75FF74EF0E5ACE4B4C0343F7 /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
+		7AD673A6150107EFA969E218 /* DailyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataModel.swift; sourceTree = "<group>"; };
+		7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
+		7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8661A897741D9F7E22369293 /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
+		8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8F7AE487FA8A9A78D1CA7AF7 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		A3DB463B6EBF2B66F87C6D1B /* HEXSmartContract */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HEXSmartContract; path = Packages/HEXSmartContract; sourceTree = SOURCE_ROOT; };
+		A44318D06F6DDFBF8A8D1DC2 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
+		A4EE5DD68DC35DC77B0F7158 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageRingView.swift; sourceTree = "<group>"; };
+		A7595C261643D69745596A63 /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
+		B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C8E33AE5E4828C3C88DF6F6F /* ChainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainModel.swift; sourceTree = "<group>"; };
+		CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeModel.swift; sourceTree = "<group>"; };
+		CD97BE07A876D006551CAE25 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
+		D3D1360766F77C7E34479748 /* HEXRESTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXRESTAPI.swift; sourceTree = "<group>"; };
+		DDABA209A6840CC44EA2DB01 /* EditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressView.swift; sourceTree = "<group>"; };
+		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F566D219A3EE9DD765B2A15A /* AccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		ED94771726E44559003162D4 /* Frameworks */ = {
+		9EA6DFD4D94400AED4E5D66F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDCC3A8426E46E4A00A576B2 /* web3.swift in Frameworks */,
-				ED94773026E44655003162D4 /* ComposableArchitecture in Frameworks */,
-				EDFFCC4026FFFB400017700F /* SwiftUIVisualEffects in Frameworks */,
+				E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */,
+				F529BC6F4DA1C825F82C1220 /* ComposableArchitecture in Frameworks */,
+				15A5B14F56E424F987EB628D /* IdentifiedCollections in Frameworks */,
+				8762623629706852978DE029 /* SwiftUIVisualEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		ED1E970026EEDCDB009C469A /* Plan */ = {
+		0274987511660F32ADBD8FAF /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				ED1E970126EEDCE5009C469A /* PlanView.swift */,
+				EB0066F4C337E2DEAEF7927D /* Info.plist */,
 			);
-			path = Plan;
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		ED47344C26E45478003B1BB2 /* Charts */ = {
+		184F9CCBCFA3BF831BBC7ED2 = {
 			isa = PBXGroup;
 			children = (
-				ED47345426E454C1003B1BB2 /* ChartsView.swift */,
-				ED47345626E457CF003B1BB2 /* TradingviewChartView.swift */,
+				9EC91AB47259A4E07ABDDDA4 /* Apps */,
+				9797DD6B37CA2C154F244CCA /* Packages */,
+				5FC98121009B3C2AE2BEEC8D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2189B6BB95D20E18D61637A1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */,
+				4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */,
+				7254A74580879CE1D57F0B5B /* NSNumber+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2E0E3972D291E010FA3D2F8A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */,
+				C8E33AE5E4828C3C88DF6F6F /* ChainModel.swift */,
+				7AD673A6150107EFA969E218 /* DailyDataModel.swift */,
+				CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4455585EB75E9BC452971505 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				8661A897741D9F7E22369293 /* ChartsView.swift */,
+				1DD8D64D146F25708B3C880D /* TradingviewChartView.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
 		};
-		ED47344D26E45485003B1BB2 /* Accounts */ = {
+		575AC1FA576C3016FA51E267 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				ED47345126E454AD003B1BB2 /* AccountsView.swift */,
-				ED047F5826F18E350062F47F /* EditAddressView.swift */,
-				ED38706226F7CB4200369175 /* StakeDetailsView.swift */,
-				EDFFCC3C26FFF6E00017700F /* StakeCardView.swift */,
-				EDFFCC462700A28B0017700F /* StakeDetailsCardView.swift */,
+				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
 			);
-			path = Accounts;
+			path = Resources;
 			sourceTree = "<group>";
 		};
-		ED47344E26E4548A003B1BB2 /* Calculator */ = {
+		5FC98121009B3C2AE2BEEC8D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ED47344F26E454A3003B1BB2 /* CalculatorView.swift */,
-			);
-			path = Calculator;
-			sourceTree = "<group>";
-		};
-		ED47345826E4595A003B1BB2 /* HTML */ = {
-			isa = PBXGroup;
-			children = (
-				ED47345926E4596F003B1BB2 /* index.html */,
-			);
-			path = HTML;
-			sourceTree = "<group>";
-		};
-		ED94771126E44559003162D4 = {
-			isa = PBXGroup;
-			children = (
-				ED94771C26E44559003162D4 /* HEX */,
-				ED94771B26E44559003162D4 /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		ED94771B26E44559003162D4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ED94771A26E44559003162D4 /* HEX.app */,
+				210D963E491A8FBE29AF4297 /* HEX.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		ED94771C26E44559003162D4 /* HEX */ = {
+		616E00B83079E41CBA823645 /* HTML */ = {
 			isa = PBXGroup;
 			children = (
-				ED38706126F6683E00369175 /* Info.plist */,
-				ED1E970026EEDCDB009C469A /* Plan */,
-				EDCC3A8526E4771800A576B2 /* HEXContract */,
-				ED47345826E4595A003B1BB2 /* HTML */,
-				ED47344E26E4548A003B1BB2 /* Calculator */,
-				ED47344D26E45485003B1BB2 /* Accounts */,
-				ED47344C26E45478003B1BB2 /* Charts */,
-				ED94771D26E44559003162D4 /* App.swift */,
-				ED94773126E4468E003162D4 /* AppReducer.swift */,
-				ED94771F26E44559003162D4 /* ContentView.swift */,
-				ED94772126E44559003162D4 /* Assets.xcassets */,
-				ED94772326E44559003162D4 /* Preview Content */,
-				ED3C9EFB26EF196800D01257 /* BigUInt+Extensions.swift */,
-				ED507A4E26EF2CC500D1A022 /* NSNumber+Extensions.swift */,
-				ED507A5126EF97DA00D1A022 /* HEXRESTAPI.swift */,
-				ED507A5926EFDE5F00D1A022 /* Constants.swift */,
-				EDFFCC412700318A0017700F /* StakeGroupBoxStyle.swift */,
-				EDE9A6D12700E751008B1F87 /* PercentageRingView.swift */,
-				EDE9A6D32700E789008B1F87 /* Double+Extensions.swift */,
+				8F7AE487FA8A9A78D1CA7AF7 /* index.html */,
+			);
+			path = HTML;
+			sourceTree = "<group>";
+		};
+		9797DD6B37CA2C154F244CCA /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				A3DB463B6EBF2B66F87C6D1B /* HEXSmartContract */,
+			);
+			name = Packages;
+			sourceTree = SOURCE_ROOT;
+		};
+		9EC91AB47259A4E07ABDDDA4 /* Apps */ = {
+			isa = PBXGroup;
+			children = (
+				FA53A81348801277D5DFC836 /* HEX */,
+			);
+			path = Apps;
+			sourceTree = "<group>";
+		};
+		C857CA1EC3CAD9122BD5EFC4 /* PreviewContent */ = {
+			isa = PBXGroup;
+			children = (
+				B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */,
+				CD97BE07A876D006551CAE25 /* SampleAppStore.swift */,
+				6D23AAE8F6F76901D1F55EE2 /* SampleStakes.swift */,
+			);
+			path = PreviewContent;
+			sourceTree = "<group>";
+		};
+		E717C245D7B1917174022557 /* Accounts */ = {
+			isa = PBXGroup;
+			children = (
+				F566D219A3EE9DD765B2A15A /* AccountsView.swift */,
+				DDABA209A6840CC44EA2DB01 /* EditAddressView.swift */,
+				3DE9CB8137688323C8FFC4EE /* StakeCardView.swift */,
+				A7595C261643D69745596A63 /* StakeDetailsCardView.swift */,
+				A44318D06F6DDFBF8A8D1DC2 /* StakeDetailsView.swift */,
+			);
+			path = Accounts;
+			sourceTree = "<group>";
+		};
+		E8A88478808885F930928A06 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				1DDF517C36EF212BA45BD85E /* App.swift */,
+				A4EE5DD68DC35DC77B0F7158 /* AppView.swift */,
+				159508FDC797208E635EE0A7 /* AppViewReducer.swift */,
+				8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */,
+				D3D1360766F77C7E34479748 /* HEXRESTAPI.swift */,
+				3EF2A73BE4CFB08841463C67 /* HEXSmartContractReducer.swift */,
+				A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */,
+				75FF74EF0E5ACE4B4C0343F7 /* StakeGroupBoxStyle.swift */,
+				E717C245D7B1917174022557 /* Accounts */,
+				4455585EB75E9BC452971505 /* Charts */,
+				2189B6BB95D20E18D61637A1 /* Extensions */,
+				616E00B83079E41CBA823645 /* HTML */,
+				2E0E3972D291E010FA3D2F8A /* Models */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		FA53A81348801277D5DFC836 /* HEX */ = {
+			isa = PBXGroup;
+			children = (
+				C857CA1EC3CAD9122BD5EFC4 /* PreviewContent */,
+				575AC1FA576C3016FA51E267 /* Resources */,
+				E8A88478808885F930928A06 /* Sources */,
+				0274987511660F32ADBD8FAF /* SupportingFiles */,
 			);
 			path = HEX;
 			sourceTree = "<group>";
 		};
-		ED94772326E44559003162D4 /* Preview Content */ = {
+		"TEMP_7B358B06-B17D-47B8-86F3-8477E8C0D568" /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				ED94772426E44559003162D4 /* Preview Assets.xcassets */,
-				ED94773326E448A1003162D4 /* SampleAppStore.swift */,
-				ED38706426F7CCE300369175 /* SampleStakes.swift */,
+				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
 			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		EDCC3A8526E4771800A576B2 /* HEXContract */ = {
-			isa = PBXGroup;
-			children = (
-				EDCC3A8626E4772F00A576B2 /* DailyDataRangeABIFunction.swift */,
-				ED507A5326EFC9D600D1A022 /* StakeCountABIFunction.swift */,
-				ED507A5526EFC9FA00D1A022 /* StakeListsABIFunction.swift */,
-				ED507A5726EFD3A000D1A022 /* CurrentDayABIFunction.swift */,
-			);
-			path = HEXContract;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		ED94771926E44559003162D4 /* HEX */ = {
+		BEEA04362609402497B76738 /* HEX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ED94772826E44559003162D4 /* Build configuration list for PBXNativeTarget "HEX" */;
+			buildConfigurationList = B3C1D483ED031C8E34A4AD76 /* Build configuration list for PBXNativeTarget "HEX" */;
 			buildPhases = (
-				ED94771626E44559003162D4 /* Sources */,
-				ED94771726E44559003162D4 /* Frameworks */,
-				ED94771826E44559003162D4 /* Resources */,
+				A2F50650B6EB19A852252251 /* Sources */,
+				6AFC4253892E079DDD2F23A4 /* Resources */,
+				9EA6DFD4D94400AED4E5D66F /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -212,108 +253,124 @@
 			);
 			name = HEX;
 			packageProductDependencies = (
-				ED94772F26E44655003162D4 /* ComposableArchitecture */,
-				EDCC3A8326E46E4A00A576B2 /* web3.swift */,
-				EDFFCC3F26FFFB400017700F /* SwiftUIVisualEffects */,
+				91CFA55A0676A6312247857C /* HEXSmartContract */,
+				444317EC2D324F520CBE85B9 /* ComposableArchitecture */,
+				88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */,
+				F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */,
 			);
 			productName = HEX;
-			productReference = ED94771A26E44559003162D4 /* HEX.app */;
+			productReference = 210D963E491A8FBE29AF4297 /* HEX.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		ED94771226E44559003162D4 /* Project object */ = {
+		7ACFF8AA164BBAD3832BE903 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1200;
 				TargetAttributes = {
-					ED94771926E44559003162D4 = {
-						CreatedOnToolsVersion = 13.0;
+					BEEA04362609402497B76738 = {
+						DevelopmentTeam = K78G42H4U2;
 					};
 				};
 			};
-			buildConfigurationList = ED94771526E44559003162D4 /* Build configuration list for PBXProject "HEX" */;
-			compatibilityVersion = "Xcode 13.0";
+			buildConfigurationList = F8CE563E6987D9147320DD0F /* Build configuration list for PBXProject "HEX" */;
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				en,
 			);
-			mainGroup = ED94771126E44559003162D4;
+			mainGroup = 184F9CCBCFA3BF831BBC7ED2;
 			packageReferences = (
-				ED94772E26E44655003162D4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				EDCC3A8226E46E4A00A576B2 /* XCRemoteSwiftPackageReference "web3" */,
-				EDFFCC3E26FFFB400017700F /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */,
+				95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				0D4F14F86CFAA75A69AE1DA2 /* XCRemoteSwiftPackageReference "swift-identified-collections" */,
+				C75F4C07C428F5C67C9471FF /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */,
 			);
-			productRefGroup = ED94771B26E44559003162D4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				ED94771926E44559003162D4 /* HEX */,
+				BEEA04362609402497B76738 /* HEX */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		ED94771826E44559003162D4 /* Resources */ = {
+		6AFC4253892E079DDD2F23A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED47345A26E4596F003B1BB2 /* index.html in Resources */,
-				ED94772526E44559003162D4 /* Preview Assets.xcassets in Resources */,
-				ED94772226E44559003162D4 /* Assets.xcassets in Resources */,
+				7D8422D8310166D060476217 /* Assets.xcassets in Resources */,
+				52FD3F03A19D6F64F11DC1B9 /* Preview Assets.xcassets in Resources */,
+				2684BD9DA6E8D146AC9D88F8 /* index.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		ED94771626E44559003162D4 /* Sources */ = {
+		A2F50650B6EB19A852252251 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED47345526E454C1003B1BB2 /* ChartsView.swift in Sources */,
-				ED507A5A26EFDE5F00D1A022 /* Constants.swift in Sources */,
-				ED94773226E4468E003162D4 /* AppReducer.swift in Sources */,
-				ED47345026E454A3003B1BB2 /* CalculatorView.swift in Sources */,
-				ED94772026E44559003162D4 /* ContentView.swift in Sources */,
-				EDCC3A8726E4772F00A576B2 /* DailyDataRangeABIFunction.swift in Sources */,
-				EDFFCC3D26FFF6E00017700F /* StakeCardView.swift in Sources */,
-				ED47345226E454AD003B1BB2 /* AccountsView.swift in Sources */,
-				EDE9A6D22700E751008B1F87 /* PercentageRingView.swift in Sources */,
-				ED3C9EFC26EF196800D01257 /* BigUInt+Extensions.swift in Sources */,
-				ED047F5926F18E350062F47F /* EditAddressView.swift in Sources */,
-				EDFFCC472700A28B0017700F /* StakeDetailsCardView.swift in Sources */,
-				ED94771E26E44559003162D4 /* App.swift in Sources */,
-				ED38706526F7CCE300369175 /* SampleStakes.swift in Sources */,
-				EDE9A6D42700E789008B1F87 /* Double+Extensions.swift in Sources */,
-				ED38706326F7CB4200369175 /* StakeDetailsView.swift in Sources */,
-				ED507A5626EFC9FA00D1A022 /* StakeListsABIFunction.swift in Sources */,
-				ED507A5826EFD3A000D1A022 /* CurrentDayABIFunction.swift in Sources */,
-				ED507A4F26EF2CC500D1A022 /* NSNumber+Extensions.swift in Sources */,
-				ED47345726E457CF003B1BB2 /* TradingviewChartView.swift in Sources */,
-				ED94773426E448A1003162D4 /* SampleAppStore.swift in Sources */,
-				EDFFCC422700318A0017700F /* StakeGroupBoxStyle.swift in Sources */,
-				ED507A5426EFC9D600D1A022 /* StakeCountABIFunction.swift in Sources */,
-				ED1E970226EEDCE5009C469A /* PlanView.swift in Sources */,
-				ED507A5226EF97DA00D1A022 /* HEXRESTAPI.swift in Sources */,
+				2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */,
+				EB07FC8C061C9EE62D12B1A5 /* AccountsView.swift in Sources */,
+				6EE3C4E0E462E75622B3E7D0 /* App.swift in Sources */,
+				CC785C19F759BA0622686E2E /* AppView.swift in Sources */,
+				E116B69A06FF2F29A1C24AD4 /* AppViewReducer.swift in Sources */,
+				2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */,
+				03694F4DCB471E2C274C2E03 /* ChainModel.swift in Sources */,
+				D1192A21070C9A0B4E9C2F3A /* ChartsView.swift in Sources */,
+				E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */,
+				CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */,
+				8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */,
+				E55F9524A6B501613D0A68B5 /* EditAddressView.swift in Sources */,
+				51BEC3410EA964A987483EA2 /* HEXRESTAPI.swift in Sources */,
+				B56A142149154BF2D807874D /* HEXSmartContractReducer.swift in Sources */,
+				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
+				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
+				98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */,
+				F9D31BABEB128F709FF24E19 /* SampleStakes.swift in Sources */,
+				0C9100B388BAF2D76BBF2E35 /* StakeCardView.swift in Sources */,
+				8CC28AD8FA67541669EE6E62 /* StakeDetailsCardView.swift in Sources */,
+				6EA19F3CD0493B47350F99B5 /* StakeDetailsView.swift in Sources */,
+				5640CA4996A75E410A4FEFF6 /* StakeGroupBoxStyle.swift in Sources */,
+				EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */,
+				8FF1FF204F7F1C29DC6CD982 /* TradingviewChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		ED94772626E44559003162D4 /* Debug */ = {
+		86182B0E39D155D485C6CFD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_ASSET_PATHS = Apps/HEX/PreviewContent;
+				INFOPLIST_FILE = Apps/HEX/SupportingFiles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeblau.HEX;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_WORKSPACE = YES;
+			};
+			name = Debug;
+		};
+		9003B18185D267EF00920518 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -341,7 +398,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 6;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = K78G42H4U2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -349,8 +408,8 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"DEBUG=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -359,22 +418,25 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		ED94772726E44559003162D4 /* Release */ = {
+		91AE3132EAD8DAB22DFC4A82 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -402,7 +464,9 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = K78G42H4U2;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -414,148 +478,107 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				VALIDATE_PRODUCT = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
-		ED94772926E44559003162D4 /* Debug */ = {
+		98B8F00AD40336D5EC9E66CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_ASSET_PATHS = "\"HEX/Preview Content\"";
-				DEVELOPMENT_TEAM = K78G42H4U2;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HEX/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_ASSET_PATHS = Apps/HEX/PreviewContent;
+				INFOPLIST_FILE = Apps/HEX/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeblau.HEX;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
-		ED94772A26E44559003162D4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_ASSET_PATHS = "\"HEX/Preview Content\"";
-				DEVELOPMENT_TEAM = K78G42H4U2;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = HEX/Info.plist;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.joeblau.HEX;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		ED94771526E44559003162D4 /* Build configuration list for PBXProject "HEX" */ = {
+		B3C1D483ED031C8E34A4AD76 /* Build configuration list for PBXNativeTarget "HEX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				ED94772626E44559003162D4 /* Debug */,
-				ED94772726E44559003162D4 /* Release */,
+				86182B0E39D155D485C6CFD4 /* Debug */,
+				98B8F00AD40336D5EC9E66CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		ED94772826E44559003162D4 /* Build configuration list for PBXNativeTarget "HEX" */ = {
+		F8CE563E6987D9147320DD0F /* Build configuration list for PBXProject "HEX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				ED94772926E44559003162D4 /* Debug */,
-				ED94772A26E44559003162D4 /* Release */,
+				9003B18185D267EF00920518 /* Debug */,
+				91AE3132EAD8DAB22DFC4A82 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		ED94772E26E44655003162D4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+		0D4F14F86CFAA75A69AE1DA2 /* XCRemoteSwiftPackageReference "swift-identified-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			repositoryURL = "https://github.com/pointfreeco/swift-identified-collections.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
+				minimumVersion = 0.3.0;
 			};
 		};
-		EDCC3A8226E46E4A00A576B2 /* XCRemoteSwiftPackageReference "web3" */ = {
+		95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/argentlabs/web3.swift";
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.8.1;
+				minimumVersion = 0.17.0;
 			};
 		};
-		EDFFCC3E26FFFB400017700F /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */ = {
+		C75F4C07C428F5C67C9471FF /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/lucasbrown/swiftui-visual-effects.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		ED94772F26E44655003162D4 /* ComposableArchitecture */ = {
+		444317EC2D324F520CBE85B9 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = ED94772E26E44655003162D4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			package = 95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
-		EDCC3A8326E46E4A00A576B2 /* web3.swift */ = {
+		88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EDCC3A8226E46E4A00A576B2 /* XCRemoteSwiftPackageReference "web3" */;
-			productName = web3.swift;
+			package = 0D4F14F86CFAA75A69AE1DA2 /* XCRemoteSwiftPackageReference "swift-identified-collections" */;
+			productName = IdentifiedCollections;
 		};
-		EDFFCC3F26FFFB400017700F /* SwiftUIVisualEffects */ = {
+		91CFA55A0676A6312247857C /* HEXSmartContract */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EDFFCC3E26FFFB400017700F /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */;
+			productName = HEXSmartContract;
+		};
+		F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C75F4C07C428F5C67C9471FF /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */;
 			productName = SwiftUIVisualEffects;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = ED94771226E44559003162D4 /* Project object */;
+	rootObject = 7ACFF8AA164BBAD3832BE903 /* Project object */;
 }
