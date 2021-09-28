@@ -1,6 +1,7 @@
 // StakeDetailsCardView.swift
 // Copyright (c) 2021 Joe Blau
 
+import HEXREST
 import SwiftUI
 
 struct StakeDetailsCardView: View {
@@ -24,7 +25,7 @@ struct StakeDetailsCardView: View {
                 Spacer()
                 VStack(alignment: .trailing) {
                     Text(stake.stakedHearts
-                            .hexAt(price: hexPrice.hexUsd)
+                        .hexAt(price: hexPrice.hexUsd)
                         .currencyStringSuffix).foregroundColor(.primary)
                     Text(stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
                 }

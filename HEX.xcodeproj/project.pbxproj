@@ -7,72 +7,72 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03694F4DCB471E2C274C2E03 /* ChainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E33AE5E4828C3C88DF6F6F /* ChainModel.swift */; };
-		0C9100B388BAF2D76BBF2E35 /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE9CB8137688323C8FFC4EE /* StakeCardView.swift */; };
-		15A5B14F56E424F987EB628D /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */; };
+		15A5B14F56E424F987EB628D /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 444317EC2D324F520CBE85B9 /* ComposableArchitecture */; };
 		2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */; };
-		2684BD9DA6E8D146AC9D88F8 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 8F7AE487FA8A9A78D1CA7AF7 /* index.html */; };
+		272864C27D707302918465AF /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EC50004741C666AA20180 /* AppView.swift */; };
+		281CDE7E994671A7D59FDB7D /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */; };
 		2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */; };
 		35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7254A74580879CE1D57F0B5B /* NSNumber+Extensions.swift */; };
-		51BEC3410EA964A987483EA2 /* HEXRESTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D1360766F77C7E34479748 /* HEXRESTAPI.swift */; };
+		38ECF3516F587DDB5C816F2B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFCB070A01C6E3E3CB59BB /* App.swift */; };
+		3920D3217BD4AD7C4F21AEE9 /* StakeTotalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */; };
+		4AF473CDE829B16639DD6BE3 /* EditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6D31C243C81BEE013D6547 /* EditAddressView.swift */; };
 		52FD3F03A19D6F64F11DC1B9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */; };
-		5640CA4996A75E410A4FEFF6 /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FF74EF0E5ACE4B4C0343F7 /* StakeGroupBoxStyle.swift */; };
+		559A9CC38F7C9CAE8BF88604 /* StakeDetailsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */; };
 		5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */; };
-		6EA19F3CD0493B47350F99B5 /* StakeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44318D06F6DDFBF8A8D1DC2 /* StakeDetailsView.swift */; };
-		6EE3C4E0E462E75622B3E7D0 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDF517C36EF212BA45BD85E /* App.swift */; };
+		641B864855B2593A479F561B /* AppViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DBF49D004E00EE95C96479 /* AppViewReducer.swift */; };
+		74D28048802B53B2C69F9EF6 /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C81D66CAB957125308B7010 /* StakeCardView.swift */; };
 		7D8422D8310166D060476217 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */; };
-		8762623629706852978DE029 /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */; };
-		8CC28AD8FA67541669EE6E62 /* StakeDetailsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7595C261643D69745596A63 /* StakeDetailsCardView.swift */; };
+		8762623629706852978DE029 /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */; };
+		893D7552D989DCF03EB4FDF0 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 230728B8D69D958751745D31 /* index.html */; };
 		8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */; };
-		8FF1FF204F7F1C29DC6CD982 /* TradingviewChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD8D64D146F25708B3C880D /* TradingviewChartView.swift */; };
+		8F9E6D637FDA37CBB3BC00AA /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694B1DA5DF0377977B34F9C /* ChartsView.swift */; };
+		93ABDD68901F0B237BE4C642 /* TradingviewChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88926926504D1FC51E75CAD9 /* TradingviewChartView.swift */; };
 		98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97BE07A876D006551CAE25 /* SampleAppStore.swift */; };
-		B56A142149154BF2D807874D /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF2A73BE4CFB08841463C67 /* HEXSmartContractReducer.swift */; };
-		CC785C19F759BA0622686E2E /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EE5DD68DC35DC77B0F7158 /* AppView.swift */; };
+		B3FDC626A1314EDA5EC1194A /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */; };
+		B47647423BAF6BDF59F01BD1 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DFEC316C64640DC5205E43 /* AccountsView.swift */; };
+		BE94256F6E38266AD8D0FB68 /* StakeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */; };
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
-		D1192A21070C9A0B4E9C2F3A /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8661A897741D9F7E22369293 /* ChartsView.swift */; };
-		E116B69A06FF2F29A1C24AD4 /* AppViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159508FDC797208E635EE0A7 /* AppViewReducer.swift */; };
-		E55F9524A6B501613D0A68B5 /* EditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDABA209A6840CC44EA2DB01 /* EditAddressView.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
-		EB07FC8C061C9EE62D12B1A5 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F566D219A3EE9DD765B2A15A /* AccountsView.swift */; };
+		ED5982A82703990800A08E9A /* AccountDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5982A72703990800A08E9A /* AccountDataModel.swift */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
-		EDEA665B270347270027AD03 /* StakeTotalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEA665A270347270027AD03 /* StakeTotalModel.swift */; };
-		F529BC6F4DA1C825F82C1220 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 444317EC2D324F520CBE85B9 /* ComposableArchitecture */; };
+		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
+		F529BC6F4DA1C825F82C1220 /* HEXREST in Frameworks */ = {isa = PBXBuildFile; productRef = 14471AE898FE9C16BE145C44 /* HEXREST */; };
 		F9D31BABEB128F709FF24E19 /* SampleStakes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D23AAE8F6F76901D1F55EE2 /* SampleStakes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C81D66CAB957125308B7010 /* StakeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCardView.swift; sourceTree = "<group>"; };
 		117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigUInt+Extensions.swift"; sourceTree = "<group>"; };
-		159508FDC797208E635EE0A7 /* AppViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewReducer.swift; sourceTree = "<group>"; };
-		1DD8D64D146F25708B3C880D /* TradingviewChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingviewChartView.swift; sourceTree = "<group>"; };
-		1DDF517C36EF212BA45BD85E /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		12DBF49D004E00EE95C96479 /* AppViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewReducer.swift; sourceTree = "<group>"; };
+		1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
 		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3DE9CB8137688323C8FFC4EE /* StakeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeCardView.swift; sourceTree = "<group>"; };
-		3EF2A73BE4CFB08841463C67 /* HEXSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXSmartContractReducer.swift; sourceTree = "<group>"; };
+		230728B8D69D958751745D31 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
+		2D56D72C21058B5DDC3BDE89 /* hex-smart-contract */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-smart-contract"; path = "Packages/hex-smart-contract"; sourceTree = SOURCE_ROOT; };
+		4A6D31C243C81BEE013D6547 /* EditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressView.swift; sourceTree = "<group>"; };
 		4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		56DFEC316C64640DC5205E43 /* AccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsView.swift; sourceTree = "<group>"; };
+		6C4EC50004741C666AA20180 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		6D23AAE8F6F76901D1F55EE2 /* SampleStakes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleStakes.swift; sourceTree = "<group>"; };
 		7254A74580879CE1D57F0B5B /* NSNumber+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Extensions.swift"; sourceTree = "<group>"; };
-		75FF74EF0E5ACE4B4C0343F7 /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
 		7AD673A6150107EFA969E218 /* DailyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataModel.swift; sourceTree = "<group>"; };
 		7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
+		7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeTotalModel.swift; sourceTree = "<group>"; };
 		7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8661A897741D9F7E22369293 /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
+		7EFFCB070A01C6E3E3CB59BB /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		88926926504D1FC51E75CAD9 /* TradingviewChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingviewChartView.swift; sourceTree = "<group>"; };
 		8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		8F7AE487FA8A9A78D1CA7AF7 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		A3DB463B6EBF2B66F87C6D1B /* HEXSmartContract */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HEXSmartContract; path = Packages/HEXSmartContract; sourceTree = SOURCE_ROOT; };
-		A44318D06F6DDFBF8A8D1DC2 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
-		A4EE5DD68DC35DC77B0F7158 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageRingView.swift; sourceTree = "<group>"; };
-		A7595C261643D69745596A63 /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
+		A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXSmartContractReducer.swift; sourceTree = "<group>"; };
 		B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		C8E33AE5E4828C3C88DF6F6F /* ChainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainModel.swift; sourceTree = "<group>"; };
 		CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeModel.swift; sourceTree = "<group>"; };
 		CD97BE07A876D006551CAE25 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
-		D3D1360766F77C7E34479748 /* HEXRESTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXRESTAPI.swift; sourceTree = "<group>"; };
-		DDABA209A6840CC44EA2DB01 /* EditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressView.swift; sourceTree = "<group>"; };
+		D694B1DA5DF0377977B34F9C /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
+		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		EDEA665A270347270027AD03 /* StakeTotalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeTotalModel.swift; sourceTree = "<group>"; };
-		F566D219A3EE9DD765B2A15A /* AccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsView.swift; sourceTree = "<group>"; };
+		ED5982A72703990800A08E9A /* AccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataModel.swift; sourceTree = "<group>"; };
+		F0738425D18A2BAF07C68CAC /* hex-rest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-rest"; path = "Packages/hex-rest"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,9 +81,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */,
-				F529BC6F4DA1C825F82C1220 /* ComposableArchitecture in Frameworks */,
-				15A5B14F56E424F987EB628D /* IdentifiedCollections in Frameworks */,
-				8762623629706852978DE029 /* SwiftUIVisualEffects in Frameworks */,
+				F529BC6F4DA1C825F82C1220 /* HEXREST in Frameworks */,
+				15A5B14F56E424F987EB628D /* ComposableArchitecture in Frameworks */,
+				8762623629706852978DE029 /* IdentifiedCollections in Frameworks */,
+				281CDE7E994671A7D59FDB7D /* SwiftUIVisualEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,28 +122,19 @@
 			isa = PBXGroup;
 			children = (
 				7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */,
-				C8E33AE5E4828C3C88DF6F6F /* ChainModel.swift */,
 				7AD673A6150107EFA969E218 /* DailyDataModel.swift */,
 				CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */,
-				EDEA665A270347270027AD03 /* StakeTotalModel.swift */,
+				7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */,
+				ED5982A72703990800A08E9A /* AccountDataModel.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		4455585EB75E9BC452971505 /* Charts */ = {
-			isa = PBXGroup;
-			children = (
-				8661A897741D9F7E22369293 /* ChartsView.swift */,
-				1DD8D64D146F25708B3C880D /* TradingviewChartView.swift */,
-			);
-			path = Charts;
 			sourceTree = "<group>";
 		};
 		575AC1FA576C3016FA51E267 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8F7AE487FA8A9A78D1CA7AF7 /* index.html */,
 				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
+				230728B8D69D958751745D31 /* index.html */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -155,10 +147,32 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		90BE8DA6D5A1BF4EF796BA89 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
+		914DAE34AA3B7586609FAD81 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				7EFFCB070A01C6E3E3CB59BB /* App.swift */,
+				6C4EC50004741C666AA20180 /* AppView.swift */,
+				12DBF49D004E00EE95C96479 /* AppViewReducer.swift */,
+				A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */,
+				CBF66A67479E6E83DD335C7F /* Accounts */,
+				C71267E75C8575AF88008CF8 /* Charts */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		9797DD6B37CA2C154F244CCA /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				A3DB463B6EBF2B66F87C6D1B /* HEXSmartContract */,
+				F0738425D18A2BAF07C68CAC /* hex-rest */,
+				2D56D72C21058B5DDC3BDE89 /* hex-smart-contract */,
 			);
 			name = Packages;
 			sourceTree = SOURCE_ROOT;
@@ -171,6 +185,15 @@
 			path = Apps;
 			sourceTree = "<group>";
 		};
+		C71267E75C8575AF88008CF8 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				D694B1DA5DF0377977B34F9C /* ChartsView.swift */,
+				88926926504D1FC51E75CAD9 /* TradingviewChartView.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
 		C857CA1EC3CAD9122BD5EFC4 /* PreviewContent */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,14 +204,14 @@
 			path = PreviewContent;
 			sourceTree = "<group>";
 		};
-		E717C245D7B1917174022557 /* Accounts */ = {
+		CBF66A67479E6E83DD335C7F /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
-				F566D219A3EE9DD765B2A15A /* AccountsView.swift */,
-				DDABA209A6840CC44EA2DB01 /* EditAddressView.swift */,
-				3DE9CB8137688323C8FFC4EE /* StakeCardView.swift */,
-				A7595C261643D69745596A63 /* StakeDetailsCardView.swift */,
-				A44318D06F6DDFBF8A8D1DC2 /* StakeDetailsView.swift */,
+				56DFEC316C64640DC5205E43 /* AccountsView.swift */,
+				4A6D31C243C81BEE013D6547 /* EditAddressView.swift */,
+				0C81D66CAB957125308B7010 /* StakeCardView.swift */,
+				1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */,
+				DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */,
 			);
 			path = Accounts;
 			sourceTree = "<group>";
@@ -196,36 +219,14 @@
 		E8A88478808885F930928A06 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				EDEA665D27034B8D0027AD03 /* App */,
-				EDEA665C27034B790027AD03 /* Styles */,
 				8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */,
-				D3D1360766F77C7E34479748 /* HEXRESTAPI.swift */,
-				3EF2A73BE4CFB08841463C67 /* HEXSmartContractReducer.swift */,
 				A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */,
+				914DAE34AA3B7586609FAD81 /* App */,
 				2189B6BB95D20E18D61637A1 /* Extensions */,
 				2E0E3972D291E010FA3D2F8A /* Models */,
+				90BE8DA6D5A1BF4EF796BA89 /* Styles */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		EDEA665C27034B790027AD03 /* Styles */ = {
-			isa = PBXGroup;
-			children = (
-				75FF74EF0E5ACE4B4C0343F7 /* StakeGroupBoxStyle.swift */,
-			);
-			path = Styles;
-			sourceTree = "<group>";
-		};
-		EDEA665D27034B8D0027AD03 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				E717C245D7B1917174022557 /* Accounts */,
-				4455585EB75E9BC452971505 /* Charts */,
-				1DDF517C36EF212BA45BD85E /* App.swift */,
-				A4EE5DD68DC35DC77B0F7158 /* AppView.swift */,
-				159508FDC797208E635EE0A7 /* AppViewReducer.swift */,
-			);
-			path = App;
 			sourceTree = "<group>";
 		};
 		FA53A81348801277D5DFC836 /* HEX */ = {
@@ -257,6 +258,7 @@
 			name = HEX;
 			packageProductDependencies = (
 				91CFA55A0676A6312247857C /* HEXSmartContract */,
+				14471AE898FE9C16BE145C44 /* HEXREST */,
 				444317EC2D324F520CBE85B9 /* ComposableArchitecture */,
 				88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */,
 				F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */,
@@ -307,7 +309,7 @@
 			files = (
 				7D8422D8310166D060476217 /* Assets.xcassets in Resources */,
 				52FD3F03A19D6F64F11DC1B9 /* Preview Assets.xcassets in Resources */,
-				2684BD9DA6E8D146AC9D88F8 /* index.html in Resources */,
+				893D7552D989DCF03EB4FDF0 /* index.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,30 +321,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */,
-				EB07FC8C061C9EE62D12B1A5 /* AccountsView.swift in Sources */,
-				6EE3C4E0E462E75622B3E7D0 /* App.swift in Sources */,
-				CC785C19F759BA0622686E2E /* AppView.swift in Sources */,
-				E116B69A06FF2F29A1C24AD4 /* AppViewReducer.swift in Sources */,
+				ED5982A82703990800A08E9A /* AccountDataModel.swift in Sources */,
+				B47647423BAF6BDF59F01BD1 /* AccountsView.swift in Sources */,
+				38ECF3516F587DDB5C816F2B /* App.swift in Sources */,
+				272864C27D707302918465AF /* AppView.swift in Sources */,
+				641B864855B2593A479F561B /* AppViewReducer.swift in Sources */,
 				2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */,
-				03694F4DCB471E2C274C2E03 /* ChainModel.swift in Sources */,
-				D1192A21070C9A0B4E9C2F3A /* ChartsView.swift in Sources */,
+				8F9E6D637FDA37CBB3BC00AA /* ChartsView.swift in Sources */,
 				E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */,
 				CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */,
 				8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */,
-				E55F9524A6B501613D0A68B5 /* EditAddressView.swift in Sources */,
-				51BEC3410EA964A987483EA2 /* HEXRESTAPI.swift in Sources */,
-				B56A142149154BF2D807874D /* HEXSmartContractReducer.swift in Sources */,
+				4AF473CDE829B16639DD6BE3 /* EditAddressView.swift in Sources */,
+				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
 				98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */,
 				F9D31BABEB128F709FF24E19 /* SampleStakes.swift in Sources */,
-				0C9100B388BAF2D76BBF2E35 /* StakeCardView.swift in Sources */,
-				8CC28AD8FA67541669EE6E62 /* StakeDetailsCardView.swift in Sources */,
-				6EA19F3CD0493B47350F99B5 /* StakeDetailsView.swift in Sources */,
-				5640CA4996A75E410A4FEFF6 /* StakeGroupBoxStyle.swift in Sources */,
-				EDEA665B270347270027AD03 /* StakeTotalModel.swift in Sources */,
+				74D28048802B53B2C69F9EF6 /* StakeCardView.swift in Sources */,
+				559A9CC38F7C9CAE8BF88604 /* StakeDetailsCardView.swift in Sources */,
+				BE94256F6E38266AD8D0FB68 /* StakeDetailsView.swift in Sources */,
+				B3FDC626A1314EDA5EC1194A /* StakeGroupBoxStyle.swift in Sources */,
 				EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */,
-				8FF1FF204F7F1C29DC6CD982 /* TradingviewChartView.swift in Sources */,
+				3920D3217BD4AD7C4F21AEE9 /* StakeTotalModel.swift in Sources */,
+				93ABDD68901F0B237BE4C642 /* TradingviewChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,6 +564,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		14471AE898FE9C16BE145C44 /* HEXREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HEXREST;
+		};
 		444317EC2D324F520CBE85B9 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
