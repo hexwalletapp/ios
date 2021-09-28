@@ -4,6 +4,7 @@
 import SwiftUI
 
 struct StakeDetailsCardView: View {
+    let hexPrice: HEXPrice
     let stake: Stake
     let account: Account
 
@@ -22,9 +23,9 @@ struct StakeDetailsCardView: View {
                 }
                 Spacer()
                 VStack(alignment: .trailing) {
-//                    Text(stake.stakedHearts
-//                        .hexAt(price: account.hexPrice)
-//                        .currencyStringSuffix).foregroundColor(.primary)
+                    Text(stake.stakedHearts
+                            .hexAt(price: hexPrice.hexUsd)
+                        .currencyStringSuffix).foregroundColor(.primary)
                     Text(stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
                 }
             }

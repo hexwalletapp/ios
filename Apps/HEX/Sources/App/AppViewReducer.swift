@@ -4,51 +4,13 @@
 import ComposableArchitecture
 import Foundation
 import HEXSmartContract
-import SwiftUI
 import IdentifiedCollections
+import SwiftUI
 
 import BigInt
 
 enum Tab {
-    case charts, accounts, calculator
-}
-
-enum StakeFilter: Equatable, CaseIterable, CustomStringConvertible {
-    case total, list
-
-    var description: String {
-        switch self {
-        case .total: return "Total"
-        case .list: return "List"
-        }
-    }
-}
-
-struct HEXPrice: Codable, Equatable {
-    var lastUpdated: Date
-    var hexEth: Double
-    var hexUsd: Double
-    var hexBtc: Double
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-
-        let date = try container.decode(String.self, forKey: .lastUpdated)
-
-        lastUpdated = dateFormatter.date(from: date) ?? Date()
-        hexEth = Double(try container.decode(String.self, forKey: .hexEth)) ?? 0
-        hexUsd = Double(try container.decode(String.self, forKey: .hexUsd)) ?? 0
-        hexBtc = Double(try container.decode(String.self, forKey: .hexBtc)) ?? 0
-    }
-}
-
-struct StakeTotal: Codable, Hashable, Equatable {
-    var stakeShares: BigUInt = 0
-    var stakeHearts: BigUInt = 0
-    var interestHearts: BigUInt = 0
-    var interestSevenDayHearts: BigUInt = 0
+    case charts, accounts
 }
 
 enum Action {
@@ -58,10 +20,11 @@ enum Action {
 struct AppState: Equatable {
     @BindableState var presentEditAddress = false
     @BindableState var selectedTab: Tab = .accounts
-    
+
     @BindableState var selectedId = ""
     @BindableState var accounts = IdentifiedArrayOf<Account>()
     var currentDay: BigUInt = 0
+    var hexPrice = HEXPrice()
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -71,21 +34,10 @@ enum AppAction: BindableAction, Equatable {
     case onBackground
     case onInactive
     case onActive
-    
+
     case account(Action, Account)
-//    case getStakes
-//    case getCurrentDay
-//    case scheduleNotification
-
-//    case getDailyDataRange(UInt16, UInt16, String)
-//    case updateStakeIDs([BigUInt], String)
-//    case updateStake(Stake, String)
-//    case updateDailyData([DailyData], String)
-//    case updateHexPrice(Result<HEXPrice, NSError>)
-//    case updateDay(BigUInt)
+    case updateHexPrice(Result<HEXPrice, NSError>)
     case binding(BindingAction<AppState>)
-
-//    case updateAccounts
 }
 
 struct AppEnvironment {
@@ -124,10 +76,15 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case .none:
             break
         }
-        
-        return environment.hexManager.getCurrentDay(id: HexManagerId()).fireAndForget()
-        
-        
+
+        return .merge(
+            HEXRESTAPI.fetchHexPrice()
+                .receive(on: environment.mainQueue)
+                .mapError { $0 as NSError }
+                .catchToEffect()
+                .map(AppAction.updateHexPrice),
+            environment.hexManager.getCurrentDay(id: HexManagerId()).fireAndForget()
+        )
 
     case let .account(action, account):
 //        switch action {
@@ -135,7 +92,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 //        case .remove: state.accounts.remove(id: account.id)
 //        }
         return .none
-        
+
 //        return Effect(value: .updateAccounts)
 
 //    case let .updateStakeIDs(stakeIDs, id):
@@ -261,16 +218,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 //        state.currentDay = day
 //        return .none
 //
-//    case let .updateHexPrice(result):
-//        switch result {
-//        case let .success(hexPrice):
-//            (0 ..< state.accounts.count).forEach { index in
-//                state.accounts[index].hexPrice = hexPrice.hexUsd
-//            }
-//        case let .failure(error):
-//            print(error)
-//        }
-//        return .none
+    case let .updateHexPrice(result):
+        switch result {
+        case let .success(hexPrice): state.hexPrice = hexPrice
+        case let .failure(error): print(error)
+        }
+        return .none
 
 //    case .scheduleNotification:
 //        return .none
@@ -311,7 +264,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 //                .eraseToEffect()
 //        )
 
-        
     case .binding(\.$selectedTab):
 //        switch state.selectedTab {
 //        case .charts, .calculator: return .none
@@ -321,11 +273,14 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .none
 
     case .binding(\.$presentEditAddress):
-//        switch state.presentEditAddress {
-//        case false: return Effect(value: .updateAccounts)
-//        case true: return .none
-//        }
-        return .none
+        switch state.presentEditAddress {
+        case false:  return .concatenate(
+            state.accounts.compactMap { account -> Effect<AppAction, Never>? in
+                environment.hexManager.getStakes(id: HexManagerId(), address: account.address).fireAndForget()
+            }
+        )
+        case true: return .none
+        }
 
     case .binding(\.$accounts):
         do {

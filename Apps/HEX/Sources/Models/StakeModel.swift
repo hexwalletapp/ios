@@ -14,6 +14,4 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let unlockedDay: UInt16
     let isAutoStake: Bool
     let percentComplete: Double
-    let interestHearts: BigUInt
-    let interestSevenDayHearts: BigUInt
 }

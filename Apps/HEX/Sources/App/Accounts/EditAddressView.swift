@@ -87,11 +87,11 @@ struct EditAddressView: View {
                 }
                 .navigationTitle("Manage Accounts")
                 .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        Button {
-                            viewStore.send(.binding(.set(\.$presentEditAddress, false)))
-                        } label: { Image(systemName: "xmark") }
-                    }
+//                    ToolbarItemGroup(placement: .navigationBarLeading) {
+//                        Button {
+//                            viewStore.send(.binding(.set(\.$presentEditAddress, false)))
+//                        } label: { Image(systemName: "xmark") }
+//                    }
                 }
             }
             .onAppear {

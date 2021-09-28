@@ -48,12 +48,12 @@ struct AccountsView: View {
     var accountList: some View {
         WithViewStore(store) { viewStore in
             switch (viewStore.accounts.isEmpty, viewStore.accounts[id: viewStore.selectedId]) {
-            case (false, .some(let account)):
+            case (false, let .some(account)):
                 ForEach(account.stakes) { stake in
-                    StakeDetailsCardView(stake: stake,
+                    StakeDetailsCardView(hexPrice: viewStore.hexPrice,
+                                         stake: stake,
                                          account: account)
                 }
-
             default:
                 EmptyView()
             }
@@ -66,7 +66,8 @@ struct AccountsView: View {
             case false:
                 TabView(selection: viewStore.binding(\.$selectedId)) {
                     ForEach(viewStore.accounts) { account in
-                        StakeCardView(account: account)
+                        StakeCardView(hexPrice: viewStore.hexPrice,
+                                      account: account)
                             .padding(.horizontal)
                             .padding(.top, k.CARD_PADDING_TOP)
                             .padding(.bottom, k.CARD_PADDING_BOTTOM)
