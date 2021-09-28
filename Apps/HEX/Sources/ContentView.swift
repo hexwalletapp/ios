@@ -4,7 +4,7 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct ContentView: View {
+struct AppView: View {
     let store: Store<AppState, AppAction>
 
     var body: some View {
@@ -23,13 +23,6 @@ struct ContentView: View {
                         Text("Accounts")
                     }
                     .tag(Tab.accounts)
-
-//                CalculatorView()
-//                    .tabItem {
-//                        Image(systemName: "plus.app.fill")
-//                        Text("Calculator")
-//                    }
-//                    .tag(Tab.calculator)
             }
         }
     }
@@ -37,9 +30,9 @@ struct ContentView: View {
 
 #if DEBUG
 
-    struct ContentView_Previews: PreviewProvider {
+    struct AppView_Previews: PreviewProvider {
         static var previews: some View {
-            ContentView(store: sampleAppStore)
+            AppView(store: sampleAppStore)
         }
     }
 
