@@ -39,6 +39,7 @@ struct AccountsView: View {
 
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Button {} label: { Image(systemName: "arrow.up.arrow.down") }
+                        .disabled(true)
                     }
                 }
             }
