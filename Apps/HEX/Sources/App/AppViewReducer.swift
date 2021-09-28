@@ -107,6 +107,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case .binding(\.$accountsData):
         do {
             let accounts = state.accountsData.map { $0.account }
+            if let lastAccount = accounts.last {
+                state.selectedId = lastAccount.address + lastAccount.chain.description
+            }
             let encodedAccounts = try environment.encoder.encode(accounts)
             UserDefaults.standard.setValue(encodedAccounts, forKey: k.ACCOUNTS_KEY)
         } catch {
