@@ -8,14 +8,18 @@ struct Account: Codable, Hashable, Equatable, Identifiable {
     var name: String = ""
     var address: String = ""
     var chain: Chain = .ethereum
-    var dailyData = [DailyData]()
     var stakes = [Stake]()
+    var total = StakeTotal()
+    
+    
+    //    var dailyData = [DailyData]()
+//    var stakesBeginDay = UInt16.max
+//    var stakesEndDay = UInt16.min
+    
 //    var hexPrice: Double = 0
 //    var stakeCount = 0
 //    var stakes = [Stake]()
-//    var total = StakeTotal()
 //    var sharesPerDay = [BigUInt]()
 //    var dailyDataList = [DailyData]()
-//    var stakesBeginDay = UInt16.max
-//    var stakesEndDay = UInt16.min
+
 }

@@ -14,6 +14,6 @@ extension BigUInt {
     }
 
     func hexAt(price: Double) -> NSNumber {
-        NSNumber(value: hex.doubleValue * price)
+        return NSNumber(value: hex.doubleValue * price)
     }
 }
