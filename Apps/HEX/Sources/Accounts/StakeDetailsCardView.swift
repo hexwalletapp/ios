@@ -22,15 +22,16 @@ struct StakeDetailsCardView: View {
                 }
                 Spacer()
                 VStack(alignment: .trailing) {
-                    Text(stake.stakedHearts
-                        .hexAt(price: account.hexPrice)
-                        .currencyStringSuffix).foregroundColor(.primary)
+//                    Text(stake.stakedHearts
+//                        .hexAt(price: account.hexPrice)
+//                        .currencyStringSuffix).foregroundColor(.primary)
                     Text(stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
                 }
             }
             .font(.body.monospacedDigit())
         } label: {
             Label("Staked \(stake.stakedDays) Days", systemImage: "calendar")
+            EmptyView()
         }
         .padding([.horizontal], 20)
         .padding([.vertical], 10)

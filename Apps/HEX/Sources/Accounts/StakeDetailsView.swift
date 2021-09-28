@@ -23,9 +23,9 @@ struct StakeDetailsView: View {
 }
 
 #if DEBUG
-    struct StakeDetailsView_Previews: PreviewProvider {
-        static var previews: some View {
-            StakeDetailsView(stake: sampleStake)
-        }
-    }
+//    struct StakeDetailsView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            StakeDetailsView(stake: sampleStake)
+//        }
+//    }
 #endif

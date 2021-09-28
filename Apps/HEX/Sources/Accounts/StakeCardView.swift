@@ -36,21 +36,21 @@ struct StakeCardView: View {
                 .blurEffectStyle(.systemMaterial)
             VStack(alignment: .leading) {
                 HStack(alignment: .top) {
-                    frontTotal(title: "Daily Payout",
-                               hearts: account.total.interestSevenDayHearts,
-                               alignment: .leading)
+//                    frontTotal(title: "Daily Payout",
+//                               hearts: account.total.interestSevenDayHearts,
+//                               alignment: .leading)
                     Spacer()
                     front(address: account.address)
                 }
                 Spacer()
                 HStack(alignment: .bottom) {
-                    frontTotal(title: "Total Balance",
-                               hearts: account.total.stakeHearts + account.total.interestHearts,
-                               alignment: .leading)
+//                    frontTotal(title: "Total Balance",
+//                               hearts: account.total.stakeHearts + account.total.interestHearts,
+//                               alignment: .leading)
                     Spacer()
-                    frontTotal(title: "Total Shares",
-                               shares: account.total.stakeShares,
-                               alignment: .trailing)
+//                    frontTotal(title: "Total Shares",
+//                               shares: account.total.stakeShares,
+//                               alignment: .trailing)
                 }
             }
             .font(.body.monospacedDigit())
@@ -74,21 +74,21 @@ struct StakeCardView: View {
                 .offset(y: MAGNETIC_STRIPE_HEIGHT)
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    Image(account.chain.description).resizable()
-                        .scaledToFit()
-                        .frame(height: 32)
-                        .vibrancyEffect()
-                        .vibrancyEffectStyle(.fill)
+//                    Image(account.chain.description).resizable()
+//                        .scaledToFit()
+//                        .frame(height: 32)
+//                        .vibrancyEffect()
+//                        .vibrancyEffectStyle(.fill)
                     Spacer()
-                    Text(account.name)
-                    description(text: account.chain.description)
+//                    Text(account.name)
+//                    description(text: account.chain.description)
                 }
 
                 Spacer()
                 VStack(alignment: .trailing) {
-                    backTotal(title: "Staked", hearts: account.total.stakeHearts)
+//                    backTotal(title: "Staked", hearts: account.total.stakeHearts)
                     Spacer()
-                    backTotal(title: "Earned", hearts: account.total.interestHearts)
+//                    backTotal(title: "Earned", hearts: account.total.interestHearts)
                 }
             }
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
@@ -99,9 +99,9 @@ struct StakeCardView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 
-    func frontTotal(title: String, hearts: BigUInt, alignment: HorizontalAlignment) -> some View {
+    func frontTotal(title: String, hearts _: BigUInt, alignment: HorizontalAlignment) -> some View {
         VStack(alignment: alignment) {
-            Text(hearts.hexAt(price: account.hexPrice).currencyString)
+//            Text(hearts.hexAt(price: account.hexPrice).currencyString)
             description(text: title)
         }
     }
@@ -123,7 +123,7 @@ struct StakeCardView: View {
 
     func backTotal(title: String, hearts: BigUInt) -> some View {
         VStack(alignment: .trailing) {
-            Text(hearts.hexAt(price: account.hexPrice).currencyStringSuffix).foregroundColor(.primary)
+//            Text(hearts.hexAt(price: account.hexPrice).currencyStringSuffix).foregroundColor(.primary)
             Text(hearts.hex.hexString).foregroundColor(.secondary)
             description(text: title)
         }
@@ -150,14 +150,14 @@ struct StakeCardView: View {
 }
 
 #if DEBUG
-    struct StakeCardView_Previews: PreviewProvider {
-        static var previews: some View {
-            ForEach(ColorScheme.allCases, id: \.self) {
-                StakeCardView(account: Account(name: "Test", address: "0x1234567890", chain: .ethereum))
-                    .previewLayout(PreviewLayout.sizeThatFits)
-                    .padding()
-                    .preferredColorScheme($0)
-            }
-        }
-    }
+//    struct StakeCardView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            ForEach(ColorScheme.allCases, id: \.self) {
+//                StakeCardView(account: Account(name: "Test", address: "0x1234567890", chain: .ethereum))
+//                    .previewLayout(PreviewLayout.sizeThatFits)
+//                    .padding()
+//                    .preferredColorScheme($0)
+//            }
+//        }
+//    }
 #endif

@@ -29,3 +29,5 @@ struct k {
     static let CARD_PADDING_BOTTOM = CGFloat(48)
     static let CARD_PADDING_TOP = CGFloat(12)
 }
+
+struct HexManagerId: Hashable {}
