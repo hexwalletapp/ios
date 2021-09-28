@@ -16,7 +16,7 @@ options:
 packages:
   swift-composable-architecture:
     url: https://github.com/pointfreeco/swift-composable-architecture.git
-    from: 0.17.0
+    from: 0.27.1
   swiftui-visual-effects:   
     url: https://github.com/lucasbrown/swiftui-visual-effects.git
     from: 1.0.3
@@ -42,23 +42,21 @@ targets:
       TARGETED_DEVICE_FAMILY: 1
       VALIDATE_WORKSPACE: true
     dependencies:
-      # - target: HEXSmartContract
+      - target: HEXSmartContract
       - package: swift-composable-architecture
         product: ComposableArchitecture
       - package: swiftui-visual-effects
         product: SwiftUIVisualEffects
+
+  HEXSmartContract:
+    type: framework
+    platform: iOS
+    sources:
+      - path: Library/HEXSmartContract
+        excludes:
+          - Library/HEXSmartContract/HEXSmartContract.docc/*
+    dependencies:
+      - package: swift-composable-architecture
+        product: ComposableArchitecture
       - package: web3-swift
         product: web3.swift
-
-  # HEXSmartContract:
-  #   type: framework
-  #   platform: iOS
-  #   sources:
-  #     - path: Library/HEXSmartContract
-  #       excludes:
-  #         - Library/HEXSmartContract/HEXSmartContract.docc/*
-  #   dependencies:
-  #     - package: swift-composable-architecture
-  #       product: ComposableArchitecture
-  #     - package: web3-swift
-  #       product: web3.swift

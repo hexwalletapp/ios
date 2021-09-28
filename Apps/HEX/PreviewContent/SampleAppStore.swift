@@ -2,7 +2,7 @@
 // Copyright (c) 2021 Joe Blau
 
 import ComposableArchitecture
-import web3
+import HEXSmartContract
 
 #if DEBUG
 
@@ -10,6 +10,6 @@ import web3
 
     let sampleAppStore = Store(initialState: AppState(),
                                reducer: appReducer,
-                               environment: AppEnvironment(client: EthereumClient(url: URL(string: "")!),
+                               environment: AppEnvironment(hexManager: .mock(),
                                                            mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
 #endif
