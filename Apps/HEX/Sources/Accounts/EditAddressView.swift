@@ -73,25 +73,25 @@ struct EditAddressView: View {
                     case .address: break
                     }
 
-                    account.address = account.address.trimmingCharacters(in: .whitespaces)
+                    account.address = account.address.trimmingCharacters(in: .whitespaces).lowercased()
                     account.name = account.name.trimmingCharacters(in: .whitespaces)
 
                     guard !account.address.isEmpty, !account.name.isEmpty else { return }
 
-                    var existingAccounts = Set(viewStore.accounts)
-                    existingAccounts.insert(account)
+                    var existingAccounts = viewStore.accounts
+                    existingAccounts.updateOrAppend(account)
 
-                    viewStore.send(.binding(.set(\.$accounts, Array(existingAccounts))))
+                    viewStore.send(.binding(.set(\.$accounts, existingAccounts)))
 
                     account = Account()
                 }
                 .navigationTitle("Manage Accounts")
                 .toolbar {
-//                    ToolbarItemGroup(placement: .navigationBarLeading) {
-//                        Button {
-//                            viewStore.send(.binding(.set(\.$presentEditAddress, false)))
-//                        } label: { Image(systemName: "xmark") }
-//                    }
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button {
+                            viewStore.send(.binding(.set(\.$presentEditAddress, false)))
+                        } label: { Image(systemName: "xmark") }
+                    }
                 }
             }
             .onAppear {

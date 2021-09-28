@@ -1,10 +1,11 @@
-// AppReducer.swift
+// AppViewReducer.swift
 // Copyright (c) 2021 Joe Blau
 
 import ComposableArchitecture
 import Foundation
 import HEXSmartContract
 import SwiftUI
+import IdentifiedCollections
 
 import BigInt
 
@@ -20,56 +21,6 @@ enum StakeFilter: Equatable, CaseIterable, CustomStringConvertible {
         case .total: return "Total"
         case .list: return "List"
         }
-    }
-}
-
-enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible {
-    var id: Self { self }
-
-    case ethereum, pulse
-
-    var gradient: [Color] {
-        switch self {
-        case .ethereum: return k.HEX_COLORS
-        case .pulse: return k.PULSE_COLORS
-        }
-    }
-
-    var description: String {
-        switch self {
-        case .ethereum: return "Ethereum"
-        case .pulse: return "Pulse"
-        }
-    }
-}
-
-struct Account: Codable, Hashable, Equatable, Identifiable {
-    var id: String { address.lowercased() + chain.description.lowercased() }
-//    var name: String = ""
-    var address: String = ""
-    var chain: Chain = .ethereum
-//    var hexPrice: Double = 0
-//    var stakeCount = 0
-//    var stakes = [Stake]()
-//    var total = StakeTotal()
-//    var sharesPerDay = [BigUInt]()
-//    var dailyDataList = [DailyData]()
-//    var stakesBeginDay = UInt16.max
-//    var stakesEndDay = UInt16.min
-}
-
-struct DailyData: Codable, Hashable, Equatable {
-    let payout: BigUInt
-    let shares: BigUInt
-    let sats: BigUInt
-
-    init(dayData: BigUInt) {
-        var dailyData = dayData
-        payout = dailyData & k.HEARTS_MASK
-        dailyData >>= k.HEARTS_UINT_SHIFT
-        shares = dailyData & k.HEARTS_MASK
-        dailyData >>= k.HEARTS_UINT_SHIFT
-        sats = dailyData & k.SATS_MASK
     }
 }
 
@@ -100,20 +51,28 @@ struct StakeTotal: Codable, Hashable, Equatable {
     var interestSevenDayHearts: BigUInt = 0
 }
 
+enum Action {
+    case add, remove
+}
+
 struct AppState: Equatable {
     @BindableState var presentEditAddress = false
     @BindableState var selectedTab: Tab = .accounts
-    @BindableState var selectedIndex: Int = 0
-    @BindableState var accounts = [Account]()
-    var currentDay: BigUInt? = nil
+    
+    @BindableState var selectedId = ""
+    @BindableState var accounts = IdentifiedArrayOf<Account>()
+    var currentDay: BigUInt = 0
 }
 
 enum AppAction: BindableAction, Equatable {
     case hexManager(HEXSmartContractManager.Action)
 
+    case applicationDidFinishLaunching
     case onBackground
     case onInactive
     case onActive
+    
+    case account(Action, Account)
 //    case getStakes
 //    case getCurrentDay
 //    case scheduleNotification
@@ -139,6 +98,12 @@ struct AppEnvironment {
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
     switch action {
+    case .hexManager:
+        return .none
+
+    case .applicationDidFinishLaunching:
+        return environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager)
+
     case .onBackground:
         return .none
 
@@ -149,8 +114,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         switch UserDefaults.standard.data(forKey: k.ACCOUNTS_KEY) {
         case let .some(encodedAccounts):
             do {
-                let decodedAccounts = try environment.decoder.decode([Account].self, from: encodedAccounts)
+                let decodedAccounts = try environment.decoder.decode(IdentifiedArrayOf<Account>.self, from: encodedAccounts)
                 state.accounts = decodedAccounts
+                state.selectedId = decodedAccounts.first?.address ?? ""
             } catch {
                 UserDefaults.standard.removeObject(forKey: k.ACCOUNTS_KEY)
                 print(error)
@@ -158,9 +124,18 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case .none:
             break
         }
+        
+        return environment.hexManager.getCurrentDay(id: HexManagerId()).fireAndForget()
+        
+        
 
+    case let .account(action, account):
+//        switch action {
+//        case .add: state.accounts.append(account)
+//        case .remove: state.accounts.remove(id: account.id)
+//        }
         return .none
-
+        
 //        return Effect(value: .updateAccounts)
 
 //    case let .updateStakeIDs(stakeIDs, id):
@@ -336,6 +311,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 //                .eraseToEffect()
 //        )
 
+        
     case .binding(\.$selectedTab):
 //        switch state.selectedTab {
 //        case .charts, .calculator: return .none

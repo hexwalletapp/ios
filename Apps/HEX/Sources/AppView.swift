@@ -1,4 +1,4 @@
-// ContentView.swift
+// AppView.swift
 // Copyright (c) 2021 Joe Blau
 
 import ComposableArchitecture
