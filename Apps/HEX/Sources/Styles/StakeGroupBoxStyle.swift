@@ -6,7 +6,7 @@ import SwiftUI
 struct StakeGroupBoxStyle<V: View>: GroupBoxStyle {
     var color: Color
     var destination: V
-    var date: Date?
+    var stakeStatus: StakeStatus
 
     @ScaledMetric var size: CGFloat = 1
 
@@ -15,10 +15,10 @@ struct StakeGroupBoxStyle<V: View>: GroupBoxStyle {
             GroupBox(label: HStack {
                 configuration.label.foregroundColor(color)
                 Spacer()
-                if date != nil {
-                    Text("\(date!)").font(.footnote).foregroundColor(.secondary).padding(.trailing, 4)
-                }
-                Image(systemName: "chevron.right").foregroundColor(Color(.systemGray4)).imageScale(.small)
+                Text(stakeStatus.description)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                Image(systemName: "chevron.right").foregroundColor(.secondary).imageScale(.small)
             }) {
                 configuration.content.padding([.top], 4)
             }
