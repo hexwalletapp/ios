@@ -47,7 +47,7 @@ extension NSNumber {
         formatter.numberStyle = .percent
         return formatter.string(from: self) ?? ""
     }
-    
+
     var percentageFractionString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .percent

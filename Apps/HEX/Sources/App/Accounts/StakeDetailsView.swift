@@ -1,9 +1,9 @@
 // StakeDetailsView.swift
 // Copyright (c) 2021 Joe Blau
 
+import BigInt
 import HEXREST
 import SwiftUI
-import BigInt
 
 struct StakeDetailsView: View {
     let hexPrice: HEXPrice
@@ -32,7 +32,6 @@ struct StakeDetailsView: View {
                         .frame(width: 128, height: 128)
                         Spacer()
                         VStack(alignment: .trailing) {
-                            
                             Text(stake.daysRemaining.description).font(.headline)
                             Text("Days Remaining").font(.subheadline).foregroundColor(.secondary)
                             Text(stake.stakeShares.number.shareString).font(.headline)
@@ -50,7 +49,7 @@ struct StakeDetailsView: View {
 //
 //                Text(stake.lockedDay.description)
 //                Text(stake.stakedDays.description)
-                Text(stake.unlockedDay.description)
+//                Text(stake.unlockedDay.description)
 //
 //                Text(stake.isAutoStake.description)
             }
@@ -59,7 +58,7 @@ struct StakeDetailsView: View {
         }
         .navigationTitle(stake.stakeId.description)
     }
-    
+
     var earningsView: some View {
         VStack {
             earningsHeader
@@ -73,7 +72,7 @@ struct StakeDetailsView: View {
         }
         .padding([.vertical], 20)
     }
-    
+
     var earningsHeader: some View {
         LazyVGrid(columns: threeColumnGrid) {
             Text("")
@@ -90,12 +89,12 @@ struct StakeDetailsView: View {
             Text("\(units.hex)")
                 .font(.caption.monospaced())
             Text(units
-                    .hexAt(price: hexPrice.hexUsd)
-                                        .currencyString)
-                .font(.caption.monospaced())
+                .hexAt(price: hexPrice.hexUsd)
+                .currencyString)
+                            .font(.caption.monospaced())
         }
     }
-    
+
     func roiRow(principle: BigUInt, interest: BigUInt) -> some View {
         LazyVGrid(columns: threeColumnGrid) {
             Text("ʀᴏɪ")
@@ -107,13 +106,12 @@ struct StakeDetailsView: View {
                 .font(.caption.monospaced())
             Text(toPercentage(principle: principle.hexAt(price: hexPrice.hexUsd),
                               interest: interest.hexAt(price: hexPrice.hexUsd)))
-                    .font(.caption.monospaced())
-
+                .font(.caption.monospaced())
         }
     }
 
     func toPercentage(principle: NSNumber, interest: NSNumber) -> String {
-        NSNumber(value: (interest.doubleValue / principle.doubleValue)).percentageFractionString
+        NSNumber(value: interest.doubleValue / principle.doubleValue).percentageFractionString
     }
 }
 
