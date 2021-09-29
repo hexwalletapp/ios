@@ -48,12 +48,17 @@ struct EditAddressView: View {
                                         .frame(width: 16, height: 16)
                                     Text(accountData.account.name)
                                     Spacer()
-                                    Text("\(accountData.account.address.prefix(6).description)...\(accountData.account.address.suffix(4).description)")
-                                        .font(.caption.monospaced())
-                                        .padding([.horizontal], 12)
-                                        .padding([.vertical], 6)
-                                        .background(Color(.systemGray6))
-                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    switch viewStore.editMode {
+                                    case .inactive:
+                                        Text("\(accountData.account.address.prefix(6).description)...\(accountData.account.address.suffix(4).description)")
+                                            .font(.caption.monospaced())
+                                            .padding([.horizontal], 12)
+                                            .padding([.vertical], 6)
+                                            .background(Color(.systemGray6))
+                                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    default:
+                                        EmptyView()
+                                    }
                                 }
                             }
                             .onDelete(perform: delete)
@@ -92,14 +97,13 @@ struct EditAddressView: View {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         switch viewStore.editMode {
                         case .inactive:
-                        Button {
-                            focusedField = .none
-                            viewStore.send(.binding(.set(\.$editMode, .active)))
-                            
-                        } label: { Text("Edit") }
+                            Button {
+                                focusedField = .none
+                                viewStore.send(.binding(.set(\.$editMode, .active)))
+
+                            } label: { Text("Edit") }
                         default:
                             Button { viewStore.send(.binding(.set(\.$editMode, .inactive))) } label: { Text("Done") }
-                            
                         }
                     }
                 }
@@ -114,7 +118,7 @@ struct EditAddressView: View {
         remainingAccounts.remove(atOffsets: offsets)
         viewStore.send(.binding(.set(\.$accountsData, remainingAccounts)))
     }
-    
+
     func move(indices: IndexSet, newOffset: Int) {
         let viewStore = ViewStore(store)
         var accountsData = viewStore.accountsData

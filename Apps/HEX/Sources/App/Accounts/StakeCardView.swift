@@ -22,10 +22,13 @@ struct StakeCardView: View {
             case false: front
             }
         }
+        .clipped()
+        .shadow(color: Color.black.opacity(0.1), radius: 7, x: 0, y: 0)
         .onTapGesture {
             flipCard()
         }
         .rotation3DEffect(.degrees(cardRotation), axis: (x: 0, y: 1, z: 0))
+
     }
 
     var front: some View {
@@ -99,6 +102,7 @@ struct StakeCardView: View {
         }
         .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        
     }
 
     func frontTotal(title: String, hearts: BigUInt, alignment: HorizontalAlignment) -> some View {
@@ -120,7 +124,7 @@ struct StakeCardView: View {
             .font(.subheadline.monospaced())
             .padding(8)
             .background(Color(.displayP3, white: 1.0, opacity: 0.2))
-            .clipShape(Capsule())
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 
     func backTotal(title: String, hearts: BigUInt) -> some View {

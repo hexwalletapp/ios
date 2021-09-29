@@ -42,6 +42,8 @@ struct StakeDetailsCardView: View {
                                                                         stake: stake,
                                                                         account: account),
                                           stakeStatus: stake.status))
+        .clipped()
+        .shadow(color: Color.black.opacity(0.1), radius: 7, x: 0, y: 0)
     }
 }
 
