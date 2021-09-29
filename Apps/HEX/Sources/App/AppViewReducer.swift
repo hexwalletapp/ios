@@ -54,9 +54,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             do {
                 let decodedAccounts = try environment.decoder.decode([Account].self,
                                                                      from: encodedAccounts)
-                
+
                 state.accountsData = IdentifiedArray(uniqueElements: decodedAccounts.map { AccountData(account: $0) })
-                
+
                 switch decodedAccounts.first {
                 case let .some(decodedAccount):
                     state.selectedId = decodedAccount.address + decodedAccount.chain.description

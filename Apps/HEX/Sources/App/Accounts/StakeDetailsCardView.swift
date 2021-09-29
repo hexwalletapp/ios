@@ -37,7 +37,9 @@ struct StakeDetailsCardView: View {
         }
         .padding([.horizontal], 20)
         .padding([.vertical], 10)
-        .groupBoxStyle(StakeGroupBoxStyle(color: .primary, destination: StakeDetailsView(stake: stake)))
+        .groupBoxStyle(StakeGroupBoxStyle(color: .primary, destination: StakeDetailsView(hexPrice: hexPrice,
+                                                                                         stake: stake,
+                                                                                         account: account)))
     }
 }
 

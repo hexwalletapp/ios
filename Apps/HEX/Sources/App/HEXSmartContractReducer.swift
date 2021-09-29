@@ -25,9 +25,11 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                              stakedDays: stake.stakedDays,
                              unlockedDay: stake.unlockedDay,
                              isAutoStake: stake.isAutoStake,
-                             percentComplete: (Double(state.currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays))
+                             percentComplete: (Double(state.currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays),
+                             daysRemaining: (stake.lockedDay + stake.stakedDays) - UInt16(state.currentDay),
+                             interestHearts: 0)
             }
-        state.accountsData[id: accountDataKey]?.stakes = stakes
+        state.accountsData[id: accountDataKey]?.stakes = IdentifiedArray(uniqueElements: stakes)
         state.accountsData[id: accountDataKey]?.total.stakeShares = totalStakeShares
         state.accountsData[id: accountDataKey]?.total.stakedHearts = totalStakedHearts
 
@@ -67,6 +69,8 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
             totalInterestHearts += interestHearts
             totalInterestSevenDayHearts += interestSevenDayHearts
+            
+            state.accountsData[id: accountDataKey]?.stakes[id: stake.id]?.interestHearts = interestHearts
         }
 
         state.accountsData[id: accountDataKey]?.total.interestHearts = totalInterestHearts
