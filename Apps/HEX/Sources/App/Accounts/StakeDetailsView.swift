@@ -18,30 +18,30 @@ struct StakeDetailsView: View {
         ScrollView {
             GroupBox {
                 VStack {
-                    HStack {
+                    HStack(alignment: .top) {
                         ZStack {
                             PercentageRingView(
-                                ringWidth: 8, percent: stake.percentComplete * 100,
+                                ringWidth: 16,
+                                percent: stake.percentComplete * 100,
                                 backgroundColor: account.chain.gradient.first?.opacity(0.15) ?? .clear,
                                 foregroundColors: [account.chain.gradient.first ?? .clear, account.chain.gradient.last ?? .clear]
                             )
-                            .frame(width: 64, height: 64)
                             Text(NSNumber(value: stake.percentComplete).percentageFractionString)
                                 .font(.caption.monospacedDigit())
                         }
+                        .frame(width: 128, height: 128)
                         Spacer()
-                        field(value: "\(stake.daysRemaining)", title: "Days Remaining", alingment: .trailing)
+                        VStack(alignment: .trailing) {
+                            
+                            Text(stake.daysRemaining.description).font(.headline)
+                            Text("Days Remaining").font(.subheadline).foregroundColor(.secondary)
+                            Text(stake.stakeShares.number.shareString).font(.headline)
+                            Text("Shares").font(.subheadline).foregroundColor(.secondary)
+                        }
                     }
 
                     Spacer(minLength: 20)
-                    earningsHeader
-                    Divider()
-                    girdRow(title: "Principle", units: stake.stakedHearts)
-                    girdRow(title: "Interest", units: stake.interestHearts)
-                    Divider()
-                    girdRow(title: "Total", units: stake.stakedHearts + stake.interestHearts)
-                    Divider()
-                    roiRow(principle: stake.stakedHearts, interest: stake.interestHearts)
+                    earningsView
                 }
 
 //                Text(stake.stakeId.description)
@@ -50,7 +50,7 @@ struct StakeDetailsView: View {
 //
 //                Text(stake.lockedDay.description)
 //                Text(stake.stakedDays.description)
-//                Text(stake.unlockedDay.description)
+                Text(stake.unlockedDay.description)
 //
 //                Text(stake.isAutoStake.description)
             }
@@ -60,11 +60,25 @@ struct StakeDetailsView: View {
         .navigationTitle(stake.stakeId.description)
     }
     
+    var earningsView: some View {
+        VStack {
+            earningsHeader
+            Divider()
+            girdRow(title: "ᴘʀɪɴᴄɪᴘʟᴇ", units: stake.stakedHearts)
+            girdRow(title: "ɪɴᴛᴇʀᴇsᴛ", units: stake.interestHearts)
+            Divider()
+            girdRow(title: "ᴛᴏᴛᴀʟ", units: stake.stakedHearts + stake.interestHearts)
+            Divider()
+            roiRow(principle: stake.stakedHearts, interest: stake.interestHearts)
+        }
+        .padding([.vertical], 20)
+    }
+    
     var earningsHeader: some View {
         LazyVGrid(columns: threeColumnGrid) {
             Text("")
-            Text("ʜᴇx")
-            Text("ᴜsᴅ")
+            Text("ʜᴇx").foregroundColor(.secondary)
+            Text("ᴜsᴅ").foregroundColor(.secondary)
         }
     }
 
@@ -72,6 +86,7 @@ struct StakeDetailsView: View {
         LazyVGrid(columns: threeColumnGrid) {
             Text(title)
                 .font(.subheadline)
+                .foregroundColor(.secondary)
             Text("\(units.hex)")
                 .font(.caption.monospaced())
             Text(units
@@ -83,8 +98,9 @@ struct StakeDetailsView: View {
     
     func roiRow(principle: BigUInt, interest: BigUInt) -> some View {
         LazyVGrid(columns: threeColumnGrid) {
-            Text("ROI")
+            Text("ʀᴏɪ")
                 .font(.subheadline)
+                .foregroundColor(.secondary)
 
             Text(toPercentage(principle: principle.hex,
                               interest: interest.hex))
@@ -95,14 +111,7 @@ struct StakeDetailsView: View {
 
         }
     }
-    
-    func field(value: String, title: String, alingment: HorizontalAlignment) -> some View {
-        VStack(alignment: alingment) {
-            Text(value).font(.largeTitle)
-            Text(title).font(.subheadline).foregroundColor(.secondary)
-        }
-    }
-    
+
     func toPercentage(principle: NSNumber, interest: NSNumber) -> String {
         NSNumber(value: (interest.doubleValue / principle.doubleValue)).percentageFractionString
     }
