@@ -2,8 +2,8 @@
 // Copyright (c) 2021 Joe Blau
 
 import ComposableArchitecture
-import SwiftUI
 import HEXSmartContract
+import SwiftUI
 
 struct EditAddressView: View {
     let store: Store<AppState, AppAction>
@@ -49,7 +49,7 @@ struct EditAddressView: View {
                                     Text(accountData.account.name)
                                     Spacer()
                                     Text("\(accountData.account.address.prefix(6).description)...\(accountData.account.address.suffix(4).description)")
-                                        .font(.system(.caption, design: .monospaced))
+                                        .font(.caption.monospaced())
                                         .padding([.horizontal], 12)
                                         .padding([.vertical], 6)
                                         .background(Color(.systemGray6))
@@ -78,7 +78,7 @@ struct EditAddressView: View {
                     account.name = account.name.trimmingCharacters(in: .whitespaces)
 
                     guard !account.address.isEmpty, !account.name.isEmpty else { return }
-                    
+
                     var existingAccounts = viewStore.accountsData
                     existingAccounts.updateOrAppend(AccountData(account: account))
 

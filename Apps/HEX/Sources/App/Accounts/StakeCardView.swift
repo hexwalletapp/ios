@@ -117,7 +117,7 @@ struct StakeCardView: View {
 
     func front(address: String) -> some View {
         Text("\(address.prefix(6).description)...\(address.suffix(4).description)")
-            .font(.system(.subheadline, design: .monospaced))
+            .font(.subheadline.monospaced())
             .padding(8)
             .background(Color(.displayP3, white: 1.0, opacity: 0.2))
             .clipShape(Capsule())
@@ -134,7 +134,7 @@ struct StakeCardView: View {
 
     func description(text: String) -> some View {
         Text(text)
-            .font(.system(.caption, design: .monospaced))
+            .font(.caption.monospaced())
             .vibrancyEffect()
             .vibrancyEffectStyle(.fill)
     }

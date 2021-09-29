@@ -1,8 +1,8 @@
 // AccountModel.swift
 // Copyright (c) 2021 Joe Blau
 
-import SwiftUI
 import HEXSmartContract
+import SwiftUI
 
 struct Account: Codable, Hashable, Equatable, Identifiable {
     var id: String { address + chain.description }
@@ -10,4 +10,3 @@ struct Account: Codable, Hashable, Equatable, Identifiable {
     var address: String = ""
     var chain: Chain = .ethereum
 }
-
