@@ -14,6 +14,7 @@ enum Tab {
 }
 
 struct AppState: Equatable {
+    @BindableState var editMode: EditMode = .inactive
     @BindableState var presentEditAddress = false
     @BindableState var selectedTab: Tab = .accounts
 
@@ -107,7 +108,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case .binding(\.$accountsData):
         do {
             let accounts = state.accountsData.map { $0.account }
-            if let lastAccount = accounts.last {
+            if let lastAccount = accounts.last, state.selectedId.isEmpty {
                 state.selectedId = lastAccount.address + lastAccount.chain.description
             }
             let encodedAccounts = try environment.encoder.encode(accounts)
