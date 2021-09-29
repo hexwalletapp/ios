@@ -47,24 +47,13 @@ struct AppEnvironment {
 let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
     switch action {
     case .applicationDidFinishLaunching:
-        return environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager)
-
-    case .onActive:
         switch UserDefaults.standard.data(forKey: k.ACCOUNTS_KEY) {
         case let .some(encodedAccounts):
             do {
                 let decodedAccounts = try environment.decoder.decode([Account].self,
                                                                      from: encodedAccounts)
-
                 state.accountsData = IdentifiedArray(uniqueElements: decodedAccounts.map { AccountData(account: $0) })
-
-                switch decodedAccounts.first {
-                case let .some(decodedAccount):
-                    state.selectedId = decodedAccount.address + decodedAccount.chain.description
-                    return Effect(value: .updateAccounts)
-                case .none:
-                    break
-                }
+                state.selectedId = decodedAccounts.first?.id ?? ""
             } catch {
                 UserDefaults.standard.removeObject(forKey: k.ACCOUNTS_KEY)
                 print(error)
@@ -72,7 +61,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case .none:
             break
         }
-        return .none
+        return environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager)
+
+    case .onActive:
+        return  Effect(value: .updateAccounts)
 
     case .updateAccounts:
         return .merge(

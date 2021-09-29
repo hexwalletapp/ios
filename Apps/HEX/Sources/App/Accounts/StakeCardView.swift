@@ -22,13 +22,10 @@ struct StakeCardView: View {
             case false: front
             }
         }
-        .clipped()
-        .shadow(color: Color.black.opacity(0.1), radius: 7, x: 0, y: 0)
         .onTapGesture {
             flipCard()
         }
         .rotation3DEffect(.degrees(cardRotation), axis: (x: 0, y: 1, z: 0))
-
     }
 
     var front: some View {
@@ -88,7 +85,6 @@ struct StakeCardView: View {
                     Text(accountData.account.name)
                     description(text: accountData.account.chain.description)
                 }
-
                 Spacer()
                 VStack(alignment: .trailing) {
                     backTotal(title: "Staked", hearts: accountData.total.stakedHearts)
@@ -102,7 +98,6 @@ struct StakeCardView: View {
         }
         .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        
     }
 
     func frontTotal(title: String, hearts: BigUInt, alignment: HorizontalAlignment) -> some View {
@@ -148,7 +143,6 @@ struct StakeCardView: View {
         withAnimation(.easeInOut(duration: duration)) {
             cardRotation += 180
         }
-
         withAnimation(.easeInOut(duration: 0.001).delay(duration / 2)) {
             showBack.toggle()
         }
