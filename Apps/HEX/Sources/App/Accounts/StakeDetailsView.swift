@@ -23,7 +23,7 @@ struct StakeDetailsView: View {
                             .padding([.vertical], 8)
                             .padding([.horizontal], 16)
                             .background(Color(.systemGray5))
-                            .clipShape(Capsule())
+                            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                     }
                     HStack(alignment: .top) {
                         ZStack {
@@ -52,8 +52,9 @@ struct StakeDetailsView: View {
                     earningsView
                 }
             }
-            .padding([.horizontal], 20)
-            .padding([.vertical], 10)
+            .padding()
+            .clipped()
+            .shadow(color: Color.black.opacity(0.2), radius: 7, x: 0, y: 0)
         }
         .navigationTitle(stake.stakeId.description)
     }
