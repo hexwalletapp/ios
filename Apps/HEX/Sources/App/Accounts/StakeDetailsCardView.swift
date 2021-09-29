@@ -11,7 +11,7 @@ struct StakeDetailsCardView: View {
 
     var body: some View {
         GroupBox {
-            HStack {
+            HStack(alignment: .top) {
                 ZStack {
                     PercentageRingView(
                         ringWidth: 8, percent: stake.percentComplete * 100,
