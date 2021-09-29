@@ -14,7 +14,8 @@ struct k {
     static let ACCOUNTS_KEY = "evm_account_key"
     static let CARD_PADDING_BOTTOM = CGFloat(48)
     static let CARD_PADDING_TOP = CGFloat(12)
-    static let HEX_START_DATE = Date(timeIntervalSince1970: 1_575_244_800)
+    static let HEX_START_DATE = Date(timeIntervalSince1970: 1_575_273_600)
+    static let GRACE_PERIOD = 14
 }
 
 struct HexManagerId: Hashable {}

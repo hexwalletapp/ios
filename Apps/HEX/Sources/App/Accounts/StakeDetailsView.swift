@@ -17,7 +17,14 @@ struct StakeDetailsView: View {
     var body: some View {
         ScrollView {
             GroupBox {
-                VStack {
+                VStack(spacing: 20) {
+                    HStack(alignment: .top) {
+                        Label(stake.status.description, systemImage: stake.status.systemName)
+                            .padding([.vertical], 8)
+                            .padding([.horizontal], 16)
+                            .background(Color(.systemGray5))
+                            .clipShape(Capsule())
+                    }
                     HStack(alignment: .top) {
                         ZStack {
                             PercentageRingView(
@@ -32,14 +39,16 @@ struct StakeDetailsView: View {
                         .frame(width: 128, height: 128)
                         Spacer()
                         VStack(alignment: .trailing) {
-                            Text(stake.daysRemaining.description).font(.headline)
+                            Text(stake.endDate.longDateString)
+                            Text("End Date").font(.subheadline).foregroundColor(.secondary)
+                            Spacer()
+                            Text(stake.daysRemaining.description)
                             Text("Days Remaining").font(.subheadline).foregroundColor(.secondary)
-                            Text(stake.stakeShares.number.shareString).font(.headline)
+                            Spacer()
+                            Text(stake.stakeShares.number.shareString)
                             Text("Shares").font(.subheadline).foregroundColor(.secondary)
                         }
                     }
-
-                    Spacer(minLength: 20)
                     earningsView
                 }
 

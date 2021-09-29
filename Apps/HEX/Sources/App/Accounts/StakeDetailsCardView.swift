@@ -23,7 +23,7 @@ struct StakeDetailsCardView: View {
                         .font(.caption.monospacedDigit())
                 }
                 Spacer()
-                VStack(alignment: .trailing) {
+                VStack(alignment: .trailing, spacing: 4) {
                     Text(stake.stakedHearts
                         .hexAt(price: hexPrice.hexUsd)
                         .currencyStringSuffix).foregroundColor(.primary)
@@ -32,14 +32,16 @@ struct StakeDetailsCardView: View {
             }
             .font(.body.monospacedDigit())
         } label: {
-            Label("Staked \(stake.stakedDays) Days", systemImage: "calendar")
+            Label(stake.stakeId.description, systemImage: stake.status.systemName)
             EmptyView()
         }
         .padding([.horizontal], 20)
         .padding([.vertical], 10)
-        .groupBoxStyle(StakeGroupBoxStyle(color: .primary, destination: StakeDetailsView(hexPrice: hexPrice,
-                                                                                         stake: stake,
-                                                                                         account: account)))
+        .groupBoxStyle(StakeGroupBoxStyle(color: .primary,
+                                          destination: StakeDetailsView(hexPrice: hexPrice,
+                                                                        stake: stake,
+                                                                        account: account),
+                                          stakeStatus: stake.status))
     }
 }
 

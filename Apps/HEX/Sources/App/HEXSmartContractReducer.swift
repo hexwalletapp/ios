@@ -12,11 +12,32 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         let accountDataKey = address.value + chain.description
         var totalStakeShares: BigUInt = 0
         var totalStakedHearts: BigUInt = 0
+        let currentDay = Int(state.currentDay)
 
         let stakes = stakeList.sorted(by: { $0.lockedDay + $0.stakedDays < $1.lockedDay + $1.stakedDays })
             .map { stake -> Stake in
                 totalStakeShares += stake.stakeShares
                 totalStakedHearts += stake.stakedHearts
+
+                let stakeUnlockDay = Int(stake.unlockedDay)
+                let stakeLockedDay = Int(stake.lockedDay)
+                let stakeLength = stakeLockedDay + Int(stake.stakedDays)
+                let gracePeriod = stakeLength + k.GRACE_PERIOD
+                let daysRemaining = stakeLength - currentDay
+
+                let status: StakeStatus
+                // Calculate Status
+                if stake.unlockedDay > 0, stake.unlockedDay < stake.lockedDay + stake.stakedDays {
+                    status = .emergencyEnd
+                } else if stake.unlockedDay > 0, stakeLength ..< gracePeriod ~= stakeUnlockDay {
+                    status = .goodAccounting
+                } else if stake.unlockedDay == 0, stakeLength ..< gracePeriod ~= stakeUnlockDay {
+                    status = .gracePeriod
+                } else if stake.unlockedDay == 0, currentDay > gracePeriod {
+                    status = .bleeding
+                } else {
+                    status = .active
+                }
 
                 return Stake(stakeId: stake.stakeId,
                              stakedHearts: stake.stakedHearts,
@@ -25,8 +46,10 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                              stakedDays: stake.stakedDays,
                              unlockedDay: stake.unlockedDay,
                              isAutoStake: stake.isAutoStake,
-                             percentComplete: min(1, (Double(state.currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)),
-                             daysRemaining: (Int(stake.lockedDay) + Int(stake.stakedDays)) - Int(state.currentDay),
+                             percentComplete: min(1, (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)),
+                             daysRemaining: daysRemaining,
+                             status: status,
+                             endDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(stakeLength * 86400)),
                              interestHearts: 0)
             }
         state.accountsData[id: accountDataKey]?.stakes = IdentifiedArray(uniqueElements: stakes)
