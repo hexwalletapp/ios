@@ -33,28 +33,45 @@ struct StakeDetailsView: View {
                                 backgroundColor: account.chain.gradient.first?.opacity(0.15) ?? .clear,
                                 foregroundColors: [account.chain.gradient.first ?? .clear, account.chain.gradient.last ?? .clear]
                             )
-                            Text(NSNumber(value: stake.percentComplete).percentageFractionString)
-                                .font(.caption.monospacedDigit())
+                            VStack {
+                                Text(NSNumber(value: stake.percentComplete).percentageFractionString)
+                                    .font(.body.monospacedDigit())
+                                Text("Complete")
+                                    .font(.caption.monospaced())
+                                    .foregroundColor(.secondary)
+                            }
                         }
-                        .frame(width: 128, height: 128)
+                        .frame(width: 164, height: 164)
                         Spacer()
-                        VStack(alignment: .trailing) {
-                            Text(stake.endDate.longDateString)
-                            Text("End Date").font(.subheadline).foregroundColor(.secondary)
+                        VStack(alignment: .trailing, spacing: 8) {
+                            headerDetails(headline: stake.startDate.longDateString, subheadling: "Stake Start")
+                            headerDetails(headline: stake.endDate.longDateString, subheadling: "Stake End")
+                            headerDetails(headline: stake.daysRemaining.description, subheadling: "Days Remaining")
+                            headerDetails(headline: stake.stakeShares.number.shareString, subheadling: "Shares")
                             Spacer()
-                            Text(stake.daysRemaining.description)
-                            Text("Days Remaining").font(.subheadline).foregroundColor(.secondary)
-                            Spacer()
-                            Text(stake.stakeShares.number.shareString)
-                            Text("Shares").font(.subheadline).foregroundColor(.secondary)
                         }
                     }
                     earningsView
+                    HStack(alignment: .top) {
+                        Spacer()
+                        Text("sᴛᴀᴋᴇ ɪᴅ:").font(.caption)
+                        Text(stake.stakeId.description).font(.caption.monospaced())
+                    }
+                    .foregroundColor(.secondary)
                 }
             }
             .padding()
         }
-        .navigationTitle(stake.stakeId.description)
+        .navigationTitle(stake.endDate.mediumDateString)
+    }
+    
+    func headerDetails(headline: String, subheadling: String) -> some View {
+        VStack(alignment: .trailing) {
+            Text(headline)
+            Text(subheadling)
+                .font(.caption.monospaced())
+                .foregroundColor(.secondary)
+        }
     }
 
     var earningsView: some View {
@@ -68,7 +85,7 @@ struct StakeDetailsView: View {
             Divider()
             roiRow(principle: stake.stakedHearts, interest: stake.interestHearts)
         }
-        .padding([.vertical], 20)
+        .padding([.bottom], 10)
     }
 
     var earningsHeader: some View {

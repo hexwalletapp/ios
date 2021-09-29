@@ -32,7 +32,7 @@ struct StakeDetailsCardView: View {
             }
             .font(.body.monospacedDigit())
         } label: {
-            Label(stake.stakeId.description, systemImage: stake.status.systemName)
+            Label(stake.endDate.mediumDateString, systemImage: stake.status.systemName)
             EmptyView()
         }
         .padding([.horizontal], 20)

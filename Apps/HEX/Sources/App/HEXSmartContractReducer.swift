@@ -49,6 +49,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                              percentComplete: min(1, (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)),
                              daysRemaining: daysRemaining,
                              status: status,
+                             startDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(stakeLockedDay * 86400)),
                              endDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(stakeLength * 86400)),
                              interestHearts: 0)
             }
