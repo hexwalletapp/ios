@@ -53,8 +53,6 @@ struct StakeDetailsView: View {
                 }
             }
             .padding()
-            .clipped()
-            .shadow(color: Color.black.opacity(0.2), radius: 7, x: 0, y: 0)
         }
         .navigationTitle(stake.stakeId.description)
     }
