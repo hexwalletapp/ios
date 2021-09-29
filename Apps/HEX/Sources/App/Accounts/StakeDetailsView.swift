@@ -51,16 +51,6 @@ struct StakeDetailsView: View {
                     }
                     earningsView
                 }
-
-//                Text(stake.stakeId.description)
-//                Text(stake.stakedHearts.hex.hexString)
-//                Text(stake.stakeShares.number.shareString)
-//
-//                Text(stake.lockedDay.description)
-//                Text(stake.stakedDays.description)
-//                Text(stake.unlockedDay.description)
-//
-//                Text(stake.isAutoStake.description)
             }
             .padding([.horizontal], 20)
             .padding([.vertical], 10)

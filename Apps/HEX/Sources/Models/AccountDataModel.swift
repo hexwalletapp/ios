@@ -9,14 +9,4 @@ struct AccountData: Codable, Hashable, Equatable, Identifiable {
     var account: Account
     var stakes = IdentifiedArrayOf<Stake>()
     var total = StakeTotal()
-
-//    var dailyData = [DailyData]()
-//    var stakesBeginDay = UInt16.max
-//    var stakesEndDay = UInt16.min
-
-//    var hexPrice: Double = 0
-//    var stakeCount = 0
-//    var stakes = [Stake]()
-//    var sharesPerDay = [BigUInt]()
-//    var dailyDataList = [DailyData]()
 }

@@ -57,6 +57,7 @@ struct EditAddressView: View {
                                 }
                             }
                             .onDelete(perform: delete)
+                            .onMove(perform: move)
                         } header: {
                             Text("Accounts")
                         } footer: {
@@ -88,17 +89,21 @@ struct EditAddressView: View {
                 }
                 .navigationTitle("Manage Accounts")
                 .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        switch viewStore.editMode {
+                        case .inactive:
                         Button {
-                            viewStore.send(.binding(.set(\.$presentEditAddress, false)))
-                        } label: { Image(systemName: "xmark") }
+                            focusedField = .none
+                            viewStore.send(.binding(.set(\.$editMode, .active)))
+                            
+                        } label: { Text("Edit") }
+                        default:
+                            Button { viewStore.send(.binding(.set(\.$editMode, .inactive))) } label: { Text("Done") }
+                            
+                        }
                     }
                 }
-            }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    focusedField = .name
-                }
+                .environment(\.editMode, viewStore.binding(\.$editMode))
             }
         }
     }
@@ -108,6 +113,13 @@ struct EditAddressView: View {
         var remainingAccounts = viewStore.accountsData
         remainingAccounts.remove(atOffsets: offsets)
         viewStore.send(.binding(.set(\.$accountsData, remainingAccounts)))
+    }
+    
+    func move(indices: IndexSet, newOffset: Int) {
+        let viewStore = ViewStore(store)
+        var accountsData = viewStore.accountsData
+        accountsData.move(fromOffsets: indices, toOffset: newOffset)
+        viewStore.send(.binding(.set(\.$accountsData, accountsData)))
     }
 }
 
