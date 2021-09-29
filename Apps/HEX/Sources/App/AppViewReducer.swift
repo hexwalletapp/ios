@@ -64,7 +64,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager)
 
     case .onActive:
-        return  Effect(value: .updateAccounts)
+        return Effect(value: .updateAccounts)
 
     case .updateAccounts:
         return .merge(

@@ -16,6 +16,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let percentComplete: Double
     let daysRemaining: Int
     let status: StakeStatus
+    let startDate: Date
     let endDate: Date
     var interestHearts: BigUInt
 }
