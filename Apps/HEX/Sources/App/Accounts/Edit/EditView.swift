@@ -1,11 +1,11 @@
-// EditAddressView.swift
+// EditView.swift
 // Copyright (c) 2021 Joe Blau
 
 import ComposableArchitecture
 import HEXSmartContract
 import SwiftUI
 
-struct EditAddressView: View {
+struct EditView: View {
     let store: Store<AppState, AppAction>
 
     private enum Field: Hashable {
@@ -94,6 +94,12 @@ struct EditAddressView: View {
                 }
                 .navigationTitle("Manage Accounts")
                 .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button {
+                            viewStore.send(.dismiss)
+                        } label: { Image(systemName: "xmark") }
+                    }
+
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         switch viewStore.editMode {
                         case .inactive:
@@ -128,9 +134,9 @@ struct EditAddressView: View {
 }
 
 #if DEBUG
-    struct EditAddressView_Previews: PreviewProvider {
+    struct EditView_Previews: PreviewProvider {
         static var previews: some View {
-            EditAddressView(store: sampleAppStore)
+            EditView(store: sampleAppStore)
         }
     }
 #endif

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,9 +16,9 @@
 		2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */; };
 		342A1C83EC0A9A0554C79285 /* AccountDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */; };
 		35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7254A74580879CE1D57F0B5B /* NSNumber+Extensions.swift */; };
+		384453310AFABC584F1147F7 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AD4C7459F0A5F35C779C6E /* EditView.swift */; };
 		38ECF3516F587DDB5C816F2B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFCB070A01C6E3E3CB59BB /* App.swift */; };
 		3920D3217BD4AD7C4F21AEE9 /* StakeTotalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */; };
-		4AF473CDE829B16639DD6BE3 /* EditAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6D31C243C81BEE013D6547 /* EditAddressView.swift */; };
 		52FD3F03A19D6F64F11DC1B9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */; };
 		559A9CC38F7C9CAE8BF88604 /* StakeDetailsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */; };
 		5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */; };
@@ -30,6 +30,7 @@
 		8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */; };
 		8F9E6D637FDA37CBB3BC00AA /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694B1DA5DF0377977B34F9C /* ChartsView.swift */; };
 		93ABDD68901F0B237BE4C642 /* TradingviewChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88926926504D1FC51E75CAD9 /* TradingviewChartView.swift */; };
+		951557B74017F4F2EAF783FF /* SpeculateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4655D7DA8FAC48D54C19BC82 /* SpeculateView.swift */; };
 		98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97BE07A876D006551CAE25 /* SampleAppStore.swift */; };
 		B3FDC626A1314EDA5EC1194A /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */; };
 		B47647423BAF6BDF59F01BD1 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DFEC316C64640DC5205E43 /* AccountsView.swift */; };
@@ -38,7 +39,6 @@
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
-		ED40F7C8270573A700065F72 /* SpeculateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED40F7C7270573A700065F72 /* SpeculateView.swift */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F529BC6F4DA1C825F82C1220 /* HEXREST in Frameworks */ = {isa = PBXBuildFile; productRef = 14471AE898FE9C16BE145C44 /* HEXREST */; };
@@ -50,12 +50,12 @@
 		117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigUInt+Extensions.swift"; sourceTree = "<group>"; };
 		12DBF49D004E00EE95C96479 /* AppViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewReducer.swift; sourceTree = "<group>"; };
 		1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
-		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		230728B8D69D958751745D31 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
 		2D56D72C21058B5DDC3BDE89 /* hex-smart-contract */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-smart-contract"; path = "Packages/hex-smart-contract"; sourceTree = SOURCE_ROOT; };
 		3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeStatusModel.swift; sourceTree = "<group>"; };
-		4A6D31C243C81BEE013D6547 /* EditAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddressView.swift; sourceTree = "<group>"; };
+		4655D7DA8FAC48D54C19BC82 /* SpeculateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeculateView.swift; sourceTree = "<group>"; };
 		4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		56DFEC316C64640DC5205E43 /* AccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsView.swift; sourceTree = "<group>"; };
 		6C4EC50004741C666AA20180 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
@@ -69,6 +69,7 @@
 		7EFFCB070A01C6E3E3CB59BB /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		88926926504D1FC51E75CAD9 /* TradingviewChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradingviewChartView.swift; sourceTree = "<group>"; };
 		8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		95AD4C7459F0A5F35C779C6E /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataModel.swift; sourceTree = "<group>"; };
 		A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageRingView.swift; sourceTree = "<group>"; };
 		A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXSmartContractReducer.swift; sourceTree = "<group>"; };
@@ -79,7 +80,6 @@
 		D694B1DA5DF0377977B34F9C /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		ED40F7C7270573A700065F72 /* SpeculateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeculateView.swift; sourceTree = "<group>"; };
 		F0738425D18A2BAF07C68CAC /* hex-rest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-rest"; path = "Packages/hex-rest"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -105,6 +105,14 @@
 				EB0066F4C337E2DEAEF7927D /* Info.plist */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		041BD39CE903C621DFD6D4D8 /* Speculate */ = {
+			isa = PBXGroup;
+			children = (
+				4655D7DA8FAC48D54C19BC82 /* SpeculateView.swift */,
+			);
+			path = Speculate;
 			sourceTree = "<group>";
 		};
 		184F9CCBCFA3BF831BBC7ED2 = {
@@ -218,14 +226,22 @@
 		CBF66A67479E6E83DD335C7F /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
-				ED40F7C62705739C00065F72 /* Speculate */,
-				ED40F7C52705738A00065F72 /* Edit */,
 				56DFEC316C64640DC5205E43 /* AccountsView.swift */,
 				0C81D66CAB957125308B7010 /* StakeCardView.swift */,
 				1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */,
 				DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */,
+				E327E66ABFAEF0680D431590 /* Edit */,
+				041BD39CE903C621DFD6D4D8 /* Speculate */,
 			);
 			path = Accounts;
+			sourceTree = "<group>";
+		};
+		E327E66ABFAEF0680D431590 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				95AD4C7459F0A5F35C779C6E /* EditView.swift */,
+			);
+			path = Edit;
 			sourceTree = "<group>";
 		};
 		E8A88478808885F930928A06 /* Sources */ = {
@@ -241,22 +257,6 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		ED40F7C52705738A00065F72 /* Edit */ = {
-			isa = PBXGroup;
-			children = (
-				4A6D31C243C81BEE013D6547 /* EditAddressView.swift */,
-			);
-			path = Edit;
-			sourceTree = "<group>";
-		};
-		ED40F7C62705739C00065F72 /* Speculate */ = {
-			isa = PBXGroup;
-			children = (
-				ED40F7C7270573A700065F72 /* SpeculateView.swift */,
-			);
-			path = Speculate;
-			sourceTree = "<group>";
-		};
 		FA53A81348801277D5DFC836 /* HEX */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +266,15 @@
 				0274987511660F32ADBD8FAF /* SupportingFiles */,
 			);
 			path = HEX;
+			sourceTree = "<group>";
+		};
+		"TEMP_6C7BC12C-EA80-41B7-82BB-6D3637789FF3" /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				230728B8D69D958751745D31 /* index.html */,
+				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,14 +369,14 @@
 				CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */,
 				0632C27A5D5B4F5FC6F9294B /* Date+Extensions.swift in Sources */,
 				8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */,
-				4AF473CDE829B16639DD6BE3 /* EditAddressView.swift in Sources */,
+				384453310AFABC584F1147F7 /* EditView.swift in Sources */,
 				024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */,
 				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
 				98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */,
 				F9D31BABEB128F709FF24E19 /* SampleStakes.swift in Sources */,
-				ED40F7C8270573A700065F72 /* SpeculateView.swift in Sources */,
+				951557B74017F4F2EAF783FF /* SpeculateView.swift in Sources */,
 				74D28048802B53B2C69F9EF6 /* StakeCardView.swift in Sources */,
 				559A9CC38F7C9CAE8BF88604 /* StakeDetailsCardView.swift in Sources */,
 				BE94256F6E38266AD8D0FB68 /* StakeDetailsView.swift in Sources */,
@@ -387,7 +396,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = Apps/HEX/PreviewContent;
 				INFOPLIST_FILE = Apps/HEX/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -532,7 +540,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = Apps/HEX/PreviewContent;
 				INFOPLIST_FILE = Apps/HEX/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

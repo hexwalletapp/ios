@@ -1,13 +1,9 @@
-//
-//  SpeculateView.swift
-//  HEX
-//
-//  Created by Joe Blau on 9/29/21.
-//
+// SpeculateView.swift
+// Copyright (c) 2021 Joe Blau
 
-import SwiftUI
 import ComposableArchitecture
 import HEXREST
+import SwiftUI
 
 struct SpeculateView: View {
     let store: Store<AppState, AppAction>
@@ -16,44 +12,56 @@ struct SpeculateView: View {
         case price
     }
     
-    @State var price: String = "0.0"
+    @State var price: String
     @FocusState private var focusedField: Field?
     
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 Form {
-                    List {
-                        Section("HEX Price") {
-                            
-                            TextField("HEX Price",
-                                      text: $price,
-                                      prompt: Text("HEX Price"))
-                                .keyboardType(.decimalPad)
-                                .focused($focusedField, equals: .price)
-                                .submitLabel(.done)
-                        }
-                        .onSubmit {
+                    Section("HEX Price") {
+                        TextField("HEX Price",
+                                  text: $price,
+                                  prompt: Text("HEX Price"))
+                            .keyboardType(.decimalPad)
+                            .focused($focusedField, equals: .price)
+                    }
+                    
+                    Section {
+                        Button {
                             guard !price.isEmpty else { return }
                             
-                            switch  Double(price)  {
+                            switch Double(price) {
                             case let .some(priceDouble):
                                 let speculativePrice = NSNumber(value: priceDouble)
                                 
+                                focusedField = nil
                                 viewStore.send(.binding(.set(\.$speculativePrice, speculativePrice)))
                                 viewStore.send(.binding(.set(\.$shouldSpeculate, true)))
-                                viewStore.send(.binding(.set(\.$accountPresent, nil)))
+                                viewStore.send(.dismiss)
                             case .none:
                                 return
                             }
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Text("Speculate")
+                                Spacer()
+                            }
                         }
                     }
-                    .navigationTitle("Speculate")
+                }
+                .navigationTitle("Speculate")
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button {
+                            focusedField = nil
+                            viewStore.send(.dismiss)
+                        } label: { Image(systemName: "xmark") }
+                    }
                 }
             }
             .onAppear {
-                price = viewStore.price.description
-                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                     focusedField = .price
                 }
@@ -65,7 +73,7 @@ struct SpeculateView: View {
 #if DEBUG
 struct SpeculateView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeculateView(store: sampleAppStore)
+        SpeculateView(store: sampleAppStore, price: "1.00")
     }
 }
 #endif

@@ -29,8 +29,9 @@ struct AccountsView: View {
                 .navigationBarTitle("Accounts")
                 .sheet(item: viewStore.binding(\.$accountPresent), content: { accountPresent in
                     switch accountPresent {
-                    case .edit: EditAddressView(store: store)
-                    case .speculate: SpeculateView(store: store)
+                    case .edit: EditView(store: store)
+                    case .speculate: SpeculateView(store: store,
+                                                   price: viewStore.speculativePrice.currencyNumberString)
                     }
                 })
                 .toolbar {
@@ -38,24 +39,24 @@ struct AccountsView: View {
                         Button {
                             viewStore.send(.binding(.set(\.$accountPresent, .edit)))
                         } label: { Image(systemName: "person") }
-                        
+
                         toolbarText(heading: viewStore.currentDay.description, subheading: "Day")
                         toolbarText(heading: viewStore.price.currencyString + (viewStore.shouldSpeculate ? "*" : ""), subheading: "Price")
                     }
 
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-  
                         Menu(content: {
                             Section {
                                 Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate))
                             }
-                             Section {
-                            Button {
-                                viewStore.send(.binding(.set(\.$accountPresent, .speculate)))
-                            } label: { Label("Edit \(viewStore.price.currencyString)", systemImage: "square.and.pencil") }
-                             }
-                        }, label: {Image(systemName: "dollarsign.circle")})
-                        
+                            Section {
+                                Button {
+                                    viewStore.send(.binding(.set(\.$accountPresent, .speculate)))
+                                } label: { Label("Edit • \(viewStore.speculativePrice.currencyString)",
+                                                 systemImage: "square.and.pencil") }
+                            }
+                        }, label: { Image(systemName: "dollarsign.circle") })
+
                         Button {} label: { Image(systemName: "bell.badge") }
                             .disabled(true)
 
@@ -73,7 +74,7 @@ struct AccountsView: View {
             Text(subheading).font(.caption2.monospaced()).foregroundColor(.secondary)
         }
     }
-    
+
     var accountList: some View {
         WithViewStore(store) { viewStore in
             switch (viewStore.accountsData.isEmpty, viewStore.accountsData[id: viewStore.selectedId]) {

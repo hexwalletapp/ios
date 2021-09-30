@@ -15,7 +15,7 @@ enum Tab {
 
 enum AccountPresent: Identifiable {
     var id: Self { self }
-    
+
     case edit, speculate
 }
 
@@ -42,6 +42,7 @@ enum AppAction: BindableAction, Equatable {
     case onInactive
     case onActive
 
+    case dismiss
     case updateAccounts
     case updatePrice
     case updateHexPrice(Result<HEXPrice, NSError>)
@@ -99,14 +100,18 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             state.price = NSNumber(value: state.hexPrice.hexUsd)
         }
         return .none
-        
+
     case let .updateHexPrice(result):
         switch result {
         case let .success(hexPrice): state.hexPrice = hexPrice
         case let .failure(error): print(error)
         }
         return Effect(value: .updatePrice)
-        
+
+    case .dismiss:
+        state.accountPresent = nil
+        return .none
+
     case .binding(\.$shouldSpeculate):
         return Effect(value: .updatePrice)
 
