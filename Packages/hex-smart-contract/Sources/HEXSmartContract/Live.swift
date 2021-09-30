@@ -5,9 +5,9 @@ import BigInt
 import Combine
 import ComposableArchitecture
 import Foundation
+import IdentifiedCollections
 import UIKit
 import web3
-import IdentifiedCollections
 
 public extension HEXSmartContractManager {
     static let live: HEXSmartContractManager = { () -> HEXSmartContractManager in

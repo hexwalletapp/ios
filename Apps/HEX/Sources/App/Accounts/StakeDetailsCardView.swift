@@ -25,7 +25,7 @@ struct StakeDetailsCardView: View {
                 Spacer()
                 VStack(alignment: .trailing, spacing: 4) {
                     Text(stake.stakedHearts
-                            .hexAt(price: price.doubleValue)
+                        .hexAt(price: price.doubleValue)
                         .currencyStringSuffix).foregroundColor(.primary)
                     Text(stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
                 }

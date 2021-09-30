@@ -36,6 +36,14 @@ extension NSNumber {
         return formatter.string(from: self) ?? ""
     }
 
+    var currencyNumberString: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        return formatter.string(from: self) ?? ""
+    }
+    
     var currencyString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
