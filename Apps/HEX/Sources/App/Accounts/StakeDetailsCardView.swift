@@ -24,10 +24,10 @@ struct StakeDetailsCardView: View {
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 4) {
-                    Text(stake.stakedHearts
+                    Text(stake.balanceHearts
                         .hexAt(price: price.doubleValue)
                         .currencyStringSuffix).foregroundColor(.primary)
-                    Text(stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
+                    Text(stake.balanceHearts.hex.hexString).foregroundColor(.secondary)
                 }
             }
             .font(.body.monospacedDigit())
