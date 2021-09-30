@@ -64,7 +64,7 @@ struct StakeDetailsView: View {
         }
         .navigationTitle(stake.endDate.mediumDateString)
     }
-    
+
     func headerDetails(headline: String, subheadling: String) -> some View {
         VStack(alignment: .trailing) {
             Text(headline)

@@ -12,6 +12,7 @@ struct StakeCardView: View {
     let accountData: AccountData
 
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
+    private let MAGNETIC_STRIPE_PADDING = CGFloat(24)
     @State private var cardRotation = 0.0
     @State private var showBack = false
 
@@ -73,7 +74,7 @@ struct StakeCardView: View {
             Rectangle()
                 .foregroundColor(.black)
                 .frame(height: MAGNETIC_STRIPE_HEIGHT)
-                .offset(y: MAGNETIC_STRIPE_HEIGHT)
+                .offset(y: MAGNETIC_STRIPE_PADDING)
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     Image(accountData.account.chain.description).resizable()
@@ -89,11 +90,15 @@ struct StakeCardView: View {
                 VStack(alignment: .trailing) {
                     backTotal(title: "Staked", hearts: accountData.total.stakedHearts)
                     Spacer()
-                    backTotal(title: "Earned", hearts: accountData.total.interestHearts + accountData.total.bigPayDayHearts)
+                    backTotal(title: "Interest", hearts: accountData.total.interestHearts)
+                    if !accountData.total.bigPayDayHearts.isZero {
+                        Spacer()
+                        backTotal(title: "Big Pay Day", hearts: accountData.total.bigPayDayHearts)
+                    }
                 }
             }
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-            .padding([.top], MAGNETIC_STRIPE_HEIGHT * 2)
+            .padding([.top], MAGNETIC_STRIPE_HEIGHT + MAGNETIC_STRIPE_PADDING)
             .padding()
         }
         .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)

@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */; };
 		0632C27A5D5B4F5FC6F9294B /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707199CFAF4B74C473DFC14 /* Date+Extensions.swift */; };
 		15A5B14F56E424F987EB628D /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 444317EC2D324F520CBE85B9 /* ComposableArchitecture */; };
 		2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */; };
@@ -37,7 +38,6 @@
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
-		ED065DEF2705291C003C89CF /* GlobalInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED065DEE2705291C003C89CF /* GlobalInfoModel.swift */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F529BC6F4DA1C825F82C1220 /* HEXREST in Frameworks */ = {isa = PBXBuildFile; productRef = 14471AE898FE9C16BE145C44 /* HEXREST */; };
@@ -60,6 +60,7 @@
 		6C4EC50004741C666AA20180 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		6D23AAE8F6F76901D1F55EE2 /* SampleStakes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleStakes.swift; sourceTree = "<group>"; };
 		7254A74580879CE1D57F0B5B /* NSNumber+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNumber+Extensions.swift"; sourceTree = "<group>"; };
+		742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalInfoModel.swift; sourceTree = "<group>"; };
 		7AD673A6150107EFA969E218 /* DailyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataModel.swift; sourceTree = "<group>"; };
 		7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeTotalModel.swift; sourceTree = "<group>"; };
@@ -77,7 +78,6 @@
 		D694B1DA5DF0377977B34F9C /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		ED065DEE2705291C003C89CF /* GlobalInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalInfoModel.swift; sourceTree = "<group>"; };
 		F0738425D18A2BAF07C68CAC /* hex-rest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-rest"; path = "Packages/hex-rest"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -131,10 +131,10 @@
 				9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */,
 				7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */,
 				7AD673A6150107EFA969E218 /* DailyDataModel.swift */,
+				742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */,
 				CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */,
 				3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */,
 				7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */,
-				ED065DEE2705291C003C89CF /* GlobalInfoModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -249,6 +249,15 @@
 			path = HEX;
 			sourceTree = "<group>";
 		};
+		"TEMP_B2BFF230-C8D1-4966-ABA7-7E38B216B02E" /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				230728B8D69D958751745D31 /* index.html */,
+				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -342,9 +351,9 @@
 				0632C27A5D5B4F5FC6F9294B /* Date+Extensions.swift in Sources */,
 				8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */,
 				4AF473CDE829B16639DD6BE3 /* EditAddressView.swift in Sources */,
+				024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */,
 				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
-				ED065DEF2705291C003C89CF /* GlobalInfoModel.swift in Sources */,
 				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
 				98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */,
 				F9D31BABEB128F709FF24E19 /* SampleStakes.swift in Sources */,

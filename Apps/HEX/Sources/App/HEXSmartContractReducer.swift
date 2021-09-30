@@ -71,13 +71,12 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         let unclaimedSatoshisTotal = state.globalInfo.unclaimedSatoshisTotal
         let claimedBtcAddrCount = state.globalInfo.claimedBtcAddrCount
         let claimedSatoshisTotal = state.globalInfo.claimedSatoshisTotal
-        
+
         var totalInterestHearts: BigUInt = 0
         var totalInterestSevenDayHearts: BigUInt = 0
         var bigPayDayTotalHearts: BigUInt = 0
         var currentDay = state.currentDay
 
-        
         let dailyData = dailyDataEncoded.map { dailyData -> DailyData in
             var dailyData = dailyData
             let payout = dailyData & k.HEARTS_MASK
@@ -100,24 +99,23 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             totalInterestHearts += interestHearts
             totalInterestSevenDayHearts += interestSevenDayHearts
 
-            
             // Big Pay Day
-            if startIndex..<endIndex ~= Int(k.BIG_PAY_DAY) {
+            if startIndex ..< endIndex ~= Int(k.BIG_PAY_DAY) {
                 let stakeSharesTotal = dailyData[Int(k.BIG_PAY_DAY)].shares
 
                 let bigPaySlice = unclaimedSatoshisTotal * k.HEARTS_PER_SATOSHI * stake.stakeShares / stakeSharesTotal
-                
+
                 let viralRewards = bigPaySlice * claimedBtcAddrCount / k.CLAIMABLE_BTC_ADDR_COUNT
                 let criticalMass = bigPaySlice * claimedSatoshisTotal / k.CLAIMABLE_SATOSHIS_TOTAL
-                
+
                 let adoptionBonus = viralRewards + criticalMass
-                
+
                 let bigPayDayHearts = bigPaySlice + adoptionBonus
                 state.accountsData[id: accountDataKey]?.stakes[id: stake.id]?.bigPayDayHearts = bigPayDayHearts
-                
+
                 bigPayDayTotalHearts += bigPayDayHearts
             }
-            
+
             state.accountsData[id: accountDataKey]?.stakes[id: stake.id]?.interestHearts = interestHearts
         }
 
@@ -136,7 +134,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                                                  chain: accountData.account.chain).fireAndForget()
             }
         )
-        
+
     case let .globalInfo(globalInfo):
         state.globalInfo = GlobalInfo(globalInfo: globalInfo)
         return .none
