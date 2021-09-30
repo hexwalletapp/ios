@@ -41,7 +41,7 @@ extension NSNumber {
         formatter.numberStyle = .currency
         return formatter.string(from: self) ?? ""
     }
-    
+
     var currencyWholeString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency

@@ -5,8 +5,8 @@ import BigInt
 import Combine
 import ComposableArchitecture
 import Foundation
-import web3
 import UIKit
+import web3
 
 public extension HEXSmartContractManager {
     static let live: HEXSmartContractManager = { () -> HEXSmartContractManager in
@@ -151,7 +151,7 @@ public extension HEXSmartContractManager {
                 }
             }
         }
-        
+
         manager.getGlobalInfo = { id in
             guard let client = dependencies[id]?.client else { return .none }
 

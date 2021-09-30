@@ -18,8 +18,8 @@ struct k {
     static let GRACE_PERIOD = 14
     static let BIG_PAY_DAY = BigUInt(352)
     static let HEARTS_PER_SATOSHI = BigUInt(1e4)
-    static let CLAIMABLE_BTC_ADDR_COUNT = BigUInt(27997742)
-    static let CLAIMABLE_SATOSHIS_TOTAL = BigUInt(910087996911001)
+    static let CLAIMABLE_BTC_ADDR_COUNT = BigUInt(27_997_742)
+    static let CLAIMABLE_SATOSHIS_TOTAL = BigUInt(910_087_996_911_001)
 }
 
 struct HexManagerId: Hashable {}

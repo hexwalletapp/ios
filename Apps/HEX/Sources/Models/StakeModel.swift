@@ -20,7 +20,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let endDate: Date
     var interestHearts: BigUInt
     var bigPayDayHearts: BigUInt?
-    
+
     var balanceHearts: BigUInt {
         switch bigPayDayHearts {
         case let .some(bigPayDayHearts):

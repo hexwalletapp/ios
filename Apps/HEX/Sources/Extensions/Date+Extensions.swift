@@ -9,7 +9,7 @@ extension Date {
         f.dateStyle = .long
         return f.string(from: self)
     }
-    
+
     var mediumDateString: String {
         let f = DateFormatter()
         f.dateStyle = .medium

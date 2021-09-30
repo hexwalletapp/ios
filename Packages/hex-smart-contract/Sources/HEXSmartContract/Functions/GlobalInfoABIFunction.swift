@@ -1,9 +1,5 @@
-//
-//  File.swift
-//  
-//
-//  Created by Joe Blau on 9/29/21.
-//
+// GlobalInfoABIFunction.swift
+// Copyright (c) 2021 Joe Blau
 
 import BigInt
 import Foundation
@@ -16,12 +12,12 @@ public struct GlobalInfo: ABIFunction {
     public var contract = EthereumAddress("0x2b591e99afe9f32eaa6214f7b7629768c40eeb39")
     public var from: EthereumAddress? = nil
 
-    public func encode(to encoder: ABIFunctionEncoder) throws {}
+    public func encode(to _: ABIFunctionEncoder) throws {}
 
     // MARK: - Response
 
     public struct Response: ABIResponse, Equatable {
-        public static var types: [ABIType.Type] = [ABIType.Type](repeating: BigUInt.self, count: 13)
+        public static var types = [ABIType.Type](repeating: BigUInt.self, count: 13)
         public let lockedHeartsTotal: BigUInt
         public let nextStakeSharesTotal: BigUInt
         public let shareRate: BigUInt
