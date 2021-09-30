@@ -14,7 +14,11 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         var totalStakedHearts: BigUInt = 0
         let currentDay = Int(state.currentDay)
 
-        let stakes = stakeList.sorted(by: { $0.lockedDay + $0.stakedDays < $1.lockedDay + $1.stakedDays })
+        let stakes = stakeList.sorted(by: {
+            let firstStake = [BigUInt($0.lockedDay + $0.stakedDays), $0.stakeId]
+            let secondStake = [BigUInt($1.lockedDay + $1.stakedDays), $1.stakeId]
+            return firstStake.lexicographicallyPrecedes(secondStake)
+        })
             .map { stake -> Stake in
                 totalStakeShares += stake.stakeShares
                 totalStakedHearts += stake.stakedHearts
