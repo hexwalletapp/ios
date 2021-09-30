@@ -6,6 +6,7 @@ import Combine
 import ComposableArchitecture
 import Foundation
 import web3
+import UIKit
 
 public extension HEXSmartContractManager {
     static let live: HEXSmartContractManager = { () -> HEXSmartContractManager in
@@ -145,6 +146,30 @@ public extension HEXSmartContractManager {
                             }
                         case .none:
                             print("no stakes")
+                        }
+                    }
+                }
+            }
+        }
+        
+        manager.getGlobalInfo = { id in
+            guard let client = dependencies[id]?.client else { return .none }
+
+            return .fireAndForget {
+                let globalInfo = GlobalInfo()
+                globalInfo.call(withClient: client,
+                                responseType: GlobalInfo.Response.self) { error, response in
+                    switch error {
+                    case let .some(error):
+                        print(error)
+                    case .none:
+                        switch response {
+                        case let .some(globalInfo):
+                            DispatchQueue.main.async {
+                                dependencies[id]?.subscriber.send(.globalInfo(globalInfo))
+                            }
+                        case .none:
+                            print("no global info")
                         }
                     }
                 }

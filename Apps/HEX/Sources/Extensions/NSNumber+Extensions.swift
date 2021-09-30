@@ -41,6 +41,13 @@ extension NSNumber {
         formatter.numberStyle = .currency
         return formatter.string(from: self) ?? ""
     }
+    
+    var currencyWholeString: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 0
+        return formatter.string(from: self) ?? ""
+    }
 
     var percentageString: String {
         let formatter = NumberFormatter()

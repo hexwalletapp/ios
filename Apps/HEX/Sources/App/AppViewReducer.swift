@@ -22,6 +22,7 @@ struct AppState: Equatable {
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
     var currentDay: BigUInt = 0
     var hexPrice = HEXPrice()
+    var globalInfo = GlobalInfo()
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -73,9 +74,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 .mapError { $0 as NSError }
                 .catchToEffect()
                 .map(AppAction.updateHexPrice)
-                .throttle(id: GetPriceDebounceId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true),
+                .throttle(id: GetPriceThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true),
+            environment.hexManager.getGlobalInfo(id: HexManagerId()).fireAndForget()
+                .throttle(id: GlobalInfoThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true),
             environment.hexManager.getCurrentDay(id: HexManagerId()).fireAndForget()
-                .throttle(id: GetDayDebounceId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true)
+                .throttle(id: GetDayThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true)
         )
 
     case let .updateHexPrice(result):

@@ -11,6 +11,7 @@ public struct HEXSmartContractManager {
         case stakeList([StakeLists_Parameter.Response], EthereumAddress, Chain)
         case dailyData([BigUInt], EthereumAddress, Chain)
         case currentDay(BigUInt)
+        case globalInfo(GlobalInfo.Response)
     }
 
     var create: (AnyHashable) -> Effect<Action, Never> = { _ in _unimplemented("create") }
@@ -28,6 +29,8 @@ public struct HEXSmartContractManager {
     var getDailyDataRange: (AnyHashable, EthereumAddress, Chain, UInt16, UInt16) -> Effect<Never, Never> = { _, _, _, _, _ in _unimplemented("getDailyDataRange") }
 
     var getCurrentDay: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("getCurrentDay") }
+    
+    var getGlobalInfo: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("getGlobalInfo") }
 
     public func create(id: AnyHashable) -> Effect<Action, Never> {
         create(id)
@@ -59,5 +62,9 @@ public struct HEXSmartContractManager {
 
     public func getCurrentDay(id: AnyHashable) -> Effect<Never, Never> {
         getCurrentDay(id)
+    }
+    
+    public func getGlobalInfo(id: AnyHashable) -> Effect<Never, Never> {
+        getGlobalInfo(id)
     }
 }
