@@ -6,7 +6,7 @@ import HEXREST
 import SwiftUI
 
 struct StakeDetailsView: View {
-    let hexPrice: HEXPrice
+    let price: Double
     let stake: Stake
     let account: Account
 
@@ -41,7 +41,7 @@ struct StakeDetailsView: View {
                                     .foregroundColor(.secondary)
                             }
                         }
-                        .frame(width: 164, height: 164)
+                        .frame(width: 128, height: 128)
                         Spacer()
                         VStack(alignment: .trailing, spacing: 8) {
                             headerDetails(headline: stake.startDate.longDateString, subheadling: "Stake Start")
@@ -107,7 +107,7 @@ struct StakeDetailsView: View {
             Text("\(units.hex)")
                 .font(.caption.monospaced())
             Text(units
-                .hexAt(price: hexPrice.hexUsd)
+                .hexAt(price: price)
                 .currencyWholeString)
                             .font(.caption.monospaced())
         }
@@ -122,8 +122,8 @@ struct StakeDetailsView: View {
             Text(toPercentage(principle: principle.hex,
                               interest: interest.hex))
                 .font(.caption.monospaced())
-            Text(toPercentage(principle: principle.hexAt(price: hexPrice.hexUsd),
-                              interest: interest.hexAt(price: hexPrice.hexUsd)))
+            Text(toPercentage(principle: principle.hexAt(price: price),
+                              interest: interest.hexAt(price: price)))
                 .font(.caption.monospaced())
         }
     }

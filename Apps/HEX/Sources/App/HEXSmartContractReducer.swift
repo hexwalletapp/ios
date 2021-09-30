@@ -127,7 +127,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
     case let .currentDay(day):
         state.currentDay = day
-        return .concatenate(
+        return .merge(
             state.accountsData.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never>? in
                 environment.hexManager.getStakes(id: HexManagerId(),
                                                  address: accountData.account.address,

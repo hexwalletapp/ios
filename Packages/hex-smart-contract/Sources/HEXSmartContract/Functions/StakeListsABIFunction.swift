@@ -24,9 +24,10 @@ public struct StakeLists_Parameter: ABIFunction {
 
     // MARK: - Response
 
-    public struct Response: ABIResponse, Equatable {
+    public struct Response: ABIResponse, Equatable, Identifiable {
         public static var types: [ABIType.Type] = [BigUInt.self, BigUInt.self, BigUInt.self, UInt16.self, UInt16.self, UInt16.self, Bool.self]
 
+        public var id: BigUInt { stakeId }
         public let stakeId: BigUInt
         public let stakedHearts: BigUInt
         public let stakeShares: BigUInt

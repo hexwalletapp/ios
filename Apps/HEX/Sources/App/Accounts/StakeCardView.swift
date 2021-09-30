@@ -8,7 +8,7 @@ import SwiftUI
 import SwiftUIVisualEffects
 
 struct StakeCardView: View {
-    let hexPrice: HEXPrice
+    let price: NSNumber
     let accountData: AccountData
 
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
@@ -107,7 +107,7 @@ struct StakeCardView: View {
 
     func frontTotal(title: String, hearts: BigUInt, alignment: HorizontalAlignment) -> some View {
         VStack(alignment: alignment) {
-            Text(hearts.hexAt(price: hexPrice.hexUsd).currencyString)
+            Text(hearts.hexAt(price: price.doubleValue).currencyString)
             description(text: title)
         }
     }
@@ -129,7 +129,7 @@ struct StakeCardView: View {
 
     func backTotal(title: String, hearts: BigUInt) -> some View {
         VStack(alignment: .trailing) {
-            Text(hearts.hexAt(price: hexPrice.hexUsd).currencyStringSuffix).foregroundColor(.primary)
+            Text(hearts.hexAt(price: price.doubleValue).currencyStringSuffix).foregroundColor(.primary)
             Text(hearts.hex.hexString).foregroundColor(.secondary)
             description(text: title)
         }

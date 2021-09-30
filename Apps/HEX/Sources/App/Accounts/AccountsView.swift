@@ -27,17 +27,35 @@ struct AccountsView: View {
                 }
                 .background(Color(.systemGroupedBackground))
                 .navigationBarTitle("Accounts")
-                .sheet(isPresented: viewStore.binding(\.$presentEditAddress), content: {
-                    EditAddressView(store: store)
+                .sheet(item: viewStore.binding(\.$accountPresent), content: { accountPresent in
+                    switch accountPresent {
+                    case .edit: EditAddressView(store: store)
+                    case .speculate: SpeculateView(store: store)
+                    }
                 })
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         Button {
-                            viewStore.send(.binding(.set(\.$presentEditAddress, true)))
+                            viewStore.send(.binding(.set(\.$accountPresent, .edit)))
                         } label: { Image(systemName: "person") }
+                        
+                        toolbarText(heading: viewStore.currentDay.description, subheading: "Day")
+                        toolbarText(heading: viewStore.price.currencyString + (viewStore.shouldSpeculate ? "*" : ""), subheading: "Price")
                     }
 
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
+  
+                        Menu(content: {
+                            Section {
+                                Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate))
+                            }
+                             Section {
+                            Button {
+                                viewStore.send(.binding(.set(\.$accountPresent, .speculate)))
+                            } label: { Label("Edit \(viewStore.price.currencyString)", systemImage: "square.and.pencil") }
+                             }
+                        }, label: {Image(systemName: "dollarsign.circle")})
+                        
                         Button {} label: { Image(systemName: "bell.badge") }
                             .disabled(true)
 
@@ -49,12 +67,19 @@ struct AccountsView: View {
         }
     }
 
+    func toolbarText(heading: String, subheading: String) -> some View {
+        VStack {
+            Text(heading).font(.caption.monospacedDigit())
+            Text(subheading).font(.caption2.monospaced()).foregroundColor(.secondary)
+        }
+    }
+    
     var accountList: some View {
         WithViewStore(store) { viewStore in
             switch (viewStore.accountsData.isEmpty, viewStore.accountsData[id: viewStore.selectedId]) {
             case (false, let .some(accountData)):
                 ForEach(accountData.stakes) { stake in
-                    StakeDetailsCardView(hexPrice: viewStore.hexPrice,
+                    StakeDetailsCardView(price: viewStore.price,
                                          stake: stake,
                                          account: accountData.account)
                 }
@@ -70,7 +95,7 @@ struct AccountsView: View {
             case false:
                 TabView(selection: viewStore.binding(\.$selectedId)) {
                     ForEach(viewStore.accountsData) { accountData in
-                        StakeCardView(hexPrice: viewStore.hexPrice,
+                        StakeCardView(price: viewStore.price,
                                       accountData: accountData)
                             .padding(.horizontal)
                             .padding(.top, k.CARD_PADDING_TOP)

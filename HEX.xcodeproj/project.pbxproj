@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -38,6 +38,7 @@
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
+		ED40F7C8270573A700065F72 /* SpeculateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED40F7C7270573A700065F72 /* SpeculateView.swift */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F529BC6F4DA1C825F82C1220 /* HEXREST in Frameworks */ = {isa = PBXBuildFile; productRef = 14471AE898FE9C16BE145C44 /* HEXREST */; };
@@ -49,7 +50,7 @@
 		117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigUInt+Extensions.swift"; sourceTree = "<group>"; };
 		12DBF49D004E00EE95C96479 /* AppViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewReducer.swift; sourceTree = "<group>"; };
 		1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
-		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		230728B8D69D958751745D31 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
 		2D56D72C21058B5DDC3BDE89 /* hex-smart-contract */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-smart-contract"; path = "Packages/hex-smart-contract"; sourceTree = SOURCE_ROOT; };
@@ -78,6 +79,7 @@
 		D694B1DA5DF0377977B34F9C /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		ED40F7C7270573A700065F72 /* SpeculateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeculateView.swift; sourceTree = "<group>"; };
 		F0738425D18A2BAF07C68CAC /* hex-rest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-rest"; path = "Packages/hex-rest"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -216,8 +218,9 @@
 		CBF66A67479E6E83DD335C7F /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
+				ED40F7C62705739C00065F72 /* Speculate */,
+				ED40F7C52705738A00065F72 /* Edit */,
 				56DFEC316C64640DC5205E43 /* AccountsView.swift */,
-				4A6D31C243C81BEE013D6547 /* EditAddressView.swift */,
 				0C81D66CAB957125308B7010 /* StakeCardView.swift */,
 				1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */,
 				DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */,
@@ -238,6 +241,22 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		ED40F7C52705738A00065F72 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				4A6D31C243C81BEE013D6547 /* EditAddressView.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		ED40F7C62705739C00065F72 /* Speculate */ = {
+			isa = PBXGroup;
+			children = (
+				ED40F7C7270573A700065F72 /* SpeculateView.swift */,
+			);
+			path = Speculate;
+			sourceTree = "<group>";
+		};
 		FA53A81348801277D5DFC836 /* HEX */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,15 +266,6 @@
 				0274987511660F32ADBD8FAF /* SupportingFiles */,
 			);
 			path = HEX;
-			sourceTree = "<group>";
-		};
-		"TEMP_B2BFF230-C8D1-4966-ABA7-7E38B216B02E" /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				230728B8D69D958751745D31 /* index.html */,
-				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,6 +367,7 @@
 				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
 				98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */,
 				F9D31BABEB128F709FF24E19 /* SampleStakes.swift in Sources */,
+				ED40F7C8270573A700065F72 /* SpeculateView.swift in Sources */,
 				74D28048802B53B2C69F9EF6 /* StakeCardView.swift in Sources */,
 				559A9CC38F7C9CAE8BF88604 /* StakeDetailsCardView.swift in Sources */,
 				BE94256F6E38266AD8D0FB68 /* StakeDetailsView.swift in Sources */,
@@ -376,6 +387,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = Apps/HEX/PreviewContent;
 				INFOPLIST_FILE = Apps/HEX/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -520,6 +532,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = Apps/HEX/PreviewContent;
 				INFOPLIST_FILE = Apps/HEX/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
