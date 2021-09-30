@@ -9,4 +9,9 @@ struct StakeTotal: Codable, Hashable, Equatable {
     var stakedHearts: BigUInt = 0
     var interestHearts: BigUInt = 0
     var interestSevenDayHearts: BigUInt = 0
+    var bigPayDayHearts: BigUInt = 0
+    
+    var balanceHearts: BigUInt {
+        stakedHearts + interestHearts + bigPayDayHearts
+    }
 }

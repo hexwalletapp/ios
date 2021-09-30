@@ -10,7 +10,7 @@ extension BigUInt {
     }
 
     var hex: NSNumber {
-        NSNumber(value: Double(self / BigUInt(100_000_000)))
+        self.quotientAndRemainder(dividingBy: BigUInt(100_000_000)).quotient.number
     }
 
     func hexAt(price: Double) -> NSNumber {

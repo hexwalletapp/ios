@@ -10,7 +10,7 @@ struct StakeDetailsView: View {
     let stake: Stake
     let account: Account
 
-    let threeColumnGrid = [GridItem(.flexible(maximum: 72), alignment: .leading),
+    let threeColumnGrid = [GridItem(.flexible(maximum: 80), alignment: .leading),
                            GridItem(.flexible(maximum: 100), alignment: .trailing),
                            GridItem(.flexible(), alignment: .trailing)]
 
@@ -80,8 +80,11 @@ struct StakeDetailsView: View {
             Divider()
             girdRow(title: "ᴘʀɪɴᴄɪᴘʟᴇ", units: stake.stakedHearts)
             girdRow(title: "ɪɴᴛᴇʀᴇsᴛ", units: stake.interestHearts)
+            if let bigPayDayHearts = stake.bigPayDayHearts {
+                girdRow(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: bigPayDayHearts)
+            }
             Divider()
-            girdRow(title: "ᴛᴏᴛᴀʟ", units: stake.stakedHearts + stake.interestHearts)
+            girdRow(title: "ᴛᴏᴛᴀʟ", units: stake.balanceHearts)
             Divider()
             roiRow(principle: stake.stakedHearts, interest: stake.interestHearts)
         }
@@ -105,7 +108,7 @@ struct StakeDetailsView: View {
                 .font(.caption.monospaced())
             Text(units
                 .hexAt(price: hexPrice.hexUsd)
-                .currencyString)
+                .currencyWholeString)
                             .font(.caption.monospaced())
         }
     }

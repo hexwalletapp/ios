@@ -16,8 +16,13 @@ struct k {
     static let CARD_PADDING_TOP = CGFloat(20)
     static let HEX_START_DATE = Date(timeIntervalSince1970: 1_575_273_600)
     static let GRACE_PERIOD = 14
+    static let BIG_PAY_DAY = BigUInt(352)
+    static let HEARTS_PER_SATOSHI = BigUInt(1e4)
+    static let CLAIMABLE_BTC_ADDR_COUNT = BigUInt(27997742)
+    static let CLAIMABLE_SATOSHIS_TOTAL = BigUInt(910087996911001)
 }
 
 struct HexManagerId: Hashable {}
-struct GetPriceDebounceId: Hashable {}
-struct GetDayDebounceId: Hashable {}
+struct GetPriceThrottleId: Hashable {}
+struct GlobalInfoThrottleId: Hashable {}
+struct GetDayThrottleId: Hashable {}

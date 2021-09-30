@@ -19,4 +19,14 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let startDate: Date
     let endDate: Date
     var interestHearts: BigUInt
+    var bigPayDayHearts: BigUInt?
+    
+    var balanceHearts: BigUInt {
+        switch bigPayDayHearts {
+        case let .some(bigPayDayHearts):
+            return stakedHearts + interestHearts + bigPayDayHearts
+        case .none:
+            return stakedHearts + interestHearts
+        }
+    }
 }

@@ -47,7 +47,7 @@ struct StakeCardView: View {
                 Spacer()
                 HStack(alignment: .bottom) {
                     frontTotal(title: "Total Balance",
-                               hearts: accountData.total.stakedHearts + accountData.total.interestHearts,
+                               hearts: accountData.total.balanceHearts,
                                alignment: .leading)
                     Spacer()
                     frontTotal(title: "Total Shares",
@@ -89,7 +89,7 @@ struct StakeCardView: View {
                 VStack(alignment: .trailing) {
                     backTotal(title: "Staked", hearts: accountData.total.stakedHearts)
                     Spacer()
-                    backTotal(title: "Earned", hearts: accountData.total.interestHearts)
+                    backTotal(title: "Earned", hearts: accountData.total.interestHearts + accountData.total.bigPayDayHearts)
                 }
             }
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
@@ -128,7 +128,7 @@ struct StakeCardView: View {
             Text(hearts.hex.hexString).foregroundColor(.secondary)
             description(text: title)
         }
-        .font(.body.monospacedDigit())
+        .font(.subheadline.monospacedDigit())
     }
 
     func description(text: String) -> some View {
