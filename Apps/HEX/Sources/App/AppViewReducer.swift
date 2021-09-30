@@ -13,15 +13,24 @@ enum Tab {
     case charts, accounts
 }
 
+enum AccountPresent: Identifiable {
+    var id: Self { self }
+    
+    case edit, speculate
+}
+
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
-    @BindableState var presentEditAddress = false
+    @BindableState var accountPresent: AccountPresent? = nil
     @BindableState var selectedTab: Tab = .accounts
 
     @BindableState var selectedId = ""
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
-    var currentDay: BigUInt = 0
+    @BindableState var shouldSpeculate = false
+    @BindableState var speculativePrice: NSNumber = 1.00
     var hexPrice = HEXPrice()
+    var price: NSNumber = 0.0
+    var currentDay: BigUInt = 0
     var globalInfo = GlobalInfo()
 }
 
@@ -34,6 +43,7 @@ enum AppAction: BindableAction, Equatable {
     case onActive
 
     case updateAccounts
+    case updatePrice
     case updateHexPrice(Result<HEXPrice, NSError>)
     case binding(BindingAction<AppState>)
 }
@@ -81,12 +91,24 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 .throttle(id: GetDayThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true)
         )
 
+    case .updatePrice:
+        switch state.shouldSpeculate {
+        case true:
+            state.price = state.speculativePrice
+        case false:
+            state.price = NSNumber(value: state.hexPrice.hexUsd)
+        }
+        return .none
+        
     case let .updateHexPrice(result):
         switch result {
         case let .success(hexPrice): state.hexPrice = hexPrice
         case let .failure(error): print(error)
         }
-        return .none
+        return Effect(value: .updatePrice)
+        
+    case .binding(\.$shouldSpeculate):
+        return Effect(value: .updatePrice)
 
     case .binding(\.$selectedTab):
         switch state.selectedTab {
@@ -94,10 +116,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case .accounts: return Effect(value: .updateAccounts)
         }
 
-    case .binding(\.$presentEditAddress):
-        switch state.presentEditAddress {
-        case false: return Effect(value: .updateAccounts)
-        case true: return .none
+    case .binding(\.$accountPresent):
+        switch state.accountPresent {
+        case .some: return .none
+        case .none: return Effect(value: .updateAccounts)
         }
 
     case .binding(\.$accountsData):

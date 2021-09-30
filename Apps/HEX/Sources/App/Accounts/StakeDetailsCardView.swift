@@ -5,7 +5,7 @@ import HEXREST
 import SwiftUI
 
 struct StakeDetailsCardView: View {
-    let hexPrice: HEXPrice
+    let price: NSNumber
     let stake: Stake
     let account: Account
 
@@ -25,7 +25,7 @@ struct StakeDetailsCardView: View {
                 Spacer()
                 VStack(alignment: .trailing, spacing: 4) {
                     Text(stake.stakedHearts
-                        .hexAt(price: hexPrice.hexUsd)
+                            .hexAt(price: price.doubleValue)
                         .currencyStringSuffix).foregroundColor(.primary)
                     Text(stake.stakedHearts.hex.hexString).foregroundColor(.secondary)
                 }
@@ -38,7 +38,7 @@ struct StakeDetailsCardView: View {
         .padding([.horizontal], 20)
         .padding([.vertical], 10)
         .groupBoxStyle(StakeGroupBoxStyle(color: .primary,
-                                          destination: StakeDetailsView(hexPrice: hexPrice,
+                                          destination: StakeDetailsView(price: price.doubleValue,
                                                                         stake: stake,
                                                                         account: account),
                                           stakeStatus: stake.status))
