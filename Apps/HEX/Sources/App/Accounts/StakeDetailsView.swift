@@ -25,32 +25,7 @@ struct StakeDetailsView: View {
                             .background(Color(.systemGray5))
                             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                     }
-                    HStack(alignment: .top) {
-                        ZStack {
-                            PercentageRingView(
-                                ringWidth: 16,
-                                percent: stake.percentComplete * 100,
-                                backgroundColor: account.chain.gradient.first?.opacity(0.15) ?? .clear,
-                                foregroundColors: [account.chain.gradient.first ?? .clear, account.chain.gradient.last ?? .clear]
-                            )
-                            VStack {
-                                Text(NSNumber(value: stake.percentComplete).percentageFractionString)
-                                    .font(.body.monospacedDigit())
-                                Text("Complete")
-                                    .font(.caption.monospaced())
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                        .frame(width: 128, height: 128)
-                        Spacer()
-                        VStack(alignment: .trailing, spacing: 8) {
-                            headerDetails(headline: stake.startDate.longDateString, subheadling: "Stake Start")
-                            headerDetails(headline: stake.endDate.longDateString, subheadling: "Stake End")
-                            headerDetails(headline: stake.daysRemaining.description, subheadling: "Days Remaining")
-                            headerDetails(headline: stake.stakeShares.number.shareString, subheadling: "Shares")
-                            Spacer()
-                        }
-                    }
+                    headerView
                     earningsView
                     HStack(alignment: .top) {
                         Spacer()
@@ -63,6 +38,35 @@ struct StakeDetailsView: View {
             .padding()
         }
         .navigationTitle(stake.endDate.mediumDateString)
+    }
+    
+    var headerView: some View {
+        HStack(alignment: .top) {
+            ZStack {
+                PercentageRingView(
+                    ringWidth: 16,
+                    percent: stake.percentComplete * 100,
+                    backgroundColor: account.chain.gradient.first?.opacity(0.15) ?? .clear,
+                    foregroundColors: [account.chain.gradient.first ?? .clear, account.chain.gradient.last ?? .clear]
+                )
+                VStack {
+                    Text(NSNumber(value: stake.percentComplete).percentageFractionString)
+                        .font(.body.monospacedDigit())
+                    Text("Complete")
+                        .font(.caption.monospaced())
+                        .foregroundColor(.secondary)
+                }
+            }
+            .frame(width: 128, height: 128)
+            Spacer()
+            VStack(alignment: .trailing, spacing: 8) {
+                headerDetails(headline: stake.startDate.longDateString, subheadling: "Stake Start")
+                headerDetails(headline: stake.endDate.longDateString, subheadling: "Stake End")
+                headerDetails(headline: stake.daysRemaining.description, subheadling: "Days Remaining")
+                headerDetails(headline: stake.stakeShares.number.shareString, subheadling: "Shares")
+                Spacer()
+            }
+        }
     }
 
     func headerDetails(headline: String, subheadling: String) -> some View {
@@ -80,7 +84,7 @@ struct StakeDetailsView: View {
             Divider()
             girdRow(title: "ᴘʀɪɴᴄɪᴘʟᴇ", units: stake.stakedHearts)
             girdRow(title: "ɪɴᴛᴇʀᴇsᴛ", units: stake.interestHearts)
-            if let bigPayDayHearts = stake.bigPayDayHearts {
+            if let bigPayDayHearts = stake.bigPayDayHearts, !bigPayDayHearts.isZero {
                 girdRow(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: bigPayDayHearts)
             }
             Divider()
