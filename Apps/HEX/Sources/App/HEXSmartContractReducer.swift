@@ -94,35 +94,35 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         state.accountsData[id: accountDataKey]?
             .stakes
             .forEach { stake in
-            let startIndex = Int(stake.lockedDay)
+                let startIndex = Int(stake.lockedDay)
                 let endIndex = min(startIndex + Int(stake.stakedDays), Int(state.currentDay))
-            let weekStartIndex = max(endIndex - 7, startIndex)
+                let weekStartIndex = max(endIndex - 7, startIndex)
 
-            let interestHearts = dailyData[startIndex ..< endIndex].reduce(0) { $0 + ((stake.stakeShares * $1.payout) / $1.shares) }
-            let interestSevenDayHearts = dailyData[weekStartIndex ..< endIndex].reduce(0) { $0 + ((stake.stakeShares * $1.payout) / $1.shares) }
+                let interestHearts = dailyData[startIndex ..< endIndex].reduce(0) { $0 + ((stake.stakeShares * $1.payout) / $1.shares) }
+                let interestSevenDayHearts = dailyData[weekStartIndex ..< endIndex].reduce(0) { $0 + ((stake.stakeShares * $1.payout) / $1.shares) }
 
-            totalInterestHearts += interestHearts
-            totalInterestSevenDayHearts += interestSevenDayHearts
+                totalInterestHearts += interestHearts
+                totalInterestSevenDayHearts += interestSevenDayHearts
 
-            // Big Pay Day
-            if startIndex ..< endIndex ~= Int(k.BIG_PAY_DAY) {
-                let stakeSharesTotal = dailyData[Int(k.BIG_PAY_DAY)].shares
+                // Big Pay Day
+                if startIndex ..< endIndex ~= Int(k.BIG_PAY_DAY) {
+                    let stakeSharesTotal = dailyData[Int(k.BIG_PAY_DAY)].shares
 
-                let bigPaySlice = unclaimedSatoshisTotal * k.HEARTS_PER_SATOSHI * stake.stakeShares / stakeSharesTotal
+                    let bigPaySlice = unclaimedSatoshisTotal * k.HEARTS_PER_SATOSHI * stake.stakeShares / stakeSharesTotal
 
-                let viralRewards = bigPaySlice * claimedBtcAddrCount / k.CLAIMABLE_BTC_ADDR_COUNT
-                let criticalMass = bigPaySlice * claimedSatoshisTotal / k.CLAIMABLE_SATOSHIS_TOTAL
+                    let viralRewards = bigPaySlice * claimedBtcAddrCount / k.CLAIMABLE_BTC_ADDR_COUNT
+                    let criticalMass = bigPaySlice * claimedSatoshisTotal / k.CLAIMABLE_SATOSHIS_TOTAL
 
-                let adoptionBonus = viralRewards + criticalMass
+                    let adoptionBonus = viralRewards + criticalMass
 
-                let bigPayDayHearts = bigPaySlice + adoptionBonus
-                state.accountsData[id: accountDataKey]?.stakes[id: stake.id]?.bigPayDayHearts = bigPayDayHearts
+                    let bigPayDayHearts = bigPaySlice + adoptionBonus
+                    state.accountsData[id: accountDataKey]?.stakes[id: stake.id]?.bigPayDayHearts = bigPayDayHearts
 
-                bigPayDayTotalHearts += bigPayDayHearts
+                    bigPayDayTotalHearts += bigPayDayHearts
+                }
+
+                state.accountsData[id: accountDataKey]?.stakes[id: stake.id]?.interestHearts = interestHearts
             }
-
-            state.accountsData[id: accountDataKey]?.stakes[id: stake.id]?.interestHearts = interestHearts
-        }
 
         state.accountsData[id: accountDataKey]?.total.interestHearts = totalInterestHearts
         state.accountsData[id: accountDataKey]?.total.interestSevenDayHearts = (totalInterestSevenDayHearts / BigUInt(7))

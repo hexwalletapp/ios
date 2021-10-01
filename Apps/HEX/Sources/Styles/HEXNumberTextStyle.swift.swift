@@ -1,9 +1,5 @@
-//
-//  HEXNumberTextStyle.swift.swift
-//  HEX
-//
-//  Created by Joe Blau on 10/1/21.
-//
+// HEXNumberTextStyle.swift.swift
+// Copyright (c) 2021 Joe Blau
 
 import SwiftUI
 

@@ -39,7 +39,7 @@ struct StakeDetailsView: View {
         }
         .navigationTitle(stake.endDate.mediumDateString)
     }
-    
+
     var headerView: some View {
         HStack(alignment: .top) {
             ZStack {
