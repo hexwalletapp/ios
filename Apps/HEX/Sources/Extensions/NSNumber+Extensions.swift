@@ -7,10 +7,16 @@ extension NSNumber {
     var hexString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.positiveSuffix = " ʜᴇx"
         return formatter.string(from: self) ?? ""
     }
 
+    var hexStringSuffix: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.positiveSuffix = " ʜᴇx"
+        return formatter.string(from: self) ?? ""
+    }
+    
     var shareString: String {
         let units = ["", "ᴋ-", "ᴍ-", "ɢ-", "ᴛ-", "ᴘ-", "ᴇ-"]
         let numerator = log10(doubleValue)
