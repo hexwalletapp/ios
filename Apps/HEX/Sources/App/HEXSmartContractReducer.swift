@@ -20,9 +20,6 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             return firstStake.lexicographicallyPrecedes(secondStake)
         })
             .map { stake -> Stake in
-                totalStakeShares += stake.stakeShares
-                totalStakedHearts += stake.stakedHearts
-
                 let stakeUnlockDay = Int(stake.unlockedDay)
                 let stakeLockedDay = Int(stake.lockedDay)
                 let stakeLength = stakeLockedDay + Int(stake.stakedDays)
@@ -33,7 +30,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                 // Calculate Status
                 if stake.unlockedDay > 0, stake.unlockedDay < stake.lockedDay + stake.stakedDays {
                     status = .emergencyEnd
-                } else if stake.unlockedDay > 0, stakeLength ..< gracePeriod ~= stakeUnlockDay {
+                } else if stake.unlockedDay > 0, stakeLength ..< currentDay ~= stakeUnlockDay {
                     status = .goodAccounting
                 } else if stake.unlockedDay == 0, stakeLength ..< gracePeriod ~= stakeUnlockDay {
                     status = .gracePeriod
@@ -41,6 +38,8 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                     status = .bleeding
                 } else {
                     status = .active
+                    totalStakeShares += stake.stakeShares
+                    totalStakedHearts += stake.stakedHearts
                 }
 
                 return Stake(stakeId: stake.stakeId,
@@ -92,9 +91,11 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             return DailyData(payout: payout, shares: shares, sats: sats)
         }
 
-        state.accountsData[id: accountDataKey]?.stakes.forEach { stake in
+        state.accountsData[id: accountDataKey]?
+            .stakes
+            .forEach { stake in
             let startIndex = Int(stake.lockedDay)
-            let endIndex = Int(state.currentDay)
+                let endIndex = min(startIndex + Int(stake.stakedDays), Int(state.currentDay))
             let weekStartIndex = max(endIndex - 7, startIndex)
 
             let interestHearts = dailyData[startIndex ..< endIndex].reduce(0) { $0 + ((stake.stakeShares * $1.payout) / $1.shares) }
