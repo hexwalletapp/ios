@@ -7,14 +7,14 @@ import SwiftUI
 
 struct SpeculateView: View {
     let store: Store<AppState, AppAction>
-    
+
     private enum Field: Hashable {
         case price
     }
-    
+
     @State var price: String
     @FocusState private var focusedField: Field?
-    
+
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
@@ -26,15 +26,15 @@ struct SpeculateView: View {
                             .keyboardType(.decimalPad)
                             .focused($focusedField, equals: .price)
                     }
-                    
+
                     Section {
                         Button {
                             guard !price.isEmpty else { return }
-                            
+
                             switch Double(price) {
                             case let .some(priceDouble):
                                 let speculativePrice = NSNumber(value: priceDouble)
-                                
+
                                 focusedField = nil
                                 viewStore.send(.binding(.set(\.$speculativePrice, speculativePrice)))
                                 viewStore.send(.binding(.set(\.$shouldSpeculate, true)))
@@ -71,9 +71,9 @@ struct SpeculateView: View {
 }
 
 #if DEBUG
-struct SpeculateView_Previews: PreviewProvider {
-    static var previews: some View {
-        SpeculateView(store: sampleAppStore, price: "1.00")
+    struct SpeculateView_Previews: PreviewProvider {
+        static var previews: some View {
+            SpeculateView(store: sampleAppStore, price: "1.00")
+        }
     }
-}
 #endif

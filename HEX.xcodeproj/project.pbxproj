@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,10 +36,10 @@
 		B47647423BAF6BDF59F01BD1 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DFEC316C64640DC5205E43 /* AccountsView.swift */; };
 		BE94256F6E38266AD8D0FB68 /* StakeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */; };
 		C6DAE61AE40346FBAC8B7C3D /* StakeStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */; };
+		C8433AD2F29CC034EBDC5DE5 /* HEXNumberTextStyle.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C761093E015E0AF15D227C29 /* HEXNumberTextStyle.swift.swift */; };
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
-		ED6528312707526300050084 /* HEXNumberTextStyle.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6528302707526300050084 /* HEXNumberTextStyle.swift.swift */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F529BC6F4DA1C825F82C1220 /* HEXREST in Frameworks */ = {isa = PBXBuildFile; productRef = 14471AE898FE9C16BE145C44 /* HEXREST */; };
@@ -51,7 +51,7 @@
 		117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigUInt+Extensions.swift"; sourceTree = "<group>"; };
 		12DBF49D004E00EE95C96479 /* AppViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewReducer.swift; sourceTree = "<group>"; };
 		1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
-		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		230728B8D69D958751745D31 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
 		2D56D72C21058B5DDC3BDE89 /* hex-smart-contract */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-smart-contract"; path = "Packages/hex-smart-contract"; sourceTree = SOURCE_ROOT; };
@@ -76,12 +76,12 @@
 		A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXSmartContractReducer.swift; sourceTree = "<group>"; };
 		B707199CFAF4B74C473DFC14 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C761093E015E0AF15D227C29 /* HEXNumberTextStyle.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXNumberTextStyle.swift.swift; sourceTree = "<group>"; };
 		CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeModel.swift; sourceTree = "<group>"; };
 		CD97BE07A876D006551CAE25 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
 		D694B1DA5DF0377977B34F9C /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		ED6528302707526300050084 /* HEXNumberTextStyle.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXNumberTextStyle.swift.swift; sourceTree = "<group>"; };
 		F0738425D18A2BAF07C68CAC /* hex-rest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-rest"; path = "Packages/hex-rest"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -171,8 +171,8 @@
 		90BE8DA6D5A1BF4EF796BA89 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
+				C761093E015E0AF15D227C29 /* HEXNumberTextStyle.swift.swift */,
 				2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */,
-				ED6528302707526300050084 /* HEXNumberTextStyle.swift.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -271,6 +271,15 @@
 			path = HEX;
 			sourceTree = "<group>";
 		};
+		"TEMP_43CC1DC6-B92F-4516-8807-4C7185925D51" /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				230728B8D69D958751745D31 /* index.html */,
+				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -357,7 +366,6 @@
 				38ECF3516F587DDB5C816F2B /* App.swift in Sources */,
 				272864C27D707302918465AF /* AppView.swift in Sources */,
 				641B864855B2593A479F561B /* AppViewReducer.swift in Sources */,
-				ED6528312707526300050084 /* HEXNumberTextStyle.swift.swift in Sources */,
 				2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */,
 				8F9E6D637FDA37CBB3BC00AA /* ChartsView.swift in Sources */,
 				E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */,
@@ -366,6 +374,7 @@
 				8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */,
 				384453310AFABC584F1147F7 /* EditView.swift in Sources */,
 				024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */,
+				C8433AD2F29CC034EBDC5DE5 /* HEXNumberTextStyle.swift.swift in Sources */,
 				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
@@ -391,7 +400,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = Apps/HEX/PreviewContent;
 				INFOPLIST_FILE = Apps/HEX/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -536,7 +544,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = Apps/HEX/PreviewContent;
 				INFOPLIST_FILE = Apps/HEX/SupportingFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

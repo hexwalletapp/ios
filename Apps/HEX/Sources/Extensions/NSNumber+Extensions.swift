@@ -16,7 +16,7 @@ extension NSNumber {
         formatter.positiveSuffix = " ʜᴇx"
         return formatter.string(from: self) ?? ""
     }
-    
+
     var shareString: String {
         let units = ["", "ᴋ-", "ᴍ-", "ɢ-", "ᴛ-", "ᴘ-", "ᴇ-"]
         let numerator = log10(doubleValue)
@@ -49,7 +49,7 @@ extension NSNumber {
         formatter.maximumFractionDigits = 2
         return formatter.string(from: self) ?? ""
     }
-    
+
     var currencyString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
