@@ -129,8 +129,8 @@ struct StakeCardView: View {
 
     func backTotal(title: String, hearts: BigUInt) -> some View {
         VStack(alignment: .trailing) {
-            Text(hearts.hexAt(price: price.doubleValue).currencyStringSuffix).foregroundColor(.primary)
-            Text(hearts.hex.hexString).foregroundColor(.secondary)
+            Text(hearts.hexAt(price: price.doubleValue).currencyString).foregroundColor(.primary)
+            Label(hearts.hex.hexString, image: "hex-logo.SFSymbol").labelStyle(HEXNumberTextStyle()).foregroundColor(.secondary)
             description(text: title)
         }
         .font(.subheadline.monospacedDigit())
