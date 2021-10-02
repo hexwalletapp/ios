@@ -82,15 +82,15 @@ struct StakeDetailsView: View {
         VStack {
             earningsHeader
             Divider()
-            girdRow(title: "ᴘʀɪɴᴄɪᴘʟᴇ", units: stake.stakedHearts)
+            girdRow(title: "ᴘʀɪɴᴄɪᴘᴀʟ", units: stake.stakedHearts)
             girdRow(title: "ɪɴᴛᴇʀᴇsᴛ", units: stake.interestHearts)
-            if let bigPayDayHearts = stake.bigPayDayHearts, !bigPayDayHearts.isZero {
+            if let bigPayDayHearts = stake.bigPayDayHearts {
                 girdRow(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: bigPayDayHearts)
             }
             Divider()
             girdRow(title: "ᴛᴏᴛᴀʟ", units: stake.balanceHearts)
             Divider()
-            roiRow(principle: stake.stakedHearts, interest: stake.interestHearts)
+            roiRow(principal: stake.stakedHearts, interest: stake.interestHearts)
         }
         .padding([.bottom], 10)
     }
@@ -117,23 +117,23 @@ struct StakeDetailsView: View {
         }
     }
 
-    func roiRow(principle: BigUInt, interest: BigUInt) -> some View {
+    func roiRow(principal: BigUInt, interest: BigUInt) -> some View {
         LazyVGrid(columns: threeColumnGrid) {
             Text("ʀᴏɪ")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
-            Text(toPercentage(principle: principle.hex,
+            Text(toPercentage(principal: principal.hex,
                               interest: interest.hex))
                 .font(.caption.monospaced())
-            Text(toPercentage(principle: principle.hexAt(price: price),
+            Text(toPercentage(principal: principal.hexAt(price: price),
                               interest: interest.hexAt(price: price)))
                 .font(.caption.monospaced())
         }
     }
 
-    func toPercentage(principle: NSNumber, interest: NSNumber) -> String {
-        NSNumber(value: interest.doubleValue / principle.doubleValue).percentageFractionString
+    func toPercentage(principal: NSNumber, interest: NSNumber) -> String {
+        NSNumber(value: interest.doubleValue / principal.doubleValue).percentageFractionString
     }
 }
 
