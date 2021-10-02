@@ -40,7 +40,7 @@ struct AccountsView: View {
                             viewStore.send(.binding(.set(\.$accountPresent, .edit)))
                         } label: { Image(systemName: "person") }
 
-                        toolbarText(heading: viewStore.currentDay.description, subheading: "Day")
+                        toolbarText(heading: viewStore.currentDay.advanced(by: 1).description, subheading: "Day")
                         toolbarText(heading: viewStore.price.currencyString + (viewStore.shouldSpeculate ? "*" : ""), subheading: "Price")
                     }
 
