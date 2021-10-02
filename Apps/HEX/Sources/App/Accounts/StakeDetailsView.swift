@@ -60,19 +60,23 @@ struct StakeDetailsView: View {
             .frame(width: 128, height: 128)
             Spacer()
             VStack(alignment: .trailing, spacing: 8) {
-                headerDetails(headline: stake.startDate.longDateString, subheadling: "Stake Start")
-                headerDetails(headline: stake.endDate.longDateString, subheadling: "Stake End")
-                headerDetails(headline: stake.daysRemaining.description, subheadling: "Days Remaining")
-                headerDetails(headline: stake.stakeShares.number.shareString, subheadling: "Shares")
+                headerDetails(headline: stake.startDate.longDateString, subheading: "Stake Start Date")
+                headerDetails(headline: stake.endDate.longDateString, subheading: "Stake End Date")
+                switch stake.daysRemaining.signum() {
+                case -1: headerDetails(headline: stake.endDate.relativeTime, subheading: "Stake Ended")
+                default: headerDetails(headline: stake.endDate.relativeTime, subheading: "Stake Ends")
+                }
+
+                headerDetails(headline: stake.stakeShares.number.shareString, subheading: "Shares")
                 Spacer()
             }
         }
     }
 
-    func headerDetails(headline: String, subheadling: String) -> some View {
+    func headerDetails(headline: String, subheading: String) -> some View {
         VStack(alignment: .trailing) {
             Text(headline)
-            Text(subheadling)
+            Text(subheading)
                 .font(.caption.monospaced())
                 .foregroundColor(.secondary)
         }
@@ -90,7 +94,10 @@ struct StakeDetailsView: View {
             Divider()
             girdRow(title: "ᴛᴏᴛᴀʟ", units: stake.balanceHearts)
             Divider()
-            roiRow(principal: stake.stakedHearts, interest: stake.interestHearts)
+
+//            roiRow(principal: stake.stakedHearts, interest: stake.interestHearts)
+            gridRow(title: "ʀᴏɪ", hex: stake.roiPercent, usd: stake.roiPercent(price: price))
+            gridRow(title: "ᴀᴘʏ", hex: stake.apyPercent, usd: stake.apyPercent(price: price))
         }
         .padding([.bottom], 10)
     }
@@ -114,6 +121,19 @@ struct StakeDetailsView: View {
                 .hexAt(price: price)
                 .currencyWholeString)
                             .font(.caption.monospaced())
+        }
+    }
+
+    func gridRow(title: String, hex: Double, usd: Double) -> some View {
+        LazyVGrid(columns: threeColumnGrid) {
+            Text(title)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+
+            Text(NSNumber(value: hex).percentageFractionString)
+                .font(.caption.monospaced())
+            Text(NSNumber(value: usd).percentageFractionString)
+                .font(.caption.monospaced())
         }
     }
 

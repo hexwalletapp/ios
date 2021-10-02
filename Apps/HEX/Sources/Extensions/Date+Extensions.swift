@@ -15,4 +15,10 @@ extension Date {
         f.dateStyle = .medium
         return f.string(from: self)
     }
+
+    var relativeTime: String {
+        let f = RelativeDateTimeFormatter()
+        f.unitsStyle = .full
+        return f.localizedString(for: self, relativeTo: Date())
+    }
 }

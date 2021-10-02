@@ -29,4 +29,22 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
             return stakedHearts + interestHearts
         }
     }
+
+    var roiPercent: Double {
+        interestHearts.hex.doubleValue / stakedHearts.hex.doubleValue
+    }
+
+    func roiPercent(price: Double) -> Double {
+        interestHearts.hexAt(price: price).doubleValue / stakedHearts.hexAt(price: price).doubleValue
+    }
+
+    var apyPercent: Double {
+        let stakeDays = Int(stakedDays) + max(daysRemaining, 0)
+        return roiPercent * (Double(k.ONE_YEAR) / Double(stakeDays))
+    }
+
+    func apyPercent(price: Double) -> Double {
+        let stakeDays = Int(stakedDays) + max(daysRemaining, 0)
+        return roiPercent(price: price) * (Double(k.ONE_YEAR) / Double(stakeDays))
+    }
 }
