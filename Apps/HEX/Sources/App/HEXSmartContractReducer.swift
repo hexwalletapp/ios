@@ -55,7 +55,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                              startDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(stakeLockedDay * 86400)),
                              endDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(stakeLength * 86400)),
                              interestHearts: 0,
-                             bigPayDayHearts: 0)
+                             bigPayDayHearts: nil)
             }
         state.accountsData[id: accountDataKey]?.stakes = IdentifiedArray(uniqueElements: stakes)
         state.accountsData[id: accountDataKey]?.total.stakeShares = totalStakeShares
