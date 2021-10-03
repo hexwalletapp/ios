@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */; };
 		0632C27A5D5B4F5FC6F9294B /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707199CFAF4B74C473DFC14 /* Date+Extensions.swift */; };
-		15A5B14F56E424F987EB628D /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 444317EC2D324F520CBE85B9 /* ComposableArchitecture */; };
+		15A5B14F56E424F987EB628D /* LightweightCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 566385D68414482B5486D7B8 /* LightweightCharts */; };
 		2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */; };
 		272864C27D707302918465AF /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EC50004741C666AA20180 /* AppView.swift */; };
-		281CDE7E994671A7D59FDB7D /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */; };
+		281CDE7E994671A7D59FDB7D /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */; };
 		2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */; };
 		342A1C83EC0A9A0554C79285 /* AccountDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */; };
 		35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7254A74580879CE1D57F0B5B /* NSNumber+Extensions.swift */; };
@@ -25,9 +25,10 @@
 		641B864855B2593A479F561B /* AppViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DBF49D004E00EE95C96479 /* AppViewReducer.swift */; };
 		74D28048802B53B2C69F9EF6 /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C81D66CAB957125308B7010 /* StakeCardView.swift */; };
 		7D8422D8310166D060476217 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */; };
-		8762623629706852978DE029 /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */; };
+		8762623629706852978DE029 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 444317EC2D324F520CBE85B9 /* ComposableArchitecture */; };
 		893D7552D989DCF03EB4FDF0 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 230728B8D69D958751745D31 /* index.html */; };
 		8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */; };
+		8E7B1CECCEB39F0A5B0F9700 /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */; };
 		8F9E6D637FDA37CBB3BC00AA /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694B1DA5DF0377977B34F9C /* ChartsView.swift */; };
 		93ABDD68901F0B237BE4C642 /* TradingviewChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88926926504D1FC51E75CAD9 /* TradingviewChartView.swift */; };
 		951557B74017F4F2EAF783FF /* SpeculateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4655D7DA8FAC48D54C19BC82 /* SpeculateView.swift */; };
@@ -36,6 +37,7 @@
 		B47647423BAF6BDF59F01BD1 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DFEC316C64640DC5205E43 /* AccountsView.swift */; };
 		BE94256F6E38266AD8D0FB68 /* StakeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */; };
 		C6DAE61AE40346FBAC8B7C3D /* StakeStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */; };
+		C749709A25B9C12FF2E27A19 /* LightweightChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27481CFCEE3DBEFCE2DA374 /* LightweightChartsView.swift */; };
 		C8433AD2F29CC034EBDC5DE5 /* HEXNumberTextStyle.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C761093E015E0AF15D227C29 /* HEXNumberTextStyle.swift.swift */; };
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
@@ -54,6 +56,7 @@
 		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		230728B8D69D958751745D31 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
+		269F5C7F944D784EC6D1C355 /* lightweight-charts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "lightweight-charts"; path = "Vendor/lightweight-charts"; sourceTree = SOURCE_ROOT; };
 		2D56D72C21058B5DDC3BDE89 /* hex-smart-contract */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-smart-contract"; path = "Packages/hex-smart-contract"; sourceTree = SOURCE_ROOT; };
 		3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeStatusModel.swift; sourceTree = "<group>"; };
 		4655D7DA8FAC48D54C19BC82 /* SpeculateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeculateView.swift; sourceTree = "<group>"; };
@@ -74,6 +77,7 @@
 		9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataModel.swift; sourceTree = "<group>"; };
 		A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageRingView.swift; sourceTree = "<group>"; };
 		A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXSmartContractReducer.swift; sourceTree = "<group>"; };
+		B27481CFCEE3DBEFCE2DA374 /* LightweightChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightweightChartsView.swift; sourceTree = "<group>"; };
 		B707199CFAF4B74C473DFC14 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C761093E015E0AF15D227C29 /* HEXNumberTextStyle.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXNumberTextStyle.swift.swift; sourceTree = "<group>"; };
@@ -92,9 +96,10 @@
 			files = (
 				E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */,
 				F529BC6F4DA1C825F82C1220 /* HEXREST in Frameworks */,
-				15A5B14F56E424F987EB628D /* ComposableArchitecture in Frameworks */,
-				8762623629706852978DE029 /* IdentifiedCollections in Frameworks */,
-				281CDE7E994671A7D59FDB7D /* SwiftUIVisualEffects in Frameworks */,
+				15A5B14F56E424F987EB628D /* LightweightCharts in Frameworks */,
+				8762623629706852978DE029 /* ComposableArchitecture in Frameworks */,
+				281CDE7E994671A7D59FDB7D /* IdentifiedCollections in Frameworks */,
+				8E7B1CECCEB39F0A5B0F9700 /* SwiftUIVisualEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +200,7 @@
 			children = (
 				F0738425D18A2BAF07C68CAC /* hex-rest */,
 				2D56D72C21058B5DDC3BDE89 /* hex-smart-contract */,
+				269F5C7F944D784EC6D1C355 /* lightweight-charts */,
 			);
 			name = Packages;
 			sourceTree = SOURCE_ROOT;
@@ -211,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				D694B1DA5DF0377977B34F9C /* ChartsView.swift */,
+				B27481CFCEE3DBEFCE2DA374 /* LightweightChartsView.swift */,
 				88926926504D1FC51E75CAD9 /* TradingviewChartView.swift */,
 			);
 			path = Charts;
@@ -271,7 +278,7 @@
 			path = HEX;
 			sourceTree = "<group>";
 		};
-		"TEMP_C04AF4C5-8306-43D3-86DC-AD8A376A640D" /* Resources */ = {
+		"TEMP_699B8607-9C1E-4C2F-87ED-1D0C7AC0F209" /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				230728B8D69D958751745D31 /* index.html */,
@@ -299,6 +306,7 @@
 			packageProductDependencies = (
 				91CFA55A0676A6312247857C /* HEXSmartContract */,
 				14471AE898FE9C16BE145C44 /* HEXREST */,
+				566385D68414482B5486D7B8 /* LightweightCharts */,
 				444317EC2D324F520CBE85B9 /* ComposableArchitecture */,
 				88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */,
 				F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */,
@@ -376,6 +384,7 @@
 				024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */,
 				C8433AD2F29CC034EBDC5DE5 /* HEXNumberTextStyle.swift.swift in Sources */,
 				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
+				C749709A25B9C12FF2E27A19 /* LightweightChartsView.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
 				98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */,
@@ -617,6 +626,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		566385D68414482B5486D7B8 /* LightweightCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LightweightCharts;
 		};
 		88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */ = {
 			isa = XCSwiftPackageProductDependency;

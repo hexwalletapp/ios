@@ -26,7 +26,8 @@ packages:
 
 localPackages:
   - ./Packages/hex-smart-contract/  
-  - ./Packages/hex-rest/  
+  - ./Packages/hex-rest/
+  - ./Vendor/lightweight-charts/
 
 targets:
   HEX:
@@ -50,6 +51,8 @@ targets:
         product: HEXSmartContract
       - package: hex-rest
         product: HEXREST
+      - package: lightweight-charts
+        product: LightweightCharts
       - package: swift-composable-architecture
         product: ComposableArchitecture
       - package: swift-identified-collections

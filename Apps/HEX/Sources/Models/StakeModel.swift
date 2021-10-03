@@ -11,10 +11,11 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let stakeShares: BigUInt
     let lockedDay: UInt16
     let stakedDays: UInt16
+    let penaltyDays: UInt16
     let unlockedDay: UInt16
     let isAutoStake: Bool
     let percentComplete: Double
-    let daysRemaining: Int
+    let servedDays: UInt16
     let status: StakeStatus
     let startDate: Date
     let endDate: Date
@@ -39,12 +40,12 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     }
 
     var apyPercent: Double {
-        let stakeDays = Int(stakedDays) + max(daysRemaining, 0)
+        let stakeDays = max(stakedDays, servedDays)
         return roiPercent * (Double(k.ONE_YEAR) / Double(stakeDays))
     }
 
     func apyPercent(price: Double) -> Double {
-        let stakeDays = Int(stakedDays) + max(daysRemaining, 0)
+        let stakeDays = max(stakedDays, servedDays)
         return roiPercent(price: price) * (Double(k.ONE_YEAR) / Double(stakeDays))
     }
 }

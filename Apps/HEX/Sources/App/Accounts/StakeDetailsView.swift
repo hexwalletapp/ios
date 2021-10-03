@@ -62,9 +62,9 @@ struct StakeDetailsView: View {
             VStack(alignment: .trailing, spacing: 8) {
                 headerDetails(headline: stake.startDate.longDateString, subheading: "Stake Start Date")
                 headerDetails(headline: stake.endDate.longDateString, subheading: "Stake End Date")
-                switch stake.daysRemaining.signum() {
-                case -1: headerDetails(headline: stake.endDate.relativeTime, subheading: "Stake Ended")
-                default: headerDetails(headline: stake.endDate.relativeTime, subheading: "Stake Ends")
+                switch stake.servedDays < stake.stakedDays {
+                case true: headerDetails(headline: stake.endDate.relativeTime, subheading: "Stake Ends")
+                case false: headerDetails(headline: stake.endDate.relativeTime, subheading: "Stake Ended")
                 }
 
                 headerDetails(headline: stake.stakeShares.number.shareString, subheading: "Shares")
