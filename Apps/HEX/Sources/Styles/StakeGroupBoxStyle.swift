@@ -20,7 +20,7 @@ struct StakeGroupBoxStyle<V: View>: GroupBoxStyle {
                     .foregroundColor(.secondary)
                 Image(systemName: "chevron.right").foregroundColor(.secondary).imageScale(.small)
             }) {
-                configuration.content.padding([.top], 4)
+                configuration.content.padding(.top, 4)
             }
         }.buttonStyle(PlainButtonStyle())
     }

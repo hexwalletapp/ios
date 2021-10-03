@@ -52,8 +52,8 @@ struct EditView: View {
                                     case .inactive:
                                         Text("\(accountData.account.address.prefix(6).description)...\(accountData.account.address.suffix(4).description)")
                                             .font(.caption.monospaced())
-                                            .padding([.horizontal], 12)
-                                            .padding([.vertical], 6)
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 6)
                                             .background(Color(.systemGray6))
                                             .clipShape(RoundedRectangle(cornerRadius: 8))
                                     default:
