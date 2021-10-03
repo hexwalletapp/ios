@@ -15,12 +15,13 @@ struct k {
     static let CARD_PADDING_BOTTOM = CGFloat(48)
     static let CARD_PADDING_TOP = CGFloat(20)
     static let HEX_START_DATE = Date(timeIntervalSince1970: 1_575_273_600)
-    static let GRACE_PERIOD = 14
+    static let GRACE_PERIOD = BigUInt(14)
     static let BIG_PAY_DAY = BigUInt(352)
     static let HEARTS_PER_SATOSHI = BigUInt(1e4)
     static let CLAIMABLE_BTC_ADDR_COUNT = BigUInt(27_997_742)
     static let CLAIMABLE_SATOSHIS_TOTAL = BigUInt(910_087_996_911_001)
     static let ONE_YEAR = BigUInt(365)
+    static let EARLY_PENALTY_MIN_DAYS = 90
 }
 
 struct HexManagerId: Hashable {}

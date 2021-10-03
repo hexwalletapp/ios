@@ -6,7 +6,7 @@ import SwiftUI
 
 struct ChartsView: View {
     var body: some View {
-        TradingviewChartView()
+        LightweightChartsView()
             .navigationTitle("Charts")
     }
 }

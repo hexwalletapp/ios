@@ -12,7 +12,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         let accountDataKey = address.value + chain.description
         var totalStakeShares: BigUInt = 0
         var totalStakedHearts: BigUInt = 0
-        let currentDay = Int(state.currentDay)
+        let currentDay = state.currentDay
 
         let stakes = stakeList.sorted(by: {
             let firstStake = [BigUInt($0.lockedDay + $0.stakedDays), $0.stakeId]
@@ -20,19 +20,18 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             return firstStake.lexicographicallyPrecedes(secondStake)
         })
             .map { stake -> Stake in
-                let stakeUnlockDay = Int(stake.unlockedDay)
-                let stakeLockedDay = Int(stake.lockedDay)
-                let stakeLength = stakeLockedDay + Int(stake.stakedDays)
-                let gracePeriod = stakeLength + k.GRACE_PERIOD
-                let daysRemaining = stakeLength - currentDay
+                let stakeUnlockDay = BigUInt(stake.unlockedDay)
+                let stakeLockedDay = BigUInt(stake.lockedDay)
+                let servedDays = stakeLockedDay + BigUInt(stake.stakedDays)
+                let gracePeriod = servedDays + k.GRACE_PERIOD
 
                 let status: StakeStatus
                 // Calculate Status
                 if stake.unlockedDay > 0, stake.unlockedDay < stake.lockedDay + stake.stakedDays {
                     status = .emergencyEnd
-                } else if stake.unlockedDay > 0, stakeLength ..< currentDay ~= stakeUnlockDay {
+                } else if stake.unlockedDay > 0, servedDays ..< currentDay ~= stakeUnlockDay {
                     status = .goodAccounting
-                } else if stake.unlockedDay == 0, stakeLength ..< gracePeriod ~= stakeUnlockDay {
+                } else if stake.unlockedDay == 0, servedDays ..< gracePeriod ~= stakeUnlockDay {
                     status = .gracePeriod
                 } else if stake.unlockedDay == 0, currentDay > gracePeriod {
                     status = .bleeding
@@ -42,18 +41,24 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                     totalStakedHearts += stake.stakedHearts
                 }
 
+                var penaltyDays = (stake.stakedDays + 1) / 2
+                if penaltyDays < k.EARLY_PENALTY_MIN_DAYS {
+                    penaltyDays = UInt16(k.EARLY_PENALTY_MIN_DAYS)
+                }
+
                 return Stake(stakeId: stake.stakeId,
                              stakedHearts: stake.stakedHearts,
                              stakeShares: stake.stakeShares,
                              lockedDay: stake.lockedDay,
                              stakedDays: stake.stakedDays,
+                             penaltyDays: penaltyDays,
                              unlockedDay: stake.unlockedDay,
                              isAutoStake: stake.isAutoStake,
                              percentComplete: min(1, (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)),
-                             daysRemaining: daysRemaining,
+                             servedDays: UInt16(servedDays),
                              status: status,
-                             startDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(stakeLockedDay * 86400)),
-                             endDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(stakeLength * 86400)),
+                             startDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(stakeLockedDay) * 86400)),
+                             endDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(servedDays) * 86400)),
                              interestHearts: 0,
                              bigPayDayHearts: nil)
             }
@@ -115,7 +120,14 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
                     let adoptionBonus = viralRewards + criticalMass
 
-                    let bigPayDayHearts = bigPaySlice + adoptionBonus
+                    let payout = bigPaySlice + adoptionBonus
+
+                    let bigPayDayHearts = payout
+
+                    if stake.penaltyDays < stake.servedDays {
+                        let penalyEndDay = BigUInt(stake.lockedDay + stake.penaltyDays)
+                    }
+
                     state.accountsData[id: accountDataKey]?.stakes[id: stake.id]?.bigPayDayHearts = bigPayDayHearts
 
                     bigPayDayTotalHearts += bigPayDayHearts

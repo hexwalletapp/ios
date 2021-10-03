@@ -22,7 +22,7 @@ enum AccountPresent: Identifiable {
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var accountPresent: AccountPresent? = nil
-    @BindableState var selectedTab: Tab = .accounts
+    @BindableState var selectedTab: Tab = .charts
 
     @BindableState var selectedId = ""
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
