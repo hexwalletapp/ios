@@ -25,6 +25,7 @@
 		641B864855B2593A479F561B /* AppViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DBF49D004E00EE95C96479 /* AppViewReducer.swift */; };
 		74D28048802B53B2C69F9EF6 /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C81D66CAB957125308B7010 /* StakeCardView.swift */; };
 		7D8422D8310166D060476217 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */; };
+		7E0D47B727112D5AA0B76332 /* UIColorHexSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 513588855FFFE13DA3B67D58 /* UIColorHexSwift */; };
 		8762623629706852978DE029 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 444317EC2D324F520CBE85B9 /* ComposableArchitecture */; };
 		893D7552D989DCF03EB4FDF0 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 230728B8D69D958751745D31 /* index.html */; };
 		8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */; };
@@ -100,6 +101,7 @@
 				8762623629706852978DE029 /* ComposableArchitecture in Frameworks */,
 				281CDE7E994671A7D59FDB7D /* IdentifiedCollections in Frameworks */,
 				8E7B1CECCEB39F0A5B0F9700 /* SwiftUIVisualEffects in Frameworks */,
+				7E0D47B727112D5AA0B76332 /* UIColorHexSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +280,7 @@
 			path = HEX;
 			sourceTree = "<group>";
 		};
-		"TEMP_699B8607-9C1E-4C2F-87ED-1D0C7AC0F209" /* Resources */ = {
+		"TEMP_EAA6FDAB-FE75-4F77-9C53-0F659B928A49" /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				230728B8D69D958751745D31 /* index.html */,
@@ -310,6 +312,7 @@
 				444317EC2D324F520CBE85B9 /* ComposableArchitecture */,
 				88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */,
 				F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */,
+				513588855FFFE13DA3B67D58 /* UIColorHexSwift */,
 			);
 			productName = HEX;
 			productReference = 210D963E491A8FBE29AF4297 /* HEX.app */;
@@ -341,6 +344,7 @@
 				95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				0D4F14F86CFAA75A69AE1DA2 /* XCRemoteSwiftPackageReference "swift-identified-collections" */,
 				C75F4C07C428F5C67C9471FF /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */,
+				4A923601213E74DC49B6E35A /* XCRemoteSwiftPackageReference "UIColor-Hex-Swift" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
@@ -599,6 +603,14 @@
 				minimumVersion = 0.3.0;
 			};
 		};
+		4A923601213E74DC49B6E35A /* XCRemoteSwiftPackageReference "UIColor-Hex-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yeahdongcn/UIColor-Hex-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.7;
+			};
+		};
 		95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
@@ -626,6 +638,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		513588855FFFE13DA3B67D58 /* UIColorHexSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A923601213E74DC49B6E35A /* XCRemoteSwiftPackageReference "UIColor-Hex-Swift" */;
+			productName = UIColorHexSwift;
 		};
 		566385D68414482B5486D7B8 /* LightweightCharts */ = {
 			isa = XCSwiftPackageProductDependency;

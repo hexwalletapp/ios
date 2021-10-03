@@ -17,8 +17,7 @@ struct LightweightChartsView: UIViewRepresentable {
         case .dark: chart.applyOptions(options: darkOptions)
         default: chart.applyOptions(options: lightOptions)
         }
-        
-        
+
         let options = CandlestickSeriesOptions(
             upColor: "rgba(255, 144, 0, 1)",
             downColor: "#000",
@@ -177,11 +176,11 @@ struct LightweightChartsView: UIViewRepresentable {
             BarData(time: .string("2019-05-21"), open: 187.13, high: 192.52, low: 186.34, close: 191.45),
             BarData(time: .string("2019-05-22"), open: 190.49, high: 192.22, low: 188.05, close: 188.91),
             BarData(time: .string("2019-05-23"), open: 188.45, high: 192.54, low: 186.27, close: 192.00),
-            BarData(time: .string("2019-05-24"), open: 192.54, high: 193.86, low: 190.41, close: 193.59)
+            BarData(time: .string("2019-05-24"), open: 192.54, high: 193.86, low: 190.41, close: 193.59),
         ]
         series.setData(data: data)
     }
-    
+
     var lightOptions: ChartOptions {
         ChartOptions(
             layout: LayoutOptions(backgroundColor: "#FFFFFF", textColor: "rgba(255, 255, 255, 0.9)"),
@@ -194,9 +193,9 @@ struct LightweightChartsView: UIViewRepresentable {
             )
         )
     }
-    
+
     var darkOptions: ChartOptions {
-        return ChartOptions(
+        ChartOptions(
             layout: LayoutOptions(backgroundColor: "#000000", textColor: "rgba(255, 255, 255, 0.9)"),
             rightPriceScale: VisiblePriceScaleOptions(borderColor: "rgba(197, 203, 206, 0.8)"),
             timeScale: TimeScaleOptions(borderColor: "rgba(197, 203, 206, 0.8)"),
