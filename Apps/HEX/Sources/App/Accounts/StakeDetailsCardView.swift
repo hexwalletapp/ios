@@ -37,8 +37,8 @@ struct StakeDetailsCardView: View {
             Label(stake.endDate.mediumDateString, systemImage: stake.status.systemName)
             EmptyView()
         }
-        .padding([.horizontal], 20)
-        .padding([.vertical], 10)
+        .padding(.horizontal)
+        .padding(.vertical, 10)
         .groupBoxStyle(StakeGroupBoxStyle(color: .primary,
                                           destination: StakeDetailsView(price: price.doubleValue,
                                                                         stake: stake,

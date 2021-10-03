@@ -20,8 +20,8 @@ struct StakeDetailsView: View {
                 VStack(spacing: 20) {
                     HStack(alignment: .top) {
                         Label(stake.status.description, systemImage: stake.status.systemName)
-                            .padding([.vertical], 8)
-                            .padding([.horizontal], 16)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 16)
                             .background(Color(.systemGray5))
                             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                     }
@@ -95,11 +95,9 @@ struct StakeDetailsView: View {
             girdRow(title: "ᴛᴏᴛᴀʟ", units: stake.balanceHearts)
             Divider()
 
-//            roiRow(principal: stake.stakedHearts, interest: stake.interestHearts)
             gridRow(title: "ʀᴏɪ", hex: stake.roiPercent, usd: stake.roiPercent(price: price))
             gridRow(title: "ᴀᴘʏ", hex: stake.apyPercent, usd: stake.apyPercent(price: price))
         }
-        .padding([.bottom], 10)
     }
 
     var earningsHeader: some View {
@@ -133,21 +131,6 @@ struct StakeDetailsView: View {
             Text(NSNumber(value: hex).percentageFractionString)
                 .font(.caption.monospaced())
             Text(NSNumber(value: usd).percentageFractionString)
-                .font(.caption.monospaced())
-        }
-    }
-
-    func roiRow(principal: BigUInt, interest: BigUInt) -> some View {
-        LazyVGrid(columns: threeColumnGrid) {
-            Text("ʀᴏɪ")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-
-            Text(toPercentage(principal: principal.hex,
-                              interest: interest.hex))
-                .font(.caption.monospaced())
-            Text(toPercentage(principal: principal.hexAt(price: price),
-                              interest: interest.hexAt(price: price)))
                 .font(.caption.monospaced())
         }
     }

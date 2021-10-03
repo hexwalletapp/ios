@@ -19,10 +19,25 @@ enum AccountPresent: Identifiable {
     case edit, speculate
 }
 
+enum TimeScale: Identifiable, CaseIterable, CustomStringConvertible {
+    var id: Self { self }
+
+    case day1, week1, month1
+    
+    var description: String {
+        switch self {
+        case .day1: return "1D"
+        case .week1: return "1W"
+        case .month1: return "1M"
+        }
+    }
+}
+
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var accountPresent: AccountPresent? = nil
     @BindableState var selectedTab: Tab = .charts
+    @BindableState var selectedTimeScale: TimeScale = .day1
 
     @BindableState var selectedId = ""
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()

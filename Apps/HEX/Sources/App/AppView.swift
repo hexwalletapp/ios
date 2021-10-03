@@ -10,7 +10,7 @@ struct AppView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             TabView(selection: viewStore.binding(\.$selectedTab)) {
-                ChartsView()
+                ChartsView(store: store)
                     .tabItem {
                         Image(systemName: "chart.pie.fill")
                         Text("Charts")

@@ -98,13 +98,12 @@ struct AccountsView: View {
                     ForEach(viewStore.accountsData) { accountData in
                         StakeCardView(price: viewStore.price,
                                       accountData: accountData)
-                            .padding(.horizontal)
-                            .padding(.top, k.CARD_PADDING_TOP)
+                            .padding([.horizontal, .top])
                             .padding(.bottom, k.CARD_PADDING_BOTTOM)
                             .tag(accountData.id)
                     }
                 }
-                .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_TOP)
+                .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
                 .tabViewStyle(PageTabViewStyle())
             case true:
                 EmptyView()

@@ -98,7 +98,7 @@ struct StakeCardView: View {
                 }
             }
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-            .padding([.top], MAGNETIC_STRIPE_HEIGHT + MAGNETIC_STRIPE_PADDING)
+            .padding(.top, MAGNETIC_STRIPE_HEIGHT + MAGNETIC_STRIPE_PADDING)
             .padding()
         }
         .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
