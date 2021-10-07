@@ -19,7 +19,7 @@ struct ChartsView: View {
                         .padding()
                 }
                 .background(Color(.systemGroupedBackground))
-                .navigationTitle("HEX/USD")
+                .navigationTitle("HEX/USDC")
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Menu(content: {
