@@ -28,14 +28,18 @@ struct k {
     static func chartOptions() -> ChartOptions {
         ChartOptions(
             layout: LayoutOptions(backgroundColor: ChartColor(.systemBackground),
-                                  textColor: ChartColor(.label)),
-            rightPriceScale: VisiblePriceScaleOptions(borderColor: ChartColor(UIColor.secondaryLabel)),
-            timeScale: TimeScaleOptions(borderColor: ChartColor(UIColor.secondaryLabel)),
+                                  textColor: ChartColor(.secondaryLabel)),
+            rightPriceScale: VisiblePriceScaleOptions(borderColor: ChartColor(UIColor.systemGray6)),
+            timeScale: TimeScaleOptions(borderColor: ChartColor(UIColor.systemGray6)),
             crosshair: CrosshairOptions(mode: .normal),
             grid: GridOptions(
-                verticalLines: GridLineOptions(color: ChartColor(UIColor.systemGray5)),
-                horizontalLines: GridLineOptions(color: ChartColor(UIColor.systemGray5))
-            )
+                verticalLines: GridLineOptions(color: ChartColor(UIColor.systemGray6)),
+                horizontalLines: GridLineOptions(color: ChartColor(UIColor.systemGray6))
+            ),
+            localization: LocalizationOptions(priceFormatter: .closure({
+                NSNumber(value: $0).currencyString
+            })
+                                             )
         )
     }
 
@@ -49,8 +53,6 @@ struct k {
         )
     }
     
-
-
     static func candleStickSeriesOptions() -> CandlestickSeriesOptions {
         CandlestickSeriesOptions(
             upColor: ChartColor(UIColor.systemGreen),

@@ -38,7 +38,7 @@ enum TimeScaleMinute: Identifiable, CaseIterable, TimeScaleable {
 
     var description: String {
         switch self {
-        case .five: return "5 minutes (Shane Mode)"
+        case .five: return "5 minutes"
         case .fifteen: return "15 minutes"
         case .thirty: return "30 minutes"
         }
@@ -93,8 +93,8 @@ enum TimeScaleDay: Identifiable, CaseIterable, TimeScaleable {
     var code: String {
         switch self {
         case .one: return "D"
-        case .seven: return "M"
-        case .thirty: return "W"
+        case .seven: return "W"
+        case .thirty: return "M"
         }
     }
 }

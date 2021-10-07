@@ -12,7 +12,7 @@ extension OHLCVData {
 
     var barData: BarData {
         BarData(time: .utc(timestamp: time.timeIntervalSince1970),
-                open: open,
+                open: `open`,
                 high: high,
                 low: low,
                 close: close)
@@ -20,9 +20,9 @@ extension OHLCVData {
 
     var volumeData: HistogramData {
         let color: ChartColor
-        switch open < close {
-        case true: color = ChartColor(.systemGreen)
-        case false: color = ChartColor(.systemRed)
+        switch `open` < close {
+        case true: color = ChartColor(.systemGreen.withAlphaComponent(0.6))
+        case false: color = ChartColor(.systemRed.withAlphaComponent(0.6))
         }
         return HistogramData(color: color,
                              time: .utc(timestamp: time.timeIntervalSince1970),

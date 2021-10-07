@@ -7,6 +7,8 @@ import LightweightCharts
 import SwiftUI
 
 struct LightweightChartsView: UIViewRepresentable {
+    @Environment(\.colorScheme) var colorScheme
+
     var store: Store<AppState, AppAction>
     var timeScale: TimeScale
     var chartType: ChartType

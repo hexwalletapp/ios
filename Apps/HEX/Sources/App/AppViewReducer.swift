@@ -25,7 +25,7 @@ struct AppState: Equatable {
     @BindableState var accountPresent: AccountPresent? = nil
     @BindableState var selectedTab: Tab = .charts
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
-    @BindableState var selectedChartType: ChartType = .line
+    @BindableState var selectedChartType: ChartType = .candlestick
     
     @BindableState var selectedId = ""
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
@@ -50,8 +50,8 @@ enum AppAction: BindableAction, Equatable {
     case onActive
     
     case dismiss
-    case updateAccounts
-    case updatePrice
+    case getAccounts
+    case getPrice
     case getChart
     case updateHexPrice(Result<HEXPrice, NSError>)
     case updateChart(Result<CryptoCompareResponse, NSError>)
@@ -85,9 +85,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager)
         
     case .onActive:
-        return Effect(value: .updateAccounts)
+        return .merge(
+            Effect(value: .getChart),
+            Effect(value: .getAccounts)
+        )
         
-    case .updateAccounts:
+    case .getAccounts:
         return .merge(
             HEXRESTAPI.fetchHexPrice()
                 .receive(on: environment.mainQueue)
@@ -101,7 +104,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 .throttle(id: GetDayThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true)
         )
         
-    case .updatePrice:
+    case .getPrice:
         switch state.shouldSpeculate {
         case true:
             state.price = state.speculativePrice
@@ -115,7 +118,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case let .success(hexPrice): state.hexPrice = hexPrice
         case let .failure(error): print(error)
         }
-        return Effect(value: .updatePrice)
+        return Effect(value: .getPrice)
         
     case let .updateChart(result):
         switch result {
@@ -144,18 +147,18 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         
         
     case .binding(\.$shouldSpeculate):
-        return Effect(value: .updatePrice)
+        return Effect(value: .getPrice)
         
     case .binding(\.$selectedTab):
         switch state.selectedTab {
-        case .charts: return .none
-        case .accounts: return Effect(value: .updateAccounts)
+        case .charts: return Effect(value: .getChart)
+        case .accounts: return Effect(value: .getAccounts)
         }
         
     case .binding(\.$accountPresent):
         switch state.accountPresent {
         case .some: return .none
-        case .none: return Effect(value: .updateAccounts)
+        case .none: return Effect(value: .getAccounts)
         }
         
     case .binding(\.$accountsData):
