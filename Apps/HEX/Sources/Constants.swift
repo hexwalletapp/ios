@@ -2,7 +2,9 @@
 // Copyright (c) 2021 Joe Blau
 
 import BigInt
+import Combine
 import Foundation
+import LightweightCharts
 import SwiftUI
 
 struct k {
@@ -22,9 +24,55 @@ struct k {
     static let CLAIMABLE_SATOSHIS_TOTAL = BigUInt(910_087_996_911_001)
     static let ONE_YEAR = BigUInt(365)
     static let EARLY_PENALTY_MIN_DAYS = 90
+
+    static func chartOptions() -> ChartOptions {
+        ChartOptions(
+            layout: LayoutOptions(backgroundColor: ChartColor(.systemBackground),
+                                  textColor: ChartColor(.label)),
+            rightPriceScale: VisiblePriceScaleOptions(borderColor: ChartColor(UIColor.secondaryLabel)),
+            timeScale: TimeScaleOptions(borderColor: ChartColor(UIColor.secondaryLabel)),
+            crosshair: CrosshairOptions(mode: .normal),
+            grid: GridOptions(
+                verticalLines: GridLineOptions(color: ChartColor(UIColor.systemGray5)),
+                horizontalLines: GridLineOptions(color: ChartColor(UIColor.systemGray5))
+            )
+        )
+    }
+
+
+    static func volumeSeriesOptions() -> HistogramSeriesOptions {
+        HistogramSeriesOptions(
+            priceScaleId: "123",
+            priceLineVisible: false,
+            priceFormat: .builtIn(BuiltInPriceFormat(type: .volume, precision: nil, minMove: nil)),
+            color: ChartColor(UIColor.systemGreen)
+        )
+    }
+    
+
+
+    static func candleStickSeriesOptions() -> CandlestickSeriesOptions {
+        CandlestickSeriesOptions(
+            upColor: ChartColor(UIColor.systemGreen),
+            downColor: ChartColor(UIColor.systemRed),
+            borderUpColor: ChartColor(UIColor.systemGreen),
+            borderDownColor: ChartColor(UIColor.systemRed),
+            wickUpColor: ChartColor(UIColor.systemGreen),
+            wickDownColor: ChartColor(UIColor.systemRed)
+        )
+    }
+
+    static func lineSeriesOptoins() -> LineSeriesOptions {
+        LineSeriesOptions(
+            color: ChartColor(.accentColor),
+            lineWidth: .two
+        )
+    }
 }
 
 struct HexManagerId: Hashable {}
 struct GetPriceThrottleId: Hashable {}
 struct GlobalInfoThrottleId: Hashable {}
 struct GetDayThrottleId: Hashable {}
+
+var cancellables = Set<AnyCancellable>()

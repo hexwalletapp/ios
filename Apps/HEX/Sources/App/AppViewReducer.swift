@@ -7,6 +7,7 @@ import Foundation
 import HEXREST
 import HEXSmartContract
 import IdentifiedCollections
+import LightweightCharts
 import SwiftUI
 
 enum Tab {
@@ -15,52 +16,45 @@ enum Tab {
 
 enum AccountPresent: Identifiable {
     var id: Self { self }
-
-    case edit, speculate
-}
-
-enum TimeScale: Identifiable, CaseIterable, CustomStringConvertible {
-    var id: Self { self }
-
-    case day1, week1, month1
     
-    var description: String {
-        switch self {
-        case .day1: return "1D"
-        case .week1: return "1W"
-        case .month1: return "1M"
-        }
-    }
+    case edit, speculate
 }
 
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var accountPresent: AccountPresent? = nil
     @BindableState var selectedTab: Tab = .charts
-    @BindableState var selectedTimeScale: TimeScale = .day1
-
+    @BindableState var selectedTimeScale: TimeScale = .day(.one)
+    @BindableState var selectedChartType: ChartType = .line
+    
     @BindableState var selectedId = ""
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
     @BindableState var shouldSpeculate = false
     @BindableState var speculativePrice: NSNumber = 1.00
+    @BindableState var candlesstickSeries: CandlestickSeries? = nil
+    @BindableState var lineSeries: LineSeries? = nil
+    @BindableState var volumeSeries: HistogramSeries? = nil
     var hexPrice = HEXPrice()
     var price: NSNumber = 0.0
     var currentDay: BigUInt = 0
     var globalInfo = GlobalInfo()
+    var ohlcv = [OHLCVData]()
 }
 
 enum AppAction: BindableAction, Equatable {
     case hexManager(HEXSmartContractManager.Action)
-
+    
     case applicationDidFinishLaunching
     case onBackground
     case onInactive
     case onActive
-
+    
     case dismiss
     case updateAccounts
     case updatePrice
+    case getChart
     case updateHexPrice(Result<HEXPrice, NSError>)
+    case updateChart(Result<CryptoCompareResponse, NSError>)
     case binding(BindingAction<AppState>)
 }
 
@@ -89,10 +83,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             break
         }
         return environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager)
-
+        
     case .onActive:
         return Effect(value: .updateAccounts)
-
+        
     case .updateAccounts:
         return .merge(
             HEXRESTAPI.fetchHexPrice()
@@ -106,7 +100,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             environment.hexManager.getCurrentDay(id: HexManagerId()).fireAndForget()
                 .throttle(id: GetDayThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true)
         )
-
+        
     case .updatePrice:
         switch state.shouldSpeculate {
         case true:
@@ -115,33 +109,55 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             state.price = NSNumber(value: state.hexPrice.hexUsd)
         }
         return .none
-
+        
     case let .updateHexPrice(result):
         switch result {
         case let .success(hexPrice): state.hexPrice = hexPrice
         case let .failure(error): print(error)
         }
         return Effect(value: .updatePrice)
-
+        
+    case let .updateChart(result):
+        switch result {
+        case let .success(chartData):
+            state.ohlcv = chartData.Data.Data
+        case let .failure(error): print(error)
+        }
+        return .none
+        
+    case .getChart:
+        let histTo = state.selectedTimeScale.toHistTo
+        return CryptoCompareAPI.fetchHistory(histTo: histTo)
+            .receive(on: environment.mainQueue)
+            .mapError { $0 as NSError }
+            .catchToEffect()
+            .map(AppAction.updateChart)
+        
+        
     case .dismiss:
         state.accountPresent = nil
         return .none
-
+        
+    case .binding(\.$selectedTimeScale),
+            .binding(\.$selectedChartType):
+        return Effect(value: .getChart)
+        
+        
     case .binding(\.$shouldSpeculate):
         return Effect(value: .updatePrice)
-
+        
     case .binding(\.$selectedTab):
         switch state.selectedTab {
         case .charts: return .none
         case .accounts: return Effect(value: .updateAccounts)
         }
-
+        
     case .binding(\.$accountPresent):
         switch state.accountPresent {
         case .some: return .none
         case .none: return Effect(value: .updateAccounts)
         }
-
+        
     case .binding(\.$accountsData):
         do {
             let accounts = state.accountsData.map { $0.account }
@@ -154,12 +170,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             UserDefaults.standard.removeObject(forKey: k.ACCOUNTS_KEY)
         }
         return .none
-
+        
     case .binding, .hexManager, .onBackground, .onInactive:
         return .none
     }
 }
-.binding()
-.combined(with: hexReducer.pullback(state: \.self,
-                                    action: /AppAction.hexManager,
-                                    environment: { $0 }))
+    .binding()
+    .combined(with: hexReducer.pullback(state: \.self,
+                                        action: /AppAction.hexManager,
+                                        environment: { $0 }))
