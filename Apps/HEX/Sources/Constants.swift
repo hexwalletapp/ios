@@ -37,7 +37,7 @@ struct k {
                 horizontalLines: GridLineOptions(color: ChartColor(UIColor.systemGray6))
             ),
             localization: LocalizationOptions(priceFormatter: .closure {
-                NSNumber(value: $0).currencyString
+                NSNumber(value: $0).currencyShortString
             }
             )
         )

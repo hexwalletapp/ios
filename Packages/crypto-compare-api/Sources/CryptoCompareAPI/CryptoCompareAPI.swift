@@ -26,7 +26,7 @@ public enum CryptoCompareAPI {
         components.path = "/data/v2/" + histTo.description
         components.queryItems = [
             URLQueryItem(name: "fsym", value: "HEX"),
-            URLQueryItem(name: "tsym", value: "USD"),
+            URLQueryItem(name: "tsym", value: "USDC"),
             URLQueryItem(name: "aggregate", value: aggregate),
             URLQueryItem(name: "limit", value: "1000"),
             URLQueryItem(name: "api_key", value: APIKEY),

@@ -20,13 +20,8 @@ extension OHLCVData {
     }
 
     var volumeData: HistogramData {
-//        let color: ChartColor
-//        switch open < close {
-//        case true: color = ChartColor(.systemGreen.withAlphaComponent(0.6))
-//        case false: color = ChartColor(.systemRed.withAlphaComponent(0.6))
-//        }
         return HistogramData(color: nil,
                              time: .utc(timestamp: time.timeIntervalSince1970),
-                             value: volumefrom)
+                             value: volumeto)
     }
 }
