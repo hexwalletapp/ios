@@ -106,7 +106,18 @@ struct AccountsView: View {
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
                 .tabViewStyle(PageTabViewStyle())
             case true:
-                EmptyView()
+                VStack {
+                    Spacer(minLength: 200)
+                    Button {
+                        viewStore.send(.binding(.set(\.$accountPresent, .edit)))
+                    } label: {
+                        VStack(alignment: .center) {
+                            Image(systemName: "person.badge.plus").font(.largeTitle)
+                            Text("Add").font(.body.monospaced())
+                        }
+                        .padding()
+                    }
+                }
             }
         }
     }
