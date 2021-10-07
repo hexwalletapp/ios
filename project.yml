@@ -23,9 +23,6 @@ packages:
   swiftui-visual-effects:   
     url: https://github.com/lucasbrown/swiftui-visual-effects.git
     from: 1.0.3
-  uicolor-hex-swift:
-    url: https://github.com/yeahdongcn/UIColor-Hex-Swift.git
-    from: 5.1.7
 
 localPackages:
   - ./Packages/hex-smart-contract/  
@@ -62,5 +59,3 @@ targets:
         product: IdentifiedCollections
       - package: swiftui-visual-effects
         product: SwiftUIVisualEffects
-      - package: uicolor-hex-swift
-        product: UIColorHexSwift
