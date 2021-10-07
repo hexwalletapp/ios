@@ -1,6 +1,7 @@
 // OHLCVData+Extensions.swift.swift
 // Copyright (c) 2021 Joe Blau
 
+import CryptoCompareAPI
 import Foundation
 import LightweightCharts
 
@@ -12,7 +13,7 @@ extension OHLCVData {
 
     var barData: BarData {
         BarData(time: .utc(timestamp: time.timeIntervalSince1970),
-                open: `open`,
+                open: open,
                 high: high,
                 low: low,
                 close: close)
@@ -20,7 +21,7 @@ extension OHLCVData {
 
     var volumeData: HistogramData {
         let color: ChartColor
-        switch `open` < close {
+        switch open < close {
         case true: color = ChartColor(.systemGreen.withAlphaComponent(0.6))
         case false: color = ChartColor(.systemRed.withAlphaComponent(0.6))
         }

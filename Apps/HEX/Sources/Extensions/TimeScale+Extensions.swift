@@ -1,10 +1,7 @@
-//
-//  TimeScale+Extensions.swift
-//  HEX
-//
-//  Created by Joe Blau on 10/6/21.
-//
+// TimeScale+Extensions.swift
+// Copyright (c) 2021 Joe Blau
 
+import CryptoCompareAPI
 import Foundation
 
 extension TimeScale {

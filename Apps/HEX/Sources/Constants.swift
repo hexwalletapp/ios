@@ -36,13 +36,12 @@ struct k {
                 verticalLines: GridLineOptions(color: ChartColor(UIColor.systemGray6)),
                 horizontalLines: GridLineOptions(color: ChartColor(UIColor.systemGray6))
             ),
-            localization: LocalizationOptions(priceFormatter: .closure({
+            localization: LocalizationOptions(priceFormatter: .closure {
                 NSNumber(value: $0).currencyString
-            })
-                                             )
+            }
+            )
         )
     }
-
 
     static func volumeSeriesOptions() -> HistogramSeriesOptions {
         HistogramSeriesOptions(
@@ -52,7 +51,7 @@ struct k {
             color: ChartColor(UIColor.systemGreen)
         )
     }
-    
+
     static func candleStickSeriesOptions() -> CandlestickSeriesOptions {
         CandlestickSeriesOptions(
             upColor: ChartColor(UIColor.systemGreen),

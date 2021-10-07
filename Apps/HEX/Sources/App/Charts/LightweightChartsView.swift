@@ -3,6 +3,7 @@
 
 import Combine
 import ComposableArchitecture
+import CryptoCompareAPI
 import LightweightCharts
 import SwiftUI
 
@@ -20,10 +21,10 @@ struct LightweightChartsView: UIViewRepresentable {
 
     func updateUIView(_ chart: LightweightCharts, context _: Context) {
         let viewStore = ViewStore(store)
-        
+
         chart.applyOptions(options: k.chartOptions())
-        
-        viewStore.candlesstickSeries.map { chart.removeSeries(seriesApi: $0)  }
+
+        viewStore.candlesstickSeries.map { chart.removeSeries(seriesApi: $0) }
         viewStore.lineSeries.map { chart.removeSeries(seriesApi: $0) }
         viewStore.volumeSeries.map { chart.removeSeries(seriesApi: $0) }
 
@@ -31,12 +32,12 @@ struct LightweightChartsView: UIViewRepresentable {
         case .candlestick:
             let candlestickSeries = chart.addCandlestickSeries(options: k.candleStickSeriesOptions())
             candlestickSeries.setData(data: ohlcv.map { $0.barData })
-            
+
             viewStore.send(.binding(.set(\.$candlesstickSeries, candlestickSeries)))
         case .line:
             let lineSeries = chart.addLineSeries(options: k.lineSeriesOptoins())
             lineSeries.setData(data: ohlcv.map { $0.lineData })
-            
+
             viewStore.send(.binding(.set(\.$lineSeries, lineSeries)))
         }
 
