@@ -48,7 +48,7 @@ struct k {
             priceScaleId: "123",
             priceLineVisible: false,
             priceFormat: .builtIn(BuiltInPriceFormat(type: .volume, precision: nil, minMove: nil)),
-            color: ChartColor(UIColor.systemGreen)
+            color: ChartColor(UIColor.systemGray4)
         )
     }
 
