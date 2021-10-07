@@ -27,6 +27,7 @@ packages:
 localPackages:
   - ./Packages/hex-smart-contract/  
   - ./Packages/hex-rest/
+  - ./Packages/crypto-compare-api/
   - ./Vendor/lightweight-charts/
 
 targets:
@@ -51,6 +52,8 @@ targets:
         product: HEXSmartContract
       - package: hex-rest
         product: HEXREST
+      - package: crypto-compare-api
+        product: CryptoCompareAPI
       - package: lightweight-charts
         product: LightweightCharts
       - package: swift-composable-architecture

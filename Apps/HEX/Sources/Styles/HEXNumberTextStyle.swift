@@ -1,4 +1,4 @@
-// HEXNumberTextStyle.swift.swift
+// HEXNumberTextStyle.swift
 // Copyright (c) 2021 Joe Blau
 
 import SwiftUI

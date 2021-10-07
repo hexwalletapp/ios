@@ -3,6 +3,7 @@
 
 import BigInt
 import ComposableArchitecture
+import CryptoCompareAPI
 import Foundation
 import HEXREST
 import HEXSmartContract
@@ -16,7 +17,7 @@ enum Tab {
 
 enum AccountPresent: Identifiable {
     var id: Self { self }
-    
+
     case edit, speculate
 }
 
@@ -26,7 +27,7 @@ struct AppState: Equatable {
     @BindableState var selectedTab: Tab = .charts
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
     @BindableState var selectedChartType: ChartType = .candlestick
-    
+
     @BindableState var selectedId = ""
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
     @BindableState var shouldSpeculate = false
@@ -43,12 +44,12 @@ struct AppState: Equatable {
 
 enum AppAction: BindableAction, Equatable {
     case hexManager(HEXSmartContractManager.Action)
-    
+
     case applicationDidFinishLaunching
     case onBackground
     case onInactive
     case onActive
-    
+
     case dismiss
     case getAccounts
     case getPrice
@@ -83,13 +84,13 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             break
         }
         return environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager)
-        
+
     case .onActive:
         return .merge(
             Effect(value: .getChart),
             Effect(value: .getAccounts)
         )
-        
+
     case .getAccounts:
         return .merge(
             HEXRESTAPI.fetchHexPrice()
@@ -103,7 +104,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             environment.hexManager.getCurrentDay(id: HexManagerId()).fireAndForget()
                 .throttle(id: GetDayThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true)
         )
-        
+
     case .getPrice:
         switch state.shouldSpeculate {
         case true:
@@ -112,14 +113,14 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             state.price = NSNumber(value: state.hexPrice.hexUsd)
         }
         return .none
-        
+
     case let .updateHexPrice(result):
         switch result {
         case let .success(hexPrice): state.hexPrice = hexPrice
         case let .failure(error): print(error)
         }
         return Effect(value: .getPrice)
-        
+
     case let .updateChart(result):
         switch result {
         case let .success(chartData):
@@ -127,7 +128,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case let .failure(error): print(error)
         }
         return .none
-        
+
     case .getChart:
         let histTo = state.selectedTimeScale.toHistTo
         return CryptoCompareAPI.fetchHistory(histTo: histTo)
@@ -135,32 +136,30 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             .mapError { $0 as NSError }
             .catchToEffect()
             .map(AppAction.updateChart)
-        
-        
+
     case .dismiss:
         state.accountPresent = nil
         return .none
-        
+
     case .binding(\.$selectedTimeScale),
-            .binding(\.$selectedChartType):
+         .binding(\.$selectedChartType):
         return Effect(value: .getChart)
-        
-        
+
     case .binding(\.$shouldSpeculate):
         return Effect(value: .getPrice)
-        
+
     case .binding(\.$selectedTab):
         switch state.selectedTab {
         case .charts: return Effect(value: .getChart)
         case .accounts: return Effect(value: .getAccounts)
         }
-        
+
     case .binding(\.$accountPresent):
         switch state.accountPresent {
         case .some: return .none
         case .none: return Effect(value: .getAccounts)
         }
-        
+
     case .binding(\.$accountsData):
         do {
             let accounts = state.accountsData.map { $0.account }
@@ -173,12 +172,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             UserDefaults.standard.removeObject(forKey: k.ACCOUNTS_KEY)
         }
         return .none
-        
+
     case .binding, .hexManager, .onBackground, .onInactive:
         return .none
     }
 }
-    .binding()
-    .combined(with: hexReducer.pullback(state: \.self,
-                                        action: /AppAction.hexManager,
-                                        environment: { $0 }))
+.binding()
+.combined(with: hexReducer.pullback(state: \.self,
+                                    action: /AppAction.hexManager,
+                                    environment: { $0 }))
