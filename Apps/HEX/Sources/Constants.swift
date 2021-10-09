@@ -75,5 +75,6 @@ struct HexManagerId: Hashable {}
 struct GetPriceThrottleId: Hashable {}
 struct GlobalInfoThrottleId: Hashable {}
 struct GetDayThrottleId: Hashable {}
+struct GetChartId: Hashable {}
 
 var cancellables = Set<AnyCancellable>()
