@@ -20,8 +20,8 @@ extension OHLCVData {
     }
 
     var volumeData: HistogramData {
-        return HistogramData(color: nil,
-                             time: .utc(timestamp: time.timeIntervalSince1970),
-                             value: volumeto)
+        HistogramData(color: nil,
+                      time: .utc(timestamp: time.timeIntervalSince1970),
+                      value: volumeto)
     }
 }

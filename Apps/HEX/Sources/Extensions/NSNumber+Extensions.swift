@@ -55,23 +55,31 @@ extension NSNumber {
         formatter.numberStyle = .currency
         return formatter.string(from: self) ?? ""
     }
-    
+
     var currencyShortString: String {
-        let units = ["", "ᴋ", "ᴍ", "ʙ", "ᴛ", "ᴏ̨", "ᴏ̨"]
-        let numerator = log10(doubleValue)
-        let exp: Int
-
-        switch numerator.sign {
-        case .minus: exp = 0
-        case .plus: exp = NSNumber(value: numerator / 3.0).intValue
-        }
-
-        let roundedNumber = NSNumber(value: round(10 * doubleValue / pow(1000.0, Double(exp))) / 10)
-        
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.positiveSuffix = "\(units[exp])"
-        return formatter.string(from: roundedNumber) ?? ""
+        
+        let number: NSNumber
+        switch doubleValue {
+        case 0 ..< 1:
+            number = self
+        default:
+            let units = ["", "ᴋ", "ᴍ", "ʙ", "ᴛ", "ᴏ̨", "ᴏ̨"]
+            let numerator = log10(doubleValue)
+            let exp: Int
+
+            switch numerator.sign {
+            case .minus: exp = 0
+            case .plus: exp = NSNumber(value: numerator / 3.0).intValue
+            }
+
+            number = NSNumber(value: round(10 * doubleValue / pow(1000.0, Double(exp))) / 10)
+            formatter.positiveSuffix = "\(units[exp])"
+
+        }
+        
+        return formatter.string(from: number) ?? ""
     }
 
     var currencyWholeString: String {
