@@ -84,8 +84,10 @@ struct ChartsView: View {
     }
 }
 
-struct ChartsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChartsView(store: sampleAppStore)
+#if DEBUG
+    struct ChartsView_Previews: PreviewProvider {
+        static var previews: some View {
+            ChartsView(store: sampleAppStore)
+        }
     }
-}
+#endif
