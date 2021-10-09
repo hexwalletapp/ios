@@ -59,7 +59,7 @@ extension NSNumber {
     var currencyShortString: String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        
+
         let number: NSNumber
         switch doubleValue {
         case 0 ..< 1:
@@ -76,9 +76,8 @@ extension NSNumber {
 
             number = NSNumber(value: round(10 * doubleValue / pow(1000.0, Double(exp))) / 10)
             formatter.positiveSuffix = "\(units[exp])"
-
         }
-        
+
         return formatter.string(from: number) ?? ""
     }
 

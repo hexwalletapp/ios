@@ -46,6 +46,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                     penaltyDays = UInt16(k.EARLY_PENALTY_MIN_DAYS)
                 }
 
+                let percentComplete = max(0, min(1, (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)))
                 return Stake(stakeId: stake.stakeId,
                              stakedHearts: stake.stakedHearts,
                              stakeShares: stake.stakeShares,
@@ -54,7 +55,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                              penaltyDays: penaltyDays,
                              unlockedDay: stake.unlockedDay,
                              isAutoStake: stake.isAutoStake,
-                             percentComplete: min(1, (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)),
+                             percentComplete: percentComplete,
                              servedDays: UInt16(servedDays),
                              status: status,
                              startDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(stakeLockedDay) * 86400)),
@@ -99,8 +100,8 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         state.accountsData[id: accountDataKey]?
             .stakes
             .forEach { stake in
-                guard !dailyData.isEmpty else { return }
-
+                guard stake.lockedDay <= state.currentDay else { return }
+                
                 let startIndex = Int(stake.lockedDay)
                 let endIndex = min(startIndex + Int(stake.stakedDays), Int(state.currentDay))
                 let weekStartIndex = max(endIndex - 7, startIndex)
@@ -145,7 +146,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         return .none
 
     case let .currentDay(day):
-        state.currentDay = day + 1
+        state.currentDay = day
         return .merge(
             state.accountsData.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never>? in
                 environment.hexManager.getStakes(id: HexManagerId(),
