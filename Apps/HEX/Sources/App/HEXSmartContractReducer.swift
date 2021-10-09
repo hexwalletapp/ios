@@ -99,6 +99,8 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         state.accountsData[id: accountDataKey]?
             .stakes
             .forEach { stake in
+                guard !dailyData.isEmpty else { return }
+
                 let startIndex = Int(stake.lockedDay)
                 let endIndex = min(startIndex + Int(stake.stakedDays), Int(state.currentDay))
                 let weekStartIndex = max(endIndex - 7, startIndex)
@@ -143,7 +145,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         return .none
 
     case let .currentDay(day):
-        state.currentDay = day
+        state.currentDay = day + 1
         return .merge(
             state.accountsData.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never>? in
                 environment.hexManager.getStakes(id: HexManagerId(),
