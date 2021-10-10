@@ -59,7 +59,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                              servedDays: UInt16(servedDays),
                              status: status,
                              startDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(stakeLockedDay) * 86400)),
-                             endDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(servedDays) * 86400)),
+                             endDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(gracePeriod) * 86400)),
                              interestHearts: 0,
                              bigPayDayHearts: nil)
             }
@@ -101,7 +101,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             .stakes
             .forEach { stake in
                 guard stake.lockedDay <= state.currentDay else { return }
-                
+
                 let startIndex = Int(stake.lockedDay)
                 let endIndex = min(startIndex + Int(stake.stakedDays), Int(state.currentDay))
                 let weekStartIndex = max(endIndex - 7, startIndex)
