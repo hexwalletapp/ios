@@ -24,7 +24,7 @@ enum AccountPresent: Identifiable {
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var accountPresent: AccountPresent? = nil
-    @BindableState var selectedTab: Tab = .charts
+    @BindableState var selectedTab: Tab = .accounts
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
     @BindableState var selectedChartType: ChartType = .candlestick
 
