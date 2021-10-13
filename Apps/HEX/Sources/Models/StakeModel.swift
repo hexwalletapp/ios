@@ -3,6 +3,7 @@
 
 import BigInt
 import Foundation
+import HEXSmartContract
 
 struct Stake: Codable, Hashable, Equatable, Identifiable {
     var id: BigUInt { stakeId }
@@ -20,6 +21,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let startDate: Date
     let endDate: Date
     var interestHearts: BigUInt
+    var interestSevenDayHearts: BigUInt
     var bigPayDayHearts: BigUInt?
 
     var balanceHearts: BigUInt {
@@ -47,5 +49,30 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     func apyPercent(price: Double) -> Double {
         let stakeDays = max(stakedDays, servedDays)
         return roiPercent(price: price) * (Double(k.ONE_YEAR) / Double(stakeDays))
+    }
+    
+    func calculatePayout(globalInfo: GlobalInfo,
+                         beginDay: Int,
+                         endDay: Int,
+                         dailyData: [DailyData]) -> (payout: BigUInt,
+                                                     bigPayDay: BigUInt?) {
+        var payout = dailyData[beginDay ..< endDay].reduce(0) { $0 + ((stakeShares * $1.payout) / $1.shares) }
+        
+        var bigPayDay: BigUInt? = nil
+        if beginDay ..< endDay ~= Int(k.BIG_PAY_DAY) {
+            let stakeSharesTotal = dailyData[Int(k.BIG_PAY_DAY)].shares
+
+            let bigPaySlice = globalInfo.unclaimedSatoshisTotal * k.HEARTS_PER_SATOSHI * stakeShares / stakeSharesTotal
+            
+            let viralRewards = bigPaySlice * globalInfo.claimedBtcAddrCount / k.CLAIMABLE_BTC_ADDR_COUNT
+            let criticalMass = bigPaySlice * globalInfo.claimedSatoshisTotal / k.CLAIMABLE_SATOSHIS_TOTAL
+
+            let adoptionBonus = viralRewards + criticalMass
+
+            bigPayDay = bigPaySlice + adoptionBonus
+//            payout += bigPaySlice + adoptionBonus
+        }
+    
+        return (payout, bigPayDay)
     }
 }

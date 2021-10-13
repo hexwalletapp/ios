@@ -45,7 +45,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                 if penaltyDays < k.EARLY_PENALTY_MIN_DAYS {
                     penaltyDays = UInt16(k.EARLY_PENALTY_MIN_DAYS)
                 }
-
+                
                 let percentComplete = max(0, min(1, (Double(currentDay) - Double(stake.lockedDay)) / Double(stake.stakedDays)))
                 return Stake(stakeId: stake.stakeId,
                              stakedHearts: stake.stakedHearts,
@@ -59,8 +59,9 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                              servedDays: UInt16(servedDays),
                              status: status,
                              startDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(stakeLockedDay) * 86400)),
-                             endDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(gracePeriod) * 86400)),
+                             endDate: k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(servedDays) * 86400)),
                              interestHearts: 0,
+                             interestSevenDayHearts: 0,
                              bigPayDayHearts: nil)
             }
         state.accountsData[id: accountDataKey]?.stakes = IdentifiedArray(uniqueElements: stakes)
@@ -77,13 +78,6 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
     case let .dailyData(dailyDataEncoded, address, chain):
         let accountDataKey = address.value + chain.description
-        let unclaimedSatoshisTotal = state.globalInfo.unclaimedSatoshisTotal
-        let claimedBtcAddrCount = state.globalInfo.claimedBtcAddrCount
-        let claimedSatoshisTotal = state.globalInfo.claimedSatoshisTotal
-
-        var totalInterestHearts: BigUInt = 0
-        var totalInterestSevenDayHearts: BigUInt = 0
-        var bigPayDayTotalHearts: BigUInt = 0
         var currentDay = state.currentDay
 
         let dailyData = dailyDataEncoded.map { dailyData -> DailyData in
@@ -106,42 +100,37 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                 let endIndex = min(startIndex + Int(stake.stakedDays), Int(state.currentDay))
                 let weekStartIndex = max(endIndex - 7, startIndex)
 
-                let interestHearts = dailyData[startIndex ..< endIndex].reduce(0) { $0 + ((stake.stakeShares * $1.payout) / $1.shares) }
-                let interestSevenDayHearts = dailyData[weekStartIndex ..< endIndex].reduce(0) { $0 + ((stake.stakeShares * $1.payout) / $1.shares) }
-
-                totalInterestHearts += interestHearts
-                totalInterestSevenDayHearts += interestSevenDayHearts
-
-                // Big Pay Day
-                if startIndex ..< endIndex ~= Int(k.BIG_PAY_DAY) {
-                    let stakeSharesTotal = dailyData[Int(k.BIG_PAY_DAY)].shares
-
-                    let bigPaySlice = unclaimedSatoshisTotal * k.HEARTS_PER_SATOSHI * stake.stakeShares / stakeSharesTotal
-
-                    let viralRewards = bigPaySlice * claimedBtcAddrCount / k.CLAIMABLE_BTC_ADDR_COUNT
-                    let criticalMass = bigPaySlice * claimedSatoshisTotal / k.CLAIMABLE_SATOSHIS_TOTAL
-
-                    let adoptionBonus = viralRewards + criticalMass
-
-                    let payout = bigPaySlice + adoptionBonus
-
-                    let bigPayDayHearts = payout
-
-                    if stake.penaltyDays < stake.servedDays {
-                        let penalyEndDay = BigUInt(stake.lockedDay + stake.penaltyDays)
-                    }
-
-                    state.accountsData[id: accountDataKey]?.stakes[id: stake.id]?.bigPayDayHearts = bigPayDayHearts
-
-                    bigPayDayTotalHearts += bigPayDayHearts
-                }
-
-                state.accountsData[id: accountDataKey]?.stakes[id: stake.id]?.interestHearts = interestHearts
+                // Total Interest
+                let interest = stake.calculatePayout(globalInfo: state.globalInfo,
+                                                   beginDay: startIndex,
+                                                   endDay: endIndex,
+                                                   dailyData: dailyData)
+                state.accountsData[id: accountDataKey]?
+                    .stakes[id: stake.id]?
+                    .interestHearts = interest.payout
+                state.accountsData[id: accountDataKey]?
+                    .stakes[id: stake.id]?
+                    .bigPayDayHearts = interest.bigPayDay
+                
+                // Seven Day Interest
+                let sevenDayInterest = stake.calculatePayout(globalInfo: state.globalInfo,
+                                                           beginDay: weekStartIndex,
+                                                           endDay: endIndex,
+                                                           dailyData: dailyData)
+                state.accountsData[id: accountDataKey]?
+                    .stakes[id: stake.id]?
+                    .interestSevenDayHearts = sevenDayInterest.payout
             }
 
+        let stakes = state.accountsData[id: accountDataKey]?.stakes
+        
+        let totalInterestHearts = stakes?.reduce(0, { $0 + $1.interestHearts }) ?? 0
+        var totalInterestSevenDayHearts = stakes?.reduce(0, { $0 + $1.interestSevenDayHearts }) ?? 0
+        let bigPayDayTotalHearts = stakes?.compactMap { $0.bigPayDayHearts }.reduce(0, { $0 + $1 })
+        
         state.accountsData[id: accountDataKey]?.total.interestHearts = totalInterestHearts
         state.accountsData[id: accountDataKey]?.total.interestSevenDayHearts = (totalInterestSevenDayHearts / BigUInt(7))
-        state.accountsData[id: accountDataKey]?.total.bigPayDayHearts = bigPayDayTotalHearts
+        bigPayDayTotalHearts.map { state.accountsData[id: accountDataKey]?.total.bigPayDayHearts = $0 }
 
         return .none
 

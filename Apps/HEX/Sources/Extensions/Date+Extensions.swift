@@ -19,7 +19,7 @@ extension Date {
     var relativeTime: String {
         let f = RelativeDateTimeFormatter()
         f.dateTimeStyle = .named
-        f.unitsStyle = .spellOut
+        f.unitsStyle = .full
         return f.localizedString(for: self, relativeTo: Date())
     }
 }
