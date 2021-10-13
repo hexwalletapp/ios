@@ -130,16 +130,18 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .none
 
     case .getChart:
-        let histTo = state.selectedTimeScale.toHistTo
-        return .concatenate(
-            Effect.cancel(id: GetChartId()),
-            CryptoCompareAPI.fetchHistory(histTo: histTo)
-                .receive(on: environment.mainQueue)
-                .mapError { $0 as NSError }
-                .catchToEffect()
-                .map(AppAction.updateChart)
-                .cancellable(id: GetChartId())
-        )
+        return .none
+        // uncomment this when chart is working
+//        let histTo = state.selectedTimeScale.toHistTo
+//        return .concatenate(
+//            Effect.cancel(id: GetChartId()),
+//            CryptoCompareAPI.fetchHistory(histTo: histTo)
+//                .receive(on: environment.mainQueue)
+//                .mapError { $0 as NSError }
+//                .catchToEffect()
+//                .map(AppAction.updateChart)
+//                .cancellable(id: GetChartId())
+//        )
 
     case .dismiss:
         state.accountPresent = nil

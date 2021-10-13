@@ -50,6 +50,7 @@ struct LightweightChartsView: UIViewRepresentable {
                 )
             )
         )
+
         volumeSeries.setData(data: ohlcv.map { $0.volumeData })
         viewStore.send(.binding(.set(\.$volumeSeries, volumeSeries)))
     }
