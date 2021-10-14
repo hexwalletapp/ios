@@ -12,6 +12,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let stakeShares: BigUInt
     let lockedDay: UInt16
     let stakedDays: UInt16
+    let stakeEndDay: UInt16
     let penaltyDays: UInt16
     let unlockedDay: UInt16
     let isAutoStake: Bool
@@ -20,6 +21,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let status: StakeStatus
     let startDate: Date
     let endDate: Date
+    var penaltyHearts: BigUInt
     var interestHearts: BigUInt
     var interestSevenDayHearts: BigUInt
     var bigPayDayHearts: BigUInt?
@@ -74,5 +76,14 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
         }
     
         return (payout, bigPayDay)
+    }
+    
+    func estimatePayoutRewardsDay(globalInfo: GlobalInfo) -> (payout: BigUInt,
+                                       bigPayDay: BigUInt?) {
+        
+     
+        
+        
+        return (0, nil)
     }
 }
