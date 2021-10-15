@@ -10,9 +10,9 @@ struct StakeDetailsView: View {
     let stake: Stake
     let account: Account
 
-    let threeColumnGrid = [GridItem(.flexible(maximum: 80), alignment: .leading),
-                           GridItem(.flexible(maximum: 100), alignment: .trailing),
-                           GridItem(.flexible(), alignment: .trailing)]
+    let threeColumnGrid = [GridItem(.fixed(80), spacing: k.GRID_SPACING, alignment: .leading),
+                           GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing),
+                           GridItem(.fixed(100), spacing: k.GRID_SPACING, alignment: .trailing)]
 
     var body: some View {
         ScrollView {
@@ -109,29 +109,29 @@ struct StakeDetailsView: View {
     }
 
     var earningsHeader: some View {
-        LazyVGrid(columns: threeColumnGrid) {
+        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
             Text("")
-            Text("ʜᴇx").foregroundColor(.secondary)
             Text("ᴜsᴅ").foregroundColor(.secondary)
+            Text("ʜᴇx").foregroundColor(.secondary)
         }
     }
 
     func girdRow(title: String, units: BigUInt) -> some View {
-        LazyVGrid(columns: threeColumnGrid) {
+        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
             Text(title)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
+            Text(units
+                    .hexAt(price: price)
+                    .currencyWholeString)
+                .font(.caption.monospaced())
             Text("\(units.hex)")
                 .font(.caption.monospaced())
-            Text(units
-                .hexAt(price: price)
-                .currencyWholeString)
-                            .font(.caption.monospaced())
         }
     }
 
     func gridRow(title: String, hex: Double, usd: Double) -> some View {
-        LazyVGrid(columns: threeColumnGrid) {
+        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
             Text(title)
                 .font(.subheadline)
                 .foregroundColor(.secondary)

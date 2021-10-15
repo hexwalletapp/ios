@@ -24,6 +24,7 @@ struct k {
     static let CLAIMABLE_SATOSHIS_TOTAL = BigUInt(910_087_996_911_001)
     static let ONE_YEAR = BigUInt(365)
     static let EARLY_PENALTY_MIN_DAYS = 90
+    static let GRID_SPACING = CGFloat.zero
 
     static func chartOptions() -> ChartOptions {
         ChartOptions(
