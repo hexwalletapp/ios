@@ -9,11 +9,11 @@ struct StakeDetailsView: View {
     let price: Double
     let stake: Stake
     let account: Account
-    
+
     let threeColumnGrid = [GridItem(.flexible(maximum: 80), alignment: .leading),
                            GridItem(.flexible(maximum: 100), alignment: .trailing),
                            GridItem(.flexible(), alignment: .trailing)]
-    
+
     var body: some View {
         ScrollView {
             GroupBox {
@@ -39,7 +39,7 @@ struct StakeDetailsView: View {
         }
         .navigationTitle(stake.endDate.mediumDateString)
     }
-    
+
     var headerView: some View {
         HStack(alignment: .top) {
             ZStack {
@@ -66,13 +66,12 @@ struct StakeDetailsView: View {
                 case true: headerDetails(headline: stake.endDate.relativeTime, subheading: "Stake Ended")
                 case false: headerDetails(headline: stake.endDate.relativeTime, subheading: "Stake Ends")
                 }
-                
                 headerDetails(headline: stake.stakeShares.number.shareString, subheading: "Shares")
                 Spacer()
             }
         }
     }
-    
+
     func headerDetails(headline: String, subheading: String) -> some View {
         VStack(alignment: .trailing) {
             Text(headline)
@@ -81,27 +80,34 @@ struct StakeDetailsView: View {
                 .foregroundColor(.secondary)
         }
     }
-    
+
     var earningsView: some View {
         VStack {
             earningsHeader
-            Divider()
             VStack {
+                Divider()
                 girdRow(title: "ᴘʀɪɴᴄɪᴘᴀʟ", units: stake.stakedHearts)
-                girdRow(title: "ᴘᴇɴᴀʟᴛʏ", units: stake.penaltyHearts).foregroundColor(.red)
                 girdRow(title: "ɪɴᴛᴇʀᴇsᴛ", units: stake.interestHearts)
                 if let bigPayDayHearts = stake.bigPayDayHearts {
                     girdRow(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: bigPayDayHearts)
                 }
             }
-            Divider()
-            girdRow(title: "ᴛᴏᴛᴀʟ", units: stake.balanceHearts)
-            Divider()
-            gridRow(title: "ʀᴏɪ", hex: stake.roiPercent, usd: stake.roiPercent(price: price))
-            gridRow(title: "ᴀᴘʏ", hex: stake.apyPercent, usd: stake.apyPercent(price: price))
+            VStack {
+                Divider()
+                girdRow(title: "ᴛᴏᴛᴀʟ", units: stake.balanceHearts)
+            }
+//            VStack {
+//                Divider()
+//                girdRow(title: "ᴘᴇɴᴀʟᴛʏ", units: stake.penaltyHearts).foregroundColor(.red)
+//            }
+            VStack {
+                Divider()
+                gridRow(title: "ʀᴏɪ", hex: stake.roiPercent, usd: stake.roiPercent(price: price))
+                gridRow(title: "ᴀᴘʏ", hex: stake.apyPercent, usd: stake.apyPercent(price: price))
+            }
         }
     }
-    
+
     var earningsHeader: some View {
         LazyVGrid(columns: threeColumnGrid) {
             Text("")
@@ -109,7 +115,7 @@ struct StakeDetailsView: View {
             Text("ᴜsᴅ").foregroundColor(.secondary)
         }
     }
-    
+
     func girdRow(title: String, units: BigUInt) -> some View {
         LazyVGrid(columns: threeColumnGrid) {
             Text(title)
@@ -118,25 +124,25 @@ struct StakeDetailsView: View {
             Text("\(units.hex)")
                 .font(.caption.monospaced())
             Text(units
-                    .hexAt(price: price)
-                    .currencyWholeString)
-                .font(.caption.monospaced())
+                .hexAt(price: price)
+                .currencyWholeString)
+                            .font(.caption.monospaced())
         }
     }
-    
+
     func gridRow(title: String, hex: Double, usd: Double) -> some View {
         LazyVGrid(columns: threeColumnGrid) {
             Text(title)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
-            
+
             Text(NSNumber(value: hex).percentageFractionString)
                 .font(.caption.monospaced())
             Text(NSNumber(value: usd).percentageFractionString)
                 .font(.caption.monospaced())
         }
     }
-    
+
     func toPercentage(principal: NSNumber, interest: NSNumber) -> String {
         NSNumber(value: interest.doubleValue / principal.doubleValue).percentageFractionString
     }
