@@ -52,20 +52,21 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
         let stakeDays = max(stakedDays, servedDays)
         return roiPercent(price: price) * (Double(k.ONE_YEAR) / Double(stakeDays))
     }
-    
+
     func calculatePayout(globalInfo: GlobalInfo,
                          beginDay: Int,
                          endDay: Int,
                          dailyData: [DailyData]) -> (payout: BigUInt,
-                                                     bigPayDay: BigUInt?) {
-        var payout = dailyData[beginDay ..< endDay].reduce(0) { $0 + ((stakeShares * $1.payout) / $1.shares) }
-        
-        var bigPayDay: BigUInt? = nil
+                                                     bigPayDay: BigUInt?)
+    {
+        let payout = dailyData[beginDay ..< endDay].reduce(0) { $0 + ((stakeShares * $1.payout) / $1.shares) }
+
+        var bigPayDay: BigUInt?
         if beginDay ..< endDay ~= Int(k.BIG_PAY_DAY) {
             let stakeSharesTotal = dailyData[Int(k.BIG_PAY_DAY)].shares
 
             let bigPaySlice = globalInfo.unclaimedSatoshisTotal * k.HEARTS_PER_SATOSHI * stakeShares / stakeSharesTotal
-            
+
             let viralRewards = bigPaySlice * globalInfo.claimedBtcAddrCount / k.CLAIMABLE_BTC_ADDR_COUNT
             let criticalMass = bigPaySlice * globalInfo.claimedSatoshisTotal / k.CLAIMABLE_SATOSHIS_TOTAL
 
@@ -74,16 +75,13 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
             bigPayDay = bigPaySlice + adoptionBonus
 //            payout += bigPaySlice + adoptionBonus
         }
-    
+
         return (payout, bigPayDay)
     }
-    
-    func estimatePayoutRewardsDay(globalInfo: GlobalInfo) -> (payout: BigUInt,
-                                       bigPayDay: BigUInt?) {
-        
-     
-        
-        
+
+    func estimatePayoutRewardsDay(globalInfo _: GlobalInfo) -> (payout: BigUInt,
+                                                                bigPayDay: BigUInt?)
+    {
         return (0, nil)
     }
 }
