@@ -78,7 +78,7 @@ struct StakeCardView: View {
                 .foregroundColor(.black)
                 .frame(height: MAGNETIC_STRIPE_HEIGHT)
                 .offset(y: MAGNETIC_STRIPE_PADDING)
-            
+
             VStack(alignment: .leading) {
                 backHeader
                 girdRow(title: "ʟɪᴏ̨ᴜɪᴅ", units: accountData.balanceHearts)
@@ -146,19 +146,19 @@ struct StakeCardView: View {
             description(text: "ʜᴇx")
         }
     }
-    
+
     func girdRow(title: String, units: BigUInt) -> some View {
         LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
             description(text: title)
             Text(units
-                    .hexAt(price: price.doubleValue)
-                    .currencyWholeString)
-                .font(.caption.monospaced())
+                .hexAt(price: price.doubleValue)
+                .currencyWholeString)
+                            .font(.caption.monospaced())
             Text("\(units.hex)")
                 .font(.caption.monospaced())
         }
     }
-    
+
     func flipCard() {
         let duration = 0.3
         withAnimation(.easeInOut(duration: duration)) {

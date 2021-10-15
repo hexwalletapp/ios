@@ -122,9 +122,9 @@ struct StakeDetailsView: View {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             Text(units
-                    .hexAt(price: price)
-                    .currencyWholeString)
-                .font(.caption.monospaced())
+                .hexAt(price: price)
+                .currencyWholeString)
+                            .font(.caption.monospaced())
             Text("\(units.hex)")
                 .font(.caption.monospaced())
         }
