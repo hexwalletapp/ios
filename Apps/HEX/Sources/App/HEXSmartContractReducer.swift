@@ -208,14 +208,24 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         state.currentDay = day
         return .merge(
             state.accountsData.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never>? in
-                environment.hexManager.getStakes(id: HexManagerId(),
-                                                 address: accountData.account.address,
-                                                 chain: accountData.account.chain).fireAndForget()
+                .merge(
+                    environment.hexManager.getStakes(id: HexManagerId(),
+                                                     address: accountData.account.address,
+                                                     chain: accountData.account.chain).fireAndForget(),
+                    environment.hexManager.getBalance(id: HexManagerId(),
+                                                      address: accountData.account.address,
+                                                      chain: accountData.account.chain).fireAndForget()
+                )
             }
         )
 
     case let .globalInfo(globalInfo):
         state.globalInfo = GlobalInfo(globalInfo: globalInfo)
+        return .none
+
+    case let .balance(balance, address, chain):
+        let accountDataKey = address.value + chain.description
+        state.accountsData[id: accountDataKey]?.balanceHearts = balance
         return .none
     }
 }

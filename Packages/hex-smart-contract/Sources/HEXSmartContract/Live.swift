@@ -177,6 +177,29 @@ public extension HEXSmartContractManager {
             }
         }
 
+        manager.getBalance = { id, address, chain in
+            guard let client = dependencies[id]?.client else { return .none }
+            let ethereumAddress = EthereumAddress(address)
+            return .fireAndForget {
+                let erc20 = ERC20(client: client)
+                erc20.balanceOf(tokenContract: EthereumAddress("0x2b591e99afe9f32eaa6214f7b7629768c40eeb39"),
+                                address: ethereumAddress) { error, balance in
+                    switch error {
+                    case let .some(error):
+                        print(error)
+                    case .none:
+                        switch balance {
+                        case let .some(balance):
+                            DispatchQueue.main.async {
+                                dependencies[id]?.subscriber.send(.balance(balance, ethereumAddress, chain))
+                            }
+                        case .none:
+                            print("no balance")
+                        }
+                    }
+                }
+            }
+        }
         return manager
     }()
 }

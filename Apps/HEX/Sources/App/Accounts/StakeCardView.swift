@@ -11,6 +11,9 @@ struct StakeCardView: View {
     let price: NSNumber
     let accountData: AccountData
 
+    let threeColumnGrid = [GridItem(.fixed(80), spacing: k.GRID_SPACING, alignment: .leading),
+                           GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing),
+                           GridItem(.fixed(100), spacing: k.GRID_SPACING, alignment: .trailing)]
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
     private let MAGNETIC_STRIPE_PADDING = CGFloat(24)
     @State private var cardRotation = 0.0
@@ -75,30 +78,32 @@ struct StakeCardView: View {
                 .foregroundColor(.black)
                 .frame(height: MAGNETIC_STRIPE_HEIGHT)
                 .offset(y: MAGNETIC_STRIPE_PADDING)
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
+            
+            VStack(alignment: .leading) {
+                backHeader
+                girdRow(title: "ʟɪᴏ̨ᴜɪᴅ", units: accountData.balanceHearts)
+                girdRow(title: "sᴛᴀᴋᴇᴅ", units: accountData.total.stakedHearts)
+                girdRow(title: "ɪɴᴛᴇʀᴇsᴛ", units: accountData.total.interestHearts)
+                if !accountData.total.bigPayDayHearts.isZero {
+                    girdRow(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: accountData.total.bigPayDayHearts)
+                }
+                Spacer()
+                HStack(alignment: .bottom) {
+                    VStack(alignment: .leading) {
+                        Spacer()
+                        Text(accountData.account.name)
+                        description(text: accountData.account.chain.description)
+                    }
+                    Spacer()
                     Image(accountData.account.chain.description).resizable()
                         .scaledToFit()
                         .frame(height: 32)
                         .vibrancyEffect()
                         .vibrancyEffectStyle(.fill)
-                    Spacer()
-                    Text(accountData.account.name)
-                    description(text: accountData.account.chain.description)
-                }
-                Spacer()
-                VStack(alignment: .trailing) {
-                    backTotal(title: "Staked", hearts: accountData.total.stakedHearts)
-                    Spacer()
-                    backTotal(title: "Interest", hearts: accountData.total.interestHearts)
-                    if !accountData.total.bigPayDayHearts.isZero {
-                        Spacer()
-                        backTotal(title: "Big Pay Day", hearts: accountData.total.bigPayDayHearts)
-                    }
                 }
             }
             .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-            .padding(.top, MAGNETIC_STRIPE_HEIGHT + MAGNETIC_STRIPE_PADDING)
+            .padding(.top, MAGNETIC_STRIPE_HEIGHT + MAGNETIC_STRIPE_PADDING / 2)
             .padding()
         }
         .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
@@ -127,22 +132,33 @@ struct StakeCardView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 
-    func backTotal(title: String, hearts: BigUInt) -> some View {
-        VStack(alignment: .trailing) {
-            Text(hearts.hexAt(price: price.doubleValue).currencyString).foregroundColor(.primary)
-            Label(hearts.hex.hexString, image: "hex-logo.SFSymbol").labelStyle(HEXNumberTextStyle()).foregroundColor(.secondary)
-            description(text: title)
-        }
-        .font(.subheadline.monospacedDigit())
-    }
-
     func description(text: String) -> some View {
         Text(text)
-            .font(.caption.monospaced())
+            .font(.subheadline)
             .vibrancyEffect()
             .vibrancyEffectStyle(.fill)
     }
 
+    var backHeader: some View {
+        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
+            Text("")
+            description(text: "ᴜsᴅ")
+            description(text: "ʜᴇx")
+        }
+    }
+    
+    func girdRow(title: String, units: BigUInt) -> some View {
+        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
+            description(text: title)
+            Text(units
+                    .hexAt(price: price.doubleValue)
+                    .currencyWholeString)
+                .font(.caption.monospaced())
+            Text("\(units.hex)")
+                .font(.caption.monospaced())
+        }
+    }
+    
     func flipCard() {
         let duration = 0.3
         withAnimation(.easeInOut(duration: duration)) {
