@@ -125,7 +125,7 @@ struct StakeDetailsView: View {
                 .hexAt(price: price)
                 .currencyWholeString)
                             .font(.caption.monospaced())
-            Text("\(units.hex)")
+            Text(units.hex.hexString)
                 .font(.caption.monospaced())
         }
     }

@@ -5,13 +5,13 @@ import Foundation
 
 extension NSNumber {
     var hexString: String {
-        let formatter = NumberFormatter()
+        let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .decimal
         return formatter.string(from: self) ?? ""
     }
 
     var hexStringSuffix: String {
-        let formatter = NumberFormatter()
+        let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .decimal
         formatter.positiveSuffix = " ʜᴇx"
         return formatter.string(from: self) ?? ""
@@ -29,21 +29,21 @@ extension NSNumber {
 
         let roundedNumber = NSNumber(value: round(10 * doubleValue / pow(1000.0, Double(exp))) / 10)
 
-        let formatter = NumberFormatter()
+        let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .decimal
         formatter.positiveSuffix = " \(units[exp])sʜᴀʀᴇs"
         return formatter.string(from: roundedNumber) ?? ""
     }
 
     var currencyStringSuffix: String {
-        let formatter = NumberFormatter()
+        let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .currency
         formatter.positiveSuffix = " ᴜsᴅ"
         return formatter.string(from: self) ?? ""
     }
 
     var currencyNumberString: String {
-        let formatter = NumberFormatter()
+        let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .decimal
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
@@ -51,13 +51,13 @@ extension NSNumber {
     }
 
     var currencyString: String {
-        let formatter = NumberFormatter()
+        let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .currency
         return formatter.string(from: self) ?? ""
     }
 
     var currencyShortString: String {
-        let formatter = NumberFormatter()
+        let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .currency
 
         let number: NSNumber
@@ -82,23 +82,30 @@ extension NSNumber {
     }
 
     var currencyWholeString: String {
-        let formatter = NumberFormatter()
+        let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .currency
+
         formatter.maximumFractionDigits = 0
         return formatter.string(from: self) ?? ""
     }
 
     var percentageString: String {
-        let formatter = NumberFormatter()
+        let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .percent
         return formatter.string(from: self) ?? ""
     }
 
     var percentageFractionString: String {
-        let formatter = NumberFormatter()
+        let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .percent
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
         return formatter.string(from: self) ?? ""
+    }
+
+    private static var usLocaleFormatter: NumberFormatter {
+        let f = NumberFormatter()
+        f.locale = Locale(identifier: "en_US")
+        return f
     }
 }
