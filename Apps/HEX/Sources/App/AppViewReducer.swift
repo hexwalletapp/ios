@@ -2,8 +2,8 @@
 // Copyright (c) 2021 Joe Blau
 
 import BigInt
-import ComposableArchitecture
 import BitqueryAPI
+import ComposableArchitecture
 import Foundation
 import HEXREST
 import HEXSmartContract

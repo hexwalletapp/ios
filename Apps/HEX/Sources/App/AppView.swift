@@ -14,7 +14,7 @@ struct AppView: View {
 //                TradingviewChartView()
                     .tabItem {
                         Image(systemName: "chart.pie.fill")
-                        Text("Charts")
+                        Text("Chart")
                     }
                     .tag(Tab.charts)
 

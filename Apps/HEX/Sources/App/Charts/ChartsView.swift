@@ -22,7 +22,7 @@ struct ChartsView: View {
                         switch viewStore.chartLoading {
                         case true: ProgressView()
                         case false: EmptyView()
-                        }                            
+                        }
                     }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Menu(content: {
