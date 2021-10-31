@@ -2,7 +2,7 @@ name: HEX
 
 settings:
   DEVELOPMENT_TEAM: K78G42H4U2
-  CURRENT_PROJECT_VERSION: 17
+  CURRENT_PROJECT_VERSION: 18
   MARKETING_VERSION: 0.1.0
 
 options:
@@ -30,8 +30,7 @@ packages:
 localPackages:
   - ./Packages/hex-smart-contract/
   - ./Packages/hex-rest/
-  - ./Packages/crypto-compare-api/
-  # - ./Vendor/lightweight-charts/
+  - ./Packages/bitquery-api/
 
 targets:
   HEX:
@@ -55,8 +54,8 @@ targets:
         product: HEXSmartContract
       - package: hex-rest
         product: HEXREST
-      - package: crypto-compare-api
-        product: CryptoCompareAPI
+      - package: bitquery-api
+        product: BitqueryAPI
       - package: lightweight-charts
         product: LightweightCharts
       - package: swift-composable-architecture

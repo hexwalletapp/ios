@@ -1,7 +1,7 @@
 // TimeScale+Extensions.swift
 // Copyright (c) 2021 Joe Blau
 
-import CryptoCompareAPI
+import BitqueryAPI
 import Foundation
 
 extension TimeScale {
