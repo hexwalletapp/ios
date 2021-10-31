@@ -65,7 +65,6 @@
 		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		230728B8D69D958751745D31 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeGroupBoxStyle.swift; sourceTree = "<group>"; };
-		269F5C7F944D784EC6D1C355 /* lightweight-charts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "lightweight-charts"; path = "Vendor/lightweight-charts"; sourceTree = SOURCE_ROOT; };
 		2D56D72C21058B5DDC3BDE89 /* hex-smart-contract */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-smart-contract"; path = "Packages/hex-smart-contract"; sourceTree = SOURCE_ROOT; };
 		39A371DADF6BCBCD8ADCCD3F /* CandlestickSeries+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CandlestickSeries+Extensions.swift"; sourceTree = "<group>"; };
 		3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeStatusModel.swift; sourceTree = "<group>"; };
@@ -225,7 +224,6 @@
 				8C137CBFBD36DA2BACF59DFB /* crypto-compare-api */,
 				F0738425D18A2BAF07C68CAC /* hex-rest */,
 				2D56D72C21058B5DDC3BDE89 /* hex-smart-contract */,
-				269F5C7F944D784EC6D1C355 /* lightweight-charts */,
 			);
 			name = Packages;
 			sourceTree = SOURCE_ROOT;
@@ -303,7 +301,7 @@
 			path = HEX;
 			sourceTree = "<group>";
 		};
-		"TEMP_77D0513B-8E57-4452-A594-0B8619651311" /* Resources */ = {
+		"TEMP_3A736AC8-C8DF-4215-AC65-738BFDF5A020" /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				230728B8D69D958751745D31 /* index.html */,
@@ -364,6 +362,7 @@
 			);
 			mainGroup = 184F9CCBCFA3BF831BBC7ED2;
 			packageReferences = (
+				8D214F3A5C611613264F70A7 /* XCRemoteSwiftPackageReference "LightweightChartsIOS" */,
 				95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				0D4F14F86CFAA75A69AE1DA2 /* XCRemoteSwiftPackageReference "swift-identified-collections" */,
 				C75F4C07C428F5C67C9471FF /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */,
@@ -632,6 +631,14 @@
 				minimumVersion = 0.3.0;
 			};
 		};
+		8D214F3A5C611613264F70A7 /* XCRemoteSwiftPackageReference "LightweightChartsIOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tradingview/LightweightChartsIOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.6.1;
+			};
+		};
 		95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
@@ -666,6 +673,7 @@
 		};
 		566385D68414482B5486D7B8 /* LightweightCharts */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 8D214F3A5C611613264F70A7 /* XCRemoteSwiftPackageReference "LightweightChartsIOS" */;
 			productName = LightweightCharts;
 		};
 		88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */ = {
