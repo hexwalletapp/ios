@@ -36,32 +36,38 @@ struct AccountsView: View {
                 })
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
-                        Button {
-                            viewStore.send(.binding(.set(\.$accountPresent, .edit)))
-                        } label: { Image(systemName: "person") }
+                        Menu {
+                            Section {
+                                Button {
+                                    viewStore.send(.binding(.set(\.$accountPresent, .edit)))
+                                } label: { Label("Accounts", systemImage: "person") }
+                            }
+                            
 
-                        toolbarText(heading: viewStore.currentDay.advanced(by: 1).description, subheading: "Day")
-                        toolbarText(heading: viewStore.price.currencyString + (viewStore.shouldSpeculate ? "*" : ""), subheading: "Price")
-                    }
-
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        Menu(content: {
                             Section {
                                 Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate))
-                            }
-                            Section {
+
                                 Button {
                                     viewStore.send(.binding(.set(\.$accountPresent, .speculate)))
                                 } label: { Label("Edit • \(viewStore.speculativePrice.currencyString)",
                                                  systemImage: "square.and.pencil") }
                             }
-                        }, label: { Image(systemName: "dollarsign.circle") })
+                        } label: {
+                            Image(systemName: "line.3.horizontal")
+                        }
+                    }
 
-                        Button {} label: { Image(systemName: "bell.badge") }
-                            .disabled(true)
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
 
-                        Button {} label: { Image(systemName: "arrow.up.arrow.down") }
-                            .disabled(true)
+
+                        toolbarText(heading: viewStore.currentDay.advanced(by: 1).description, subheading: "Day")
+                        toolbarText(heading: viewStore.price.currencyString + (viewStore.shouldSpeculate ? "*" : ""), subheading: "Price")
+
+//                        Button {} label: { Image(systemName: "bell.badge") }
+//                            .disabled(true)
+//
+//                        Button {} label: { Image(systemName: "arrow.up.arrow.down") }
+//                            .disabled(true)
                     }
                 }
             }
@@ -72,7 +78,7 @@ struct AccountsView: View {
         VStack {
             Text(heading).font(.caption.monospacedDigit())
             Text(subheading).font(.caption2.monospaced()).foregroundColor(.secondary)
-        }
+        }.frame(width: 48)
     }
 
     var accountList: some View {
