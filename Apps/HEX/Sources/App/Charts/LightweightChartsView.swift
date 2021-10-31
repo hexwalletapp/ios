@@ -1,9 +1,9 @@
 // LightweightChartsView.swift
 // Copyright (c) 2021 Joe Blau
 
+import BitqueryAPI
 import Combine
 import ComposableArchitecture
-import BitqueryAPI
 import LightweightCharts
 import SwiftUI
 

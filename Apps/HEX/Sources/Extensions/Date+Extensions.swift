@@ -20,6 +20,6 @@ extension Date {
         let f = RelativeDateTimeFormatter()
         f.dateTimeStyle = .named
         f.unitsStyle = .full
-        return f.localizedString(for: self, relativeTo: Date())
+        return f.localizedString(for: self, relativeTo: Date()).capitalized
     }
 }
