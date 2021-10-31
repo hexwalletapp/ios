@@ -42,7 +42,6 @@ struct AccountsView: View {
                                     viewStore.send(.binding(.set(\.$accountPresent, .edit)))
                                 } label: { Label("Accounts", systemImage: "person") }
                             }
-                            
 
                             Section {
                                 Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate))
@@ -58,8 +57,6 @@ struct AccountsView: View {
                     }
 
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-
-
                         toolbarText(heading: viewStore.currentDay.advanced(by: 1).description, subheading: "Day")
                         toolbarText(heading: viewStore.price.currencyString + (viewStore.shouldSpeculate ? "*" : ""), subheading: "Price")
 

@@ -154,7 +154,7 @@ struct StakeCardView: View {
                 .hexAt(price: price.doubleValue)
                 .currencyWholeString)
                             .font(.caption.monospaced())
-            Text("\(units.hex)")
+            Text(units.hex.hexString)
                 .font(.caption.monospaced())
         }
     }
