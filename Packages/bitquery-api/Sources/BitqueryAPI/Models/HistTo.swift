@@ -26,7 +26,7 @@ public enum HistToMinute: String, TimeSortable {
     case five = "5"
     case fifteen = "15"
     case thirty = "30"
-    
+
     var intervalString: String {
         switch self {
         case .five: return "minute(count: 5)"
@@ -34,9 +34,9 @@ public enum HistToMinute: String, TimeSortable {
         case .thirty: return "minute(count: 30)"
         }
     }
-    
+
     public var sortString: String {
-        return "timeInterval.minute"
+        "timeInterval.minute"
     }
 }
 
@@ -44,7 +44,7 @@ public enum HistToHour: String, TimeSortable {
     case one = "1"
     case two = "2"
     case four = "4"
-    
+
     var intervalString: String {
         switch self {
         case .one: return "hour(count: 1)"
@@ -52,9 +52,9 @@ public enum HistToHour: String, TimeSortable {
         case .four: return "hour(count: 4)"
         }
     }
-    
+
     public var sortString: String {
-        return "timeInterval.hour"
+        "timeInterval.hour"
     }
 }
 
@@ -62,7 +62,7 @@ public enum HistToDay: String, TimeSortable {
     case one = "1"
     case seven = "7"
     case thirty = "30"
-    
+
     var intervalString: String {
         switch self {
         case .one: return "day(count: 1)"
@@ -70,7 +70,7 @@ public enum HistToDay: String, TimeSortable {
         case .thirty: return "month(count: 1)"
         }
     }
-    
+
     public var sortString: String {
         switch self {
         case .one, .seven: return "timeInterval.day"

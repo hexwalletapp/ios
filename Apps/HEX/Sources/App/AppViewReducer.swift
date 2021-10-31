@@ -3,7 +3,7 @@
 
 import BigInt
 import ComposableArchitecture
-import CryptoCompareAPI
+import BitqueryAPI
 import Foundation
 import HEXREST
 import HEXSmartContract
@@ -37,6 +37,7 @@ struct AppState: Equatable {
     var currentDay: BigUInt = 0
     var globalInfo = GlobalInfo()
     var ohlcv = [OHLCVData]()
+    var chartLoading = false
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -120,6 +121,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return Effect(value: .getPrice)
 
     case let .updateChart(result):
+        state.chartLoading = false
         switch result {
         case let .success(chartData):
             state.ohlcv = chartData
@@ -128,6 +130,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .none
 
     case .getChart:
+        state.chartLoading = true
         let histTo = state.selectedTimeScale.toHistTo
         return .merge(
             Effect.cancel(id: GetChartId()),

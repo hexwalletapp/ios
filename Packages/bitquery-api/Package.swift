@@ -4,22 +4,22 @@
 import PackageDescription
 
 let package = Package(
-    name: "CryptoCompareAPI",
+    name: "BitqueryAPI",
     platforms: [
         .iOS(.v13),
     ],
     products: [
-        .library(name: "CryptoCompareAPI", targets: ["CryptoCompareAPI"]),
+        .library(name: "BitqueryAPI", targets: ["BitqueryAPI"]),
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "CryptoCompareAPI",
+            name: "BitqueryAPI",
             dependencies: []
         ),
         .testTarget(
-            name: "CryptoCompareAPITests",
-            dependencies: ["CryptoCompareAPI"]
+            name: "BitqueryAPITests",
+            dependencies: ["BitqueryAPI"]
         ),
     ]
 )

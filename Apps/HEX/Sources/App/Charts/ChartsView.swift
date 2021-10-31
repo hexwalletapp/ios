@@ -18,6 +18,12 @@ struct ChartsView: View {
                 .background(Color(.systemGroupedBackground))
                 .navigationBarTitle("HEX/USD", displayMode: .inline)
                 .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        switch viewStore.chartLoading {
+                        case true: ProgressView()
+                        case false: EmptyView()
+                        }                            
+                    }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Menu(content: {
                             minuteScale
@@ -25,7 +31,7 @@ struct ChartsView: View {
                             dayScale
                         }, label: {
                             Text(viewStore.selectedTimeScale.code)
-                        })
+                        }).disabled(viewStore.chartLoading)
 
                         Menu(content: {
                             ForEach(ChartType.allCases) { chart in
@@ -38,7 +44,7 @@ struct ChartsView: View {
                             }
                         }, label: {
                             viewStore.selectedChartType.icon
-                        })
+                        }).disabled(viewStore.chartLoading)
                     }
                 }
             }

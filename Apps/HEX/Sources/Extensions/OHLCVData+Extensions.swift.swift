@@ -1,7 +1,7 @@
 // OHLCVData+Extensions.swift.swift
 // Copyright (c) 2021 Joe Blau
 
-import CryptoCompareAPI
+import BitqueryAPI
 import Foundation
 import LightweightCharts
 
