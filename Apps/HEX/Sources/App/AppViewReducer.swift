@@ -32,9 +32,6 @@ struct AppState: Equatable {
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
     @BindableState var shouldSpeculate = false
     @BindableState var speculativePrice: NSNumber = 1.00
-//    @BindableState var candlesstickSeries: CandlestickSeries? = nil
-//    @BindableState var lineSeries: LineSeries? = nil
-//    @BindableState var volumeSeries: HistogramSeries? = nil
     var hexPrice = HEXPrice()
     var price: NSNumber = 0.0
     var currentDay: BigUInt = 0

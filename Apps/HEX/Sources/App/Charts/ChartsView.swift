@@ -11,8 +11,7 @@ struct ChartsView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 VStack {
-                    LightweightChartsView(store: store,
-                                          timeScale: viewStore.selectedTimeScale,
+                    LightweightChartsView(timeScale: viewStore.selectedTimeScale,
                                           chartType: viewStore.selectedChartType,
                                           ohlcv: viewStore.ohlcv)
                 }
