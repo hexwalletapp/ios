@@ -24,7 +24,7 @@ enum AccountPresent: Identifiable {
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var accountPresent: AccountPresent? = nil
-    @BindableState var selectedTab: Tab = .accounts
+    @BindableState var selectedTab: Tab = .charts
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
     @BindableState var selectedChartType: ChartType = .candlestick
 
@@ -32,9 +32,9 @@ struct AppState: Equatable {
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
     @BindableState var shouldSpeculate = false
     @BindableState var speculativePrice: NSNumber = 1.00
-    @BindableState var candlesstickSeries: CandlestickSeries? = nil
-    @BindableState var lineSeries: LineSeries? = nil
-    @BindableState var volumeSeries: HistogramSeries? = nil
+//    @BindableState var candlesstickSeries: CandlestickSeries? = nil
+//    @BindableState var lineSeries: LineSeries? = nil
+//    @BindableState var volumeSeries: HistogramSeries? = nil
     var hexPrice = HEXPrice()
     var price: NSNumber = 0.0
     var currentDay: BigUInt = 0
@@ -55,13 +55,14 @@ enum AppAction: BindableAction, Equatable {
     case getPrice
     case getChart
     case updateHexPrice(Result<HEXPrice, NSError>)
-    case updateChart(Result<CryptoCompareResponse, NSError>)
+    case updateChart(Result<[OHLCVData], NSError>)
     case binding(BindingAction<AppState>)
 }
 
 struct AppEnvironment {
     var hexManager: HEXSmartContractManager
     var mainQueue: AnySchedulerOf<DispatchQueue>
+    let bitquery = BitqueryAPI()
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
 }
@@ -124,24 +125,24 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case let .updateChart(result):
         switch result {
         case let .success(chartData):
-            state.ohlcv = chartData.Data.Data
+            state.ohlcv = chartData
         case let .failure(error): print(error)
         }
         return .none
 
     case .getChart:
-        return .none
-        // uncomment this when chart is working
-//        let histTo = state.selectedTimeScale.toHistTo
-//        return .concatenate(
-//            Effect.cancel(id: GetChartId()),
-//            CryptoCompareAPI.fetchHistory(histTo: histTo)
-//                .receive(on: environment.mainQueue)
-//                .mapError { $0 as NSError }
-//                .catchToEffect()
-//                .map(AppAction.updateChart)
-//                .cancellable(id: GetChartId())
-//        )
+        let histTo = state.selectedTimeScale.toHistTo
+        return .merge(
+            Effect.cancel(id: GetChartId()),
+            environment.bitquery
+                .fetchHistory(histTo: histTo)
+                .receive(on: environment.mainQueue)
+                .mapError { $0 as NSError }
+                .catchToEffect()
+                .map(AppAction.updateChart)
+                .throttle(id: GetChartThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true)
+                .cancellable(id: GetChartId())
+        )
 
     case .dismiss:
         state.accountPresent = nil

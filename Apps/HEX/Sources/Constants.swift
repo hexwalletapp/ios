@@ -28,14 +28,14 @@ struct k {
 
     static func chartOptions() -> ChartOptions {
         ChartOptions(
-            layout: LayoutOptions(backgroundColor: ChartColor(.systemBackground),
+            layout: LayoutOptions(backgroundColor: ChartColor(.systemGroupedBackground),
                                   textColor: ChartColor(.secondaryLabel)),
             rightPriceScale: VisiblePriceScaleOptions(borderColor: ChartColor(UIColor.systemGray6)),
-            timeScale: TimeScaleOptions(borderColor: ChartColor(UIColor.systemGray6)),
+            timeScale: TimeScaleOptions(borderColor: ChartColor(UIColor.systemGray5)),
             crosshair: CrosshairOptions(mode: .normal),
             grid: GridOptions(
-                verticalLines: GridLineOptions(color: ChartColor(UIColor.systemGray6)),
-                horizontalLines: GridLineOptions(color: ChartColor(UIColor.systemGray6))
+                verticalLines: GridLineOptions(color: ChartColor(UIColor.systemGray5)),
+                horizontalLines: GridLineOptions(color: ChartColor(UIColor.systemGray5))
             ),
             localization: LocalizationOptions(priceFormatter: .closure {
                 NSNumber(value: $0).currencyShortString
@@ -77,5 +77,6 @@ struct GetPriceThrottleId: Hashable {}
 struct GlobalInfoThrottleId: Hashable {}
 struct GetDayThrottleId: Hashable {}
 struct GetChartId: Hashable {}
+struct GetChartThrottleId: Hashable {}
 
 var cancellables = Set<AnyCancellable>()

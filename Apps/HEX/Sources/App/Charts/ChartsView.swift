@@ -15,11 +15,9 @@ struct ChartsView: View {
                                           timeScale: viewStore.selectedTimeScale,
                                           chartType: viewStore.selectedChartType,
                                           ohlcv: viewStore.ohlcv)
-                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        .padding()
                 }
                 .background(Color(.systemGroupedBackground))
-                .navigationTitle("HEX/USDC")
+                .navigationBarTitle("HEX/USD", displayMode: .inline)
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Menu(content: {

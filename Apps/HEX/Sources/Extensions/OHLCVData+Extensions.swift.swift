@@ -22,6 +22,6 @@ extension OHLCVData {
     var volumeData: HistogramData {
         HistogramData(color: nil,
                       time: .utc(timestamp: time.timeIntervalSince1970),
-                      value: volumeto)
+                      value: volume)
     }
 }
