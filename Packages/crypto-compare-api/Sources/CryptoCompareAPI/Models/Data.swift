@@ -26,8 +26,8 @@ struct DexTrade: Codable {
 }
 
 struct Interval: Codable {
-    var minute: Date?
-    var hour: Date?
-    var day: Date?
-    var month: Date?
+    var minute: String?
+    var hour: String?
+    var day: String?
+    var month: String?
 }
