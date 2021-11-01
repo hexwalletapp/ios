@@ -13,14 +13,14 @@ struct AppView: View {
                 ChartsView(store: store)
 //                TradingviewChartView()
                     .tabItem {
-                        Image(systemName: "chart.pie.fill")
+                        Image("chart")
                         Text("Chart")
                     }
                     .tag(Tab.charts)
 
                 AccountsView(store: store)
                     .tabItem {
-                        Image(systemName: "creditcard.fill")
+                        Image("accounts")
                         Text("Accounts")
                     }
                     .tag(Tab.accounts)

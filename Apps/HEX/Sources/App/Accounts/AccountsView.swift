@@ -18,7 +18,7 @@ struct AccountsView: View {
         UIPageControl.appearance().currentPageIndicatorTintColor = .tintColor
         UIPageControl.appearance().pageIndicatorTintColor = .tertiaryLabel
     }
-    
+
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
