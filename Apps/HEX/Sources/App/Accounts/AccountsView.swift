@@ -13,6 +13,12 @@ struct AccountsView: View {
         GridItem(.fixed(92)),
     ]
 
+    init(store: Store<AppState, AppAction>) {
+        self.store = store
+        UIPageControl.appearance().currentPageIndicatorTintColor = .tintColor
+        UIPageControl.appearance().pageIndicatorTintColor = .tertiaryLabel
+       }
+    
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
@@ -45,7 +51,6 @@ struct AccountsView: View {
 
                             Section {
                                 Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate))
-
                                 Button {
                                     viewStore.send(.binding(.set(\.$accountPresent, .speculate)))
                                 } label: { Label("Edit • \(viewStore.speculativePrice.currencyString)",
