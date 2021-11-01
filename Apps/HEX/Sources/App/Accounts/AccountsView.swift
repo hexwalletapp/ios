@@ -17,7 +17,7 @@ struct AccountsView: View {
         self.store = store
         UIPageControl.appearance().currentPageIndicatorTintColor = .tintColor
         UIPageControl.appearance().pageIndicatorTintColor = .tertiaryLabel
-       }
+    }
     
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -113,6 +113,7 @@ struct AccountsView: View {
                 }
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
                 .tabViewStyle(PageTabViewStyle())
+                .background(LinearGradient(stops: k.ACCOUNT_CARD_BACKGROUND_GRADIENT_STOPS, startPoint: .top, endPoint: .bottom))
             case true:
                 VStack {
                     Spacer(minLength: 200)
