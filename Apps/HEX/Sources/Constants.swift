@@ -25,6 +25,10 @@ struct k {
     static let ONE_YEAR = BigUInt(365)
     static let EARLY_PENALTY_MIN_DAYS = 90
     static let GRID_SPACING = CGFloat.zero
+    static let ACCOUNT_CARD_BACKGROUND_GRADIENT_STOPS = [
+        Gradient.Stop(color: Color(.systemGroupedBackground), location: 0.75),
+        Gradient.Stop(color: Color(.systemGroupedBackground.withAlphaComponent(0)), location: 1.0)
+    ]
 
     static func chartOptions() -> ChartOptions {
         ChartOptions(
