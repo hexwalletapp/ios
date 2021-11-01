@@ -16,7 +16,7 @@ struct ChartsView: View {
                                           ohlcv: viewStore.ohlcv)
                 }
                 .background(Color(.systemGroupedBackground))
-                .navigationBarTitle("HEX/USD", displayMode: .inline)
+                .navigationBarTitle("HEX/USDC", displayMode: .inline)
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         switch viewStore.chartLoading {
