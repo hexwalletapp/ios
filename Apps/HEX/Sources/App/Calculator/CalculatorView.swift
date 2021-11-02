@@ -8,25 +8,40 @@ import UIKit
 struct CalculatorView: View {
     let store: Store<AppState, AppAction>
 
+    enum Field {
+        case stakeAmount
+        case stakeDays
+        case price
+    }
+    
     let step = 1
     let range = 1 ... 15
-
+    @FocusState private var focusedField: Field?
+    
     var body: some View {
         WithViewStore(store) { viewStore in
-
             NavigationView {
                 Form {
                     Section {
-                        TextField("Stake Amount", value: viewStore.binding(\.$calculator.stakeAmount), format: .number)
-                            .keyboardType(.numberPad)
+                        TextField("Stake Amount", value: viewStore.binding(\.$calculator.stakeAmount).animation(), format: .number)
+                            .focused($focusedField, equals: .stakeAmount)
+                            .keyboardType(.numbersAndPunctuation)
                             .submitLabel(.next)
-                        TextField("Days", value: viewStore.binding(\.$calculator.stakeDays), format: .number)
-                            .keyboardType(.numberPad)
+                        TextField("Days", value: viewStore.binding(\.$calculator.stakeDays).animation(), format: .number)
+                            .focused($focusedField, equals: .stakeDays)
+                            .keyboardType(.numbersAndPunctuation)
                             .submitLabel(.next)
-                        TextField("Price Prediction", value: viewStore.binding(\.$calculator.price), format: .number)
-                            .keyboardType(.decimalPad)
+                        TextField("Price Prediction", value: viewStore.binding(\.$calculator.price).animation(), format: .number)
+                            .focused($focusedField, equals: .price)
+                            .keyboardType(.numbersAndPunctuation)
                             .submitLabel(.done)
-                        Stepper(value: viewStore.binding(\.$calculator.ladderSteps),
+                    }
+                    
+                    switch viewStore.calculator.showLadder {
+                    case true:
+                        Section {
+
+                            Stepper(value: viewStore.binding(\.$calculator.ladderSteps).animation(),
                                 in: range,
                                 step: step) {
                             Text("Stakes: \(viewStore.calculator.ladderSteps)")
@@ -47,13 +62,19 @@ struct CalculatorView: View {
                             displayedComponents: [.date]
                         )
                         .disabled(viewStore.calculator.ladderRungs.count == 1)
+                        } header: {
+                            Text("Ladder")
+                        }
+                        
+                    case false:
+                        EmptyView()
                     }
 
                     switch viewStore.calculator.disableForm {
                     case false:
                         Section {
                             ForEach(viewStore.binding(\.$calculator.ladderRungs)) { rung in
-                                VStack(spacing: 8) {
+                                VStack(spacing: 12) {
                                     DatePicker(
                                         "Stake \(rung.id + 1)",
                                         selection: rung.date,
@@ -67,6 +88,8 @@ struct CalculatorView: View {
                                         Text("100%")
                                     }
                                     .font(.caption.monospaced())
+                                    .disabled(viewStore.calculator.ladderRungs.count == 1)
+
                                     HStack {
                                         Text(NSNumber(value: rung.stakePercentage.wrappedValue).percentageFractionString)
                                         Spacer()
@@ -85,13 +108,27 @@ struct CalculatorView: View {
                             default: Text("Stakes")
                             }
                         }
-
                     case true:
                         EmptyView()
                     }
                 }
+                .onSubmit {
+                    switch focusedField {
+                    case .stakeAmount: focusedField = .stakeDays
+                    case .stakeDays: focusedField = .price
+                    default: focusedField = nil
+                    }
+                }
                 .background(Color(.systemGroupedBackground))
                 .navigationBarTitle("Calculator", displayMode: .inline)
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Toggle(isOn: viewStore.binding(\.$calculator.showLadder).animation()) {
+                            Label("Ladder", image: "ladder.SFSymbol")
+                        }
+                        .disabled(viewStore.calculator.disableForm)
+                    }
+                }
             }
         }
     }

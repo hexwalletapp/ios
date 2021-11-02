@@ -27,10 +27,10 @@ struct AppView: View {
 
                 CalculatorView(store: store)
                     .tabItem {
-                        Image("plan.fill")
-                        Text("Plan")
+                        Image("calculator.fill")
+                        Text("Calculator")
                     }
-                    .tag(Tab.plan)
+                    .tag(Tab.calculator)
             }
             .sheet(item: viewStore.binding(\.$modalPresent), content: { modalPresent in
                 switch modalPresent {

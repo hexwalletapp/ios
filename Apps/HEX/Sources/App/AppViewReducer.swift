@@ -12,7 +12,7 @@ import LightweightCharts
 import SwiftUI
 
 enum Tab {
-    case charts, accounts, plan
+    case charts, accounts, calculator
 }
 
 enum ModalPresent: Identifiable {
@@ -24,7 +24,7 @@ enum ModalPresent: Identifiable {
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var modalPresent: ModalPresent? = nil
-    @BindableState var selectedTab: Tab = .plan
+    @BindableState var selectedTab: Tab = .calculator
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
     @BindableState var selectedChartType: ChartType = .candlestick
 
@@ -164,7 +164,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         switch state.selectedTab {
         case .charts: return Effect(value: .getChart)
         case .accounts: return Effect(value: .getAccounts)
-        case .plan: return .none
+        case .calculator: return .none
         }
 
     case .binding(\.$modalPresent):
