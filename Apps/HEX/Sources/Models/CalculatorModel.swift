@@ -1,21 +1,16 @@
-//
-//  CalculatorModel.swift
-//  HEX
-//
-//  Created by Joe Blau on 11/1/21.
-//
+// CalculatorModel.swift
+// Copyright (c) 2021 Joe Blau
 
-import Foundation
-import ComposableArchitecture
 import BigInt
+import ComposableArchitecture
+import Foundation
 
 struct Calculator: Equatable {
     var stakeAmount: Int? = nil
     var stakeDays: Int? = nil
     var price: Double? = nil
-    var shouldLadder: Bool = false
-    
-    var ladderSteps: Int = 2 {
+
+    var ladderSteps: Int = 1 {
         willSet {
             switch newValue < ladderSteps {
             case true:
@@ -25,14 +20,15 @@ struct Calculator: Equatable {
             }
         }
     }
+
     var ladderDistribution: Distribution = .evenly
-    var ladderStartDateOffset: Date = Date()
-    var ladderRungs: [Rung] = [Rung(id: 0, date: Date()), Rung(id: 1, date: Date())]
-    
+    var ladderStartDateOffset = Date()
+    var ladderRungs: [Rung] = [Rung(id: 0, date: Date())]
+
     var disableForm: Bool {
         stakeAmount?.words.isEmpty == nil ||
-        stakeDays?.words.isEmpty == nil ||
-        price?.description.isEmpty == nil
+            stakeDays?.words.isEmpty == nil ||
+            price?.description.isEmpty == nil
     }
 }
 

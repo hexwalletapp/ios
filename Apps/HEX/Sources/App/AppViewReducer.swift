@@ -33,7 +33,7 @@ struct AppState: Equatable {
     @BindableState var shouldSpeculate = false
     @BindableState var speculativePrice: NSNumber = 1.00
     @BindableState var calculator = Calculator()
-    
+
     var hexPrice = HEXPrice()
     var price: NSNumber = 0.0
     var currentDay: BigUInt = 0
@@ -186,20 +186,22 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         return .none
 
-    case .binding(\.$calculator.shouldLadder),
-        .binding(\.$calculator.ladderSteps),
-        .binding(\.$calculator.ladderDistribution):
-        guard let stakeAmount = state.calculator.stakeAmount,
-              state.calculator.shouldLadder else { return .none }
-        
+    case .binding(\.$calculator.stakeAmount),
+         .binding(\.$calculator.stakeDays),
+         .binding(\.$calculator.price),
+         .binding(\.$calculator.ladderSteps),
+         .binding(\.$calculator.ladderDistribution):
+
+        guard let stakeAmount = state.calculator.stakeAmount else { return .none }
+
         let percentage = Double(1) / Double(state.calculator.ladderSteps)
         let percentageAmount = Double(stakeAmount) * percentage
-        
+
         (0 ..< state.calculator.ladderSteps).forEach { index in
             state.calculator.ladderRungs[index].stakePercentage = percentage
             state.calculator.ladderRungs[index].hearts = BigUInt(percentageAmount) * k.HERATS_PER_HEX
         }
-        
+
         return .none
     case .binding, .hexManager, .onBackground, .onInactive:
         return .none

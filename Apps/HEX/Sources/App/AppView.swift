@@ -24,8 +24,8 @@ struct AppView: View {
                         Text("Accounts")
                     }
                     .tag(Tab.accounts)
-                
-                PlanView(store: store)
+
+                CalculatorView(store: store)
                     .tabItem {
                         Image("plan.fill")
                         Text("Plan")

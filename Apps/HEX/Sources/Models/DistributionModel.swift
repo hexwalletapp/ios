@@ -1,9 +1,5 @@
-//
-//  DistributionModel.swift
-//  HEX
-//
-//  Created by Joe Blau on 11/1/21.
-//
+// DistributionModel.swift
+// Copyright (c) 2021 Joe Blau
 
 import Foundation
 
@@ -14,7 +10,7 @@ enum Distribution: Equatable, Identifiable, CaseIterable, CustomStringConvertibl
     case firstOfYear
     case firstOfMonth
     case custom
-    
+
     var description: String {
         switch self {
         case .evenly: return "Evenly"
