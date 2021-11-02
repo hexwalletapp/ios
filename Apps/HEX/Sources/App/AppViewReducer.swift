@@ -12,19 +12,19 @@ import LightweightCharts
 import SwiftUI
 
 enum Tab {
-    case charts, accounts
+    case charts, accounts, plan
 }
 
-enum AccountPresent: Identifiable {
+enum ModalPresent: Identifiable {
     var id: Self { self }
 
-    case edit, speculate
+    case edit, speculate, calculator
 }
 
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
-    @BindableState var accountPresent: AccountPresent? = nil
-    @BindableState var selectedTab: Tab = .charts
+    @BindableState var modalPresent: ModalPresent? = nil
+    @BindableState var selectedTab: Tab = .plan
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
     @BindableState var selectedChartType: ChartType = .candlestick
 
@@ -32,6 +32,8 @@ struct AppState: Equatable {
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
     @BindableState var shouldSpeculate = false
     @BindableState var speculativePrice: NSNumber = 1.00
+    @BindableState var calculator = Calculator()
+    
     var hexPrice = HEXPrice()
     var price: NSNumber = 0.0
     var currentDay: BigUInt = 0
@@ -115,8 +117,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 
     case let .updateHexPrice(result):
         switch result {
-        case let .success(hexPrice): state.hexPrice = hexPrice
-        case let .failure(error): print(error)
+        case let .success(hexPrice):
+            state.hexPrice = hexPrice
+            state.calculator.price = hexPrice.hexUsd
+        case let .failure(error):
+            print(error)
         }
         return Effect(value: .getPrice)
 
@@ -145,7 +150,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .dismiss:
-        state.accountPresent = nil
+        state.modalPresent = nil
         return .none
 
     case .binding(\.$selectedTimeScale),
@@ -159,10 +164,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         switch state.selectedTab {
         case .charts: return Effect(value: .getChart)
         case .accounts: return Effect(value: .getAccounts)
+        case .plan: return .none
         }
 
-    case .binding(\.$accountPresent):
-        switch state.accountPresent {
+    case .binding(\.$modalPresent):
+        switch state.modalPresent {
         case .some: return .none
         case .none: return Effect(value: .getAccounts)
         }

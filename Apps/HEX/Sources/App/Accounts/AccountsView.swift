@@ -33,26 +33,19 @@ struct AccountsView: View {
                 }
                 .background(Color(.systemGroupedBackground))
                 .navigationBarTitle("Accounts")
-                .sheet(item: viewStore.binding(\.$accountPresent), content: { accountPresent in
-                    switch accountPresent {
-                    case .edit: EditView(store: store)
-                    case .speculate: SpeculateView(store: store,
-                                                   price: viewStore.speculativePrice.currencyNumberString)
-                    }
-                })
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         Menu {
                             Section {
                                 Button {
-                                    viewStore.send(.binding(.set(\.$accountPresent, .edit)))
+                                    viewStore.send(.binding(.set(\.$modalPresent, .edit)))
                                 } label: { Label("Accounts", systemImage: "person") }
                             }
 
                             Section {
                                 Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate))
                                 Button {
-                                    viewStore.send(.binding(.set(\.$accountPresent, .speculate)))
+                                    viewStore.send(.binding(.set(\.$modalPresent, .speculate)))
                                 } label: { Label("Edit • \(viewStore.speculativePrice.currencyString)",
                                                  systemImage: "square.and.pencil") }
                             }
@@ -118,7 +111,7 @@ struct AccountsView: View {
                 VStack {
                     Spacer(minLength: 200)
                     Button {
-                        viewStore.send(.binding(.set(\.$accountPresent, .edit)))
+                        viewStore.send(.binding(.set(\.$modalPresent, .edit)))
                     } label: {
                         VStack(alignment: .center) {
                             Image(systemName: "person.badge.plus").font(.largeTitle)

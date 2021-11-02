@@ -13,18 +13,33 @@ struct AppView: View {
                 ChartsView(store: store)
 //                TradingviewChartView()
                     .tabItem {
-                        Image("chart")
+                        Image("chart.fill")
                         Text("Chart")
                     }
                     .tag(Tab.charts)
 
                 AccountsView(store: store)
                     .tabItem {
-                        Image("accounts")
+                        Image("accounts.fill")
                         Text("Accounts")
                     }
                     .tag(Tab.accounts)
+                
+                PlanView(store: store)
+                    .tabItem {
+                        Image("plan.fill")
+                        Text("Plan")
+                    }
+                    .tag(Tab.plan)
             }
+            .sheet(item: viewStore.binding(\.$modalPresent), content: { modalPresent in
+                switch modalPresent {
+                case .edit: EditView(store: store)
+                case .speculate: SpeculateView(store: store,
+                                               price: viewStore.speculativePrice.currencyNumberString)
+                case .calculator: CalculatorView(store: store)
+                }
+            })
         }
     }
 }
