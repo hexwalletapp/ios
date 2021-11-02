@@ -28,6 +28,12 @@ struct Calculator: Equatable {
     var ladderDistribution: Distribution = .evenly
     var ladderStartDateOffset: Date = Date()
     var ladderRungs: [Rung] = [Rung(id: 0, date: Date()), Rung(id: 1, date: Date())]
+    
+    var disableForm: Bool {
+        stakeAmount?.words.isEmpty == nil ||
+        stakeDays?.words.isEmpty == nil ||
+        price?.description.isEmpty == nil
+    }
 }
 
 struct Rung: Equatable, Identifiable {

@@ -21,7 +21,7 @@ struct CalculatorView: View {
             NavigationView {
                 Form {
                     Section {
-                    TextField("Stake Amount", value: viewStore.binding(\.$calculator.stakeAmount), format: .number)
+                        TextField("Stake Amount", value: viewStore.binding(\.$calculator.stakeAmount), format: .number)
                         .keyboardType(.numberPad)
                         .submitLabel(.next)
                     TextField("Days", value: viewStore.binding(\.$calculator.stakeDays), format: .number)
@@ -31,6 +31,7 @@ struct CalculatorView: View {
                         .keyboardType(.decimalPad)
                         .submitLabel(.done)
                     Toggle("Ladder", isOn: viewStore.binding(\.$calculator.shouldLadder))
+                            .disabled(viewStore.calculator.disableForm)
                     }
                     
                     switch viewStore.calculator.shouldLadder {
@@ -86,13 +87,26 @@ struct CalculatorView: View {
                             
                         } header: {
                             Text("Stakes")
+                        } footer: {
+                            Text("Your main stake will be divided into these stakes")
                         }
                         
                     case false:
                         EmptyView()
                     }
                     
-                    Button("Calculate", action: {})
+                    Button {
+                        print("here")
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text("Calculate")
+                            Spacer()
+                        }
+                    }
+                    .foregroundColor(.white)
+                    .listRowBackground(viewStore.calculator.disableForm ? Color.accentColor.opacity(0.3) : Color.accentColor)
+                    .disabled(viewStore.calculator.disableForm)
                 }
                 .background(Color(.systemGroupedBackground))
                 .navigationBarTitle("Calculator", displayMode: .inline)

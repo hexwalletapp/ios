@@ -186,6 +186,21 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         return .none
 
+    case .binding(\.$calculator.shouldLadder),
+        .binding(\.$calculator.ladderSteps),
+        .binding(\.$calculator.ladderDistribution):
+        guard let stakeAmount = state.calculator.stakeAmount,
+              state.calculator.shouldLadder else { return .none }
+        
+        let percentage = Double(1) / Double(state.calculator.ladderSteps)
+        let percentageAmount = Double(stakeAmount) * percentage
+        
+        (0 ..< state.calculator.ladderSteps).forEach { index in
+            state.calculator.ladderRungs[index].stakePercentage = percentage
+            state.calculator.ladderRungs[index].hearts = BigUInt(percentageAmount) * k.HERATS_PER_HEX
+        }
+        
+        return .none
     case .binding, .hexManager, .onBackground, .onInactive:
         return .none
     }
