@@ -36,7 +36,7 @@ struct AppView: View {
                 switch modalPresent {
                 case .edit: EditView(store: store)
                 case .speculate: SpeculateView(store: store,
-                                               price: viewStore.speculativePrice.currencyNumberString)
+                                               price: viewStore.speculativePrice.doubleValue)
                 case .calculator: CalculatorView(store: store)
                 }
             })

@@ -10,7 +10,7 @@ struct Calculator: Equatable {
     var stakeDays: Int? = nil
     var price: Double? = nil
     var showLadder: Bool = false
-    
+
     var ladderSteps: Int = 1 {
         willSet {
             switch newValue < ladderSteps {

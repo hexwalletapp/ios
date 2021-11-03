@@ -43,7 +43,7 @@ struct AccountsView: View {
                             }
 
                             Section {
-                                Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate))
+                                Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate).animation())
                                 Button {
                                     viewStore.send(.binding(.set(\.$modalPresent, .speculate)))
                                 } label: { Label("Edit • \(viewStore.speculativePrice.currencyString)",
@@ -95,7 +95,7 @@ struct AccountsView: View {
         WithViewStore(store) { viewStore in
             switch viewStore.accountsData.isEmpty {
             case false:
-                TabView(selection: viewStore.binding(\.$selectedId)) {
+                TabView(selection: viewStore.binding(\.$selectedId).animation()) {
                     ForEach(viewStore.accountsData) { accountData in
                         StakeCardView(price: viewStore.price,
                                       accountData: accountData)

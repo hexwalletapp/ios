@@ -12,7 +12,7 @@ struct SpeculateView: View {
         case price
     }
 
-    @State var price: String
+    @State var price: Double? = nil
     @FocusState private var focusedField: Field?
 
     var body: some View {
@@ -20,28 +20,25 @@ struct SpeculateView: View {
             NavigationView {
                 Form {
                     Section("HEX Price") {
-                        TextField("HEX Price",
-                                  text: $price,
-                                  prompt: Text("HEX Price"))
+                        TextField("HEX Price", value: $price, format: .number)
                             .keyboardType(.decimalPad)
                             .focused($focusedField, equals: .price)
                     }
 
                     Section {
                         Button {
-                            guard !price.isEmpty else { return }
+                            guard let price = price else { return }
 
-                            switch Double(price) {
-                            case let .some(priceDouble):
-                                let speculativePrice = NSNumber(value: priceDouble)
+                            let speculativePrice = NSNumber(value: price)
 
-                                focusedField = nil
+                            focusedField = nil
+
+                            withAnimation {
                                 viewStore.send(.binding(.set(\.$speculativePrice, speculativePrice)))
                                 viewStore.send(.binding(.set(\.$shouldSpeculate, true)))
                                 viewStore.send(.dismiss)
-                            case .none:
-                                return
                             }
+
                         } label: {
                             HStack {
                                 Spacer()
@@ -49,6 +46,7 @@ struct SpeculateView: View {
                                 Spacer()
                             }
                         }
+                        .listItemTint(.accentColor)
                     }
                 }
                 .navigationTitle("Speculate")
@@ -73,7 +71,7 @@ struct SpeculateView: View {
 #if DEBUG
     struct SpeculateView_Previews: PreviewProvider {
         static var previews: some View {
-            SpeculateView(store: sampleAppStore, price: "1.00")
+            SpeculateView(store: sampleAppStore, price: 1.00)
         }
     }
 #endif

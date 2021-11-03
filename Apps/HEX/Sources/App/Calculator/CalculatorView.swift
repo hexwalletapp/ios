@@ -13,11 +13,11 @@ struct CalculatorView: View {
         case stakeDays
         case price
     }
-    
+
     let step = 1
     let range = 1 ... 15
     @FocusState private var focusedField: Field?
-    
+
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
@@ -36,36 +36,35 @@ struct CalculatorView: View {
                             .keyboardType(.numbersAndPunctuation)
                             .submitLabel(.done)
                     }
-                    
+
                     switch viewStore.calculator.showLadder {
                     case true:
                         Section {
-
                             Stepper(value: viewStore.binding(\.$calculator.ladderSteps).animation(),
-                                in: range,
-                                step: step) {
-                            Text("Stakes: \(viewStore.calculator.ladderSteps)")
-                        }
-                        .disabled(viewStore.calculator.disableForm)
-
-                        Picker(selection: viewStore.binding(\.$calculator.ladderDistribution)) {
-                            ForEach(Distribution.allCases) { page in
-                                Text(page.description)
+                                    in: range,
+                                    step: step) {
+                                Text("Stakes: \(viewStore.calculator.ladderSteps)")
                             }
-                        } label: {
-                            Text("Distribution")
-                        }
-                        .disabled(viewStore.calculator.ladderRungs.count == 1)
-                        DatePicker(
-                            "Offset Date",
-                            selection: viewStore.binding(\.$calculator.ladderStartDateOffset),
-                            displayedComponents: [.date]
-                        )
-                        .disabled(viewStore.calculator.ladderRungs.count == 1)
+                            .disabled(viewStore.calculator.disableForm)
+
+                            Picker(selection: viewStore.binding(\.$calculator.ladderDistribution)) {
+                                ForEach(Distribution.allCases) { page in
+                                    Text(page.description)
+                                }
+                            } label: {
+                                Text("Distribution")
+                            }
+                            .disabled(viewStore.calculator.ladderRungs.count == 1)
+                            DatePicker(
+                                "Offset Date",
+                                selection: viewStore.binding(\.$calculator.ladderStartDateOffset),
+                                displayedComponents: [.date]
+                            )
+                            .disabled(viewStore.calculator.ladderRungs.count == 1)
                         } header: {
                             Text("Ladder")
                         }
-                        
+
                     case false:
                         EmptyView()
                     }
