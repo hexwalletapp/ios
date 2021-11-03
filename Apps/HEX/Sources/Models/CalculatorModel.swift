@@ -38,4 +38,12 @@ struct Rung: Equatable, Identifiable {
     var date: Date
     var stakePercentage: Double = 0.0
     var hearts: BigUInt = 0
+    var bonus: Bonus = Bonus()
+    var effectiveHearts: BigUInt = 0
+}
+
+struct Bonus: Equatable {
+    var longerPaysBetter: BigUInt = 0
+    var biggerPaysBetter: BigUInt = 0
+    var bonusHearts: BigUInt = 0
 }

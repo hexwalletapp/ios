@@ -20,7 +20,6 @@ struct k {
     static let GRACE_PERIOD = BigUInt(14)
     static let BIG_PAY_DAY = BigUInt(352)
     static let HEARTS_PER_SATOSHI = BigUInt(1e4)
-    static let HERATS_PER_HEX = BigUInt(1e8)
     static let CLAIMABLE_BTC_ADDR_COUNT = BigUInt(27_997_742)
     static let CLAIMABLE_SATOSHIS_TOTAL = BigUInt(910_087_996_911_001)
     static let ONE_YEAR = BigUInt(365)
@@ -31,6 +30,19 @@ struct k {
         Gradient.Stop(color: Color(.systemGroupedBackground.withAlphaComponent(0)), location: 1.0),
     ]
 
+    // Bigger Pays Better
+    static let BPB_BONUS_PERCENT = BigUInt(10)
+    static let HEARTS_PER_HEX = BigUInt(1e8)
+    static let BPB_MAX_HEX = 150 * BigUInt(1e6)
+    static let BPB_MAX_HEARTS = BPB_MAX_HEX * HEARTS_PER_HEX
+    static let BPB = BPB_MAX_HEARTS * 100 / BPB_BONUS_PERCENT
+    
+    // Longer Pays Better
+    static let LPB_BONUS_PERCENT = BigUInt(20)
+    static let LPB_BONUS_MAX_PERCENT = BigUInt(200)
+    static let LPB = 364 * 100 / LPB_BONUS_PERCENT
+    static let LPB_MAX_DAYS = LPB * LPB_BONUS_MAX_PERCENT / 100
+    
     static func chartOptions() -> ChartOptions {
         ChartOptions(
             layout: LayoutOptions(backgroundColor: ChartColor(.systemGroupedBackground),
