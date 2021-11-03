@@ -36,13 +36,13 @@ struct k {
     static let BPB_MAX_HEX = 150 * BigUInt(1e6)
     static let BPB_MAX_HEARTS = BPB_MAX_HEX * HEARTS_PER_HEX
     static let BPB = BPB_MAX_HEARTS * 100 / BPB_BONUS_PERCENT
-    
+
     // Longer Pays Better
     static let LPB_BONUS_PERCENT = BigUInt(20)
     static let LPB_BONUS_MAX_PERCENT = BigUInt(200)
     static let LPB = 364 * 100 / LPB_BONUS_PERCENT
     static let LPB_MAX_DAYS = LPB * LPB_BONUS_MAX_PERCENT / 100
-    
+
     static func chartOptions() -> ChartOptions {
         ChartOptions(
             layout: LayoutOptions(backgroundColor: ChartColor(.systemGroupedBackground),

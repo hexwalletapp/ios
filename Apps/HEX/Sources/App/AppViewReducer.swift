@@ -193,53 +193,57 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
          .binding(\.$calculator.ladderDistribution):
 
         guard let stakeHEX = state.calculator.stakeAmount,
-            let totalStakeDays = state.calculator.stakeDays,
-                let stakeAmount = state.calculator.stakeAmount else { return .none }
+              let totalStakeDays = state.calculator.stakeDays,
+              let stakeAmount = state.calculator.stakeAmount else { return .none }
 
         let stakeDays = BigUInt(totalStakeDays) / BigUInt(state.calculator.ladderSteps)
         let stakeHearts = BigUInt(stakeHEX) * k.HEARTS_PER_HEX / BigUInt(state.calculator.ladderSteps)
         let percentage = Double(1) / Double(state.calculator.ladderSteps)
         let percentageAmount = Double(stakeAmount) * percentage
-        
-        
+
         (0 ..< state.calculator.ladderSteps).forEach { index in
 
             let stakeDaysForRung = stakeDays * BigUInt(index + 1)
             var cappedExtraDays: BigUInt = 0
 
-            
-            if (stakeDaysForRung > 1) {
+            if stakeDaysForRung > 1 {
                 switch stakeDaysForRung <= k.LPB_MAX_DAYS {
                 case true: cappedExtraDays = stakeDaysForRung - BigUInt(1)
                 case false: cappedExtraDays = k.LPB_MAX_DAYS
                 }
             }
-            
+
             let cappedStakedHearts: BigUInt
             switch stakeHearts <= k.BPB_MAX_HEARTS {
             case true: cappedStakedHearts = stakeHearts
             case false: cappedStakedHearts = k.BPB_MAX_HEARTS
             }
-            
+
             let longerPaysBetter = cappedExtraDays * k.BPB
             let biggerPaysBetter = cappedStakedHearts * k.LPB
-            
 
             var bonusHearts = longerPaysBetter + biggerPaysBetter
             bonusHearts = stakeHearts * bonusHearts / (k.LPB * k.BPB)
-            
+
             let bonus = Bonus(longerPaysBetter: stakeHearts * longerPaysBetter / (k.LPB * k.BPB),
                               biggerPaysBetter: stakeHearts * biggerPaysBetter / (k.LPB * k.BPB),
                               bonusHearts: bonusHearts)
-            
-            
+
+            let effectiveHearts = stakeHearts + bonusHearts
+
             let interval = Double(stakeDaysForRung) * 86400
-            
+
+            print(effectiveHearts)
+            print(state.globalInfo.shareRate)
+
+            let s = effectiveHearts / state.globalInfo.shareRate
+
             state.calculator.ladderRungs[index].date = Date().advanced(by: interval)
             state.calculator.ladderRungs[index].stakePercentage = percentage
             state.calculator.ladderRungs[index].hearts = BigUInt(percentageAmount) * k.HEARTS_PER_HEX
             state.calculator.ladderRungs[index].bonus = bonus
-            state.calculator.ladderRungs[index].effectiveHearts = stakeHearts + bonusHearts
+            state.calculator.ladderRungs[index].effectiveHearts = effectiveHearts
+            state.calculator.ladderRungs[index].shares = s
         }
 
         return .none

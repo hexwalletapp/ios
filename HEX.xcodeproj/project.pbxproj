@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -310,15 +310,6 @@
 				0274987511660F32ADBD8FAF /* SupportingFiles */,
 			);
 			path = HEX;
-			sourceTree = "<group>";
-		};
-		"TEMP_81E32226-CD90-480B-9112-D5198B5AC3B5" /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				230728B8D69D958751745D31 /* index.html */,
-				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
