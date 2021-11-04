@@ -97,7 +97,7 @@ struct AccountsView: View {
             case false:
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
                     ForEach(viewStore.accountsData) { accountData in
-                        StakeCardView(price: viewStore.price,
+                        StakeCardView(price: viewStore.price.doubleValue,
                                       accountData: accountData)
                             .padding([.horizontal, .top])
                             .padding(.bottom, k.CARD_PADDING_BOTTOM)

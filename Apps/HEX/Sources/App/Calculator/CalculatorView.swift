@@ -19,11 +19,8 @@ struct CalculatorView: View {
     let step = 1
     let range = 1 ... 15
     @FocusState private var focusedField: Field?
-    let twoColumnGrid = [GridItem(.fixed(80), spacing: k.GRID_SPACING, alignment: .leading),
-                         GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing)]
-    let threeColumnGrid = [GridItem(.fixed(80), spacing: k.GRID_SPACING, alignment: .leading),
-                           GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing),
-                           GridItem(.fixed(100), spacing: k.GRID_SPACING, alignment: .trailing)]
+
+
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -132,13 +129,9 @@ struct CalculatorView: View {
     //                    }
     //                    .font(.caption.monospaced())
 
-                        calculatorSharesRow(title: "sʜᴀʀᴇs", shares: rung.shares.wrappedValue)
-
-                        
-                        
-                        calculatorHeader
+                        DataRowShareView(title: "sʜᴀʀᴇs", shares: rung.shares.wrappedValue)
+                        DataHeaderView()
                         bonuses(rung: rung)
-                        effective(rung: rung)
                     }
                     .padding([.vertical], 12)
                 } header: {
@@ -149,66 +142,33 @@ struct CalculatorView: View {
                     }
                     }
                 }
-                
-                
-
             }
         }
     }
 
     func bonuses(rung: Binding<Rung>) -> some View {
-        VStack {
-            Divider()
-            calculatorRow(title: "ᴘʀɪɴᴄɪᴘᴀʟ", units: rung.hearts.wrappedValue)
-            Divider()
-            calculatorRow(title: "ʟᴏɴɢᴇʀ", units: rung.bonus.longerPaysBetter.wrappedValue)
-            calculatorRow(title: "ʙɪɢɢᴇʀ", units: rung.bonus.biggerPaysBetter.wrappedValue)
-            calculatorRow(title: "ᴛᴏᴛᴀʟ", units: rung.bonus.bonusHearts.wrappedValue)
-        }
-    }
-
-    func effective(rung: Binding<Rung>) -> some View {
-        VStack {
-            Divider()
-            calculatorRow(title: "ᴇғғᴇᴄᴛɪᴠᴇ", units: rung.effectiveHearts.wrappedValue)
-        }
-    }
-
-    func calculatorSharesRow(title: String, shares: BigUInt) -> some View {
-        WithViewStore(store) { _ in
-            LazyVGrid(columns: twoColumnGrid, spacing: k.GRID_SPACING) {
-                Text(title)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                Text(shares.number.shareString)
-                    .font(.caption)
-            }
-        }
-    }
-
-    func calculatorRow(title: String, units: BigUInt) -> some View {
         WithViewStore(store) { viewStore in
-            LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
-                Text(title)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                Text(units
-                    .hexAt(price: viewStore.calculator.price ?? 0.0)
-                    .currencyWholeString)
-                                    .font(.caption.monospaced())
-                Text(units.hex.hexString)
-                    .font(.caption.monospaced())
+            switch viewStore.calculator.price {
+            case let .some(price):
+                VStack {
+                        Divider()
+                        DataRowHexView(title: "ᴘʀɪɴᴄɪᴘᴀʟ", units: rung.hearts.wrappedValue, price: price)
+                        Divider()
+                        DataRowHexView(title: "ʟᴏɴɢᴇʀ", units: rung.bonus.longerPaysBetter.wrappedValue, price: price)
+                        DataRowHexView(title: "ʙɪɢɢᴇʀ", units: rung.bonus.biggerPaysBetter.wrappedValue, price: price)
+                        DataRowHexView(title: "ᴛᴏᴛᴀʟ", units: rung.bonus.bonusHearts.wrappedValue, price: price)
+                        Divider()
+                        DataRowHexView(title: "ᴇғғᴇᴄᴛɪᴠᴇ", units: rung.effectiveHearts.wrappedValue, price: price)
+                }
+            case .none:
+                EmptyView()
             }
         }
     }
 
-    var calculatorHeader: some View {
-        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
-            Text("")
-            Text("ᴜsᴅ").foregroundColor(.secondary)
-            Text("ʜᴇx").foregroundColor(.secondary)
-        }
-    }
+
+
+
 }
 
 // struct CalculatorView_Previews: PreviewProvider {

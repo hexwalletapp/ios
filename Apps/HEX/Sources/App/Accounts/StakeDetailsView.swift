@@ -10,10 +10,6 @@ struct StakeDetailsView: View {
     let stake: Stake
     let account: Account
 
-    let threeColumnGrid = [GridItem(.fixed(80), spacing: k.GRID_SPACING, alignment: .leading),
-                           GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing),
-                           GridItem(.fixed(100), spacing: k.GRID_SPACING, alignment: .trailing)]
-
     var body: some View {
         ScrollView {
             GroupBox {
@@ -83,63 +79,28 @@ struct StakeDetailsView: View {
 
     var earningsView: some View {
         VStack {
-            earningsHeader
+            DataHeaderView()
             VStack {
                 Divider()
-                girdRow(title: "ᴘʀɪɴᴄɪᴘᴀʟ", units: stake.stakedHearts)
-                girdRow(title: "ɪɴᴛᴇʀᴇsᴛ", units: stake.interestHearts)
+                DataRowHexView(title: "ᴘʀɪɴᴄɪᴘᴀʟ", units: stake.stakedHearts, price: price)
+                DataRowHexView(title: "ɪɴᴛᴇʀᴇsᴛ", units: stake.interestHearts, price: price)
                 if let bigPayDayHearts = stake.bigPayDayHearts {
-                    girdRow(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: bigPayDayHearts)
+                    DataRowHexView(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: bigPayDayHearts, price: price)
                 }
             }
             VStack {
                 Divider()
-                girdRow(title: "ᴛᴏᴛᴀʟ", units: stake.balanceHearts)
+                DataRowHexView(title: "ᴛᴏᴛᴀʟ", units: stake.balanceHearts, price: price)
             }
 //            VStack {
 //                Divider()
-//                girdRow(title: "ᴘᴇɴᴀʟᴛʏ", units: stake.penaltyHearts).foregroundColor(.red)
+//              DataRowHexView(title: "ᴘᴇɴᴀʟᴛʏ", units: stake.penaltyHearts, price: price).foregroundColor(.red)
 //            }
             VStack {
                 Divider()
-                gridRow(title: "ʀᴏɪ", hex: stake.roiPercent, usd: stake.roiPercent(price: price))
-                gridRow(title: "ᴀᴘʏ", hex: stake.apyPercent, usd: stake.apyPercent(price: price))
+                DataRowPercentView(title: "ʀᴏɪ", hex: stake.roiPercent, usd: stake.roiPercent(price: price))
+                DataRowPercentView(title: "ᴀᴘʏ", hex: stake.apyPercent, usd: stake.apyPercent(price: price))
             }
-        }
-    }
-
-    var earningsHeader: some View {
-        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
-            Text("")
-            Text("ᴜsᴅ").foregroundColor(.secondary)
-            Text("ʜᴇx").foregroundColor(.secondary)
-        }
-    }
-
-    func girdRow(title: String, units: BigUInt) -> some View {
-        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
-            Text(title)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            Text(units
-                .hexAt(price: price)
-                .currencyWholeString)
-                            .font(.caption.monospaced())
-            Text(units.hex.hexString)
-                .font(.caption.monospaced())
-        }
-    }
-
-    func gridRow(title: String, hex: Double, usd: Double) -> some View {
-        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
-            Text(title)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-
-            Text(NSNumber(value: hex).percentageFractionString)
-                .font(.caption.monospaced())
-            Text(NSNumber(value: usd).percentageFractionString)
-                .font(.caption.monospaced())
         }
     }
 

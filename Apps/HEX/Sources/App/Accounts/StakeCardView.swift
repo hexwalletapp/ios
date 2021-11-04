@@ -8,12 +8,9 @@ import SwiftUI
 import SwiftUIVisualEffects
 
 struct StakeCardView: View {
-    let price: NSNumber
+    let price: Double
     let accountData: AccountData
 
-    let threeColumnGrid = [GridItem(.fixed(80), spacing: k.GRID_SPACING, alignment: .leading),
-                           GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing),
-                           GridItem(.fixed(100), spacing: k.GRID_SPACING, alignment: .trailing)]
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
     private let MAGNETIC_STRIPE_PADDING = CGFloat(24)
     @State private var cardRotation = 0.0
@@ -80,13 +77,15 @@ struct StakeCardView: View {
                 .offset(y: MAGNETIC_STRIPE_PADDING)
 
             VStack(alignment: .leading) {
-                backHeader
-                girdRow(title: "ʟɪᴏ̨ᴜɪᴅ", units: accountData.balanceHearts)
-                girdRow(title: "sᴛᴀᴋᴇᴅ", units: accountData.total.stakedHearts)
-                girdRow(title: "ɪɴᴛᴇʀᴇsᴛ", units: accountData.total.interestHearts)
+                DataHeaderView()
+                DataRowHexView(title: "ʟɪᴏ̨ᴜɪᴅ", units: accountData.balanceHearts, price: price)
+                DataRowHexView(title: "sᴛᴀᴋᴇᴅ", units: accountData.total.stakedHearts, price: price)
+                DataRowHexView(title: "ɪɴᴛᴇʀᴇsᴛ", units: accountData.total.interestHearts, price: price)
+
                 if !accountData.total.bigPayDayHearts.isZero {
-                    girdRow(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: accountData.total.bigPayDayHearts)
+                    DataRowHexView(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: accountData.total.bigPayDayHearts, price: price)
                 }
+                
                 Spacer()
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading) {
@@ -112,7 +111,7 @@ struct StakeCardView: View {
 
     func frontTotal(title: String, hearts: BigUInt, alignment: HorizontalAlignment) -> some View {
         VStack(alignment: alignment) {
-            Text(hearts.hexAt(price: price.doubleValue).currencyString)
+            Text(hearts.hexAt(price: price).currencyString)
             description(text: title)
         }
     }
@@ -137,26 +136,6 @@ struct StakeCardView: View {
             .font(.subheadline)
             .vibrancyEffect()
             .vibrancyEffectStyle(.fill)
-    }
-
-    var backHeader: some View {
-        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
-            Text("")
-            description(text: "ᴜsᴅ")
-            description(text: "ʜᴇx")
-        }
-    }
-
-    func girdRow(title: String, units: BigUInt) -> some View {
-        LazyVGrid(columns: threeColumnGrid, spacing: k.GRID_SPACING) {
-            description(text: title)
-            Text(units
-                .hexAt(price: price.doubleValue)
-                .currencyWholeString)
-                            .font(.caption.monospaced())
-            Text(units.hex.hexString)
-                .font(.caption.monospaced())
-        }
     }
 
     func flipCard() {
