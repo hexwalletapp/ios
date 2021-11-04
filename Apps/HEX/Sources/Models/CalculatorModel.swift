@@ -6,7 +6,7 @@ import ComposableArchitecture
 import Foundation
 
 struct Calculator: Equatable {
-    var stakeAmount: Int? = nil
+    var stakeAmountHex: Int? = nil
     var stakeDays: Int? = nil
     var price: Double? = nil
     var showLadder: Bool = false
@@ -27,9 +27,16 @@ struct Calculator: Equatable {
     var ladderRungs: [Rung] = [Rung(id: 0, date: Date())]
 
     var disableForm: Bool {
-        stakeAmount?.words.isEmpty == nil ||
+        stakeAmountHex?.words.isEmpty == nil ||
             stakeDays?.words.isEmpty == nil ||
             price?.description.isEmpty == nil
+    }
+    
+    var stakeAmountHearts: BigUInt {
+        switch stakeAmountHex {
+        case let .some(amount): return BigUInt(amount) * k.HEARTS_PER_HEX
+        case .none: return 0
+        }
     }
 }
 

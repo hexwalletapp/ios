@@ -27,7 +27,7 @@ struct CalculatorView: View {
             NavigationView {
                 Form {
                     Section {
-                        TextField("Stake Amount", value: viewStore.binding(\.$calculator.stakeAmount).animation(), format: .number)
+                        TextField("HEX Stake Amount", value: viewStore.binding(\.$calculator.stakeAmountHex).animation(), format: .number)
                             .focused($focusedField, equals: .stakeAmount)
                             .keyboardType(.numbersAndPunctuation)
                             .submitLabel(.next)

@@ -40,7 +40,7 @@ struct AppState: Equatable {
     var globalInfo = GlobalInfo()
     var ohlcv = [OHLCVData]()
     var chartLoading = false
-    var averageShareRate: Double = 0.0
+    var averageShareRateHex: BigUInt = 0
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -187,20 +187,17 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         return .none
 
-    case .binding(\.$calculator.stakeAmount),
+    case .binding(\.$calculator.stakeAmountHex),
          .binding(\.$calculator.stakeDays),
          .binding(\.$calculator.price),
          .binding(\.$calculator.ladderSteps),
          .binding(\.$calculator.ladderDistribution):
 
-        guard let stakeHEX = state.calculator.stakeAmount,
-              let totalStakeDays = state.calculator.stakeDays,
-              let stakeAmount = state.calculator.stakeAmount else { return .none }
+        guard let totalStakeDays = state.calculator.stakeDays,
+              let stakeAmount = state.calculator.stakeAmountHex else { return .none }
 
         let stakeDays = BigUInt(totalStakeDays) / BigUInt(state.calculator.ladderSteps)
-        let stakeHearts = BigUInt(stakeHEX) * k.HEARTS_PER_HEX / BigUInt(state.calculator.ladderSteps)
-        let percentage = Double(1) / Double(state.calculator.ladderSteps)
-        let percentageAmount = Double(stakeAmount) * percentage
+        let principalHearts = state.calculator.stakeAmountHearts / BigUInt(state.calculator.ladderSteps)
 
         (0 ..< state.calculator.ladderSteps).forEach { index in
             let stakeDaysForRung = stakeDays * BigUInt(index + 1)
@@ -214,8 +211,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             }
 
             let cappedStakedHearts: BigUInt
-            switch stakeHearts <= k.BPB_MAX_HEARTS {
-            case true: cappedStakedHearts = stakeHearts
+            switch principalHearts <= k.BPB_MAX_HEARTS {
+            case true: cappedStakedHearts = principalHearts
             case false: cappedStakedHearts = k.BPB_MAX_HEARTS
             }
 
@@ -223,28 +220,26 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             let biggerPaysBetter = cappedStakedHearts * k.LPB
 
             var bonusHearts = longerPaysBetter + biggerPaysBetter
-            bonusHearts = stakeHearts * bonusHearts / (k.LPB * k.BPB)
+            bonusHearts = principalHearts * bonusHearts / (k.LPB * k.BPB)
 
-            let bonus = Bonus(longerPaysBetter: stakeHearts * longerPaysBetter / (k.LPB * k.BPB),
-                              biggerPaysBetter: stakeHearts * biggerPaysBetter / (k.LPB * k.BPB),
+            let bonus = Bonus(longerPaysBetter: principalHearts * longerPaysBetter / (k.LPB * k.BPB),
+                              biggerPaysBetter: principalHearts * biggerPaysBetter / (k.LPB * k.BPB),
                               bonusHearts: bonusHearts)
 
-            let effectiveHearts = stakeHearts + bonusHearts
-            let shares = effectiveHearts / state.globalInfo.shareRate
+            let effectiveHearts = principalHearts + bonusHearts
+            let shares = (effectiveHearts * k.SHARE_RATE_SCALE / state.globalInfo.shareRate)
             
-            let final = state.averageShareRate * pow((3.69 / 100 + 1), (Double(stakeDaysForRung) / Double(365)))
             
-            let totalInterest = (Double(stakeDaysForRung) * (state.averageShareRate + final) / 2) * Double(shares)
+            let final = Double(state.averageShareRateHex) * pow((3.69 / 100.0 + 1.0), (Double(stakeDaysForRung) / 365.25))
+            let averageSharePayout = (state.averageShareRateHex + BigUInt(final)) / 2
             
-            let principalHearts = BigUInt(percentageAmount) * k.HEARTS_PER_HEX
-            let interestHearts = Double(stakeHearts) * (totalInterest / (Double(k.HEARTS_PER_HEX) * 100))
-            print("boom: \(BigUInt(interestHearts))")
+            let interestHearts = shares * stakeDaysForRung * averageSharePayout / k.HEARTS_PER_HEX
 
             let interval = Double(stakeDaysForRung) * 86400
             state.calculator.ladderRungs[index].date = Date().advanced(by: interval)
-            state.calculator.ladderRungs[index].stakePercentage = percentage
+            state.calculator.ladderRungs[index].stakePercentage = 1.0 / Double(state.calculator.ladderSteps)
             state.calculator.ladderRungs[index].principalHearts = principalHearts
-            state.calculator.ladderRungs[index].interestHearts = BigUInt(interestHearts)
+            state.calculator.ladderRungs[index].interestHearts = interestHearts
             state.calculator.ladderRungs[index].bonus = bonus
             state.calculator.ladderRungs[index].effectiveHearts = effectiveHearts
             state.calculator.ladderRungs[index].shares = shares

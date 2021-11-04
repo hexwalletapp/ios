@@ -42,6 +42,8 @@ struct k {
     static let LPB_BONUS_MAX_PERCENT = BigUInt(200)
     static let LPB = 364 * 100 / LPB_BONUS_PERCENT
     static let LPB_MAX_DAYS = LPB * LPB_BONUS_MAX_PERCENT / 100
+    
+    static let SHARE_RATE_SCALE = BigUInt(1e5)
 
     static func chartOptions() -> ChartOptions {
         ChartOptions(
