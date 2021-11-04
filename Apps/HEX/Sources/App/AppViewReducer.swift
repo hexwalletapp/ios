@@ -194,7 +194,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
          .binding(\.$calculator.ladderDistribution):
 
         guard let totalStakeDays = state.calculator.stakeDays,
-              let stakeAmount = state.calculator.stakeAmountHex else { return .none }
+              let stakeAmount = state.calculator.stakeAmountHex,
+              state.calculator.stakeDaysValid else { return .none }
 
         let stakeDays = BigUInt(totalStakeDays) / BigUInt(state.calculator.ladderSteps)
         let principalHearts = state.calculator.stakeAmountHearts / BigUInt(state.calculator.ladderSteps)

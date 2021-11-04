@@ -26,6 +26,13 @@ struct Calculator: Equatable {
     var ladderStartDateOffset = Date()
     var ladderRungs: [Rung] = [Rung(id: 0, date: Date())]
 
+    var stakeDaysValid: Bool {
+        switch stakeDays {
+        case let .some(days): return 1...5555 ~= days
+        case .none: return false
+        }
+    }
+    
     var disableForm: Bool {
         stakeAmountHex?.words.isEmpty == nil ||
             stakeDays?.words.isEmpty == nil ||

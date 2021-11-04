@@ -20,25 +20,33 @@ struct CalculatorView: View {
     let range = 1 ... 15
     @FocusState private var focusedField: Field?
     
-    
-    
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 Form {
                     Section {
-                        TextField("HEX Stake Amount", value: viewStore.binding(\.$calculator.stakeAmountHex).animation(), format: .number)
-                            .focused($focusedField, equals: .stakeAmount)
-                            .keyboardType(.numbersAndPunctuation)
-                            .submitLabel(.next)
-                        TextField("Days", value: viewStore.binding(\.$calculator.stakeDays).animation(), format: .number)
-                            .focused($focusedField, equals: .stakeDays)
-                            .keyboardType(.numbersAndPunctuation)
-                            .submitLabel(.next)
-                        TextField("Price Prediction", value: viewStore.binding(\.$calculator.price).animation(), format: .number)
-                            .focused($focusedField, equals: .price)
-                            .keyboardType(.numbersAndPunctuation)
-                            .submitLabel(.done)
+                        HStack {
+                            Image("hex-logo.SFSymbol").frame(width: k.FORM_ICON_WIDTH).foregroundColor(.secondary)
+                            TextField("HEX Stake Amount", value: viewStore.binding(\.$calculator.stakeAmountHex).animation(), format: .number)
+                                .focused($focusedField, equals: .stakeAmount)
+                                .keyboardType(.numbersAndPunctuation)
+                                .submitLabel(.next)
+                        }
+                        HStack {
+                            Image(systemName: "calendar.badge.clock").frame(width: k.FORM_ICON_WIDTH).foregroundColor(.secondary)
+                            TextField("Days", value: viewStore.binding(\.$calculator.stakeDays).animation(), format: .number)
+                                .focused($focusedField, equals: .stakeDays)
+                                .keyboardType(.numbersAndPunctuation)
+                                .submitLabel(.next)
+                                .foregroundColor(viewStore.calculator.stakeDaysValid ? .primary : .red)
+                        }
+                        HStack {
+                            Image(systemName: "dollarsign.square").frame(width: k.FORM_ICON_WIDTH).foregroundColor(.secondary)
+                            TextField("Price Prediction", value: viewStore.binding(\.$calculator.price).animation(), format: .currency(code: "en_US"))
+                                .focused($focusedField, equals: .price)
+                                .keyboardType(.numbersAndPunctuation)
+                                .submitLabel(.done)
+                        }
                     }
                     
                     switch viewStore.calculator.showLadder {
@@ -111,6 +119,7 @@ struct CalculatorView: View {
                             selection: rung.date,
                             displayedComponents: [.date]
                         )
+                            .disabled(true)
 //                        Slider(value: rung.stakePercentage, in: 0 ... 1) {
 //                            Text("Stake Percent")
 //                        } minimumValueLabel: {
