@@ -1,9 +1,5 @@
-//
-//  DataHeaderView.swift
-//  HEX
-//
-//  Created by Joe Blau on 11/3/21.
-//
+// DataHeaderView.swift
+// Copyright (c) 2021 Joe Blau
 
 import SwiftUI
 
@@ -18,9 +14,9 @@ struct DataHeaderView: View {
 }
 
 #if DEBUG
-struct DataHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        DataHeaderView()
+    struct DataHeaderView_Previews: PreviewProvider {
+        static var previews: some View {
+            DataHeaderView()
+        }
     }
-}
 #endif

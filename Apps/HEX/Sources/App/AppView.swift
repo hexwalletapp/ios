@@ -11,7 +11,6 @@ struct AppView: View {
         WithViewStore(store) { viewStore in
             TabView(selection: viewStore.binding(\.$selectedTab)) {
                 ChartsView(store: store)
-//                TradingviewChartView()
                     .tabItem {
                         Image("chart.fill")
                         Text("Chart")

@@ -28,17 +28,17 @@ struct Calculator: Equatable {
 
     var stakeDaysValid: Bool {
         switch stakeDays {
-        case let .some(days): return 1...5555 ~= days
+        case let .some(days): return 1 ... 5555 ~= days
         case .none: return false
         }
     }
-    
+
     var disableForm: Bool {
         stakeAmountHex?.words.isEmpty == nil ||
             stakeDays?.words.isEmpty == nil ||
             price?.description.isEmpty == nil
     }
-    
+
     var stakeAmountHearts: BigUInt {
         switch stakeAmountHex {
         case let .some(amount): return BigUInt(amount) * k.HEARTS_PER_HEX
@@ -59,22 +59,23 @@ struct Rung: Equatable, Identifiable {
     var totalPayoutHearts: BigUInt {
         principalHearts + interestHearts
     }
+
     var roiPercent: Double {
         interestHearts.hex.doubleValue / principalHearts.hex.doubleValue
     }
-    
+
     func roiPercent(price: Double) -> Double {
         interestHearts.hexAt(price: price).doubleValue / principalHearts.hexAt(price: price).doubleValue
     }
-    
+
     var apyPercent: Double {
-        return roiPercent * (Double(k.ONE_YEAR) / Double(stakeDays))
+        roiPercent * (Double(k.ONE_YEAR) / Double(stakeDays))
     }
 
     func apyPercent(price: Double) -> Double {
-        return roiPercent(price: price) * (Double(k.ONE_YEAR) / Double(stakeDays))
+        roiPercent(price: price) * (Double(k.ONE_YEAR) / Double(stakeDays))
     }
-    
+
     var stakeDays: Int {
         Calendar.current.dateComponents([.day], from: Date(), to: date).day ?? 1
     }
@@ -85,10 +86,3 @@ struct Bonus: Equatable {
     var biggerPaysBetter: BigUInt = 0
     var bonusHearts: BigUInt = 0
 }
-
-
-
-
-
-
-

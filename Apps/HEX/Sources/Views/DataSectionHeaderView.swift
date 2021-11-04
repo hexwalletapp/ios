@@ -1,9 +1,5 @@
-//
-//  DataSectionHeaderView.swift
-//  HEX
-//
-//  Created by Joe Blau on 11/3/21.
-//
+// DataSectionHeaderView.swift
+// Copyright (c) 2021 Joe Blau
 
 import SwiftUI
 

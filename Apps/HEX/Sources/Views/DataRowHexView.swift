@@ -1,18 +1,14 @@
-//
-//  DataRowView.swift
-//  HEX
-//
-//  Created by Joe Blau on 11/3/21.
-//
+// DataRowHexView.swift
+// Copyright (c) 2021 Joe Blau
 
-import SwiftUI
 import BigInt
+import SwiftUI
 
 struct DataRowHexView: View {
     var title: String
     var units: BigUInt
     var price: Double
-    
+
     var body: some View {
         LazyVGrid(columns: k.GRID_3, spacing: k.GRID_SPACING) {
             Text(title)
@@ -21,7 +17,7 @@ struct DataRowHexView: View {
             Text(units
                 .hexAt(price: price)
                 .currencyWholeString)
-                                .font(.caption.monospaced())
+                            .font(.caption.monospaced())
             Text(units.hex.hexString)
                 .font(.caption.monospaced())
         }
@@ -29,9 +25,9 @@ struct DataRowHexView: View {
 }
 
 #if DEBUG
-struct DataRowHexView_Previews: PreviewProvider {
-    static var previews: some View {
-        DataRowHexView(title: "Title", units: BigUInt(100), price: 1)
+    struct DataRowHexView_Previews: PreviewProvider {
+        static var previews: some View {
+            DataRowHexView(title: "Title", units: BigUInt(100), price: 1)
+        }
     }
-}
 #endif

@@ -42,7 +42,7 @@ struct k {
     static let LPB_BONUS_MAX_PERCENT = BigUInt(200)
     static let LPB = 364 * 100 / LPB_BONUS_PERCENT
     static let LPB_MAX_DAYS = LPB * LPB_BONUS_MAX_PERCENT / 100
-    
+
     static let SHARE_RATE_SCALE = BigUInt(1e5)
     static let FORM_ICON_WIDTH = CGFloat(20)
 
@@ -90,14 +90,14 @@ struct k {
             lineWidth: .two
         )
     }
-    
+
     static let GRID_3 = [GridItem(.fixed(80), spacing: k.GRID_SPACING, alignment: .leading),
-                                        GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing),
-                                        GridItem(.fixed(100), spacing: k.GRID_SPACING, alignment: .trailing)]
-    
+                         GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing),
+                         GridItem(.fixed(100), spacing: k.GRID_SPACING, alignment: .trailing)]
+
     static let GRID_2 = [GridItem(.fixed(80), spacing: k.GRID_SPACING, alignment: .leading),
-                          GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing)]
-    
+                         GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing)]
+
     static let GRID_1 = [GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .leading)]
 }
 

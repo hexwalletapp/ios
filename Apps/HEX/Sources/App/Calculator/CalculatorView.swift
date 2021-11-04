@@ -9,17 +9,17 @@ import UIKit
 
 struct CalculatorView: View {
     let store: Store<AppState, AppAction>
-    
+
     enum Field {
         case stakeAmount
         case stakeDays
         case price
     }
-    
+
     let step = 1
     let range = 1 ... 15
     @FocusState private var focusedField: Field?
-    
+
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
@@ -48,7 +48,7 @@ struct CalculatorView: View {
                                 .submitLabel(.done)
                         }
                     }
-                    
+
                     switch viewStore.calculator.showLadder {
                     case true:
                         Section {
@@ -57,8 +57,8 @@ struct CalculatorView: View {
                                     step: step) {
                                 Text("Stakes: \(viewStore.calculator.ladderSteps)")
                             }
-                                    .disabled(viewStore.calculator.disableForm)
-                            
+                            .disabled(viewStore.calculator.disableForm)
+
 //                            Picker(selection: viewStore.binding(\.$calculator.ladderDistribution)) {
 //                                ForEach(Distribution.allCases) { page in
 //                                    Text(page.description)
@@ -76,11 +76,11 @@ struct CalculatorView: View {
                         } header: {
                             Text("Ladder")
                         }
-                        
+
                     case false:
                         EmptyView()
                     }
-                    
+
                     switch viewStore.calculator.disableForm {
                     case false:
                         ladderRungsView
@@ -108,7 +108,7 @@ struct CalculatorView: View {
             }
         }
     }
-    
+
     var ladderRungsView: some View {
         WithViewStore(store) { viewStore in
             ForEach(viewStore.binding(\.$calculator.ladderRungs)) { rung in
@@ -119,7 +119,7 @@ struct CalculatorView: View {
                             selection: rung.date,
                             displayedComponents: [.date]
                         )
-                            .disabled(true)
+                        .disabled(true)
 //                        Slider(value: rung.stakePercentage, in: 0 ... 1) {
 //                            Text("Stake Percent")
 //                        } minimumValueLabel: {
@@ -129,7 +129,6 @@ struct CalculatorView: View {
 //                        }
 //                        .font(.caption.monospaced())
 //                        .disabled(viewStore.calculator.ladderRungs.count == 1)
-                        
 
                         bonuses(rung: rung.wrappedValue)
                         projected(rung: rung.wrappedValue)
@@ -146,7 +145,7 @@ struct CalculatorView: View {
             }
         }
     }
-    
+
     func bonuses(rung: Rung) -> some View {
         WithViewStore(store) { viewStore in
             switch viewStore.calculator.price {
@@ -168,7 +167,7 @@ struct CalculatorView: View {
             }
         }
     }
-    
+
     func projected(rung: Rung) -> some View {
         WithViewStore(store) { viewStore in
             switch viewStore.calculator.price {
@@ -190,9 +189,6 @@ struct CalculatorView: View {
             }
         }
     }
-    
-    
-    
 }
 
 // struct CalculatorView_Previews: PreviewProvider {

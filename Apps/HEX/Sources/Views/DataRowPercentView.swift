@@ -1,9 +1,5 @@
-//
-//  DataRowPercentView.swift
-//  HEX
-//
-//  Created by Joe Blau on 11/3/21.
-//
+// DataRowPercentView.swift
+// Copyright (c) 2021 Joe Blau
 
 import SwiftUI
 
@@ -26,9 +22,9 @@ struct DataRowPercentView: View {
 }
 
 #if DEBUG
-struct DataRowPercentView_Previews: PreviewProvider {
-    static var previews: some View {
-        DataRowPercentView(title: "Title", hex: 10000, usd: 5.20)
+    struct DataRowPercentView_Previews: PreviewProvider {
+        static var previews: some View {
+            DataRowPercentView(title: "Title", hex: 10000, usd: 5.20)
+        }
     }
-}
 #endif

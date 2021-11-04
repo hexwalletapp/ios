@@ -100,9 +100,9 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
             return DailyData(payout: payout, shares: shares, sats: sats)
         }
-                
+
         let recentDailyData = dailyData.suffix(7)
-        
+
         state.averageShareRateHex = recentDailyData.map { ($0.payout * k.HEARTS_PER_HEX) / $0.shares }.reduce(BigUInt(0), +) / BigUInt(recentDailyData.count)
 
         state.accountsData[id: accountDataKey]?

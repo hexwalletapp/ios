@@ -24,7 +24,7 @@ enum ModalPresent: Identifiable {
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var modalPresent: ModalPresent? = nil
-    @BindableState var selectedTab: Tab = .calculator
+    @BindableState var selectedTab: Tab = .charts
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
     @BindableState var selectedChartType: ChartType = .candlestick
 
@@ -229,11 +229,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 
             let effectiveHearts = principalHearts + bonusHearts
             let shares = (effectiveHearts * k.SHARE_RATE_SCALE / state.globalInfo.shareRate)
-            
-            
-            let final = Double(state.averageShareRateHex) * pow((3.69 / 100.0 + 1.0), (Double(stakeDaysForRung) / 365.25))
+
+            let final = Double(state.averageShareRateHex) * pow(3.69 / 100.0 + 1.0, Double(stakeDaysForRung) / 365.25)
             let averageSharePayout = (state.averageShareRateHex + BigUInt(final)) / 2
-            
+
             let interestHearts = shares * stakeDaysForRung * averageSharePayout / k.HEARTS_PER_HEX
 
             let interval = Double(stakeDaysForRung) * 86400

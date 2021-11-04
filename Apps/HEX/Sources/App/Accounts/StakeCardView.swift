@@ -85,7 +85,7 @@ struct StakeCardView: View {
                 if !accountData.total.bigPayDayHearts.isZero {
                     DataRowHexView(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: accountData.total.bigPayDayHearts, price: price)
                 }
-                
+
                 Spacer()
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading) {
