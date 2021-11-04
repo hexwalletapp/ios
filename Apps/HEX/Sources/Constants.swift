@@ -94,6 +94,8 @@ struct k {
     
     static let GRID_2 = [GridItem(.fixed(80), spacing: k.GRID_SPACING, alignment: .leading),
                           GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing)]
+    
+    static let GRID_1 = [GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .leading)]
 }
 
 struct HexManagerId: Hashable {}

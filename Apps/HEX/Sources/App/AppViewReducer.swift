@@ -40,6 +40,7 @@ struct AppState: Equatable {
     var globalInfo = GlobalInfo()
     var ohlcv = [OHLCVData]()
     var chartLoading = false
+    var averageShareRate: Double = 0.0
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -202,7 +203,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         let percentageAmount = Double(stakeAmount) * percentage
 
         (0 ..< state.calculator.ladderSteps).forEach { index in
-
             let stakeDaysForRung = stakeDays * BigUInt(index + 1)
             var cappedExtraDays: BigUInt = 0
 
@@ -230,20 +230,24 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                               bonusHearts: bonusHearts)
 
             let effectiveHearts = stakeHearts + bonusHearts
+            let shares = effectiveHearts / state.globalInfo.shareRate
+            
+            let final = state.averageShareRate * pow((3.69 / 100 + 1), (Double(stakeDaysForRung) / Double(365)))
+            
+            let totalInterest = (Double(stakeDaysForRung) * (state.averageShareRate + final) / 2) * Double(shares)
+            
+            let principalHearts = BigUInt(percentageAmount) * k.HEARTS_PER_HEX
+            let interestHearts = Double(stakeHearts) * (totalInterest / (Double(k.HEARTS_PER_HEX) * 100))
+            print("boom: \(BigUInt(interestHearts))")
 
             let interval = Double(stakeDaysForRung) * 86400
-
-            print(effectiveHearts)
-            print(state.globalInfo.shareRate)
-
-            let s = effectiveHearts / state.globalInfo.shareRate
-
             state.calculator.ladderRungs[index].date = Date().advanced(by: interval)
             state.calculator.ladderRungs[index].stakePercentage = percentage
-            state.calculator.ladderRungs[index].hearts = BigUInt(percentageAmount) * k.HEARTS_PER_HEX
+            state.calculator.ladderRungs[index].principalHearts = principalHearts
+            state.calculator.ladderRungs[index].interestHearts = BigUInt(interestHearts)
             state.calculator.ladderRungs[index].bonus = bonus
             state.calculator.ladderRungs[index].effectiveHearts = effectiveHearts
-            state.calculator.ladderRungs[index].shares = s
+            state.calculator.ladderRungs[index].shares = shares
         }
 
         return .none
