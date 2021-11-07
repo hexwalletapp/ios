@@ -12,22 +12,22 @@ struct AppView: View {
             TabView(selection: viewStore.binding(\.$selectedTab)) {
                 ChartsView(store: store)
                     .tabItem {
-                        Image("chart.fill")
+                        Image(systemName: "chart.line.uptrend.xyaxis")
                         Text("Chart")
                     }
                     .tag(Tab.charts)
 
                 AccountsView(store: store)
                     .tabItem {
-                        Image("accounts.fill")
+                        Image(systemName: "creditcard.fill")
                         Text("Accounts")
                     }
                     .tag(Tab.accounts)
 
                 CalculatorView(store: store)
                     .tabItem {
-                        Image("calculator.fill")
-                        Text("Calculator")
+                        Image(systemName: "calendar")
+                        Text("Plan")
                     }
                     .tag(Tab.calculator)
             }

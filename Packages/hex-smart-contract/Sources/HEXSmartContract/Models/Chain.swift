@@ -33,4 +33,11 @@ public enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible 
         case .pulse: return "Pulse"
         }
     }
+
+    public var url: URL {
+        switch self {
+        case .ethereum: return URL(string: "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213")!
+        case .pulse: return URL(string: "https://rpc.testnet.pulsechain.com")!
+        }
+    }
 }

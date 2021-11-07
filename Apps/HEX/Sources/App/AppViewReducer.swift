@@ -85,7 +85,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case .none:
             break
         }
-        return environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager)
+        return environment.hexManager.create(id: HexManagerId(), chain: .ethereum).map(AppAction.hexManager)
 
     case .onActive:
         return .merge(

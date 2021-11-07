@@ -15,7 +15,7 @@ public struct HEXSmartContractManager {
         case balance(BigUInt, EthereumAddress, Chain)
     }
 
-    var create: (AnyHashable) -> Effect<Action, Never> = { _ in _unimplemented("create") }
+    var create: (AnyHashable, Chain) -> Effect<Action, Never> = { _, _ in _unimplemented("create") }
 
     var destroy: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("destroy") }
 
@@ -35,8 +35,8 @@ public struct HEXSmartContractManager {
 
     var getBalance: (AnyHashable, String, Chain) -> Effect<Never, Never> = { _, _, _ in _unimplemented("getBalance") }
 
-    public func create(id: AnyHashable) -> Effect<Action, Never> {
-        create(id)
+    public func create(id: AnyHashable, chain: Chain) -> Effect<Action, Never> {
+        create(id, chain)
     }
 
     public func destroy(id: AnyHashable) -> Effect<Never, Never> {

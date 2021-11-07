@@ -13,11 +13,11 @@ public extension HEXSmartContractManager {
     static let live: HEXSmartContractManager = { () -> HEXSmartContractManager in
         var manager = HEXSmartContractManager()
 
-        manager.create = { id in
+        manager.create = { id, chain in
             Effect.run { subscriber in
                 let delegate = HEXSmartContractManagerDelegate(subscriber)
 
-                let client = EthereumClient(url: URL(string: "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213")!)
+                let client = EthereumClient(url: chain.url)
 
                 dependencies[id] = Dependencies(delegate: delegate,
                                                 client: client,
