@@ -96,7 +96,7 @@ struct PlanView: View {
                     }
                 }
                 .background(Color(.systemGroupedBackground))
-                .navigationBarTitle("Calculator", displayMode: .inline)
+                .navigationBarTitle("Plan", displayMode: .inline)
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Toggle(isOn: viewStore.binding(\.$calculator.showLadder).animation()) {

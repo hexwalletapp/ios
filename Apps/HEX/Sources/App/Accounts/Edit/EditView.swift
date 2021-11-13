@@ -60,6 +60,13 @@ struct EditView: View {
                                         EmptyView()
                                     }
                                 }
+                                .swipeActions {
+                                    Button {
+                                        viewStore.send(.copy(accountData.account.address))
+                                    } label: {
+                                        Image(systemName: "doc.on.doc")
+                                    }
+                                }
                             }
                             .onDelete(perform: delete)
                             .onMove(perform: move)

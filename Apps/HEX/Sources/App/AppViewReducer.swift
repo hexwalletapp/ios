@@ -58,6 +58,7 @@ enum AppAction: BindableAction, Equatable {
     case updateHexPrice(Result<HEXPrice, NSError>)
     case updateChart(Result<[OHLCVData], NSError>)
     case binding(BindingAction<AppState>)
+    case copy(String)
 }
 
 struct AppEnvironment {
@@ -154,6 +155,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         state.modalPresent = nil
         return .none
 
+    case let .copy(address):
+        UIPasteboard.general.string = address
+        return .none
+        
     case .binding(\.$selectedTimeScale),
          .binding(\.$selectedChartType):
         return Effect(value: .getChart)
