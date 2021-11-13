@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -50,6 +50,7 @@
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
+		ED39B3B4273F474D00A36597 /* FloatingGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED39B3B3273F474D00A36597 /* FloatingGroupBoxStyle.swift */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F1EC1CC4AA4B71573C662D42 /* DistributionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40072E4B023C31237AA7D7A2 /* DistributionModel.swift */; };
@@ -107,6 +108,7 @@
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		E06E04F90AF5769D9F8F84FF /* DataRowPercentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRowPercentView.swift; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		ED39B3B3273F474D00A36597 /* FloatingGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingGroupBoxStyle.swift; sourceTree = "<group>"; };
 		F0738425D18A2BAF07C68CAC /* hex-rest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hex-rest"; path = "Packages/hex-rest"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -225,6 +227,7 @@
 			children = (
 				B111C6AD69FEB6A0AC0F16DC /* HEXNumberTextStyle.swift */,
 				2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */,
+				ED39B3B3273F474D00A36597 /* FloatingGroupBoxStyle.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -324,14 +327,6 @@
 				0274987511660F32ADBD8FAF /* SupportingFiles */,
 			);
 			path = HEX;
-			sourceTree = "<group>";
-		};
-		"TEMP_2582AFC5-0A3E-43C1-ACA0-F49CFAE0EB9A" /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -456,6 +451,7 @@
 				C6DAE61AE40346FBAC8B7C3D /* StakeStatusModel.swift in Sources */,
 				3920D3217BD4AD7C4F21AEE9 /* StakeTotalModel.swift in Sources */,
 				0113F604E3C5650F1E1AC039 /* TimeScale+Extensions.swift in Sources */,
+				ED39B3B4273F474D00A36597 /* FloatingGroupBoxStyle.swift in Sources */,
 				18BBCBEE60339DE88779C959 /* TimeScaleModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -31,8 +31,10 @@ struct StakeDetailsView: View {
                     .foregroundColor(.secondary)
                 }
             }
+            .groupBoxStyle(FloatingGroupBoxStyle())
             .padding()
         }
+        .background(Color(.systemGroupedBackground))
         .navigationTitle(stake.endDate.mediumDateString)
     }
 
@@ -42,7 +44,7 @@ struct StakeDetailsView: View {
                 PercentageRingView(
                     ringWidth: 16,
                     percent: stake.percentComplete * 100,
-                    backgroundColor: .clear,
+                    backgroundColor: account.chain.gradient.first?.opacity(0.15) ?? .clear,
                     foregroundColors: account.chain.gradient
                 )
                 VStack {
