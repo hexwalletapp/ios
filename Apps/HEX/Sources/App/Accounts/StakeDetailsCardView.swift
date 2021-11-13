@@ -16,7 +16,7 @@ struct StakeDetailsCardView: View {
                     PercentageRingView(
                         ringWidth: 8, percent: stake.percentComplete * 100,
                         backgroundColor: account.chain.gradient.first?.opacity(0.15) ?? .clear,
-                        foregroundColors: [account.chain.gradient.first ?? .clear, account.chain.gradient.last ?? .clear]
+                        foregroundColors: account.chain.gradient
                     )
                     .frame(width: 56, height: 56)
                     Text(NSNumber(value: stake.percentComplete).percentageString)

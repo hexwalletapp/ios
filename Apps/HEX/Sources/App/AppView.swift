@@ -24,7 +24,7 @@ struct AppView: View {
                     }
                     .tag(Tab.accounts)
 
-                CalculatorView(store: store)
+                PlanView(store: store)
                     .tabItem {
                         Image(systemName: "calendar")
                         Text("Plan")
@@ -36,7 +36,6 @@ struct AppView: View {
                 case .edit: EditView(store: store)
                 case .speculate: SpeculateView(store: store,
                                                price: viewStore.speculativePrice.doubleValue)
-                case .calculator: CalculatorView(store: store)
                 }
             })
         }

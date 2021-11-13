@@ -1,4 +1,4 @@
-// CalculatorView.swift
+// PlanView.swift
 // Copyright (c) 2021 Joe Blau
 
 import BigInt
@@ -7,7 +7,7 @@ import simd
 import SwiftUI
 import UIKit
 
-struct CalculatorView: View {
+struct PlanView: View {
     let store: Store<AppState, AppAction>
 
     enum Field {
@@ -191,8 +191,8 @@ struct CalculatorView: View {
     }
 }
 
-// struct CalculatorView_Previews: PreviewProvider {
+// struct PlanView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        CalculatorView()
+//        PlanView()
 //    }
 // }

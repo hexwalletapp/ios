@@ -19,7 +19,9 @@ struct LightweightChartsView: UIViewRepresentable {
     @State var volumeSeries: HistogramSeries? = nil
 
     func makeUIView(context _: Context) -> LightweightCharts {
-        LightweightCharts(options: k.chartOptions())
+        let chart = LightweightCharts(options: k.chartOptions())
+        chart.translatesAutoresizingMaskIntoConstraints = false
+        return chart
     }
 
     func updateUIView(_ chart: LightweightCharts, context _: Context) {

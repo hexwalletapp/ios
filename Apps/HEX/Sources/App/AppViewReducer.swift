@@ -18,7 +18,7 @@ enum Tab {
 enum ModalPresent: Identifiable {
     var id: Self { self }
 
-    case edit, speculate, calculator
+    case edit, speculate
 }
 
 struct AppState: Equatable {
