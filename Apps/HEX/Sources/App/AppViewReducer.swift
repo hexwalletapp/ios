@@ -59,6 +59,7 @@ enum AppAction: BindableAction, Equatable {
     case updateChart(Result<[OHLCVData], NSError>)
     case binding(BindingAction<AppState>)
     case copy(String)
+    case delete(AccountData)
 }
 
 struct AppEnvironment {
@@ -158,7 +159,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case let .copy(address):
         UIPasteboard.general.string = address
         return .none
-        
+
+    case let .delete(account):
+        state.accountsData.remove(account)
+        return .none
+
     case .binding(\.$selectedTimeScale),
          .binding(\.$selectedChartType):
         return Effect(value: .getChart)

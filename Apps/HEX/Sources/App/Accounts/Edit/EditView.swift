@@ -64,7 +64,12 @@ struct EditView: View {
                                     Button {
                                         viewStore.send(.copy(accountData.account.address))
                                     } label: {
-                                        Image(systemName: "doc.on.doc")
+                                        Label("Copy", systemImage: "doc.on.doc")
+                                    }
+                                    Button(role: .destructive) {
+                                        viewStore.send(.delete(accountData))
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
                                     }
                                 }
                             }
@@ -125,12 +130,7 @@ struct EditView: View {
         }
     }
 
-    func delete(at offsets: IndexSet) {
-        let viewStore = ViewStore(store)
-        var remainingAccounts = viewStore.accountsData
-        remainingAccounts.remove(atOffsets: offsets)
-        viewStore.send(.binding(.set(\.$accountsData, remainingAccounts)))
-    }
+    func delete(at offsets: IndexSet) {}
 
     func move(indices: IndexSet, newOffset: Int) {
         let viewStore = ViewStore(store)

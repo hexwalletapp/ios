@@ -1,9 +1,5 @@
-//
-//  CustomGroupBoxStyle.swift
-//  HEX
-//
-//  Created by Joe Blau on 11/12/21.
-//
+// FloatingGroupBoxStyle.swift
+// Copyright (c) 2021 Joe Blau
 
 import SwiftUI
 
