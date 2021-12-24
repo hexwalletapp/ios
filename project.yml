@@ -25,7 +25,7 @@ packages:
     from: 1.0.3
   lightweight-charts:
     url: https://github.com/tradingview/LightweightChartsIOS.git
-    from: 3.6.1
+    from: 3.7.0
 
 localPackages:
   - ./Packages/hex-smart-contract/
