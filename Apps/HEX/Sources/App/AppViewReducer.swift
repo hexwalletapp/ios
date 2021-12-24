@@ -10,6 +10,7 @@ import HEXSmartContract
 import IdentifiedCollections
 import LightweightCharts
 import SwiftUI
+import EVMChain
 
 enum Tab {
     case charts, accounts, calculator

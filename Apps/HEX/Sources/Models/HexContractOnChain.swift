@@ -5,6 +5,7 @@ import BigInt
 import Foundation
 import HEXREST
 import HEXSmartContract
+import EVMChain
 
 struct HexContractOnChain: Equatable {
     func data(from chain: Chain) -> OnChainData {

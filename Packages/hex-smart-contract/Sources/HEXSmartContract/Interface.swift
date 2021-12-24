@@ -3,6 +3,7 @@
 
 import BigInt
 import ComposableArchitecture
+import EVMChain
 import Foundation
 import web3
 

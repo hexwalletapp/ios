@@ -29,8 +29,10 @@ packages:
 
 localPackages:
   - ./Packages/hex-smart-contract/
+  - ./Packages/uniswap-smart-contract/
   - ./Packages/hex-rest/
   - ./Packages/bitquery-api/
+  - ./Packages/evm-chain/
 
 targets:
   HEX:
@@ -52,10 +54,14 @@ targets:
     dependencies:
       - package: hex-smart-contract
         product: HEXSmartContract
+      - package: uniswap-smart-contract
+        product: UniswapSmartContract
       - package: hex-rest
         product: HEXREST
       - package: bitquery-api
         product: BitqueryAPI
+      - package: evm-chain
+        product: EVMChain
       - package: lightweight-charts
         product: LightweightCharts
       - package: swift-composable-architecture

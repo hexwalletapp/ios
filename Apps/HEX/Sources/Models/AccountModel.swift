@@ -3,6 +3,7 @@
 
 import HEXSmartContract
 import SwiftUI
+import EVMChain
 
 struct Account: Codable, Hashable, Equatable, Identifiable {
     var id: String { address + chain.description }

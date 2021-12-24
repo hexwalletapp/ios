@@ -4,6 +4,7 @@
 import ComposableArchitecture
 import HEXSmartContract
 import SwiftUI
+import EVMChain
 
 struct EditView: View {
     let store: Store<AppState, AppAction>

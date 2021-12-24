@@ -4,6 +4,7 @@
 import BigInt
 import Combine
 import ComposableArchitecture
+import EVMChain
 import Foundation
 import IdentifiedCollections
 import UIKit
