@@ -101,11 +101,12 @@ struct k {
     static let GRID_1 = [GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .leading)]
 }
 
-struct HexManagerId: Hashable {}
 struct GetPriceThrottleId: Hashable {}
-struct GlobalInfoThrottleId: Hashable {}
-struct GetDayThrottleId: Hashable {}
 struct GetChartId: Hashable {}
 struct GetChartThrottleId: Hashable {}
+
+struct HexManagerId: Hashable {}
+struct GetGlobalInfoThrottleId: Hashable {}
+struct GetDayThrottleId: Hashable {}
 
 var cancellables = Set<AnyCancellable>()

@@ -13,14 +13,16 @@ public extension HEXSmartContractManager {
     static let live: HEXSmartContractManager = { () -> HEXSmartContractManager in
         var manager = HEXSmartContractManager()
 
-        manager.create = { id, chain in
+        manager.create = { id in
             Effect.run { subscriber in
                 let delegate = HEXSmartContractManagerDelegate(subscriber)
 
-                let client = EthereumClient(url: chain.url)
+                let clients = Chain.allCases.reduce(into: [Chain: EthereumClient]()) { dict, chain in
+                    dict[chain.id] = EthereumClient(url: chain.url)
+                }
 
                 dependencies[id] = Dependencies(delegate: delegate,
-                                                client: client,
+                                                clients: clients,
                                                 subscriber: subscriber)
                 return AnyCancellable {
                     dependencies[id] = nil
@@ -43,7 +45,7 @@ public extension HEXSmartContractManager {
         }
 
         manager.getStakeCount = { id, address, chain in
-            guard let client = dependencies[id]?.client else { return .none }
+            guard let client = dependencies[id]?.clients[chain.id] else { return .none }
 
             return .fireAndForget {
                 let stakes = StakeCount_Parameter(stakeAddress: address)
@@ -67,7 +69,7 @@ public extension HEXSmartContractManager {
         }
 
         manager.getStakeList = { id, address, chain, stakeCount in
-            guard let client = dependencies[id]?.client else { return }
+            guard let client = dependencies[id]?.clients[chain.id] else { return }
 
             (0 ..< stakeCount).forEach { stakeIndex in
                 let getStake = StakeLists_Parameter(stakeAddress: address,
@@ -105,8 +107,8 @@ public extension HEXSmartContractManager {
             }
         }
 
-        manager.getDailyDataRange = { id, addresss, chain, begin, end in
-            guard let client = dependencies[id]?.client else { return .none }
+        manager.getDailyDataRange = { id, chain, begin, end in
+            guard let client = dependencies[id]?.clients[chain.id] else { return .none }
 
             return .fireAndForget {
                 let dailyDataRange = DailyDataRange_Parameter(beginDay: BigUInt(begin), endDay: BigUInt(end))
@@ -119,7 +121,7 @@ public extension HEXSmartContractManager {
                         switch response?.list {
                         case let .some(list):
                             DispatchQueue.main.async {
-                                dependencies[id]?.subscriber.send(.dailyData(list, addresss, chain))
+                                dependencies[id]?.subscriber.send(.dailyData(list, chain))
                             }
                         case .none:
                             print("no stakes")
@@ -129,8 +131,8 @@ public extension HEXSmartContractManager {
             }
         }
 
-        manager.getCurrentDay = { id in
-            guard let client = dependencies[id]?.client else { return .none }
+        manager.getCurrentDay = { id, chain in
+            guard let client = dependencies[id]?.clients[chain.id] else { return .none }
 
             return .fireAndForget {
                 let currentDay = CurrentDay()
@@ -143,7 +145,7 @@ public extension HEXSmartContractManager {
                         switch response?.day {
                         case let .some(day):
                             DispatchQueue.main.async {
-                                dependencies[id]?.subscriber.send(.currentDay(day))
+                                dependencies[id]?.subscriber.send(.currentDay(day, chain))
                             }
                         case .none:
                             print("no stakes")
@@ -153,8 +155,8 @@ public extension HEXSmartContractManager {
             }
         }
 
-        manager.getGlobalInfo = { id in
-            guard let client = dependencies[id]?.client else { return .none }
+        manager.getGlobalInfo = { id, chain in
+            guard let client = dependencies[id]?.clients[chain.id] else { return .none }
 
             return .fireAndForget {
                 let globalInfo = GlobalInfo()
@@ -167,7 +169,7 @@ public extension HEXSmartContractManager {
                         switch response {
                         case let .some(globalInfo):
                             DispatchQueue.main.async {
-                                dependencies[id]?.subscriber.send(.globalInfo(globalInfo))
+                                dependencies[id]?.subscriber.send(.globalInfo(globalInfo, chain))
                             }
                         case .none:
                             print("no global info")
@@ -178,7 +180,7 @@ public extension HEXSmartContractManager {
         }
 
         manager.getBalance = { id, address, chain in
-            guard let client = dependencies[id]?.client else { return .none }
+            guard let client = dependencies[id]?.clients[chain.id] else { return .none }
             let ethereumAddress = EthereumAddress(address)
             return .fireAndForget {
                 let erc20 = ERC20(client: client)
@@ -208,7 +210,7 @@ public extension HEXSmartContractManager {
 
 private struct Dependencies {
     let delegate: HEXSmartContractManagerDelegate
-    let client: EthereumClient
+    let clients: [Chain: EthereumClient]
     let subscriber: Effect<HEXSmartContractManager.Action, Never>.Subscriber
     var stakesCache = [String: IdentifiedArrayOf<StakeLists_Parameter.Response>]()
 }

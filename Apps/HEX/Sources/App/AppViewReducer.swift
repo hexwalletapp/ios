@@ -34,13 +34,9 @@ struct AppState: Equatable {
     @BindableState var speculativePrice: NSNumber = 1.00
     @BindableState var calculator = Calculator()
 
-    var hexPrice = HEXPrice()
-    var price: NSNumber = 0.0
-    var currentDay: BigUInt = 0
-    var globalInfo = GlobalInfo()
     var ohlcv = [OHLCVData]()
     var chartLoading = false
-    var averageShareRateHex: BigUInt = 0
+    var hexContractOnChain = HexContractOnChain()
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -53,7 +49,6 @@ enum AppAction: BindableAction, Equatable {
 
     case dismiss
     case getAccounts
-    case getPrice
     case getChart
     case updateHexPrice(Result<HEXPrice, NSError>)
     case updateChart(Result<[OHLCVData], NSError>)
@@ -87,7 +82,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case .none:
             break
         }
-        return environment.hexManager.create(id: HexManagerId(), chain: .ethereum).map(AppAction.hexManager)
+        return environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager)
 
     case .onActive:
         return .merge(
@@ -96,6 +91,14 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .getAccounts:
+        let glboalInfoEffects = Chain.allCases.compactMap { chain -> Effect<AppAction, Never> in
+            environment.hexManager.getGlobalInfo(id: HexManagerId(), chain: chain).fireAndForget()
+        }
+
+        let currentDayEffects = Chain.allCases.compactMap { chain -> Effect<AppAction, Never> in
+            environment.hexManager.getCurrentDay(id: HexManagerId(), chain: chain).fireAndForget()
+        }
+
         return .merge(
             HEXRESTAPI.fetchHexPrice()
                 .receive(on: environment.mainQueue)
@@ -103,30 +106,20 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 .catchToEffect()
                 .map(AppAction.updateHexPrice)
                 .throttle(id: GetPriceThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true),
-            environment.hexManager.getGlobalInfo(id: HexManagerId()).fireAndForget()
-                .throttle(id: GlobalInfoThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true),
-            environment.hexManager.getCurrentDay(id: HexManagerId()).fireAndForget()
-                .throttle(id: GetDayThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true)
+            .merge(glboalInfoEffects),
+            .merge(currentDayEffects)
         )
-
-    case .getPrice:
-        switch state.shouldSpeculate {
-        case true:
-            state.price = state.speculativePrice
-        case false:
-            state.price = NSNumber(value: state.hexPrice.hexUsd)
-        }
-        return .none
 
     case let .updateHexPrice(result):
         switch result {
         case let .success(hexPrice):
-            state.hexPrice = hexPrice
+            state.hexContractOnChain.ethData.hexPrice = hexPrice
+            state.hexContractOnChain.plsData.hexPrice = hexPrice
             state.calculator.price = hexPrice.hexUsd
         case let .failure(error):
             print(error)
         }
-        return Effect(value: .getPrice)
+        return .none
 
     case let .updateChart(result):
         state.chartLoading = false
@@ -162,14 +155,27 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 
     case let .delete(account):
         state.accountsData.remove(account)
-        return .none
+        let accounts = state.accountsData.map { $0.account }
+        do {
+            let encodedAccounts = try environment.encoder.encode(accounts)
+            UserDefaults.standard.setValue(encodedAccounts, forKey: k.ACCOUNTS_KEY)
+            return .none
+        } catch {
+            print(error)
+            return .none
+        }
 
     case .binding(\.$selectedTimeScale),
          .binding(\.$selectedChartType):
         return Effect(value: .getChart)
 
+    case .binding(\.$speculativePrice):
+        state.hexContractOnChain.ethData.speculativePrice = state.speculativePrice
+        state.hexContractOnChain.plsData.speculativePrice = state.speculativePrice
+        return .none
+
     case .binding(\.$shouldSpeculate):
-        return Effect(value: .getPrice)
+        return .none
 
     case .binding(\.$selectedTab):
         switch state.selectedTab {
@@ -207,6 +213,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
               let stakeAmount = state.calculator.stakeAmountHex,
               state.calculator.stakeDaysValid else { return .none }
 
+        let recentDailyData = state.hexContractOnChain.ethData.dailyData.suffix(7)
+
+        let averageShareRateHex = recentDailyData.map { ($0.payout * k.HEARTS_PER_HEX) / $0.shares }.reduce(BigUInt(0), +) / BigUInt(recentDailyData.count)
         let stakeDays = BigUInt(totalStakeDays) / BigUInt(state.calculator.ladderSteps)
         let principalHearts = state.calculator.stakeAmountHearts / BigUInt(state.calculator.ladderSteps)
 
@@ -238,10 +247,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                               bonusHearts: bonusHearts)
 
             let effectiveHearts = principalHearts + bonusHearts
-            let shares = (effectiveHearts * k.SHARE_RATE_SCALE / state.globalInfo.shareRate)
+            let shares = (effectiveHearts * k.SHARE_RATE_SCALE / state.hexContractOnChain.ethData.globalInfo.shareRate)
 
-            let final = Double(state.averageShareRateHex) * pow(3.69 / 100.0 + 1.0, Double(stakeDaysForRung) / 365.25)
-            let averageSharePayout = (state.averageShareRateHex + BigUInt(final)) / 2
+            let final = Double(averageShareRateHex) * pow(3.69 / 100.0 + 1.0, Double(stakeDaysForRung) / 365.25)
+            let averageSharePayout = (averageShareRateHex + BigUInt(final)) / 2
 
             let interestHearts = shares * stakeDaysForRung * averageSharePayout / k.HEARTS_PER_HEX
 
@@ -254,8 +263,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             state.calculator.ladderRungs[index].effectiveHearts = effectiveHearts
             state.calculator.ladderRungs[index].shares = shares
         }
-
         return .none
+
     case .binding, .hexManager, .onBackground, .onInactive:
         return .none
     }

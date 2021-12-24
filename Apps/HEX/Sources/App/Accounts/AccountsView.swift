@@ -55,14 +55,36 @@ struct AccountsView: View {
                     }
 
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        toolbarText(heading: viewStore.currentDay.advanced(by: 1).description, subheading: "Day")
-                        toolbarText(heading: viewStore.price.currencyString + (viewStore.shouldSpeculate ? "*" : ""), subheading: "Price")
+                        switch (viewStore.accountsData.isEmpty, viewStore.accountsData[id: viewStore.selectedId]) {
+                        case (false, let .some(accountData)):
+                            switch accountData.account.chain {
+                            case .ethereum:
+                                let ethData = viewStore.hexContractOnChain.ethData
+                                toolbarText(heading: ethData.currentDay.advanced(by: 1).description, subheading: "Day")
 
-//                        Button {} label: { Image(systemName: "bell.badge") }
-//                            .disabled(true)
-//
-//                        Button {} label: { Image(systemName: "arrow.up.arrow.down") }
-//                            .disabled(true)
+                                switch viewStore.shouldSpeculate {
+                                case true: toolbarText(heading: ethData.speculativePrice.currencyString + "*", subheading: "Price")
+                                case false: toolbarText(heading: ethData.price.currencyString, subheading: "Price")
+                                }
+
+                            case .pulse:
+                                let plsData = viewStore.hexContractOnChain.plsData
+                                toolbarText(heading: plsData.currentDay.advanced(by: 1).description, subheading: "Day")
+
+                                switch viewStore.shouldSpeculate {
+                                case true: toolbarText(heading: plsData.speculativePrice.currencyString + "*", subheading: "Price")
+                                case false: toolbarText(heading: plsData.price.currencyString, subheading: "Price")
+                                }
+                            }
+                            //                        Button {} label: { Image(systemName: "bell.badge") }
+                            //                            .disabled(true)
+                            //
+                            //                        Button {} label: { Image(systemName: "arrow.up.arrow.down") }
+                            //                            .disabled(true)
+
+                        default:
+                            EmptyView()
+                        }
                     }
                 }
             }
@@ -81,9 +103,16 @@ struct AccountsView: View {
             switch (viewStore.accountsData.isEmpty, viewStore.accountsData[id: viewStore.selectedId]) {
             case (false, let .some(accountData)):
                 ForEach(accountData.stakes) { stake in
-                    StakeDetailsCardView(price: viewStore.price,
-                                         stake: stake,
-                                         account: accountData.account)
+                    switch accountData.account.chain {
+                    case .ethereum:
+                        StakeDetailsCardView(price: viewStore.hexContractOnChain.ethData.price,
+                                             stake: stake,
+                                             account: accountData.account)
+                    case .pulse:
+                        StakeDetailsCardView(price: viewStore.hexContractOnChain.plsData.price,
+                                             stake: stake,
+                                             account: accountData.account)
+                    }
                 }
             default:
                 EmptyView()
@@ -97,11 +126,20 @@ struct AccountsView: View {
             case false:
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
                     ForEach(viewStore.accountsData) { accountData in
-                        StakeCardView(price: viewStore.price.doubleValue,
-                                      accountData: accountData)
-                            .padding([.horizontal, .top])
-                            .padding(.bottom, k.CARD_PADDING_BOTTOM)
-                            .tag(accountData.id)
+                        switch accountData.account.chain {
+                        case .ethereum:
+                            StakeCardView(price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : viewStore.hexContractOnChain.ethData.price.doubleValue,
+                                          accountData: accountData)
+                                .padding([.horizontal, .top])
+                                .padding(.bottom, k.CARD_PADDING_BOTTOM)
+                                .tag(accountData.id)
+                        case .pulse:
+                            StakeCardView(price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : viewStore.hexContractOnChain.plsData.price.doubleValue,
+                                          accountData: accountData)
+                                .padding([.horizontal, .top])
+                                .padding(.bottom, k.CARD_PADDING_BOTTOM)
+                                .tag(accountData.id)
+                        }
                     }
                 }
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)

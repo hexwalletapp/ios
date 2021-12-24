@@ -12,7 +12,8 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         let accountDataKey = address.value + chain.description
         var totalStakeShares: BigUInt = 0
         var totalStakedHearts: BigUInt = 0
-        let currentDay = state.currentDay
+        let onChainData = state.hexContractOnChain.data(from: chain)
+        let currentDay = onChainData.currentDay
 
         let stakes = stakeList.sorted(by: {
             let firstStake = [BigUInt($0.lockedDay + $0.stakedDays), $0.stakeId]
@@ -25,8 +26,8 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
                 let servedDays: UInt16
                 switch stake.lockedDay {
-                case let x where x <= state.currentDay:
-                    servedDays = min(UInt16(stake.stakedDays), UInt16(state.currentDay) - UInt16(stake.lockedDay))
+                case let x where x <= currentDay:
+                    servedDays = min(UInt16(stake.stakedDays), UInt16(currentDay) - UInt16(stake.lockedDay))
                 default:
                     servedDays = 0
                 }
@@ -77,19 +78,10 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         state.accountsData[id: accountDataKey]?.stakes = IdentifiedArray(uniqueElements: stakes)
         state.accountsData[id: accountDataKey]?.total.stakeShares = totalStakeShares
         state.accountsData[id: accountDataKey]?.total.stakedHearts = totalStakedHearts
+        state.accountsData[id: accountDataKey]?.globalAccountData(onChainData: onChainData)
+        return .none
 
-        return environment.hexManager
-            .getDailyDataRange(id: HexManagerId(),
-                               address: address,
-                               chain: chain,
-                               begin: 0,
-                               end: UInt16(state.currentDay))
-            .fireAndForget()
-
-    case let .dailyData(dailyDataEncoded, address, chain):
-        let accountDataKey = address.value + chain.description
-        var currentDay = state.currentDay
-
+    case let .dailyData(dailyDataEncoded, chain):
         let dailyData = dailyDataEncoded.map { dailyData -> DailyData in
             var dailyData = dailyData
             let payout = dailyData & k.HEARTS_MASK
@@ -101,130 +93,73 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             return DailyData(payout: payout, shares: shares, sats: sats)
         }
 
-        let recentDailyData = dailyData.suffix(7)
-
-        state.averageShareRateHex = recentDailyData.map { ($0.payout * k.HEARTS_PER_HEX) / $0.shares }.reduce(BigUInt(0), +) / BigUInt(recentDailyData.count)
-
-        state.accountsData[id: accountDataKey]?
-            .stakes
-            .forEach { stake in
-                guard stake.lockedDay <= state.currentDay else { return }
-
-                let startIndex = Int(stake.lockedDay)
-                let endIndex = min(Int(stake.stakeEndDay), Int(state.currentDay))
-                let weekStartIndex = max(endIndex - 7, startIndex)
-                let penaltyEndIndex = Int(stake.lockedDay + stake.penaltyDays)
-                let recentInterestDays = BigUInt(endIndex - weekStartIndex)
-
-                switch stake.servedDays {
-                case 0:
-                    state.accountsData[id: accountDataKey]?
-                        .stakes[id: stake.id]?
-                        .interestHearts = 0
-                case let x where x > stake.penaltyDays:
-                    let penaltyInterest = stake.calculatePayout(globalInfo: state.globalInfo,
-                                                                beginDay: startIndex,
-                                                                endDay: penaltyEndIndex,
-                                                                dailyData: dailyData)
-
-                    let deltaInterest = stake.calculatePayout(globalInfo: state.globalInfo,
-                                                              beginDay: penaltyEndIndex,
-                                                              endDay: endIndex,
-                                                              dailyData: dailyData)
-                    // Peanlty
-                    state.accountsData[id: accountDataKey]?
-                        .stakes[id: stake.id]?
-                        .penaltyHearts = penaltyInterest.payout + deltaInterest.payout
-
-                    // Interest
-                    state.accountsData[id: accountDataKey]?
-                        .stakes[id: stake.id]?
-                        .interestHearts = penaltyInterest.payout + deltaInterest.payout
-
-                    // Big Pay Day
-                    switch (penaltyInterest.bigPayDay, deltaInterest.bigPayDay) {
-                    case let (.some(penalyBigPayDay), .some(deltaBigPayDay)):
-                        state.accountsData[id: accountDataKey]?
-                            .stakes[id: stake.id]?
-                            .bigPayDayHearts = penalyBigPayDay + deltaBigPayDay
-                    case let (.some(penalyBigPayDay), .none):
-                        state.accountsData[id: accountDataKey]?
-                            .stakes[id: stake.id]?
-                            .bigPayDayHearts = penalyBigPayDay
-                    case let (.none, .some(deltaBigPayDay)):
-                        state.accountsData[id: accountDataKey]?
-                            .stakes[id: stake.id]?
-                            .bigPayDayHearts = deltaBigPayDay
-                    case (.none, .none):
-                        break
-                    }
-                default:
-                    let payoutInterest = stake.calculatePayout(globalInfo: state.globalInfo,
-                                                               beginDay: startIndex,
-                                                               endDay: endIndex,
-                                                               dailyData: dailyData)
-                    let penaltyPayout: BigUInt
-                    switch stake.penaltyDays {
-                    case stake.servedDays:
-                        penaltyPayout = payoutInterest.payout
-                    default:
-                        penaltyPayout = payoutInterest.payout * BigUInt(stake.penaltyDays) / BigUInt(stake.servedDays)
-                    }
-
-                    state.accountsData[id: accountDataKey]?
-                        .stakes[id: stake.id]?
-                        .penaltyHearts = penaltyPayout
-
-                    state.accountsData[id: accountDataKey]?
-                        .stakes[id: stake.id]?
-                        .interestHearts = payoutInterest.payout
-
-                    state.accountsData[id: accountDataKey]?
-                        .stakes[id: stake.id]?
-                        .bigPayDayHearts = payoutInterest.bigPayDay
-                }
-
-                // Seven Day Interest
-                if !recentInterestDays.isZero {
-                    let sevenDayInterest = stake.calculatePayout(globalInfo: state.globalInfo,
-                                                                 beginDay: weekStartIndex,
-                                                                 endDay: endIndex,
-                                                                 dailyData: dailyData)
-                    state.accountsData[id: accountDataKey]?
-                        .stakes[id: stake.id]?
-                        .interestSevenDayHearts = sevenDayInterest.payout / recentInterestDays
-                }
-            }
-
-        let stakes = state.accountsData[id: accountDataKey]?.stakes
-
-        let totalInterestHearts = stakes?.reduce(0) { $0 + $1.interestHearts } ?? 0
-        var totalInterestSevenDayHearts = stakes?.reduce(0) { $0 + $1.interestSevenDayHearts } ?? 0
-        let bigPayDayTotalHearts = stakes?.compactMap { $0.bigPayDayHearts }.reduce(0) { $0 + $1 }
-
-        state.accountsData[id: accountDataKey]?.total.interestHearts = totalInterestHearts
-        state.accountsData[id: accountDataKey]?.total.interestSevenDayHearts = totalInterestSevenDayHearts
-        bigPayDayTotalHearts.map { state.accountsData[id: accountDataKey]?.total.bigPayDayHearts = $0 }
-
+        switch chain {
+        case .ethereum: state.hexContractOnChain.ethData.dailyData = dailyData
+        case .pulse: state.hexContractOnChain.plsData.dailyData = dailyData
+        }
         return .none
 
-    case let .currentDay(day):
-        state.currentDay = day
-        return .merge(
-            state.accountsData.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never>? in
-                .merge(
-                    environment.hexManager.getStakes(id: HexManagerId(),
-                                                     address: accountData.account.address,
-                                                     chain: accountData.account.chain).fireAndForget(),
-                    environment.hexManager.getBalance(id: HexManagerId(),
-                                                      address: accountData.account.address,
-                                                      chain: accountData.account.chain).fireAndForget()
-                )
-            }
-        )
+    case let .currentDay(day, chain):
+        switch chain {
+        case .ethereum:
+            let ethereumAccounts = state.accountsData
+                .filter { $0.account.chain == .ethereum }
 
-    case let .globalInfo(globalInfo):
-        state.globalInfo = GlobalInfo(globalInfo: globalInfo)
+            let stakeEffects = ethereumAccounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
+                environment.hexManager.getStakes(id: HexManagerId(),
+                                                 address: accountData.account.address,
+                                                 chain: accountData.account.chain).fireAndForget()
+            }
+            let balanceEffects = ethereumAccounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
+                environment.hexManager.getBalance(id: HexManagerId(),
+                                                  address: accountData.account.address,
+                                                  chain: accountData.account.chain).fireAndForget()
+            }
+            state.hexContractOnChain.ethData.currentDay = day
+            return .merge(
+                environment.hexManager.getDailyDataRange(id: HexManagerId(),
+                                                         chain: chain,
+                                                         begin: 0,
+                                                         end: UInt16(day))
+                    .fireAndForget(),
+                .merge(stakeEffects),
+                .merge(balanceEffects)
+            )
+        case .pulse:
+            let pulseAccounts = state.accountsData
+                .filter { $0.account.chain == .pulse }
+
+            let stakeEffects = pulseAccounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
+                environment.hexManager.getStakes(id: HexManagerId(),
+                                                 address: accountData.account.address,
+                                                 chain: accountData.account.chain).fireAndForget()
+            }
+
+            let balanceEffects = pulseAccounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
+                environment.hexManager.getBalance(id: HexManagerId(),
+                                                  address: accountData.account.address,
+                                                  chain: accountData.account.chain).fireAndForget()
+            }
+
+            state.hexContractOnChain.plsData.currentDay = day
+            return .merge(
+                environment.hexManager.getDailyDataRange(id: HexManagerId(),
+                                                         chain: chain,
+                                                         begin: 0,
+                                                         end: UInt16(day))
+                    .fireAndForget(),
+                .merge(stakeEffects),
+                .merge(balanceEffects)
+            )
+        }
+
+    case let .globalInfo(globalInfo, chain):
+        switch chain {
+        case .ethereum:
+            state.hexContractOnChain.ethData.globalInfo = GlobalInfo(globalInfo: globalInfo)
+        case .pulse:
+            state.hexContractOnChain.plsData.globalInfo = GlobalInfo(globalInfo: globalInfo)
+        }
         return .none
 
     case let .balance(balance, address, chain):

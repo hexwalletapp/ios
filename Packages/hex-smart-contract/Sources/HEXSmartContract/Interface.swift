@@ -9,13 +9,13 @@ import web3
 public struct HEXSmartContractManager {
     public enum Action: Equatable {
         case stakeList([StakeLists_Parameter.Response], EthereumAddress, Chain)
-        case dailyData([BigUInt], EthereumAddress, Chain)
-        case currentDay(BigUInt)
-        case globalInfo(GlobalInfo.Response)
+        case dailyData([BigUInt], Chain)
+        case currentDay(BigUInt, Chain)
+        case globalInfo(GlobalInfo.Response, Chain)
         case balance(BigUInt, EthereumAddress, Chain)
     }
 
-    var create: (AnyHashable, Chain) -> Effect<Action, Never> = { _, _ in _unimplemented("create") }
+    var create: (AnyHashable) -> Effect<Action, Never> = { _ in _unimplemented("create") }
 
     var destroy: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("destroy") }
 
@@ -27,16 +27,16 @@ public struct HEXSmartContractManager {
 
     var updateStakeCache: (AnyHashable, EthereumAddress, Chain, StakeLists_Parameter.Response, BigUInt) -> Void = { _, _, _, _, _ in _unimplemented("updateStakeCache") }
 
-    var getDailyDataRange: (AnyHashable, EthereumAddress, Chain, UInt16, UInt16) -> Effect<Never, Never> = { _, _, _, _, _ in _unimplemented("getDailyDataRange") }
+    var getDailyDataRange: (AnyHashable, Chain, UInt16, UInt16) -> Effect<Never, Never> = { _, _, _, _ in _unimplemented("getDailyDataRange") }
 
-    var getCurrentDay: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("getCurrentDay") }
+    var getCurrentDay: (AnyHashable, Chain) -> Effect<Never, Never> = { _, _ in _unimplemented("getCurrentDay") }
 
-    var getGlobalInfo: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("getGlobalInfo") }
+    var getGlobalInfo: (AnyHashable, Chain) -> Effect<Never, Never> = { _, _ in _unimplemented("getGlobalInfo") }
 
     var getBalance: (AnyHashable, String, Chain) -> Effect<Never, Never> = { _, _, _ in _unimplemented("getBalance") }
 
-    public func create(id: AnyHashable, chain: Chain) -> Effect<Action, Never> {
-        create(id, chain)
+    public func create(id: AnyHashable) -> Effect<Action, Never> {
+        create(id)
     }
 
     public func destroy(id: AnyHashable) -> Effect<Never, Never> {
@@ -59,16 +59,16 @@ public struct HEXSmartContractManager {
         updateStakeCache(id, address, chain, stake, stakeCount)
     }
 
-    public func getDailyDataRange(id: AnyHashable, address: EthereumAddress, chain: Chain, begin: UInt16, end: UInt16) -> Effect<Never, Never> {
-        getDailyDataRange(id, address, chain, begin, end)
+    public func getDailyDataRange(id: AnyHashable, chain: Chain, begin: UInt16, end: UInt16) -> Effect<Never, Never> {
+        getDailyDataRange(id, chain, begin, end)
     }
 
-    public func getCurrentDay(id: AnyHashable) -> Effect<Never, Never> {
-        getCurrentDay(id)
+    public func getCurrentDay(id: AnyHashable, chain: Chain) -> Effect<Never, Never> {
+        getCurrentDay(id, chain)
     }
 
-    public func getGlobalInfo(id: AnyHashable) -> Effect<Never, Never> {
-        getGlobalInfo(id)
+    public func getGlobalInfo(id: AnyHashable, chain: Chain) -> Effect<Never, Never> {
+        getGlobalInfo(id, chain)
     }
 
     public func getBalance(id: AnyHashable, address: String, chain: Chain) -> Effect<Never, Never> {

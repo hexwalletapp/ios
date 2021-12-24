@@ -130,7 +130,7 @@ struct EditView: View {
         }
     }
 
-    func delete(at offsets: IndexSet) {}
+    func delete(at _: IndexSet) {}
 
     func move(indices: IndexSet, newOffset: Int) {
         let viewStore = ViewStore(store)
