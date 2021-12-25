@@ -100,58 +100,30 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         return .none
 
     case let .currentDay(day, chain):
-        switch chain {
-        case .ethereum:
-            let ethereumAccounts = state.accountsData
-                .filter { $0.account.chain == .ethereum }
-
-            let stakeEffects = ethereumAccounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
-                environment.hexManager.getStakes(id: HexManagerId(),
-                                                 address: accountData.account.address,
-                                                 chain: accountData.account.chain).fireAndForget()
-            }
-            let balanceEffects = ethereumAccounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
-                environment.hexManager.getBalance(id: HexManagerId(),
-                                                  address: accountData.account.address,
-                                                  chain: accountData.account.chain).fireAndForget()
-            }
-            state.hexContractOnChain.ethData.currentDay = day
-            return .merge(
-                environment.hexManager.getDailyDataRange(id: HexManagerId(),
-                                                         chain: .ethereum,
-                                                         begin: 0,
-                                                         end: UInt16(day))
-                    .fireAndForget(),
-                .merge(stakeEffects),
-                .merge(balanceEffects)
-            )
-        case .pulse:
-            let pulseAccounts = state.accountsData
-                .filter { $0.account.chain == .pulse }
-
-            let stakeEffects = pulseAccounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
-                environment.hexManager.getStakes(id: HexManagerId(),
-                                                 address: accountData.account.address,
-                                                 chain: accountData.account.chain).fireAndForget()
-            }
-
-            let balanceEffects = pulseAccounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
-                environment.hexManager.getBalance(id: HexManagerId(),
-                                                  address: accountData.account.address,
-                                                  chain: accountData.account.chain).fireAndForget()
-            }
-
-            state.hexContractOnChain.plsData.currentDay = day
-            return .merge(
-                environment.hexManager.getDailyDataRange(id: HexManagerId(),
-                                                         chain: .pulse,
-                                                         begin: 0,
-                                                         end: UInt16(day - 1)) // FIXME: - THIS SUBTRACTION IS A HACK BECUASE TEST NET IS NOT USED ENOUGH
-                    .fireAndForget(),
-                .merge(stakeEffects),
-                .merge(balanceEffects)
-            )
+        let accounts = state.accountsData.filter { $0.account.chain == chain }
+        let stakes = accounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
+            environment.hexManager.getStakes(id: HexManagerId(),
+                                             address: accountData.account.address,
+                                             chain: chain).fireAndForget()
         }
+        let balances = accounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
+            environment.hexManager.getBalance(id: HexManagerId(),
+                                              address: accountData.account.address,
+                                              chain: chain).fireAndForget()
+        }
+        switch chain {
+        case .ethereum: state.hexContractOnChain.ethData.currentDay = day
+        case .pulse: state.hexContractOnChain.plsData.currentDay = day
+        }
+        return .merge(
+            environment.hexManager.getDailyDataRange(id: HexManagerId(),
+                                                     chain: chain,
+                                                     begin: 0,
+                                                     end: UInt16(state.hexContractOnChain.data(from: chain).globalInfo.dailyDataCount))
+                .fireAndForget(),
+            .merge(stakes),
+            .merge(balances)
+        )
 
     case let .globalInfo(globalInfo, chain):
         switch chain {

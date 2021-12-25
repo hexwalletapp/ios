@@ -93,7 +93,8 @@ struct StakeCardView: View {
                         description(text: accountData.account.chain.description)
                     }
                     Spacer()
-                    Image(accountData.account.chain.description).resizable()
+                    accountData.account.chain.image
+                        .resizable()
                         .scaledToFit()
                         .frame(height: 32)
                         .vibrancyEffect()

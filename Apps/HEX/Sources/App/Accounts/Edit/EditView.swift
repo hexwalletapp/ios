@@ -44,7 +44,8 @@ struct EditView: View {
                         Section {
                             ForEach(viewStore.accountsData) { accountData in
                                 HStack {
-                                    Image(accountData.account.chain.description).resizable()
+                                    accountData.account.chain.image
+                                        .resizable()
                                         .scaledToFit()
                                         .frame(width: 16, height: 16)
                                     Text(accountData.account.name)

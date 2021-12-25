@@ -34,6 +34,13 @@ public enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible 
         }
     }
 
+    public var image: Image {
+        switch self {
+        case .ethereum: return Image("ethereum", bundle: Bundle.module)
+        case .pulse: return Image("pulse", bundle: Bundle.module)
+        }
+    }
+
     public var url: URL {
         switch self {
         case .ethereum: return URL(string: "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213")!
