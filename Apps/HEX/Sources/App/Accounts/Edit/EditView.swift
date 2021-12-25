@@ -23,8 +23,13 @@ struct EditView: View {
                     List {
                         Section("Add Account") {
                             Picker(selection: $account.chain) {
-                                ForEach(Chain.allCases) { page in
-                                    Text(page.description)
+                                ForEach(Chain.allCases) { chain in
+                                    HStack {
+                                        chain.image.resizable()
+                                            .scaledToFit()
+                                            .frame(width: 16, height: 16)
+                                        Text(chain.description)
+                                    }
                                 }
                             } label: {
                                 Text("Chain")
