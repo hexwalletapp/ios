@@ -11,5 +11,6 @@ import HEXSmartContract
     let sampleAppStore = Store(initialState: AppState(),
                                reducer: appReducer,
                                environment: AppEnvironment(hexManager: .mock(),
+                                                           uniswapManager: .mock(),
                                                            mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
 #endif

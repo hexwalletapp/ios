@@ -6,6 +6,7 @@ import Combine
 import Foundation
 import LightweightCharts
 import SwiftUI
+import web3
 
 struct k {
     static let HEARTS_UINT_SHIFT = BigUInt(72)
@@ -29,6 +30,9 @@ struct k {
         Gradient.Stop(color: Color(.systemGroupedBackground), location: 0.75),
         Gradient.Stop(color: Color(.systemGroupedBackground.withAlphaComponent(0)), location: 1.0),
     ]
+
+    static let USDC = EthereumAddress("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+    static let HEX = EthereumAddress("0x2b591e99afe9f32eaa6214f7b7629768c40eeb39")
 
     // Bigger Pays Better
     static let BPB_BONUS_PERCENT = BigUInt(10)
@@ -101,12 +105,12 @@ struct k {
     static let GRID_1 = [GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .leading)]
 }
 
-struct GetPriceThrottleId: Hashable {}
 struct GetChartId: Hashable {}
 struct GetChartThrottleId: Hashable {}
 
 struct HexManagerId: Hashable {}
 struct GetGlobalInfoThrottleId: Hashable {}
 struct GetDayThrottleId: Hashable {}
+struct UniswapManagerId: Hashable {}
 
 var cancellables = Set<AnyCancellable>()

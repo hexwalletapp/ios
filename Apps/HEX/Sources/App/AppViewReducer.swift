@@ -4,13 +4,13 @@
 import BigInt
 import BitqueryAPI
 import ComposableArchitecture
+import EVMChain
 import Foundation
-import HEXREST
 import HEXSmartContract
 import IdentifiedCollections
 import LightweightCharts
 import SwiftUI
-import EVMChain
+import UniswapSmartContract
 
 enum Tab {
     case charts, accounts, calculator
@@ -42,6 +42,7 @@ struct AppState: Equatable {
 
 enum AppAction: BindableAction, Equatable {
     case hexManager(HEXSmartContractManager.Action)
+    case uniswapManager(UniswapSmartContractManager.Action)
 
     case applicationDidFinishLaunching
     case onBackground
@@ -51,7 +52,7 @@ enum AppAction: BindableAction, Equatable {
     case dismiss
     case getAccounts
     case getChart
-    case updateHexPrice(Result<HEXPrice, NSError>)
+    case getPairs
     case updateChart(Result<[OHLCVData], NSError>)
     case binding(BindingAction<AppState>)
     case copy(String)
@@ -60,6 +61,7 @@ enum AppAction: BindableAction, Equatable {
 
 struct AppEnvironment {
     var hexManager: HEXSmartContractManager
+    var uniswapManager: UniswapSmartContractManager
     var mainQueue: AnySchedulerOf<DispatchQueue>
     let bitquery = BitqueryAPI()
     let encoder = JSONEncoder()
@@ -83,44 +85,37 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case .none:
             break
         }
-        return environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager)
+        return .merge(
+            environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager),
+            environment.uniswapManager.create(id: UniswapManagerId()).map(AppAction.uniswapManager)
+        )
 
     case .onActive:
         return .merge(
             Effect(value: .getChart),
-            Effect(value: .getAccounts)
+            Effect(value: .getAccounts),
+            Effect(value: .getPairs)
         )
 
     case .getAccounts:
-        let glboalInfoEffects = Chain.allCases.compactMap { chain -> Effect<AppAction, Never> in
+        let globalInfos = Chain.allCases.compactMap { chain -> Effect<AppAction, Never> in
             environment.hexManager.getGlobalInfo(id: HexManagerId(), chain: chain).fireAndForget()
         }
 
-        let currentDayEffects = Chain.allCases.compactMap { chain -> Effect<AppAction, Never> in
+        let currentDays = Chain.allCases.compactMap { chain -> Effect<AppAction, Never> in
             environment.hexManager.getCurrentDay(id: HexManagerId(), chain: chain).fireAndForget()
         }
 
         return .merge(
-            HEXRESTAPI.fetchHexPrice()
-                .receive(on: environment.mainQueue)
-                .mapError { $0 as NSError }
-                .catchToEffect()
-                .map(AppAction.updateHexPrice)
-                .throttle(id: GetPriceThrottleId(), for: .seconds(5), scheduler: environment.mainQueue, latest: true),
-            .merge(glboalInfoEffects),
-            .merge(currentDayEffects)
+            .merge(globalInfos),
+            .merge(currentDays)
         )
 
-    case let .updateHexPrice(result):
-        switch result {
-        case let .success(hexPrice):
-            state.hexContractOnChain.ethData.hexPrice = hexPrice
-            state.hexContractOnChain.plsData.hexPrice = hexPrice
-            state.calculator.price = hexPrice.hexUsd
-        case let .failure(error):
-            print(error)
+    case .getPairs:
+        let pairs = Chain.allCases.compactMap { chain -> Effect<AppAction, Never> in
+            environment.uniswapManager.getPair(id: UniswapManagerId(), chain: chain, token0: k.HEX, token1: k.USDC).fireAndForget()
         }
-        return .none
+        return .merge(pairs)
 
     case let .updateChart(result):
         state.chartLoading = false
@@ -266,7 +261,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         return .none
 
-    case .binding, .hexManager, .onBackground, .onInactive:
+    case .binding, .hexManager, .uniswapManager, .onBackground, .onInactive:
         return .none
     }
 }
@@ -274,3 +269,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 .combined(with: hexReducer.pullback(state: \.self,
                                     action: /AppAction.hexManager,
                                     environment: { $0 }))
+.combined(with: uniswapReducer.pullback(state: \.self,
+                                        action: /AppAction.uniswapManager,
+                                        environment: { $0 }))

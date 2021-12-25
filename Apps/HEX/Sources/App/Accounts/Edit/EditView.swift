@@ -2,9 +2,9 @@
 // Copyright (c) 2021 Joe Blau
 
 import ComposableArchitecture
+import EVMChain
 import HEXSmartContract
 import SwiftUI
-import EVMChain
 
 struct EditView: View {
     let store: Store<AppState, AppAction>

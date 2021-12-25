@@ -2,7 +2,6 @@
 // Copyright (c) 2021 Joe Blau
 
 import BigInt
-import HEXREST
 import SwiftUI
 
 struct StakeDetailsView: View {

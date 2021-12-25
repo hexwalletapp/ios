@@ -1,7 +1,6 @@
 // StakeDetailsCardView.swift
 // Copyright (c) 2021 Joe Blau
 
-import HEXREST
 import SwiftUI
 
 struct StakeDetailsCardView: View {

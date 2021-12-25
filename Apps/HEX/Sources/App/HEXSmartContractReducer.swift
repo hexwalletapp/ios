@@ -118,7 +118,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             state.hexContractOnChain.ethData.currentDay = day
             return .merge(
                 environment.hexManager.getDailyDataRange(id: HexManagerId(),
-                                                         chain: chain,
+                                                         chain: .ethereum,
                                                          begin: 0,
                                                          end: UInt16(day))
                     .fireAndForget(),
@@ -144,9 +144,9 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             state.hexContractOnChain.plsData.currentDay = day
             return .merge(
                 environment.hexManager.getDailyDataRange(id: HexManagerId(),
-                                                         chain: chain,
+                                                         chain: .pulse,
                                                          begin: 0,
-                                                         end: UInt16(day))
+                                                         end: UInt16(day - 1)) // FIXME: - THIS SUBTRACTION IS A HACK BECUASE TEST NET IS NOT USED ENOUGH
                     .fireAndForget(),
                 .merge(stakeEffects),
                 .merge(balanceEffects)

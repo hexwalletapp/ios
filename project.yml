@@ -30,7 +30,6 @@ packages:
 localPackages:
   - ./Packages/hex-smart-contract/
   - ./Packages/uniswap-smart-contract/
-  - ./Packages/hex-rest/
   - ./Packages/bitquery-api/
   - ./Packages/evm-chain/
 
@@ -56,8 +55,6 @@ targets:
         product: HEXSmartContract
       - package: uniswap-smart-contract
         product: UniswapSmartContract
-      - package: hex-rest
-        product: HEXREST
       - package: bitquery-api
         product: BitqueryAPI
       - package: evm-chain

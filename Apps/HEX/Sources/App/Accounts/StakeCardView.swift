@@ -3,7 +3,6 @@
 
 import BigInt
 import ComposableArchitecture
-import HEXREST
 import SwiftUI
 import SwiftUIVisualEffects
 

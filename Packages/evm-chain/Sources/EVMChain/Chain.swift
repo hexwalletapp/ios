@@ -30,7 +30,7 @@ public enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible 
     public var description: String {
         switch self {
         case .ethereum: return "Ethereum"
-        case .pulse: return "Pulse"
+        case .pulse: return "Pulse Testnet V2"
         }
     }
 

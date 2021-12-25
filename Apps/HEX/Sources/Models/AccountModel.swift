@@ -1,9 +1,9 @@
 // AccountModel.swift
 // Copyright (c) 2021 Joe Blau
 
+import EVMChain
 import HEXSmartContract
 import SwiftUI
-import EVMChain
 
 struct Account: Codable, Hashable, Equatable, Identifiable {
     var id: String { address + chain.description }

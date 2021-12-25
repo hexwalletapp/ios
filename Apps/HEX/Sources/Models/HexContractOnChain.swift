@@ -2,10 +2,9 @@
 // Copyright (c) 2021 Joe Blau
 
 import BigInt
-import Foundation
-import HEXREST
-import HEXSmartContract
 import EVMChain
+import Foundation
+import HEXSmartContract
 
 struct HexContractOnChain: Equatable {
     func data(from chain: Chain) -> OnChainData {
@@ -20,8 +19,8 @@ struct HexContractOnChain: Equatable {
 }
 
 struct OnChainData: Equatable {
-    var hexPrice = HEXPrice()
-    var price: NSNumber { NSNumber(value: hexPrice.hexUsd) }
+    var hexUsd: Double = 0
+    var price: NSNumber { NSNumber(value: hexUsd) }
     var speculativePrice = NSNumber(1)
     var currentDay: BigUInt = 0
     var dailyData = [DailyData]()

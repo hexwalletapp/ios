@@ -35,6 +35,7 @@ struct HEXApp: App {
                           reducer: appReducer,
                           environment: AppEnvironment(
                               hexManager: .live,
+                              uniswapManager: .live,
                               mainQueue: DispatchQueue.main.eraseToAnyScheduler()
                           ))
 
