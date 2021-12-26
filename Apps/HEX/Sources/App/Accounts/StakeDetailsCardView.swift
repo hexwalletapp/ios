@@ -4,7 +4,7 @@
 import SwiftUI
 
 struct StakeDetailsCardView: View {
-    let price: NSNumber
+    let price: Double
     let stake: Stake
     let account: Account
 
@@ -24,7 +24,7 @@ struct StakeDetailsCardView: View {
                 Spacer()
                 VStack(alignment: .trailing, spacing: 4) {
                     Text(stake.balanceHearts
-                        .hexAt(price: price.doubleValue)
+                        .hexAt(price: price)
                         .currencyString).foregroundColor(.primary)
                     Label(stake.balanceHearts.hex.hexString, image: "hex-logo.SFSymbol")
                         .labelStyle(HEXNumberTextStyle())
@@ -39,7 +39,7 @@ struct StakeDetailsCardView: View {
         .padding(.horizontal)
         .padding(.vertical, 10)
         .groupBoxStyle(StakeGroupBoxStyle(color: .primary,
-                                          destination: StakeDetailsView(price: price.doubleValue,
+                                          destination: StakeDetailsView(price: price,
                                                                         stake: stake,
                                                                         account: account),
                                           stakeStatus: stake.status))

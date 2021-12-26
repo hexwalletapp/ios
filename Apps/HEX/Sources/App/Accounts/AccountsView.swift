@@ -105,11 +105,11 @@ struct AccountsView: View {
                 ForEach(accountData.stakes) { stake in
                     switch accountData.account.chain {
                     case .ethereum:
-                        StakeDetailsCardView(price: viewStore.hexContractOnChain.ethData.price,
+                        StakeDetailsCardView(price: currentPrice,
                                              stake: stake,
                                              account: accountData.account)
                     case .pulse:
-                        StakeDetailsCardView(price: viewStore.hexContractOnChain.plsData.price,
+                        StakeDetailsCardView(price: currentPrice,
                                              stake: stake,
                                              account: accountData.account)
                     }
@@ -128,13 +128,13 @@ struct AccountsView: View {
                     ForEach(viewStore.accountsData) { accountData in
                         switch accountData.account.chain {
                         case .ethereum:
-                            StakeCardView(price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : viewStore.hexContractOnChain.ethData.price.doubleValue,
+                            StakeCardView(price: currentPrice,
                                           accountData: accountData)
                                 .padding([.horizontal, .top])
                                 .padding(.bottom, k.CARD_PADDING_BOTTOM)
                                 .tag(accountData.id)
                         case .pulse:
-                            StakeCardView(price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : viewStore.hexContractOnChain.plsData.price.doubleValue,
+                            StakeCardView(price: currentPrice,
                                           accountData: accountData)
                                 .padding([.horizontal, .top])
                                 .padding(.bottom, k.CARD_PADDING_BOTTOM)
@@ -160,6 +160,11 @@ struct AccountsView: View {
                 }
             }
         }
+    }
+
+    var currentPrice: Double {
+        let viewStore = ViewStore(store)
+        return viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : viewStore.hexContractOnChain.ethData.price.doubleValue
     }
 }
 
