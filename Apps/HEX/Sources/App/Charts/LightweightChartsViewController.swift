@@ -1,29 +1,24 @@
-//
-//  LightweightChartsViewController.swift
-//  HEX
-//
-//  Created by Joe Blau on 12/26/21.
-//
+// LightweightChartsViewController.swift
+// Copyright (c) 2021 Joe Blau
 
+import BitqueryAPI
 import SwiftUI
 import UIKit
-import BitqueryAPI
 
 struct LightweightChartsViewController: UIViewControllerRepresentable {
-
     typealias UIViewControllerType = ChartViewController
-    
+
     @Environment(\.colorScheme) var colorScheme
 
     var timeScale: TimeScale
     var chartType: ChartType
     var ohlcv: [OHLCVData]
-    
-    func makeUIViewController(context: Context) -> ChartViewController {
-        return ChartViewController()
+
+    func makeUIViewController(context _: Context) -> ChartViewController {
+        ChartViewController()
     }
-    
-    func updateUIViewController(_ chatViewController: ChartViewController, context: Context) {
+
+    func updateUIViewController(_ chatViewController: ChartViewController, context _: Context) {
         chatViewController.updateData(timeScale: timeScale,
                                       chartType: chartType,
                                       ohlcv: ohlcv)

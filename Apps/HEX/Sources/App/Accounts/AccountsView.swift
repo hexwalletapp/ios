@@ -5,6 +5,7 @@ import BigInt
 import ComposableArchitecture
 import SwiftUI
 import SwiftUIVisualEffects
+import EVMChain
 
 struct AccountsView: View {
     let store: Store<AppState, AppAction>
@@ -103,16 +104,9 @@ struct AccountsView: View {
             switch (viewStore.accountsData.isEmpty, viewStore.accountsData[id: viewStore.selectedId]) {
             case (false, let .some(accountData)):
                 ForEach(accountData.stakes) { stake in
-                    switch accountData.account.chain {
-                    case .ethereum:
-                        StakeDetailsCardView(price: currentPrice,
-                                             stake: stake,
-                                             account: accountData.account)
-                    case .pulse:
-                        StakeDetailsCardView(price: currentPrice,
-                                             stake: stake,
-                                             account: accountData.account)
-                    }
+                    StakeDetailsCardView(price: price(on: accountData.account.chain),
+                                         stake: stake,
+                                         account: accountData.account)
                 }
             default:
                 EmptyView()
@@ -126,20 +120,11 @@ struct AccountsView: View {
             case false:
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
                     ForEach(viewStore.accountsData) { accountData in
-                        switch accountData.account.chain {
-                        case .ethereum:
-                            StakeCardView(price: currentPrice,
-                                          accountData: accountData)
-                                .padding([.horizontal, .top])
-                                .padding(.bottom, k.CARD_PADDING_BOTTOM)
-                                .tag(accountData.id)
-                        case .pulse:
-                            StakeCardView(price: currentPrice,
-                                          accountData: accountData)
-                                .padding([.horizontal, .top])
-                                .padding(.bottom, k.CARD_PADDING_BOTTOM)
-                                .tag(accountData.id)
-                        }
+                        StakeCardView(price: price(on: accountData.account.chain),
+                                      accountData: accountData)
+                            .padding([.horizontal, .top])
+                            .padding(.bottom, k.CARD_PADDING_BOTTOM)
+                            .tag(accountData.id)
                     }
                 }
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
@@ -162,9 +147,14 @@ struct AccountsView: View {
         }
     }
 
-    var currentPrice: Double {
+    func price(on chain: Chain) -> Double {
         let viewStore = ViewStore(store)
-        return viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : viewStore.hexContractOnChain.ethData.price.doubleValue
+        let chainPrice: Double
+        switch chain {
+        case .ethereum: chainPrice = viewStore.hexContractOnChain.ethData.price.doubleValue
+        case .pulse: chainPrice = viewStore.hexContractOnChain.plsData.price.doubleValue
+        }
+        return viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : chainPrice
     }
 }
 

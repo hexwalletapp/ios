@@ -107,10 +107,5 @@ struct k {
 
 struct GetChartId: Hashable {}
 struct GetChartThrottleId: Hashable {}
-
 struct HexManagerId: Hashable {}
-struct GetGlobalInfoThrottleId: Hashable {}
-struct GetDayThrottleId: Hashable {}
 struct UniswapManagerId: Hashable {}
-
-var cancellables = Set<AnyCancellable>()

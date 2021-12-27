@@ -12,8 +12,8 @@ struct ChartsView: View {
             NavigationView {
                 VStack {
                     LightweightChartsViewController(timeScale: viewStore.selectedTimeScale,
-                                          chartType: viewStore.selectedChartType,
-                                          ohlcv: viewStore.ohlcv)
+                                                    chartType: viewStore.selectedChartType,
+                                                    ohlcv: viewStore.ohlcv)
                 }
                 .background(Color(.systemGroupedBackground))
                 .navigationBarTitle("HEX/USDC", displayMode: .inline)
