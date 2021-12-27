@@ -3,9 +3,9 @@
 
 import BigInt
 import ComposableArchitecture
+import EVMChain
 import SwiftUI
 import SwiftUIVisualEffects
-import EVMChain
 
 struct AccountsView: View {
     let store: Store<AppState, AppAction>
