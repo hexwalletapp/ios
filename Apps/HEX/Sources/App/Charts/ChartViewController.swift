@@ -1,21 +1,16 @@
-//
-//  ChartViewController.swift
-//  HEX
-//
-//  Created by Joe Blau on 12/26/21.
-//
+// ChartViewController.swift
+// Copyright (c) 2021 Joe Blau
 
-import UIKit
-import LightweightCharts
 import BitqueryAPI
+import LightweightCharts
+import UIKit
 
 class ChartViewController: UIViewController {
-    
     private var chart: LightweightCharts!
-    private var candlestickSeries: CandlestickSeries? = nil
-    private var lineSeries: LineSeries? = nil
-    private var volumeSeries: HistogramSeries? = nil
-    
+    private var candlestickSeries: CandlestickSeries?
+    private var lineSeries: LineSeries?
+    private var volumeSeries: HistogramSeries?
+
     override func viewDidLoad() {
         let chart = LightweightCharts(options: k.chartOptions())
         super.viewDidLoad()
@@ -28,8 +23,8 @@ class ChartViewController: UIViewController {
         chart.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         self.chart = chart
     }
-    
-    func updateData(timeScale: TimeScale, chartType: ChartType, ohlcv: [OHLCVData]) {
+
+    func updateData(timeScale _: TimeScale, chartType: ChartType, ohlcv: [OHLCVData]) {
         chart.applyOptions(options: k.chartOptions())
 
         candlestickSeries.map { chart.removeSeries(seriesApi: $0) }
@@ -57,6 +52,5 @@ class ChartViewController: UIViewController {
         )
 
         volumeSeries?.setData(data: ohlcv.map { $0.volumeData })
-    
     }
 }
