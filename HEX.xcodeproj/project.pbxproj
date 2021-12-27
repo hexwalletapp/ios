@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -49,10 +49,11 @@
 		BA69E57C156F8C0E271D65E1 /* DataRowShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C642EEC1F4E397063D4932C /* DataRowShareView.swift */; };
 		BE94256F6E38266AD8D0FB68 /* StakeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */; };
 		C6DAE61AE40346FBAC8B7C3D /* StakeStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */; };
-		C749709A25B9C12FF2E27A19 /* LightweightChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27481CFCEE3DBEFCE2DA374 /* LightweightChartsView.swift */; };
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
+		ED734888277952AA001BBCBC /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED734887277952AA001BBCBC /* ChartViewController.swift */; };
+		ED73488A27795435001BBCBC /* LightweightChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED73488927795435001BBCBC /* LightweightChartsViewController.swift */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F1EC1CC4AA4B71573C662D42 /* DistributionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40072E4B023C31237AA7D7A2 /* DistributionModel.swift */; };
@@ -104,7 +105,6 @@
 		A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageRingView.swift; sourceTree = "<group>"; };
 		A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXSmartContractReducer.swift; sourceTree = "<group>"; };
 		B111C6AD69FEB6A0AC0F16DC /* HEXNumberTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXNumberTextStyle.swift; sourceTree = "<group>"; };
-		B27481CFCEE3DBEFCE2DA374 /* LightweightChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightweightChartsView.swift; sourceTree = "<group>"; };
 		B707199CFAF4B74C473DFC14 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C4FE5AC3DBF047D3C2A56368 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
@@ -115,6 +115,8 @@
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		E06E04F90AF5769D9F8F84FF /* DataRowPercentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRowPercentView.swift; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		ED734887277952AA001BBCBC /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
+		ED73488927795435001BBCBC /* LightweightChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightweightChartsViewController.swift; sourceTree = "<group>"; };
 		F7A7D3C52D8FB595F17191B5 /* FloatingGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingGroupBoxStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -278,7 +280,8 @@
 			isa = PBXGroup;
 			children = (
 				D694B1DA5DF0377977B34F9C /* ChartsView.swift */,
-				B27481CFCEE3DBEFCE2DA374 /* LightweightChartsView.swift */,
+				ED73488927795435001BBCBC /* LightweightChartsViewController.swift */,
+				ED734887277952AA001BBCBC /* ChartViewController.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -337,14 +340,6 @@
 				0274987511660F32ADBD8FAF /* SupportingFiles */,
 			);
 			path = HEX;
-			sourceTree = "<group>";
-		};
-		"TEMP_C72105F1-B78F-40C7-948D-F6F678B6A0D1" /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -434,6 +429,7 @@
 				2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */,
 				B47647423BAF6BDF59F01BD1 /* AccountsView.swift in Sources */,
 				38ECF3516F587DDB5C816F2B /* App.swift in Sources */,
+				ED73488A27795435001BBCBC /* LightweightChartsViewController.swift in Sources */,
 				272864C27D707302918465AF /* AppView.swift in Sources */,
 				641B864855B2593A479F561B /* AppViewReducer.swift in Sources */,
 				2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */,
@@ -444,6 +440,7 @@
 				CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */,
 				F9EB6793DF0FE431A796C85C /* DataHeaderView.swift in Sources */,
 				946DFBDB96848637539D6175 /* DataRowHexView.swift in Sources */,
+				ED734888277952AA001BBCBC /* ChartViewController.swift in Sources */,
 				00EEFB341D4FBCA3FA35F5B5 /* DataRowPercentView.swift in Sources */,
 				BA69E57C156F8C0E271D65E1 /* DataRowShareView.swift in Sources */,
 				57D651442045B3FC9E2C051E /* DataSectionHeaderView.swift in Sources */,
@@ -456,7 +453,6 @@
 				6100F3757C54FE2778D6E715 /* HEXNumberTextStyle.swift in Sources */,
 				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
 				B10CD79F49D2B0234DB29740 /* HexContractOnChain.swift in Sources */,
-				C749709A25B9C12FF2E27A19 /* LightweightChartsView.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				272BCA8A6709C128A9169BE2 /* OHLCVData+Extensions.swift.swift in Sources */,
 				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
