@@ -47,7 +47,7 @@ struct StakeCardView: View {
                 Spacer()
                 HStack(alignment: .bottom) {
                     frontTotal(title: "Total Balance",
-                               hearts: accountData.total.balanceHearts,
+                               hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
                                alignment: .leading)
                     Spacer()
                     frontTotal(title: "Total Shares",
@@ -77,7 +77,7 @@ struct StakeCardView: View {
 
             VStack(alignment: .leading) {
                 DataHeaderView()
-                DataRowHexView(title: "ʟɪᴏ̨ᴜɪᴅ", units: accountData.balanceHearts, price: price)
+                DataRowHexView(title: "ʟɪᴏ̨ᴜɪᴅ", units: accountData.liquidBalanceHearts, price: price)
                 DataRowHexView(title: "sᴛᴀᴋᴇᴅ", units: accountData.total.stakedHearts, price: price)
                 DataRowHexView(title: "ɪɴᴛᴇʀᴇsᴛ", units: accountData.total.interestHearts, price: price)
 

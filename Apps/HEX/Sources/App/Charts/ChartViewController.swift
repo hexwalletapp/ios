@@ -12,9 +12,9 @@ class ChartViewController: UIViewController {
     private var volumeSeries: HistogramSeries?
 
     override func viewDidLoad() {
+        view.backgroundColor = .systemBackground
         let chart = LightweightCharts(options: k.chartOptions())
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         view.addSubview(chart)
         chart.translatesAutoresizingMaskIntoConstraints = false
         chart.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true

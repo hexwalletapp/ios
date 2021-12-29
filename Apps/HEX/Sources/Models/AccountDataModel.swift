@@ -10,7 +10,7 @@ struct AccountData: Codable, Hashable, Equatable, Identifiable {
     var account: Account
     var stakes = IdentifiedArrayOf<Stake>()
     var total = StakeTotal()
-    var balanceHearts: BigUInt = 0
+    var liquidBalanceHearts: BigUInt = 0
 
     mutating func globalAccountData(onChainData: OnChainData) {
         stakes.forEach { stake in

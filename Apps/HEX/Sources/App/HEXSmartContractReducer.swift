@@ -136,7 +136,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
     case let .balance(balance, address, chain):
         let accountDataKey = address.value + chain.description
-        state.accountsData[id: accountDataKey]?.balanceHearts = balance
+        state.accountsData[id: accountDataKey]?.liquidBalanceHearts = balance
         return .none
     }
 }
