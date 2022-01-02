@@ -23,6 +23,7 @@ enum ModalPresent: Identifiable {
 }
 
 struct AppState: Equatable {
+    @BindableState var accountTypeView: AccountType = .individual
     @BindableState var editMode: EditMode = .inactive
     @BindableState var modalPresent: ModalPresent? = nil
     @BindableState var selectedTab: Tab = .charts

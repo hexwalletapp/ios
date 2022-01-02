@@ -34,6 +34,7 @@ struct EditView: View {
                             } label: {
                                 Text("Chain")
                             }
+                            Toggle("Group Account", isOn: $account.isGroup)
                             TextField("Wallet Name",
                                       text: $account.name,
                                       prompt: Text("Wallet Name"))
@@ -46,50 +47,8 @@ struct EditView: View {
                                 .focused($focusedField, equals: .address)
                                 .submitLabel(.done)
                         }
-                        Section {
-                            ForEach(viewStore.accountsData) { accountData in
-                                HStack {
-                                    accountData.account.chain.image
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 16, height: 16)
-                                    Text(accountData.account.name)
-                                    Spacer()
-                                    switch viewStore.editMode {
-                                    case .inactive:
-                                        Text("\(accountData.account.address.prefix(6).description)...\(accountData.account.address.suffix(4).description)")
-                                            .font(.caption.monospaced())
-                                            .padding(.horizontal, 12)
-                                            .padding(.vertical, 6)
-                                            .background(Color(.systemGray6))
-                                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                                    default:
-                                        EmptyView()
-                                    }
-                                }
-                                .swipeActions {
-                                    Button {
-                                        viewStore.send(.copy(accountData.account.address))
-                                    } label: {
-                                        Label("Copy", systemImage: "doc.on.doc")
-                                    }
-                                    Button(role: .destructive) {
-                                        viewStore.send(.delete(accountData))
-                                    } label: {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
-                            }
-                            .onDelete(perform: delete)
-                            .onMove(perform: move)
-                        } header: {
-                            Text("Accounts")
-                        } footer: {
-                            switch viewStore.accountsData.count {
-                            case 0: Label("No accounts", systemImage: "person")
-                            default: EmptyView()
-                            }
-                        }
+                        accountSection(type: .group, accounts: viewStore.accountsData.filter { $0.account.isGroup })
+                        accountSection(type: .individual, accounts: viewStore.accountsData.filter { !$0.account.isGroup })
                     }
                 }
                 .onSubmit {
@@ -144,6 +103,61 @@ struct EditView: View {
         var accountsData = viewStore.accountsData
         accountsData.move(fromOffsets: indices, toOffset: newOffset)
         viewStore.send(.binding(.set(\.$accountsData, accountsData)))
+    }
+    
+    func accountSection(type: AccountType, accounts: IdentifiedArrayOf<AccountData>) -> some View {
+        WithViewStore(store) { viewStore in
+            Section {
+                ForEach(accounts) { accountData in
+                    accountFrom(accountData: accountData)
+                }
+                .onDelete(perform: delete)
+                .onMove(perform: move)
+            } header: {
+                type.label
+            } footer: {
+                switch accounts.count {
+                case 0: type.emptyState
+                default: EmptyView()
+                }
+            }
+        }
+    }
+    
+    func accountFrom(accountData: AccountData) -> some View {
+        WithViewStore(store) { viewStore in
+            HStack {
+                accountData.account.chain.image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 16, height: 16)
+                Text(accountData.account.name)
+                Spacer()
+                switch viewStore.editMode {
+                case .inactive:
+                    Text("\(accountData.account.address.prefix(6).description)...\(accountData.account.address.suffix(4).description)")
+                        .font(.caption.monospaced())
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color(.systemGray6))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                default:
+                    EmptyView()
+                }
+            }
+            .swipeActions {
+                Button {
+                    viewStore.send(.copy(accountData.account.address))
+                } label: {
+                    Label("Copy", systemImage: "doc.on.doc")
+                }
+                Button(role: .destructive) {
+                    viewStore.send(.delete(accountData))
+                } label: {
+                    Label("Delete", systemImage: "trash")
+                }
+            }
+        }
     }
 }
 

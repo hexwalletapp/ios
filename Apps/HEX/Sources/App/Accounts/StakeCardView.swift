@@ -1,5 +1,5 @@
 // StakeCardView.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import BigInt
 import ComposableArchitecture
@@ -50,9 +50,9 @@ struct StakeCardView: View {
                                hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
                                alignment: .leading)
                     Spacer()
-                    frontTotal(title: "Total Shares",
-                               shares: accountData.total.stakeShares,
-                               alignment: .trailing)
+                    frontTotalHEX(title: "Total HEX",
+                                  hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
+                                  alignment: .trailing)
                 }
             }
             .font(.body.monospacedDigit())
@@ -119,6 +119,13 @@ struct StakeCardView: View {
     func frontTotal(title: String, shares: BigUInt, alignment: HorizontalAlignment) -> some View {
         VStack(alignment: alignment) {
             Text(shares.number.shareString).foregroundColor(.primary)
+            description(text: title)
+        }
+    }
+
+    func frontTotalHEX(title: String, hearts: BigUInt, alignment: HorizontalAlignment) -> some View {
+        VStack(alignment: alignment) {
+            Text(hearts.hex.hexString).foregroundColor(.primary)
             description(text: title)
         }
     }
