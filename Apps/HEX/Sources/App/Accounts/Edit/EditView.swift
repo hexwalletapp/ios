@@ -1,5 +1,5 @@
 // EditView.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import ComposableArchitecture
 import EVMChain
@@ -25,30 +25,51 @@ struct EditView: View {
                             Picker(selection: $account.chain) {
                                 ForEach(Chain.allCases) { chain in
                                     HStack {
-                                        chain.image.resizable()
-                                            .scaledToFit()
-                                            .frame(width: 16, height: 16)
+                                        LinearGradient(gradient: Gradient(colors: chain.gradient),
+                                                       startPoint: .bottomLeading,
+                                                       endPoint: .topTrailing)
+                                            .mask(
+                                                chain.image.resizable()
+                                                    .scaledToFit()
+                                            ).frame(width: 16, height: 16)
                                         Text(chain.description)
                                     }
                                 }
                             } label: {
                                 Text("Chain")
                             }
-                            Toggle("Group Account", isOn: $account.isGroup)
+                            Toggle("Favorite", isOn: $account.isFavorite)
+                                .toggleStyle(SwitchToggleStyle(tint: .pink))
+                                .accentColor(.pink)
                             TextField("Wallet Name",
                                       text: $account.name,
                                       prompt: Text("Wallet Name"))
                                 .focused($focusedField, equals: .name)
+                                .disableAutocorrection(true)
                                 .submitLabel(.next)
 
                             TextField("Public Key",
                                       text: $account.address,
                                       prompt: Text("Public Key"))
                                 .focused($focusedField, equals: .address)
+                                .disableAutocorrection(true)
                                 .submitLabel(.done)
                         }
-                        accountSection(type: .group, accounts: viewStore.accountsData.filter { $0.account.isGroup })
-                        accountSection(type: .individual, accounts: viewStore.accountsData.filter { !$0.account.isGroup })
+
+                        Section {
+                            ForEach(viewStore.accountsData) { accountData in
+                                accountFrom(accountData: accountData)
+                            }
+                            .onDelete(perform: delete)
+                            .onMove(perform: move)
+                        } header: {
+                            Text("Accounts")
+                        } footer: {
+                            switch viewStore.accountsData.count {
+                            case 0: Text("No accounts")
+                            default: EmptyView()
+                            }
+                        }
                     }
                 }
                 .onSubmit {
@@ -104,51 +125,56 @@ struct EditView: View {
         accountsData.move(fromOffsets: indices, toOffset: newOffset)
         viewStore.send(.binding(.set(\.$accountsData, accountsData)))
     }
-    
-    func accountSection(type: AccountType, accounts: IdentifiedArrayOf<AccountData>) -> some View {
-        WithViewStore(store) { viewStore in
-            Section {
-                ForEach(accounts) { accountData in
-                    accountFrom(accountData: accountData)
-                }
-                .onDelete(perform: delete)
-                .onMove(perform: move)
-            } header: {
-                type.label
-            } footer: {
-                switch accounts.count {
-                case 0: type.emptyState
-                default: EmptyView()
-                }
-            }
-        }
+
+    func toggleFavorite(accountData: AccountData) {
+        let viewStore = ViewStore(store)
+        var accountsData = viewStore.accountsData
+
+        var accountData = accountData
+        accountData.account.isFavorite.toggle()
+
+        accountsData.updateOrAppend(accountData)
+        viewStore.send(.binding(.set(\.$accountsData, accountsData)))
     }
-    
+
     func accountFrom(accountData: AccountData) -> some View {
         WithViewStore(store) { viewStore in
-            HStack {
-                accountData.account.chain.image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 16, height: 16)
-                Text(accountData.account.name)
+            HStack(spacing: 16) {
+                LinearGradient(gradient: Gradient(colors: accountData.account.chain.gradient),
+                               startPoint: .bottomLeading,
+                               endPoint: .topTrailing)
+                    .mask(
+                        accountData.account.chain.image
+                            .resizable()
+                            .scaledToFit()
+                    ).frame(width: 24, height: 24)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(accountData.account.name)
+                    Text("\(accountData.account.address.prefix(6).description)...\(accountData.account.address.suffix(4).description)")
+                        .foregroundColor(.secondary)
+                        .font(.footnote.monospaced())
+                }
                 Spacer()
                 switch viewStore.editMode {
                 case .inactive:
-                    Text("\(accountData.account.address.prefix(6).description)...\(accountData.account.address.suffix(4).description)")
-                        .font(.caption.monospaced())
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(Color(.systemGray6))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    Image(systemName: "doc.on.doc")
+                        .foregroundColor(.accentColor)
+                        .onTapGesture {
+                            viewStore.send(.copy(accountData.account.address))
+                        }
+
+                    Image(systemName: accountData.account.isFavorite ? "heart.fill" : "heart")
+                        .foregroundColor(.pink)
+                        .onTapGesture {
+                            toggleFavorite(accountData: accountData)
+                        }
                 default:
                     EmptyView()
                 }
             }
             .swipeActions {
-                Button {
-                    viewStore.send(.copy(accountData.account.address))
-                } label: {
+                Button {} label: {
                     Label("Copy", systemImage: "doc.on.doc")
                 }
                 Button(role: .destructive) {

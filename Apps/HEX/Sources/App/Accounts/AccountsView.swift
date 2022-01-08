@@ -1,5 +1,5 @@
 // AccountsView.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import BigInt
 import ComposableArchitecture
@@ -15,7 +15,7 @@ struct AccountsView: View {
     ]
 
     @State private var favoriteColor = 0
-    
+
     init(store: Store<AppState, AppAction>) {
         self.store = store
         UIPageControl.appearance().currentPageIndicatorTintColor = .tintColor
@@ -26,16 +26,16 @@ struct AccountsView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 ScrollView {
-                    switch viewStore.accountTypeView {
-                    case .individual:
-                        IndividualAccountView(store: store)
-                    case .group:
-                        EmptyView()
-                    }
-
+                    IndividualAccountView(store: store)
+//                    switch viewStore.accountTypeView {
+//                    case .individual:
+//
+//                    case .group:
+//                        GroupAccountView(store: store)
+//                    }
                 }
                 .background(Color(.systemGroupedBackground))
-                .navigationBarTitle(viewStore.accountTypeView.description)
+                .navigationBarTitle("Accounts")
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         Menu {
@@ -43,12 +43,6 @@ struct AccountsView: View {
                                 Button {
                                     viewStore.send(.binding(.set(\.$modalPresent, .edit)))
                                 } label: { Label("Accounts", systemImage: "person") }
-                                
-                                Picker("Account Mode", selection: viewStore.binding(\.$accountTypeView)) {
-                                    ForEach(AccountType.allCases) { accountType in
-                                        accountType.label.tag(accountType)
-                                    }
-                                }
                             }
 
                             Section {
@@ -106,10 +100,6 @@ struct AccountsView: View {
             Text(subheading).font(.caption2.monospaced()).foregroundColor(.secondary)
         }.frame(width: 48)
     }
-
-
-
-
 }
 
 #if DEBUG

@@ -1,13 +1,9 @@
-//
-//  IndividualAccountView.swift
-//  HEX
-//
-//  Created by Joe Blau on 1/2/22.
-//
+// IndividualAccountView.swift
+// Copyright (c) 2022 Joe Blau
 
-import SwiftUI
-import EVMChain
 import ComposableArchitecture
+import EVMChain
+import SwiftUI
 
 struct IndividualAccountView: View {
     let store: Store<AppState, AppAction>
@@ -15,16 +11,16 @@ struct IndividualAccountView: View {
     var body: some View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             Section {
-                individualAccountList
+                accountList
             } header: {
-                individualAccountHeader
+                accountHeader
             }
         }
     }
-    
-    var individualAccountList: some View {
+
+    private var accountList: some View {
         WithViewStore(store) { viewStore in
-            switch (viewStore.accountsData.isEmpty, viewStore.accountsData.filter { !$0.account.isGroup }[id: viewStore.selectedId]) {
+            switch (viewStore.accountsData.isEmpty, viewStore.accountsData.filter { !$0.account.isFavorite }[id: viewStore.selectedId]) {
             case (false, let .some(accountData)):
                 ForEach(accountData.stakes) { stake in
                     StakeDetailsCardView(price: price(on: accountData.account.chain),
@@ -37,12 +33,12 @@ struct IndividualAccountView: View {
         }
     }
 
-    var individualAccountHeader: some View {
+    private var accountHeader: some View {
         WithViewStore(store) { viewStore in
             switch viewStore.accountsData.isEmpty {
             case false:
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
-                    ForEach(viewStore.accountsData.filter { !$0.account.isGroup }) { accountData in
+                    ForEach(viewStore.accountsData.filter { !$0.account.isFavorite }) { accountData in
                         StakeCardView(price: price(on: accountData.account.chain),
                                       accountData: accountData)
                             .padding([.horizontal, .top])
@@ -69,6 +65,7 @@ struct IndividualAccountView: View {
             }
         }
     }
+
     func price(on chain: Chain) -> Double {
         let viewStore = ViewStore(store)
         let chainPrice: Double
@@ -80,8 +77,8 @@ struct IndividualAccountView: View {
     }
 }
 
-//struct IndividualAccountView_Previews: PreviewProvider {
+// struct IndividualAccountView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        IndividualAccountView()
 //    }
-//}
+// }

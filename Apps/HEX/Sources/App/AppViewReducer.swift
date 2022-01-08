@@ -1,5 +1,5 @@
 // AppViewReducer.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import BigInt
 import BitqueryAPI
@@ -23,10 +23,9 @@ enum ModalPresent: Identifiable {
 }
 
 struct AppState: Equatable {
-    @BindableState var accountTypeView: AccountType = .individual
     @BindableState var editMode: EditMode = .inactive
     @BindableState var modalPresent: ModalPresent? = nil
-    @BindableState var selectedTab: Tab = .charts
+    @BindableState var selectedTab: Tab = .accounts
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
     @BindableState var selectedChartType: ChartType = .candlestick
 

@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		00EEFB341D4FBCA3FA35F5B5 /* DataRowPercentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06E04F90AF5769D9F8F84FF /* DataRowPercentView.swift */; };
 		0113F604E3C5650F1E1AC039 /* TimeScale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842E13B529FC4BD56E2661A9 /* TimeScale+Extensions.swift */; };
 		024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */; };
+		05CAC40A69A41049DE403C66 /* GroupStakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35B1DD3E5B171DD30254BC8 /* GroupStakeCardView.swift */; };
 		0632C27A5D5B4F5FC6F9294B /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707199CFAF4B74C473DFC14 /* Date+Extensions.swift */; };
 		088C68CB1F29BF619A4C50D7 /* SwiftUIVisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */; };
 		15A5B14F56E424F987EB628D /* BitqueryAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE569782E5986401240AA35 /* BitqueryAPI */; };
@@ -31,6 +32,8 @@
 		5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */; };
 		6100F3757C54FE2778D6E715 /* HEXNumberTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B111C6AD69FEB6A0AC0F16DC /* HEXNumberTextStyle.swift */; };
 		641B864855B2593A479F561B /* AppViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DBF49D004E00EE95C96479 /* AppViewReducer.swift */; };
+		737EC9222204FB7981A231F6 /* GroupAccountDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */; };
+		73C78440EE1C8FEA180F850E /* GroupAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC64B54753EEFD88E094178 /* GroupAccountView.swift */; };
 		74D28048802B53B2C69F9EF6 /* StakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C81D66CAB957125308B7010 /* StakeCardView.swift */; };
 		79C1FC79027AAF73DF6F3318 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FE5AC3DBF047D3C2A56368 /* PlanView.swift */; };
 		7D8422D8310166D060476217 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */; };
@@ -46,6 +49,7 @@
 		B10CD79F49D2B0234DB29740 /* HexContractOnChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC9F6FE02179ADCC850A631 /* HexContractOnChain.swift */; };
 		B3FDC626A1314EDA5EC1194A /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */; };
 		B47647423BAF6BDF59F01BD1 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DFEC316C64640DC5205E43 /* AccountsView.swift */; };
+		B85E73EA4BD02F6186BCEF26 /* IndividualAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF01FA828F8B7B8465AAD086 /* IndividualAccountView.swift */; };
 		BA69E57C156F8C0E271D65E1 /* DataRowShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C642EEC1F4E397063D4932C /* DataRowShareView.swift */; };
 		BE94256F6E38266AD8D0FB68 /* StakeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */; };
 		C6DAE61AE40346FBAC8B7C3D /* StakeStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */; };
@@ -53,8 +57,6 @@
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
-		ED77DFE82782361A0049FA58 /* AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED77DFE72782361A0049FA58 /* AccountType.swift */; };
-		ED77DFEA27823C330049FA58 /* IndividualAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED77DFE927823C330049FA58 /* IndividualAccountView.swift */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F1EC1CC4AA4B71573C662D42 /* DistributionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40072E4B023C31237AA7D7A2 /* DistributionModel.swift */; };
@@ -113,14 +115,16 @@
 		CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeModel.swift; sourceTree = "<group>"; };
 		CD97BE07A876D006551CAE25 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
 		D332F301DA2CB0DA59E63112 /* DataSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSectionHeaderView.swift; sourceTree = "<group>"; };
+		D35B1DD3E5B171DD30254BC8 /* GroupStakeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupStakeCardView.swift; sourceTree = "<group>"; };
 		D694B1DA5DF0377977B34F9C /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		D8B2BEAF9636D1C0A1E027C3 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
+		DEC64B54753EEFD88E094178 /* GroupAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAccountView.swift; sourceTree = "<group>"; };
+		DF01FA828F8B7B8465AAD086 /* IndividualAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualAccountView.swift; sourceTree = "<group>"; };
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		E06E04F90AF5769D9F8F84FF /* DataRowPercentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRowPercentView.swift; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		ED77DFE72782361A0049FA58 /* AccountType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountType.swift; sourceTree = "<group>"; };
-		ED77DFE927823C330049FA58 /* IndividualAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualAccountView.swift; sourceTree = "<group>"; };
 		F009BA928051D9E4DAFEF1C0 /* LightweightChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightweightChartsViewController.swift; sourceTree = "<group>"; };
+		F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAccountDataModel.swift; sourceTree = "<group>"; };
 		F7A7D3C52D8FB595F17191B5 /* FloatingGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingGroupBoxStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,12 +207,12 @@
 				7AD673A6150107EFA969E218 /* DailyDataModel.swift */,
 				40072E4B023C31237AA7D7A2 /* DistributionModel.swift */,
 				742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */,
+				F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */,
 				1AC9F6FE02179ADCC850A631 /* HexContractOnChain.swift */,
 				CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */,
 				3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */,
 				7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */,
 				6E65EEF7F70A480DE512954C /* TimeScaleModel.swift */,
-				ED77DFE72782361A0049FA58 /* AccountType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -305,12 +309,14 @@
 			isa = PBXGroup;
 			children = (
 				56DFEC316C64640DC5205E43 /* AccountsView.swift */,
+				DEC64B54753EEFD88E094178 /* GroupAccountView.swift */,
+				D35B1DD3E5B171DD30254BC8 /* GroupStakeCardView.swift */,
+				DF01FA828F8B7B8465AAD086 /* IndividualAccountView.swift */,
 				0C81D66CAB957125308B7010 /* StakeCardView.swift */,
 				1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */,
 				DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */,
 				E327E66ABFAEF0680D431590 /* Edit */,
 				041BD39CE903C621DFD6D4D8 /* Speculate */,
-				ED77DFE927823C330049FA58 /* IndividualAccountView.swift */,
 			);
 			path = Accounts;
 			sourceTree = "<group>";
@@ -346,6 +352,14 @@
 				0274987511660F32ADBD8FAF /* SupportingFiles */,
 			);
 			path = HEX;
+			sourceTree = "<group>";
+		};
+		"TEMP_437AA376-C4DA-4CBE-B2C0-63D90430950C" /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,11 +469,13 @@
 				384453310AFABC584F1147F7 /* EditView.swift in Sources */,
 				AD018BBA56BEB9A160EC670B /* FloatingGroupBoxStyle.swift in Sources */,
 				024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */,
+				737EC9222204FB7981A231F6 /* GroupAccountDataModel.swift in Sources */,
+				73C78440EE1C8FEA180F850E /* GroupAccountView.swift in Sources */,
+				05CAC40A69A41049DE403C66 /* GroupStakeCardView.swift in Sources */,
 				6100F3757C54FE2778D6E715 /* HEXNumberTextStyle.swift in Sources */,
-				ED77DFE82782361A0049FA58 /* AccountType.swift in Sources */,
 				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
 				B10CD79F49D2B0234DB29740 /* HexContractOnChain.swift in Sources */,
-				ED77DFEA27823C330049FA58 /* IndividualAccountView.swift in Sources */,
+				B85E73EA4BD02F6186BCEF26 /* IndividualAccountView.swift in Sources */,
 				CB0CF94B08C25BFCA9701669 /* LightweightChartsViewController.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				272BCA8A6709C128A9169BE2 /* OHLCVData+Extensions.swift.swift in Sources */,
