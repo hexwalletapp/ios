@@ -20,7 +20,7 @@ struct IndividualAccountView: View {
 
     private var accountList: some View {
         WithViewStore(store) { viewStore in
-            switch (viewStore.accountsData.isEmpty, viewStore.accountsData.filter { !$0.account.isFavorite }[id: viewStore.selectedId]) {
+            switch (viewStore.accountsData.isEmpty, viewStore.accountsData[id: viewStore.selectedId]) {
             case (false, let .some(accountData)):
                 ForEach(accountData.stakes) { stake in
                     StakeDetailsCardView(price: price(on: accountData.account.chain),
@@ -38,7 +38,7 @@ struct IndividualAccountView: View {
             switch viewStore.accountsData.isEmpty {
             case false:
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
-                    ForEach(viewStore.accountsData.filter { !$0.account.isFavorite }) { accountData in
+                    ForEach(viewStore.accountsData) { accountData in
                         StakeCardView(price: price(on: accountData.account.chain),
                                       accountData: accountData)
                             .padding([.horizontal, .top])
@@ -47,8 +47,13 @@ struct IndividualAccountView: View {
                     }
                 }
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
-                .tabViewStyle(PageTabViewStyle())
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .background(LinearGradient(stops: k.ACCOUNT_CARD_BACKGROUND_GRADIENT_STOPS, startPoint: .top, endPoint: .bottom))
+                
+                
+                .overlay(FavoriteDotsIndexView(hasMinusOne: true,
+                                               numberOfPages: viewStore.accountsData.count,
+                                               currentIndex: viewStore.accountsData.index(id: viewStore.selectedId) ?? 0))
             case true:
                 VStack {
                     Spacer(minLength: 200)

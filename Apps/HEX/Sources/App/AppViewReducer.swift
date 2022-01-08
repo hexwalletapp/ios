@@ -34,7 +34,7 @@ struct AppState: Equatable {
     @BindableState var shouldSpeculate = false
     @BindableState var speculativePrice: NSNumber = 1.00
     @BindableState var calculator = Calculator()
-
+    
     var ohlcv = [OHLCVData]()
     var chartLoading = false
     var hexContractOnChain = HexContractOnChain()

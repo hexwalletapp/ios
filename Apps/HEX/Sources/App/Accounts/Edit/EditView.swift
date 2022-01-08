@@ -158,21 +158,23 @@ struct EditView: View {
                 Spacer()
                 switch viewStore.editMode {
                 case .inactive:
-                    Image(systemName: "doc.on.doc")
-                        .foregroundColor(.accentColor)
-                        .onTapGesture {
-                            viewStore.send(.copy(accountData.account.address))
-                        }
-
-                    Image(systemName: accountData.account.isFavorite ? "heart.fill" : "heart")
-                        .foregroundColor(.pink)
-                        .onTapGesture {
-                            toggleFavorite(accountData: accountData)
-                        }
+                    Button {
+                        viewStore.send(.copy(accountData.account.address))
+                    } label: {
+                        Image(systemName: "doc.on.doc")
+                            .foregroundColor(.accentColor)
+                    }
+                    Button {
+                        toggleFavorite(accountData: accountData)
+                    } label: {
+                        Image(systemName: accountData.account.isFavorite ? "star.fill" : "star")
+                            .foregroundColor(.orange)
+                    }
                 default:
                     EmptyView()
                 }
             }
+            .buttonStyle(PlainButtonStyle())
             .swipeActions {
                 Button {} label: {
                     Label("Copy", systemImage: "doc.on.doc")
