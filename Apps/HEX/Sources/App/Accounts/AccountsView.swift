@@ -26,10 +26,12 @@ struct AccountsView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 ScrollView {
-                    Section {
-                        accountList
-                    } header: {
-                        accountHeader
+                    LazyVStack(pinnedViews: [.sectionHeaders]) {
+                        Section {
+                            accountList
+                        } header: {
+                            accountHeader
+                        }
                     }
                 }
                 .background(Color(.systemGroupedBackground))

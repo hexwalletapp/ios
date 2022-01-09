@@ -357,7 +357,7 @@
 			path = HEX;
 			sourceTree = "<group>";
 		};
-		"TEMP_782812C8-BBEC-4A1F-A9C1-3BBB7D1B0B82" /* Resources */ = {
+		"TEMP_7B2A273A-E6F4-4330-862A-52C34B2CC217" /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
