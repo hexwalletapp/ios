@@ -128,7 +128,8 @@ struct AccountsView: View {
                         .padding(.bottom, k.CARD_PADDING_BOTTOM)
                         .tag(viewStore.groupAccountData.id)
                     ForEach(viewStore.accountsData) { accountData in
-                        StakeCardView(accountData: .constant(accountData))
+                        StakeCardView(store: store,
+                                      accountData: .constant(accountData))
                             .padding([.horizontal, .top])
                             .padding(.bottom, k.CARD_PADDING_BOTTOM)
                             .tag(accountData.id)
@@ -141,7 +142,8 @@ struct AccountsView: View {
             case (false, true):
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
                     ForEach(viewStore.accountsData) { accountData in
-                        StakeCardView(accountData: .constant(accountData))
+                        StakeCardView(store: store,
+                                      accountData: .constant(accountData))
                             .padding([.horizontal, .top])
                             .padding(.bottom, k.CARD_PADDING_BOTTOM)
                             .tag(accountData.id)

@@ -119,7 +119,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             .merge(pairs),
             Effect.cancel(id: CancelGetAccounts()),
             Effect(value: .getGlobalInfo)
-                .throttle(id: GetAccountsThorttleId(), for: .seconds(30), scheduler: environment.mainQueue, latest: true)
+                .throttle(id: GetAccountsThorttleId(), for: .seconds(6), scheduler: environment.mainQueue, latest: true)
                 .cancellable(id: CancelGetAccounts())
         )
 

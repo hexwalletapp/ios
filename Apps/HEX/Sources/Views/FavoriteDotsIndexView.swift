@@ -16,12 +16,11 @@ struct FavoriteDotsIndexView: View {
     private let pageDotSize: CGFloat = 12
     private let pageDotSpacing: CGFloat = 12
 
-    private let pimaryHeartColor = Color.orange
-    private let secondaryHeartColor = Color.orange.opacity(0.6)
+    private let pimaryStarColor = Color.orange
+    private let secondaryStarColor = Color.secondary.opacity(0.6)
     private let primaryColor = Color.accentColor
-    private let secondaryColor = Color.accentColor.opacity(0.6)
+    private let secondaryColor = Color.secondary.opacity(0.6)
 
-    private let smallHeartScale: CGFloat = 0.5
     private let smallScale: CGFloat = 0.6
 
     // MARK: - Body
@@ -36,9 +35,9 @@ struct FavoriteDotsIndexView: View {
                             switch (index, viewStore.pageViewDots.hasMinusOne) {
                             case (0, true):
                                 Image(systemName: "star.fill")
-                                    .scaleEffect(viewStore.pageViewDots.currentIndex == 0 ? 1 : smallHeartScale)
+                                    .scaleEffect(viewStore.pageViewDots.currentIndex == 0 ? 1 : smallScale)
                                     .frame(width: pageDotSize, height: pageDotSize)
-                                    .foregroundColor(viewStore.pageViewDots.currentIndex == 0 ? pimaryHeartColor : secondaryHeartColor)
+                                    .foregroundColor(viewStore.pageViewDots.currentIndex == 0 ? pimaryStarColor : secondaryStarColor)
                                     .transition(AnyTransition.opacity.combined(with: .scale))
                                     .id(index)
                             default:

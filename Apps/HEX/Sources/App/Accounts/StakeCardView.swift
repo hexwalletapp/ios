@@ -7,6 +7,7 @@ import SwiftUI
 import SwiftUIVisualEffects
 
 struct StakeCardView: View {
+    let store: Store<AppState, AppAction>
     @Binding var accountData: AccountData
 
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
@@ -28,92 +29,104 @@ struct StakeCardView: View {
     }
 
     var front: some View {
-        ZStack {
-            Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors: accountData.account.chain.gradient),
-                                     startPoint: .bottomLeading,
-                                     endPoint: .topTrailing))
-                .blurEffect()
-                .blurEffectStyle(.systemMaterial)
-            VStack(alignment: .leading) {
-                HStack(alignment: .top) {
-                    frontTotal(title: "Daily Payout",
-                               hearts: accountData.total.interestSevenDayHearts,
-                               price: accountData.hexPrice,
-                               alignment: .leading)
+        WithViewStore(store) { viewStore in
+            ZStack {
+                Rectangle()
+                    .fill(LinearGradient(gradient: Gradient(colors: accountData.account.chain.gradient),
+                                         startPoint: .bottomLeading,
+                                         endPoint: .topTrailing))
+                    .blurEffect()
+                    .blurEffectStyle(.systemMaterial)
+                VStack(alignment: .leading) {
+                    HStack(alignment: .top) {
+                        frontTotal(title: "Daily Payout",
+                                   hearts: accountData.total.interestSevenDayHearts,
+                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice,
+                                   alignment: .leading)
+                        Spacer()
+                        front(address: accountData.account.address)
+                    }
                     Spacer()
-                    front(address: accountData.account.address)
+                    HStack(alignment: .bottom) {
+                        frontTotal(title: "Total Balance",
+                                   hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
+                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice,
+                                   alignment: .leading)
+                        Spacer()
+                        frontTotalHEX(title: "Total HEX",
+                                      hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
+                                      alignment: .trailing)
+                    }
                 }
-                Spacer()
-                HStack(alignment: .bottom) {
-                    frontTotal(title: "Total Balance",
-                               hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
-                               price: accountData.hexPrice,
-                               alignment: .leading)
-                    Spacer()
-                    frontTotalHEX(title: "Total HEX",
-                                  hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
-                                  alignment: .trailing)
+                .font(.body.monospacedDigit())
+                .padding()
+                switch accountData.isLoading {
+                case true: ProgressView()
+                    .vibrancyEffect()
+                    .vibrancyEffectStyle(.fill)
+                case false: EmptyView()
                 }
             }
-            .font(.body.monospacedDigit())
-            .padding()
-            switch accountData.isLoading {
-            case true: ProgressView()
-                .vibrancyEffect()
-                .vibrancyEffectStyle(.fill)
-            case false: EmptyView()
-            }
+            .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
+            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
-        .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
-        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 
     var back: some View {
-        ZStack(alignment: .topLeading) {
-            Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors: accountData.account.chain.gradient),
-                                     startPoint: .bottomLeading,
-                                     endPoint: .topTrailing))
-                .blurEffect()
-                .blurEffectStyle(.systemMaterial)
-            Rectangle()
-                .foregroundColor(.black)
-                .frame(height: MAGNETIC_STRIPE_HEIGHT)
-                .offset(y: MAGNETIC_STRIPE_PADDING)
+        WithViewStore(store) { viewStore in
+            ZStack(alignment: .topLeading) {
+                Rectangle()
+                    .fill(LinearGradient(gradient: Gradient(colors: accountData.account.chain.gradient),
+                                         startPoint: .bottomLeading,
+                                         endPoint: .topTrailing))
+                    .blurEffect()
+                    .blurEffectStyle(.systemMaterial)
+                Rectangle()
+                    .foregroundColor(.black)
+                    .frame(height: MAGNETIC_STRIPE_HEIGHT)
+                    .offset(y: MAGNETIC_STRIPE_PADDING)
 
-            VStack(alignment: .leading) {
-                DataHeaderView()
-                DataRowHexView(title: "ʟɪᴏ̨ᴜɪᴅ", units: accountData.liquidBalanceHearts, price: accountData.hexPrice)
-                DataRowHexView(title: "sᴛᴀᴋᴇᴅ", units: accountData.total.stakedHearts, price: accountData.hexPrice)
-                DataRowHexView(title: "ɪɴᴛᴇʀᴇsᴛ", units: accountData.total.interestHearts, price: accountData.hexPrice)
+                VStack(alignment: .leading) {
+                    DataHeaderView()
+                    DataRowHexView(title: "ʟɪᴏ̨ᴜɪᴅ",
+                                   units: accountData.liquidBalanceHearts,
+                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice)
+                    DataRowHexView(title: "sᴛᴀᴋᴇᴅ",
+                                   units: accountData.total.stakedHearts,
+                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice)
+                    DataRowHexView(title: "ɪɴᴛᴇʀᴇsᴛ",
+                                   units: accountData.total.interestHearts,
+                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice)
 
-                if !accountData.total.bigPayDayHearts.isZero {
-                    DataRowHexView(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: accountData.total.bigPayDayHearts, price: accountData.hexPrice)
-                }
-
-                Spacer()
-                HStack(alignment: .bottom) {
-                    VStack(alignment: .leading) {
-                        Spacer()
-                        Text(accountData.account.name)
-                        description(text: accountData.account.chain.description)
+                    if !accountData.total.bigPayDayHearts.isZero {
+                        DataRowHexView(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ",
+                                       units: accountData.total.bigPayDayHearts,
+                                       price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice)
                     }
+
                     Spacer()
-                    accountData.account.chain.image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 32)
-                        .vibrancyEffect()
-                        .vibrancyEffectStyle(.fill)
+                    HStack(alignment: .bottom) {
+                        VStack(alignment: .leading) {
+                            Spacer()
+                            Text(accountData.account.name)
+                            description(text: accountData.account.chain.description)
+                        }
+                        Spacer()
+                        accountData.account.chain.image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 32)
+                            .vibrancyEffect()
+                            .vibrancyEffectStyle(.fill)
+                    }
                 }
+                .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                .padding(.top, MAGNETIC_STRIPE_HEIGHT + MAGNETIC_STRIPE_PADDING / 2)
+                .padding()
             }
-            .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-            .padding(.top, MAGNETIC_STRIPE_HEIGHT + MAGNETIC_STRIPE_PADDING / 2)
-            .padding()
+            .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
+            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
-        .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
-        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 
     func frontTotal(title: String, hearts: BigUInt, price: Double, alignment: HorizontalAlignment) -> some View {
