@@ -1,5 +1,5 @@
 // Live.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import BigInt
 import Combine
@@ -7,6 +7,7 @@ import ComposableArchitecture
 import EVMChain
 import Foundation
 import IdentifiedCollections
+import os.log
 import UIKit
 import web3
 
@@ -47,7 +48,7 @@ public extension UniswapSmartContractManager {
                              responseType: GetPair.Response.self) { error, response in
                     switch error {
                     case let .some(err):
-                        print(err)
+                        os_log("%@", log: .uniswapSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch response?.address {
                         case let .some(address):
@@ -55,7 +56,7 @@ public extension UniswapSmartContractManager {
                                 dependencies[id]?.subscriber.send(.pairAddress(chain, address))
                             }
                         case .none:
-                            print("no pair")
+                            os_log("No pair from factory", log: .uniswapSmartContract, type: .info)
                         }
                     }
                 }
@@ -70,7 +71,7 @@ public extension UniswapSmartContractManager {
                                  responseType: GetReserves.Response.self) { error, response in
                     switch error {
                     case let .some(err):
-                        print(err)
+                        os_log("%@", log: .uniswapSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch response {
                         case let .some(response):
@@ -81,7 +82,7 @@ public extension UniswapSmartContractManager {
                                                                             response.blockTimestampLast))
                             }
                         case .none:
-                            print("no reserves")
+                            os_log("No reserves in pair", log: .uniswapSmartContract, type: .error)
                         }
                     }
                 }

@@ -30,11 +30,11 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             partialResult.interestSevenDayHearts += stake.interestSevenDayHearts
             partialResult.bigPayDayHearts += stake.bigPayDayHearts ?? 0
         }
-        
+
         state.accountsData[id: accountDataKey]?.total = total
 
         state.accountsData[id: accountDataKey]?.isLoading = false
-        
+
         switch state.accountsData[id: accountDataKey] {
         case let .some(accountData) where accountData.account.isFavorite == true:
             state.groupAccountData.accountsData.updateOrAppend(accountData)
@@ -72,11 +72,11 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
                                               address: accountData.account.address,
                                               chain: chain).fireAndForget()
         }
-        
+
         state.accountsData.forEach { accountData in
             state.accountsData[id: accountData.id]?.isLoading = true
         }
-        
+
         return .merge(
             .merge(stakes),
             .merge(balances)

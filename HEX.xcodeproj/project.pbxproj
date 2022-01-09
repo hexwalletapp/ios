@@ -55,6 +55,7 @@
 		CB0CF94B08C25BFCA9701669 /* LightweightChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F009BA928051D9E4DAFEF1C0 /* LightweightChartsViewController.swift */; };
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
 		D80E9D3E314B4F91B037C7F7 /* FavoritesStakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7131A18E89E871B0026BFB92 /* FavoritesStakeCardView.swift */; };
+		D853054461F3F7B67E98F857 /* OSLog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E75805BEDE9063DEA0CD2C /* OSLog+Extensions.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
@@ -118,6 +119,7 @@
 		CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeModel.swift; sourceTree = "<group>"; };
 		CD97BE07A876D006551CAE25 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
 		D332F301DA2CB0DA59E63112 /* DataSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSectionHeaderView.swift; sourceTree = "<group>"; };
+		D5E75805BEDE9063DEA0CD2C /* OSLog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+Extensions.swift"; sourceTree = "<group>"; };
 		D694B1DA5DF0377977B34F9C /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		D8B2BEAF9636D1C0A1E027C3 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */,
 				7254A74580879CE1D57F0B5B /* NSNumber+Extensions.swift */,
 				41DE07933240947412BE0800 /* OHLCVData+Extensions.swift.swift */,
+				D5E75805BEDE9063DEA0CD2C /* OSLog+Extensions.swift */,
 				842E13B529FC4BD56E2661A9 /* TimeScale+Extensions.swift */,
 			);
 			path = Extensions;
@@ -354,7 +357,7 @@
 			path = HEX;
 			sourceTree = "<group>";
 		};
-		"TEMP_945A7E2F-CA14-4577-8AEE-8BBB9E012639" /* Resources */ = {
+		"TEMP_782812C8-BBEC-4A1F-A9C1-3BBB7D1B0B82" /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
@@ -479,6 +482,7 @@
 				CB0CF94B08C25BFCA9701669 /* LightweightChartsViewController.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				272BCA8A6709C128A9169BE2 /* OHLCVData+Extensions.swift.swift in Sources */,
+				D853054461F3F7B67E98F857 /* OSLog+Extensions.swift in Sources */,
 				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
 				79C1FC79027AAF73DF6F3318 /* PlanView.swift in Sources */,
 				98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */,

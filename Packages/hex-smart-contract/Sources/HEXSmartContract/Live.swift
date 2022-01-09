@@ -1,5 +1,5 @@
 // Live.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import BigInt
 import Combine
@@ -7,6 +7,7 @@ import ComposableArchitecture
 import EVMChain
 import Foundation
 import IdentifiedCollections
+import os.log
 import UIKit
 import web3
 
@@ -54,7 +55,7 @@ public extension HEXSmartContractManager {
                             responseType: StakeCount_Parameter.Response.self) { error, response in
                     switch error {
                     case let .some(err):
-                        print(err)
+                        os_log("%@", log: .hexSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch response?.stakeCount {
                         case let .some(count):
@@ -62,7 +63,7 @@ public extension HEXSmartContractManager {
                                 manager.getStakeList(id, address, chain, count)
                             }
                         case .none:
-                            print("no stakes")
+                            os_log("No stake count", log: .hexSmartContract, type: .error)
                         }
                     }
                 }
@@ -78,8 +79,8 @@ public extension HEXSmartContractManager {
                 getStake.call(withClient: client,
                               responseType: StakeLists_Parameter.Response.self) { error, response in
                     switch error {
-                    case let .some(error):
-                        print(error)
+                    case let .some(err):
+                        os_log("%@", log: .hexSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch response {
                         case let .some(stake):
@@ -87,7 +88,7 @@ public extension HEXSmartContractManager {
                                 manager.updateStakeCache(id, address, chain, stake, stakeCount)
                             }
                         case .none:
-                            print("no stake")
+                            os_log("No stake list", log: .hexSmartContract, type: .error)
                         }
                     }
                 }
@@ -117,7 +118,7 @@ public extension HEXSmartContractManager {
                                     responseType: DailyDataRange_Parameter.Response.self) { error, response in
                     switch error {
                     case let .some(err):
-                        print(err)
+                        os_log("%@", log: .hexSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch response?.list {
                         case let .some(list):
@@ -125,7 +126,7 @@ public extension HEXSmartContractManager {
                                 dependencies[id]?.subscriber.send(.dailyData(list, chain))
                             }
                         case .none:
-                            print("no stakes")
+                            os_log("No stakes", log: .hexSmartContract, type: .error)
                         }
                     }
                 }
@@ -141,7 +142,7 @@ public extension HEXSmartContractManager {
                                 responseType: CurrentDay.Response.self) { error, response in
                     switch error {
                     case let .some(err):
-                        print(err)
+                        os_log("%@", log: .hexSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch response?.day {
                         case let .some(day):
@@ -149,7 +150,7 @@ public extension HEXSmartContractManager {
                                 dependencies[id]?.subscriber.send(.currentDay(day, chain))
                             }
                         case .none:
-                            print("no stakes")
+                            os_log("No current day", log: .hexSmartContract, type: .error)
                         }
                     }
                 }
@@ -164,8 +165,8 @@ public extension HEXSmartContractManager {
                 globalInfo.call(withClient: client,
                                 responseType: GlobalInfo.Response.self) { error, response in
                     switch error {
-                    case let .some(error):
-                        print(error)
+                    case let .some(err):
+                        os_log("%@", log: .hexSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch response {
                         case let .some(globalInfo):
@@ -173,7 +174,7 @@ public extension HEXSmartContractManager {
                                 dependencies[id]?.subscriber.send(.globalInfo(globalInfo, chain))
                             }
                         case .none:
-                            print("no global info")
+                            os_log("No global info", log: .hexSmartContract, type: .error)
                         }
                     }
                 }
@@ -188,8 +189,8 @@ public extension HEXSmartContractManager {
                 erc20.balanceOf(tokenContract: EthereumAddress("0x2b591e99afe9f32eaa6214f7b7629768c40eeb39"),
                                 address: ethereumAddress) { error, balance in
                     switch error {
-                    case let .some(error):
-                        print(error)
+                    case let .some(err):
+                        os_log("%@", log: .hexSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch balance {
                         case let .some(balance):
@@ -197,7 +198,7 @@ public extension HEXSmartContractManager {
                                 dependencies[id]?.subscriber.send(.balance(balance, ethereumAddress, chain))
                             }
                         case .none:
-                            print("no balance")
+                            os_log("No balance", log: .hexSmartContract, type: .error)
                         }
                     }
                 }

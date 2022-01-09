@@ -9,6 +9,7 @@ import Foundation
 import HEXSmartContract
 import IdentifiedCollections
 import LightweightCharts
+import os.log
 import SwiftUI
 import UniswapSmartContract
 
@@ -48,7 +49,6 @@ struct AppState: Equatable {
     var hexContractOnChain = HexContractOnChain()
     var pageViewDots = PageViewDots()
     var activeChains = Set<Chain>()
-
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -94,7 +94,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 state.selectedId = decodedAccounts.first?.id ?? ""
             } catch {
                 UserDefaults.standard.removeObject(forKey: k.ACCOUNTS_KEY)
-                print(error)
+                os_log("%@", log: .hexApp, type: .error, error.localizedDescription)
             }
         case .none:
             break
@@ -116,15 +116,14 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .getAccounts:
-        return .merge (
+        return .merge(
             Effect.cancel(id: CancelGetAccounts()),
             Effect(value: .getGlobalInfo)
                 .throttle(id: GetAccountsThorttleId(), for: .seconds(30), scheduler: environment.mainQueue, latest: true)
                 .cancellable(id: CancelGetAccounts())
         )
-            
+
     case .getGlobalInfo:
-        print("📞 SENDING GLOBAL INFO REQUEST !!!!!!!")
         let globalInfos = Array(state.activeChains).compactMap { chain -> Effect<AppAction, Never> in
             environment.hexManager.getGlobalInfo(id: HexManagerId(), chain: chain).fireAndForget()
         }
@@ -135,7 +134,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         switch result {
         case let .success(chartData):
             state.ohlcv = chartData
-        case let .failure(error): print(error)
+        case let .failure(error):
+            os_log("%@", log: .hexApp, type: .error, error.localizedDescription)
         }
         return .none
 
@@ -170,7 +170,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             UserDefaults.standard.setValue(encodedAccounts, forKey: k.ACCOUNTS_KEY)
             return .none
         } catch {
-            print(error)
+            os_log("%@", log: .hexApp, type: .error, error.localizedDescription)
             return .none
         }
 

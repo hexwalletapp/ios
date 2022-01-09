@@ -60,8 +60,8 @@ struct StakeCardView: View {
             .padding()
             switch accountData.isLoading {
             case true: ProgressView()
-                    .vibrancyEffect()
-                    .vibrancyEffectStyle(.fill)
+                .vibrancyEffect()
+                .vibrancyEffectStyle(.fill)
             case false: EmptyView()
             }
         }
