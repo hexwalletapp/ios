@@ -105,18 +105,18 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .onActive:
-        let pairs = Array(state.activeChains).compactMap { chain -> Effect<AppAction, Never> in
-            environment.uniswapManager.getPair(id: UniswapManagerId(), chain: chain, token0: k.HEX, token1: k.USDC).fireAndForget()
-        }
         return .merge(
-            .merge(pairs),
             Effect(value: .getChart),
             Effect(value: .getAccounts),
             Effect(value: .updateFavorites)
         )
 
     case .getAccounts:
+        let pairs = Array(state.activeChains).compactMap { chain -> Effect<AppAction, Never> in
+            environment.uniswapManager.getPair(id: UniswapManagerId(), chain: chain, token0: k.HEX, token1: k.USDC).fireAndForget()
+        }
         return .merge(
+            .merge(pairs),
             Effect.cancel(id: CancelGetAccounts()),
             Effect(value: .getGlobalInfo)
                 .throttle(id: GetAccountsThorttleId(), for: .seconds(30), scheduler: environment.mainQueue, latest: true)
@@ -156,7 +156,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 
     case .dismiss:
         state.modalPresent = nil
-        return .none
+        state.activeChains = Set<Chain>(state.accountsData.map { $0.account.chain })
+        return .merge(
+            Effect(value: .updateFavorites),
+            Effect(value: .getAccounts)
+        )
 
     case let .copy(address):
         UIPasteboard.general.string = address
@@ -234,7 +238,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
     case .binding(\.$modalPresent):
         switch state.modalPresent {
         case .some: return .none
-        case .none: return Effect(value: .getAccounts)
+        case .none: return Effect(value: .dismiss)
         }
 
     case .binding(\.$accountsData):
