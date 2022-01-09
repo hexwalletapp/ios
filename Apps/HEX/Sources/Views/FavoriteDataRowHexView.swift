@@ -1,9 +1,5 @@
-//
-//  FavoriteDataRowHexView.swift
-//  HEX
-//
-//  Created by Joe Blau on 1/8/22.
-//
+// FavoriteDataRowHexView.swift
+// Copyright (c) 2022 Joe Blau
 
 import SwiftUI
 
@@ -24,9 +20,9 @@ struct FavoriteDataRowHexView: View {
 }
 
 #if DEBUG
-struct FavoriteDataRowHexView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoriteDataRowHexView(title: "Title", usdTotal: "$100", hexTotal: "100")
+    struct FavoriteDataRowHexView_Previews: PreviewProvider {
+        static var previews: some View {
+            FavoriteDataRowHexView(title: "Title", usdTotal: "$100", hexTotal: "100")
+        }
     }
-}
 #endif

@@ -1,5 +1,5 @@
 // HEXSmartContractReducer.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import BigInt
 import ComposableArchitecture
@@ -79,7 +79,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         state.accountsData[id: accountDataKey]?.total.stakeShares = totalStakeShares
         state.accountsData[id: accountDataKey]?.total.stakedHearts = totalStakedHearts
         state.accountsData[id: accountDataKey]?.globalAccountData(onChainData: onChainData)
-        
+
         switch state.accountsData[id: accountDataKey] {
         case let .some(accountData) where accountData.account.isFavorite == true:
             state.groupAccountData.accountsData.updateOrAppend(accountData)
@@ -144,7 +144,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
     case let .balance(balance, address, chain):
         let accountDataKey = address.value + chain.description
         state.accountsData[id: accountDataKey]?.liquidBalanceHearts = balance
-        
+
         switch state.accountsData[id: accountDataKey] {
         case let .some(accountData) where accountData.account.isFavorite == true:
             state.groupAccountData.accountsData.updateOrAppend(accountData)

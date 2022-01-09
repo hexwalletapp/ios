@@ -31,7 +31,6 @@ struct AccountsView: View {
                     } header: {
                         accountHeader
                     }
-
                 }
                 .background(Color(.systemGroupedBackground))
                 .navigationBarTitle("Accounts")
@@ -96,28 +95,33 @@ struct AccountsView: View {
         WithViewStore(store) { viewStore in
             switch (viewStore.accountsData.isEmpty,
                     viewStore.groupAccountData.accountsData.isEmpty,
-                    viewStore.accountsData[id: viewStore.selectedId]) {
+                    viewStore.accountsData[id: viewStore.selectedId])
+            {
             case (false, true, let .some(accountData)),
-                (false, false, let .some(accountData)):
+                 (false, false, let .some(accountData)):
                 ForEach(accountData.stakes) { stake in
                     StakeDetailsCardView(price: price(on: accountData.account.chain),
                                          stake: stake,
                                          account: accountData.account)
                 }
             case (false, false, .none):
-                Text("boom")
+                ForEach(viewStore.groupAccountData.totalAccountStakes, id: \.self.1.stakeId) { accountStake in
+                    StakeDetailsCardView(price: price(on: accountStake.0.chain),
+                                         stake: accountStake.1,
+                                         account: accountStake.0)
+                }
             default:
                 EmptyView()
             }
         }
     }
-    
+
     private var accountHeader: some View {
         WithViewStore(store) { viewStore in
             switch (viewStore.accountsData.isEmpty, viewStore.groupAccountData.accountsData.isEmpty) {
             case (false, false):
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
-                    GroupStakeCardView(groupAccountData: viewStore.groupAccountData)
+                    FavoritesStakeCardView(groupAccountData: viewStore.groupAccountData)
                         .padding([.horizontal, .top])
                         .padding(.bottom, k.CARD_PADDING_BOTTOM)
                         .tag(viewStore.groupAccountData.id)
@@ -163,7 +167,7 @@ struct AccountsView: View {
             }
         }
     }
-    
+
     func price(on chain: Chain) -> Double {
         let viewStore = ViewStore(store)
         let chainPrice: Double
@@ -173,7 +177,7 @@ struct AccountsView: View {
         }
         return viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : chainPrice
     }
-    
+
     func toolbarText(heading: String, subheading: String) -> some View {
         VStack {
             Text(heading).font(.caption.monospacedDigit())

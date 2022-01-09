@@ -180,7 +180,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         state.accountsData.filter { $0.account.isFavorite }.forEach { account in
             state.groupAccountData.accountsData.updateOrAppend(account)
         }
-        
+
         switch state.groupAccountData.hasFavorites {
         case true:
             state.pageViewDots.hasMinusOne = true
@@ -191,7 +191,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             state.pageViewDots.currentIndex = 0
             state.pageViewDots.numberOfPages = state.accountsData.count
         }
-        
+
         state.selectedId = state.accountsData.first?.id ?? ""
 
         return .none
@@ -200,7 +200,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         switch state.groupAccountData.hasFavorites {
         case true:
             switch (state.groupAccountData.id == state.selectedId,
-                    state.accountsData.index(id: state.selectedId)) {
+                    state.accountsData.index(id: state.selectedId))
+            {
             case (true, .none): state.pageViewDots.currentIndex = 0
             case (false, let .some(index)): state.pageViewDots.currentIndex = index + 1
             default: state.pageViewDots.currentIndex = 1
@@ -209,7 +210,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             state.pageViewDots.currentIndex = state.accountsData.index(id: state.selectedId) ?? 0
         }
         return .none
-        
+
     case .binding(\.$selectedTimeScale),
          .binding(\.$selectedChartType):
         return Effect(value: .getChart)

@@ -3,9 +3,9 @@
 
 import BigInt
 import ComposableArchitecture
+import EVMChain
 import Foundation
 import SwiftUI
-import EVMChain
 
 struct GroupAccountData: Hashable, Equatable, Identifiable {
     var id: String { "FavoriteAccountDataId" }
@@ -19,7 +19,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
     ]
 
     var hasFavorites: Bool {
-        return !accountsData.isEmpty
+        !accountsData.isEmpty
     }
 
     var ethPrice: Double = 0
@@ -55,9 +55,9 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             partialResult += accountData.total.balanceHearts + accountData.liquidBalanceHearts
         }.hex.hexString
     }
-    
+
     // MARK: - Total Liquid
-    
+
     var totalLiquidUSD: String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
             let price: Double
@@ -70,14 +70,13 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: price).doubleValue)
         }.currencyString
     }
-    
-    
+
     var totalLiquidHEX: String {
         accountsData.reduce(into: BigUInt(0)) { partialResult, accountData in
             partialResult += accountData.liquidBalanceHearts
         }.hex.hexString
     }
-    
+
     // MARK: - Total Staked
 
     var totalStakedUSD: String {
@@ -92,16 +91,15 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: price).doubleValue)
         }.currencyString
     }
-    
-    
+
     var totalStakedHEX: String {
         accountsData.reduce(into: BigUInt(0)) { partialResult, accountData in
             partialResult += accountData.total.stakedHearts
         }.hex.hexString
     }
-    
+
     // MARK: - Total Interest
-    
+
     var totalInterestUSD: String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
             let price: Double
@@ -114,16 +112,15 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: price).doubleValue)
         }.currencyString
     }
-    
-    
+
     var totalInterestHEX: String {
         accountsData.reduce(into: BigUInt(0)) { partialResult, accountData in
             partialResult += accountData.total.interestHearts
         }.hex.hexString
     }
-    
+
     // MARK: - Total Big Pay Day
-    
+
     var totalBigPayDayUSD: String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
             let price: Double
@@ -136,23 +133,32 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: price).doubleValue)
         }.currencyString
     }
-    
-    
+
     var totalBigPayDayHEX: String {
         totalBigPayday.hex.hexString
     }
-    
+
     var totalBigPayday: BigUInt {
         accountsData.reduce(into: BigUInt(0)) { partialResult, accountData in
             partialResult += accountData.total.bigPayDayHearts
         }
     }
-    
+
     // MARK: - Total Chains
-    
+
     var totalChains: Set<Chain> {
         accountsData.reduce(into: Set<Chain>()) { partialResult, accountData in
             partialResult.insert(accountData.account.chain)
         }
+    }
+    
+    // MARK: - Stakes
+    
+    var totalAccountStakes: [(Account, Stake)] {
+        accountsData.reduce(into: Array<(Account, Stake)>()) { partialResult, accountData in
+            let accounts = Array(repeating: accountData.account, count: accountData.stakes.count)
+            let accountStakes = zip(accounts, accountData.stakes).map { ($0, $1) }
+            partialResult.append(contentsOf: accountStakes)
+        }.sorted { $0.1.stakeEndDay < $1.1.stakeEndDay }
     }
 }
