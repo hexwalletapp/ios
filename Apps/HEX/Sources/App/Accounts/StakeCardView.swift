@@ -58,6 +58,12 @@ struct StakeCardView: View {
             }
             .font(.body.monospacedDigit())
             .padding()
+            switch accountData.isLoading {
+            case true: ProgressView()
+                    .vibrancyEffect()
+                    .vibrancyEffectStyle(.fill)
+            case false: EmptyView()
+            }
         }
         .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))

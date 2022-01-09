@@ -109,3 +109,6 @@ struct GetChartId: Hashable {}
 struct GetChartThrottleId: Hashable {}
 struct HexManagerId: Hashable {}
 struct UniswapManagerId: Hashable {}
+
+struct CancelGetAccounts: Hashable {}
+struct GetAccountsThorttleId: Hashable {}

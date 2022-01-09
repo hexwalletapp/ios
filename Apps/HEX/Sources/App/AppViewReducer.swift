@@ -31,7 +31,7 @@ struct PageViewDots: Equatable {
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var modalPresent: ModalPresent? = nil
-    @BindableState var selectedTab: Tab = .accounts
+    @BindableState var selectedTab: Tab = .charts
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
     @BindableState var selectedChartType: ChartType = .candlestick
 
@@ -47,6 +47,8 @@ struct AppState: Equatable {
     var chartLoading = false
     var hexContractOnChain = HexContractOnChain()
     var pageViewDots = PageViewDots()
+    var activeChains = Set<Chain>()
+
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -60,8 +62,8 @@ enum AppAction: BindableAction, Equatable {
 
     case dismiss
     case getAccounts
+    case getGlobalInfo
     case getChart
-    case getPairs
     case updateChart(Result<[OHLCVData], NSError>)
     case binding(BindingAction<AppState>)
     case copy(String)
@@ -87,6 +89,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 let decodedAccounts = try environment.decoder.decode([Account].self,
                                                                      from: encodedAccounts)
                 state.accountsData = IdentifiedArray(uniqueElements: decodedAccounts.map { AccountData(account: $0) })
+                state.activeChains = Set<Chain>(state.accountsData.map { $0.account.chain })
                 state.pageViewDots.numberOfPages = decodedAccounts.count
                 state.selectedId = decodedAccounts.first?.id ?? ""
             } catch {
@@ -102,32 +105,30 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .onActive:
+        let pairs = Array(state.activeChains).compactMap { chain -> Effect<AppAction, Never> in
+            environment.uniswapManager.getPair(id: UniswapManagerId(), chain: chain, token0: k.HEX, token1: k.USDC).fireAndForget()
+        }
         return .merge(
-            Effect(value: .getPairs),
+            .merge(pairs),
             Effect(value: .getChart),
             Effect(value: .getAccounts),
             Effect(value: .updateFavorites)
         )
 
     case .getAccounts:
-        let globalInfos = Chain.allCases.compactMap { chain -> Effect<AppAction, Never> in
+        return .merge (
+            Effect.cancel(id: CancelGetAccounts()),
+            Effect(value: .getGlobalInfo)
+                .throttle(id: GetAccountsThorttleId(), for: .seconds(30), scheduler: environment.mainQueue, latest: true)
+                .cancellable(id: CancelGetAccounts())
+        )
+            
+    case .getGlobalInfo:
+        print("📞 SENDING GLOBAL INFO REQUEST !!!!!!!")
+        let globalInfos = Array(state.activeChains).compactMap { chain -> Effect<AppAction, Never> in
             environment.hexManager.getGlobalInfo(id: HexManagerId(), chain: chain).fireAndForget()
         }
-
-        let currentDays = Chain.allCases.compactMap { chain -> Effect<AppAction, Never> in
-            environment.hexManager.getCurrentDay(id: HexManagerId(), chain: chain).fireAndForget()
-        }
-
-        return .merge(
-            .merge(globalInfos),
-            .merge(currentDays)
-        )
-
-    case .getPairs:
-        let pairs = Chain.allCases.compactMap { chain -> Effect<AppAction, Never> in
-            environment.uniswapManager.getPair(id: UniswapManagerId(), chain: chain, token0: k.HEX, token1: k.USDC).fireAndForget()
-        }
-        return .merge(pairs)
+        return .merge(globalInfos)
 
     case let .updateChart(result):
         state.chartLoading = false
