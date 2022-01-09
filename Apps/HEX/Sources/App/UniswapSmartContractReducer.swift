@@ -17,8 +17,10 @@ let uniswapReducer = Reducer<AppState, UniswapSmartContractManager.Action, AppEn
         case .ethereum:
             state.hexContractOnChain.ethData.hexUsd = 1.0 / ratio
             state.calculator.price = 1.0 / ratio
+            state.groupAccountData.ethPrice = 1.0 / ratio
         case .pulse:
             state.hexContractOnChain.plsData.hexUsd = 1.0 / ratio
+            state.groupAccountData.plsPrice = 1.0 / ratio
         }
         return .none
     }

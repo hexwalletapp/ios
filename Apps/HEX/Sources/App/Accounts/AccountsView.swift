@@ -26,13 +26,12 @@ struct AccountsView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 ScrollView {
-                    IndividualAccountView(store: store)
-//                    switch viewStore.accountTypeView {
-//                    case .individual:
-//
-//                    case .group:
-//                        GroupAccountView(store: store)
-//                    }
+                    Section {
+                        accountList
+                    } header: {
+                        accountHeader
+                    }
+
                 }
                 .background(Color(.systemGroupedBackground))
                 .navigationBarTitle("Accounts")
@@ -63,28 +62,27 @@ struct AccountsView: View {
                             switch accountData.account.chain {
                             case .ethereum:
                                 let ethData = viewStore.hexContractOnChain.ethData
-                                toolbarText(heading: ethData.currentDay.advanced(by: 1).description, subheading: "Day")
 
                                 switch viewStore.shouldSpeculate {
                                 case true: toolbarText(heading: ethData.speculativePrice.currencyString + "*", subheading: "Price")
                                 case false: toolbarText(heading: ethData.price.currencyString, subheading: "Price")
                                 }
 
+                                toolbarText(heading: ethData.currentDay.advanced(by: 1).description, subheading: "Day")
                             case .pulse:
                                 let plsData = viewStore.hexContractOnChain.plsData
-                                toolbarText(heading: plsData.currentDay.advanced(by: 1).description, subheading: "Day")
 
                                 switch viewStore.shouldSpeculate {
                                 case true: toolbarText(heading: plsData.speculativePrice.currencyString + "*", subheading: "Price")
                                 case false: toolbarText(heading: plsData.price.currencyString, subheading: "Price")
                                 }
-                            }
-                            //                        Button {} label: { Image(systemName: "bell.badge") }
-                            //                            .disabled(true)
-                            //
-                            //                        Button {} label: { Image(systemName: "arrow.up.arrow.down") }
-                            //                            .disabled(true)
 
+                                toolbarText(heading: plsData.currentDay.advanced(by: 1).description, subheading: "Day")
+                            }
+                        case (false, .none):
+                            let ethData = viewStore.hexContractOnChain.ethData
+                            toolbarText(heading: ethData.currentDay.advanced(by: 1).description,
+                                        subheading: "Day")
                         default:
                             EmptyView()
                         }
@@ -94,11 +92,94 @@ struct AccountsView: View {
         }
     }
 
+    private var accountList: some View {
+        WithViewStore(store) { viewStore in
+            switch (viewStore.accountsData.isEmpty,
+                    viewStore.groupAccountData.accountsData.isEmpty,
+                    viewStore.accountsData[id: viewStore.selectedId]) {
+            case (false, true, let .some(accountData)),
+                (false, false, let .some(accountData)):
+                ForEach(accountData.stakes) { stake in
+                    StakeDetailsCardView(price: price(on: accountData.account.chain),
+                                         stake: stake,
+                                         account: accountData.account)
+                }
+            case (false, false, .none):
+                Text("boom")
+            default:
+                EmptyView()
+            }
+        }
+    }
+    
+    private var accountHeader: some View {
+        WithViewStore(store) { viewStore in
+            switch (viewStore.accountsData.isEmpty, viewStore.groupAccountData.accountsData.isEmpty) {
+            case (false, false):
+                TabView(selection: viewStore.binding(\.$selectedId).animation()) {
+                    GroupStakeCardView(groupAccountData: viewStore.groupAccountData)
+                        .padding([.horizontal, .top])
+                        .padding(.bottom, k.CARD_PADDING_BOTTOM)
+                        .tag(viewStore.groupAccountData.id)
+                    ForEach(viewStore.accountsData) { accountData in
+                        StakeCardView(price: price(on: accountData.account.chain),
+                                      accountData: accountData)
+                            .padding([.horizontal, .top])
+                            .padding(.bottom, k.CARD_PADDING_BOTTOM)
+                            .tag(accountData.id)
+                    }
+                }
+                .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .background(LinearGradient(stops: k.ACCOUNT_CARD_BACKGROUND_GRADIENT_STOPS, startPoint: .top, endPoint: .bottom))
+                .overlay(FavoriteDotsIndexView(store: store))
+            case (false, true):
+                TabView(selection: viewStore.binding(\.$selectedId).animation()) {
+                    ForEach(viewStore.accountsData) { accountData in
+                        StakeCardView(price: price(on: accountData.account.chain),
+                                      accountData: accountData)
+                            .padding([.horizontal, .top])
+                            .padding(.bottom, k.CARD_PADDING_BOTTOM)
+                            .tag(accountData.id)
+                    }
+                }
+                .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                .background(LinearGradient(stops: k.ACCOUNT_CARD_BACKGROUND_GRADIENT_STOPS, startPoint: .top, endPoint: .bottom))
+                .overlay(FavoriteDotsIndexView(store: store))
+            default:
+                VStack {
+                    Spacer(minLength: 200)
+                    Button {
+                        viewStore.send(.binding(.set(\.$modalPresent, .edit)))
+                    } label: {
+                        VStack(alignment: .center) {
+                            Image(systemName: "person.badge.plus").font(.largeTitle)
+                            Text("Add").font(.body.monospaced())
+                        }
+                        .padding()
+                    }
+                }
+            }
+        }
+    }
+    
+    func price(on chain: Chain) -> Double {
+        let viewStore = ViewStore(store)
+        let chainPrice: Double
+        switch chain {
+        case .ethereum: chainPrice = viewStore.hexContractOnChain.ethData.price.doubleValue
+        case .pulse: chainPrice = viewStore.hexContractOnChain.plsData.price.doubleValue
+        }
+        return viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : chainPrice
+    }
+    
     func toolbarText(heading: String, subheading: String) -> some View {
         VStack {
             Text(heading).font(.caption.monospacedDigit())
             Text(subheading).font(.caption2.monospaced()).foregroundColor(.secondary)
-        }.frame(width: 48)
+        }
+        .frame(width: 48)
     }
 }
 

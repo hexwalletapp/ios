@@ -4,7 +4,7 @@
 import ComposableArchitecture
 import SwiftUI
 
-//struct GroupAccountView: View {
+// struct GroupAccountView: View {
 //    let store: Store<AppState, AppAction>
 //
 //    var body: some View {
@@ -36,7 +36,7 @@ import SwiftUI
 //    func groupAccount(accountData: IdentifiedArrayOf<AccountData>) -> GroupAccountData {
 //        GroupAccountData(ethPrice: 0.20, plsPrice: 0.80, accountData: accountData)
 //    }
-//}
+// }
 
 // struct GroupView_Previews: PreviewProvider {
 //    static var previews: some View {

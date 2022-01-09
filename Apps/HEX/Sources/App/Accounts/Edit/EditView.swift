@@ -39,8 +39,7 @@ struct EditView: View {
                                 Text("Chain")
                             }
                             Toggle("Favorite", isOn: $account.isFavorite)
-                                .toggleStyle(SwitchToggleStyle(tint: .pink))
-                                .accentColor(.pink)
+                                .toggleStyle(SwitchToggleStyle(tint: .orange))
                             TextField("Wallet Name",
                                       text: $account.name,
                                       prompt: Text("Wallet Name"))
@@ -105,7 +104,6 @@ struct EditView: View {
                             Button {
                                 focusedField = .none
                                 viewStore.send(.binding(.set(\.$editMode, .active)))
-
                             } label: { Text("Edit") }
                         default:
                             Button { viewStore.send(.binding(.set(\.$editMode, .inactive))) } label: { Text("Done") }
@@ -117,7 +115,12 @@ struct EditView: View {
         }
     }
 
-    func delete(at _: IndexSet) {}
+    func delete(at indices: IndexSet) {
+        let viewStore = ViewStore(store)
+        var accountsData = viewStore.accountsData
+        accountsData.remove(atOffsets: indices)
+        viewStore.send(.binding(.set(\.$accountsData, accountsData)))
+    }
 
     func move(indices: IndexSet, newOffset: Int) {
         let viewStore = ViewStore(store)
@@ -166,6 +169,7 @@ struct EditView: View {
                     }
                     Button {
                         toggleFavorite(accountData: accountData)
+                        viewStore.send(.updateFavorites)
                     } label: {
                         Image(systemName: accountData.account.isFavorite ? "star.fill" : "star")
                             .foregroundColor(.orange)
@@ -175,16 +179,16 @@ struct EditView: View {
                 }
             }
             .buttonStyle(PlainButtonStyle())
-            .swipeActions {
-                Button {} label: {
-                    Label("Copy", systemImage: "doc.on.doc")
-                }
-                Button(role: .destructive) {
-                    viewStore.send(.delete(accountData))
-                } label: {
-                    Label("Delete", systemImage: "trash")
-                }
-            }
+//            .swipeActions {
+//                Button {} label: {
+//                    Label("Copy", systemImage: "doc.on.doc")
+//                }
+//                Button(role: .destructive) {
+//                    viewStore.send(.delete(accountData))
+//                } label: {
+//                    Label("Delete", systemImage: "trash")
+//                }
+//            }
         }
     }
 }

@@ -79,7 +79,14 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         state.accountsData[id: accountDataKey]?.total.stakeShares = totalStakeShares
         state.accountsData[id: accountDataKey]?.total.stakedHearts = totalStakedHearts
         state.accountsData[id: accountDataKey]?.globalAccountData(onChainData: onChainData)
-        return .none
+        
+        switch state.accountsData[id: accountDataKey] {
+        case let .some(accountData) where accountData.account.isFavorite == true:
+            state.groupAccountData.accountsData.updateOrAppend(accountData)
+            return .none
+        default:
+            return .none
+        }
 
     case let .dailyData(dailyDataEncoded, chain):
         let dailyData = dailyDataEncoded.map { dailyData -> DailyData in
@@ -137,6 +144,13 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
     case let .balance(balance, address, chain):
         let accountDataKey = address.value + chain.description
         state.accountsData[id: accountDataKey]?.liquidBalanceHearts = balance
-        return .none
+        
+        switch state.accountsData[id: accountDataKey] {
+        case let .some(accountData) where accountData.account.isFavorite == true:
+            state.groupAccountData.accountsData.updateOrAppend(accountData)
+            return .none
+        default:
+            return .none
+        }
     }
 }

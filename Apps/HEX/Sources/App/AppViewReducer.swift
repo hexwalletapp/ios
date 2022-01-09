@@ -22,6 +22,12 @@ enum ModalPresent: Identifiable {
     case edit, speculate
 }
 
+struct PageViewDots: Equatable {
+    var hasMinusOne: Bool = false
+    var numberOfPages: Int = 0
+    var currentIndex: Int = 0
+}
+
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var modalPresent: ModalPresent? = nil
@@ -34,10 +40,13 @@ struct AppState: Equatable {
     @BindableState var shouldSpeculate = false
     @BindableState var speculativePrice: NSNumber = 1.00
     @BindableState var calculator = Calculator()
-    
+
+    @BindableState var groupAccountData = GroupAccountData()
+
     var ohlcv = [OHLCVData]()
     var chartLoading = false
     var hexContractOnChain = HexContractOnChain()
+    var pageViewDots = PageViewDots()
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -57,6 +66,7 @@ enum AppAction: BindableAction, Equatable {
     case binding(BindingAction<AppState>)
     case copy(String)
     case delete(AccountData)
+    case updateFavorites
 }
 
 struct AppEnvironment {
@@ -77,6 +87,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 let decodedAccounts = try environment.decoder.decode([Account].self,
                                                                      from: encodedAccounts)
                 state.accountsData = IdentifiedArray(uniqueElements: decodedAccounts.map { AccountData(account: $0) })
+                state.pageViewDots.numberOfPages = decodedAccounts.count
                 state.selectedId = decodedAccounts.first?.id ?? ""
             } catch {
                 UserDefaults.standard.removeObject(forKey: k.ACCOUNTS_KEY)
@@ -92,6 +103,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 
     case .onActive:
         return .merge(
+            Effect(value: .updateFavorites),
             Effect(value: .getChart),
             Effect(value: .getAccounts),
             Effect(value: .getPairs)
@@ -161,6 +173,43 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             return .none
         }
 
+    case .updateFavorites:
+        state.accountsData.filter { !$0.account.isFavorite }.forEach { account in
+            state.groupAccountData.accountsData.remove(account)
+        }
+        state.accountsData.filter { $0.account.isFavorite }.forEach { account in
+            state.groupAccountData.accountsData.updateOrAppend(account)
+        }
+        
+        switch state.groupAccountData.hasFavorites {
+        case true:
+            state.pageViewDots.hasMinusOne = true
+            state.pageViewDots.currentIndex = 1
+            state.pageViewDots.numberOfPages = state.accountsData.count + 1
+        case false:
+            state.pageViewDots.hasMinusOne = false
+            state.pageViewDots.currentIndex = 0
+            state.pageViewDots.numberOfPages = state.accountsData.count
+        }
+        
+        state.selectedId = state.accountsData.first?.id ?? ""
+
+        return .none
+
+    case .binding(\.$selectedId):
+        switch state.groupAccountData.hasFavorites {
+        case true:
+            switch (state.groupAccountData.id == state.selectedId,
+                    state.accountsData.index(id: state.selectedId)) {
+            case (true, .none): state.pageViewDots.currentIndex = 0
+            case (false, let .some(index)): state.pageViewDots.currentIndex = index + 1
+            default: state.pageViewDots.currentIndex = 1
+            }
+        case false:
+            state.pageViewDots.currentIndex = state.accountsData.index(id: state.selectedId) ?? 0
+        }
+        return .none
+        
     case .binding(\.$selectedTimeScale),
          .binding(\.$selectedChartType):
         return Effect(value: .getChart)
