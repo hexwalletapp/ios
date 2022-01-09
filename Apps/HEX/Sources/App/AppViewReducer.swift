@@ -310,7 +310,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             state.calculator.ladderRungs[index].shares = shares
         }
         return .none
-        
+
     case .binding, .hexManager, .uniswapManager, .onBackground, .onInactive:
         return .none
     }
