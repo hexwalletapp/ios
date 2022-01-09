@@ -103,10 +103,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 
     case .onActive:
         return .merge(
-            Effect(value: .updateFavorites),
+            Effect(value: .getPairs),
             Effect(value: .getChart),
             Effect(value: .getAccounts),
-            Effect(value: .getPairs)
+            Effect(value: .updateFavorites)
         )
 
     case .getAccounts:
@@ -310,7 +310,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             state.calculator.ladderRungs[index].shares = shares
         }
         return .none
-
+        
     case .binding, .hexManager, .uniswapManager, .onBackground, .onInactive:
         return .none
     }

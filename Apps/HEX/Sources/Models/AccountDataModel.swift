@@ -11,6 +11,7 @@ struct AccountData: Codable, Hashable, Equatable, Identifiable {
     var stakes = IdentifiedArrayOf<Stake>()
     var total = StakeTotal()
     var liquidBalanceHearts: BigUInt = 0
+    var hexPrice: Double = 0
 
     mutating func globalAccountData(onChainData: OnChainData) {
         stakes.forEach { stake in

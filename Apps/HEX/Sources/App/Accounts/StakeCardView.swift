@@ -7,8 +7,7 @@ import SwiftUI
 import SwiftUIVisualEffects
 
 struct StakeCardView: View {
-    let price: Double
-    let accountData: AccountData
+    @Binding var accountData: AccountData
 
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
     private let MAGNETIC_STRIPE_PADDING = CGFloat(24)
@@ -40,6 +39,7 @@ struct StakeCardView: View {
                 HStack(alignment: .top) {
                     frontTotal(title: "Daily Payout",
                                hearts: accountData.total.interestSevenDayHearts,
+                               price: accountData.hexPrice,
                                alignment: .leading)
                     Spacer()
                     front(address: accountData.account.address)
@@ -48,6 +48,7 @@ struct StakeCardView: View {
                 HStack(alignment: .bottom) {
                     frontTotal(title: "Total Balance",
                                hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
+                               price: accountData.hexPrice,
                                alignment: .leading)
                     Spacer()
                     frontTotalHEX(title: "Total HEX",
@@ -77,12 +78,12 @@ struct StakeCardView: View {
 
             VStack(alignment: .leading) {
                 DataHeaderView()
-                DataRowHexView(title: "ʟɪᴏ̨ᴜɪᴅ", units: accountData.liquidBalanceHearts, price: price)
-                DataRowHexView(title: "sᴛᴀᴋᴇᴅ", units: accountData.total.stakedHearts, price: price)
-                DataRowHexView(title: "ɪɴᴛᴇʀᴇsᴛ", units: accountData.total.interestHearts, price: price)
+                DataRowHexView(title: "ʟɪᴏ̨ᴜɪᴅ", units: accountData.liquidBalanceHearts, price: accountData.hexPrice)
+                DataRowHexView(title: "sᴛᴀᴋᴇᴅ", units: accountData.total.stakedHearts, price: accountData.hexPrice)
+                DataRowHexView(title: "ɪɴᴛᴇʀᴇsᴛ", units: accountData.total.interestHearts, price: accountData.hexPrice)
 
                 if !accountData.total.bigPayDayHearts.isZero {
-                    DataRowHexView(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: accountData.total.bigPayDayHearts, price: price)
+                    DataRowHexView(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ", units: accountData.total.bigPayDayHearts, price: accountData.hexPrice)
                 }
 
                 Spacer()
@@ -109,7 +110,7 @@ struct StakeCardView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 
-    func frontTotal(title: String, hearts: BigUInt, alignment: HorizontalAlignment) -> some View {
+    func frontTotal(title: String, hearts: BigUInt, price: Double, alignment: HorizontalAlignment) -> some View {
         VStack(alignment: alignment) {
             Text(hearts.hexAt(price: price).currencyString)
             description(text: title)

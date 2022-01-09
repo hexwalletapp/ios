@@ -22,31 +22,19 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
         !accountsData.isEmpty
     }
 
-    var ethPrice: Double = 0
-    var plsPrice: Double = 0
     var accountsData = IdentifiedArrayOf<AccountData>()
 
     var dailyPayout: String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
-            let price: Double
-            switch accountData.account.chain {
-            case .ethereum: price = ethPrice
-            case .pulse: price = plsPrice
-            }
-            partialResult = NSNumber(value: partialResult.doubleValue + accountData.total.interestSevenDayHearts.hexAt(price: price).doubleValue)
+            partialResult = NSNumber(value: partialResult.doubleValue + accountData.total.interestSevenDayHearts.hexAt(price: accountData.hexPrice).doubleValue)
         }.currencyString
     }
 
     var totalBalance: String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
-            let price: Double
-            switch accountData.account.chain {
-            case .ethereum: price = ethPrice
-            case .pulse: price = plsPrice
-            }
             let totalBalance = accountData.total.balanceHearts + accountData.liquidBalanceHearts
 
-            partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: price).doubleValue)
+            partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
         }.currencyString
     }
 
@@ -60,14 +48,9 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
 
     var totalLiquidUSD: String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
-            let price: Double
-            switch accountData.account.chain {
-            case .ethereum: price = ethPrice
-            case .pulse: price = plsPrice
-            }
             let totalBalance = accountData.liquidBalanceHearts
 
-            partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: price).doubleValue)
+            partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
         }.currencyString
     }
 
@@ -81,14 +64,9 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
 
     var totalStakedUSD: String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
-            let price: Double
-            switch accountData.account.chain {
-            case .ethereum: price = ethPrice
-            case .pulse: price = plsPrice
-            }
             let totalBalance = accountData.total.stakedHearts
 
-            partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: price).doubleValue)
+            partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
         }.currencyString
     }
 
@@ -102,14 +80,9 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
 
     var totalInterestUSD: String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
-            let price: Double
-            switch accountData.account.chain {
-            case .ethereum: price = ethPrice
-            case .pulse: price = plsPrice
-            }
             let totalBalance = accountData.total.interestHearts
 
-            partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: price).doubleValue)
+            partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
         }.currencyString
     }
 
@@ -123,14 +96,9 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
 
     var totalBigPayDayUSD: String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
-            let price: Double
-            switch accountData.account.chain {
-            case .ethereum: price = ethPrice
-            case .pulse: price = plsPrice
-            }
             let totalBalance = accountData.total.bigPayDayHearts
 
-            partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: price).doubleValue)
+            partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
         }.currencyString
     }
 
@@ -151,11 +119,11 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             partialResult.insert(accountData.account.chain)
         }
     }
-    
+
     // MARK: - Stakes
-    
+
     var totalAccountStakes: [(Account, Stake)] {
-        accountsData.reduce(into: Array<(Account, Stake)>()) { partialResult, accountData in
+        accountsData.reduce(into: [(Account, Stake)]()) { partialResult, accountData in
             let accounts = Array(repeating: accountData.account, count: accountData.stakes.count)
             let accountStakes = zip(accounts, accountData.stakes).map { ($0, $1) }
             partialResult.append(contentsOf: accountStakes)
