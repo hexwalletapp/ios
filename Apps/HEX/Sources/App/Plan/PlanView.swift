@@ -98,6 +98,12 @@ struct PlanView: View {
                 .background(Color(.systemGroupedBackground))
                 .navigationBarTitle("Plan", displayMode: .inline)
                 .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button {
+                            focusedField = nil
+                        } label: { Image(systemName: "keyboard.chevron.compact.down") }
+                        .disabled(focusedField == nil)
+                    }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Toggle(isOn: viewStore.binding(\.$calculator.showLadder).animation()) {
                             Label("Ladder", image: "ladder.SFSymbol")
