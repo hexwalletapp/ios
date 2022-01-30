@@ -29,7 +29,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             partialResult = NSNumber(value: partialResult.doubleValue + accountData.total.interestSevenDayHearts.hexAt(price: accountData.hexPrice).doubleValue)
         }.currencyString
     }
-    
+
     var dailyPayoutHex: String {
         accountsData.reduce(into: BigUInt(0)) { partialResult, accountData in
             partialResult += accountData.total.interestSevenDayHearts
@@ -49,7 +49,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             partialResult += accountData.total.balanceHearts + accountData.liquidBalanceHearts
         }.hex.hexString
     }
-    
+
     var totalShares: String {
         accountsData.reduce(into: BigUInt(0)) { partialResult, accountData in
             partialResult += accountData.total.stakeShares

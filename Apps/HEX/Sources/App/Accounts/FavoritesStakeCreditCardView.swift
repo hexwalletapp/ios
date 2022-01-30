@@ -1,4 +1,4 @@
-// FavoritesStakeCardView.swift
+// FavoritesStakeCreditCardView.swift
 // Copyright (c) 2022 Joe Blau
 
 import BigInt
@@ -126,7 +126,8 @@ struct FavoritesStakeCreditCardView: View {
     func frontTotal(title: String,
                     value: String,
                     hex: String,
-                    alignment: HorizontalAlignment) -> some View {
+                    alignment: HorizontalAlignment) -> some View
+    {
         WithViewStore(store) { viewStore in
             VStack(alignment: alignment) {
                 switch viewStore.shouldShowHEXOnCreditCard {
@@ -138,11 +139,9 @@ struct FavoritesStakeCreditCardView: View {
                 }
                 description(text: title)
             }
-            
         }
-
     }
-    
+
     func frontGroup(count: Int) -> some View {
         Text("Favorites: \(count)")
             .font(.subheadline.monospaced())

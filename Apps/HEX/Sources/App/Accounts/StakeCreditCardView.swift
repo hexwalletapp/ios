@@ -1,4 +1,4 @@
-// StakeCardView.swift
+// StakeCreditCardView.swift
 // Copyright (c) 2022 Joe Blau
 
 import BigInt
@@ -49,8 +49,8 @@ struct StakeCreditCardView: View {
                     Spacer()
                     HStack(alignment: .bottom) {
                         frontTotal(title: "Total Shares",
-                               shares: accountData.total.stakeShares,
-                               alignment: .leading)
+                                   shares: accountData.total.stakeShares,
+                                   alignment: .leading)
                         Spacer()
                         frontTotal(title: "Total",
                                    hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
@@ -142,7 +142,6 @@ struct StakeCreditCardView: View {
                 description(text: title)
             }
         }
-
     }
 
     func frontTotal(title: String, shares: BigUInt, alignment: HorizontalAlignment) -> some View {

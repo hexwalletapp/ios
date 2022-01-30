@@ -48,7 +48,7 @@ struct AccountsView: View {
                             Section {
                                 Toggle("Show HEX on Card", isOn: viewStore.binding(\.$shouldShowHEXOnCreditCard).animation())
                             }
-                            
+
                             Section {
                                 Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate).animation())
                                 Button {
@@ -134,7 +134,7 @@ struct AccountsView: View {
                         .tag(viewStore.groupAccountData.id)
                     ForEach(viewStore.accountsData) { accountData in
                         StakeCreditCardView(store: store,
-                                      accountData: .constant(accountData))
+                                            accountData: .constant(accountData))
                             .padding([.horizontal, .top])
                             .padding(.bottom, k.CARD_PADDING_BOTTOM)
                             .tag(accountData.id)
@@ -149,7 +149,7 @@ struct AccountsView: View {
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
                     ForEach(viewStore.accountsData) { accountData in
                         StakeCreditCardView(store: store,
-                                      accountData: .constant(accountData))
+                                            accountData: .constant(accountData))
                             .padding([.horizontal, .top])
                             .padding(.bottom, k.CARD_PADDING_BOTTOM)
                             .tag(accountData.id)
