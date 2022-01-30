@@ -6,7 +6,7 @@ import ComposableArchitecture
 import SwiftUI
 import SwiftUIVisualEffects
 
-struct StakeCardView: View {
+struct StakeCreditCardView: View {
     let store: Store<AppState, AppAction>
     @Binding var accountData: AccountData
 
@@ -39,23 +39,23 @@ struct StakeCardView: View {
                     .blurEffectStyle(.systemMaterial)
                 VStack(alignment: .leading) {
                     HStack(alignment: .top) {
+                        front(address: accountData.account.address)
+                        Spacer()
                         frontTotal(title: "Daily Payout",
                                    hearts: accountData.total.interestSevenDayHearts,
                                    price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice,
-                                   alignment: .leading)
-                        Spacer()
-                        front(address: accountData.account.address)
+                                   alignment: .trailing)
                     }
                     Spacer()
                     HStack(alignment: .bottom) {
-                        frontTotal(title: "Total Balance",
+                        frontTotal(title: "Total Shares",
+                               shares: accountData.total.stakeShares,
+                               alignment: .leading)
+                        Spacer()
+                        frontTotal(title: "Total",
                                    hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
                                    price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice,
-                                   alignment: .leading)
-                        Spacer()
-                        frontTotalHEX(title: "Total HEX",
-                                      hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
-                                      alignment: .trailing)
+                                   alignment: .trailing)
                     }
                 }
                 .font(.body.monospacedDigit())
@@ -130,10 +130,19 @@ struct StakeCardView: View {
     }
 
     func frontTotal(title: String, hearts: BigUInt, price: Double, alignment: HorizontalAlignment) -> some View {
-        VStack(alignment: alignment) {
-            Text(hearts.hexAt(price: price).currencyString)
-            description(text: title)
+        WithViewStore(store) { viewStore in
+            VStack(alignment: alignment) {
+                switch viewStore.shouldShowHEXOnCreditCard {
+                case true:
+                    Label(hearts.hex.hexString, image: "hex-logo.SFSymbol")
+                        .labelStyle(HEXNumberTextStyle())
+                case false:
+                    Text(hearts.hexAt(price: price).currencyString)
+                }
+                description(text: title)
+            }
         }
+
     }
 
     func frontTotal(title: String, shares: BigUInt, alignment: HorizontalAlignment) -> some View {

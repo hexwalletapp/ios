@@ -33,11 +33,13 @@ struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var modalPresent: ModalPresent? = nil
     @BindableState var selectedTab: Tab = .charts
+    @BindableState var selectedChartScale: ChartScale = .liner
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
     @BindableState var selectedChartType: ChartType = .candlestick
 
     @BindableState var selectedId = ""
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
+    @BindableState var shouldShowHEXOnCreditCard = false
     @BindableState var shouldSpeculate = false
     @BindableState var speculativePrice: NSNumber = 1.00
     @BindableState var calculator = Calculator()
@@ -186,8 +188,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         state.accountsData.filter { $0.account.isFavorite }.forEach { account in
             state.groupAccountData.accountsData.updateOrAppend(account)
         }
-        
-        switch (state.groupAccountData.hasFavorites != state.didHaveFavorites) {
+
+        switch state.groupAccountData.hasFavorites != state.didHaveFavorites {
         case true:
             let currentIndex = state.pageViewDots.currentIndex
             let numberOfPages: Int

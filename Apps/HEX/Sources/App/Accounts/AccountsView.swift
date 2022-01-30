@@ -46,6 +46,10 @@ struct AccountsView: View {
                             }
 
                             Section {
+                                Toggle("Show HEX on Card", isOn: viewStore.binding(\.$shouldShowHEXOnCreditCard).animation())
+                            }
+                            
+                            Section {
                                 Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate).animation())
                                 Button {
                                     viewStore.send(.binding(.set(\.$modalPresent, .speculate)))
@@ -123,12 +127,13 @@ struct AccountsView: View {
             switch (viewStore.accountsData.isEmpty, viewStore.groupAccountData.accountsData.isEmpty) {
             case (false, false):
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
-                    FavoritesStakeCardView(groupAccountData: viewStore.groupAccountData)
+                    FavoritesStakeCreditCardView(store: store,
+                                                 groupAccountData: viewStore.groupAccountData)
                         .padding([.horizontal, .top])
                         .padding(.bottom, k.CARD_PADDING_BOTTOM)
                         .tag(viewStore.groupAccountData.id)
                     ForEach(viewStore.accountsData) { accountData in
-                        StakeCardView(store: store,
+                        StakeCreditCardView(store: store,
                                       accountData: .constant(accountData))
                             .padding([.horizontal, .top])
                             .padding(.bottom, k.CARD_PADDING_BOTTOM)
@@ -143,7 +148,7 @@ struct AccountsView: View {
             case (false, true):
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
                     ForEach(viewStore.accountsData) { accountData in
-                        StakeCardView(store: store,
+                        StakeCreditCardView(store: store,
                                       accountData: .constant(accountData))
                             .padding([.horizontal, .top])
                             .padding(.bottom, k.CARD_PADDING_BOTTOM)

@@ -6,7 +6,8 @@ import ComposableArchitecture
 import SwiftUI
 import SwiftUIVisualEffects
 
-struct FavoritesStakeCardView: View {
+struct FavoritesStakeCreditCardView: View {
+    let store: Store<AppState, AppAction>
     let groupAccountData: GroupAccountData
 
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
@@ -37,15 +38,23 @@ struct FavoritesStakeCardView: View {
                 .blurEffectStyle(.systemMaterial)
             VStack(alignment: .leading) {
                 HStack(alignment: .top) {
-                    frontTitle(title: "Daily Payout", data: groupAccountData.dailyPayout, alignment: .leading)
-                    Spacer()
                     frontGroup(count: groupAccountData.accountsData.count)
+                    Spacer()
+                    frontTotal(title: "Daily Payout",
+                               value: groupAccountData.dailyPayout,
+                               hex: groupAccountData.dailyPayoutHex,
+                               alignment: .trailing)
                 }
                 Spacer()
                 HStack(alignment: .bottom) {
-                    frontTitle(title: "Total Balance", data: groupAccountData.totalBalance, alignment: .leading)
+                    frontTitle(title: "Shares",
+                               value: groupAccountData.totalShares,
+                               alignment: .leading)
                     Spacer()
-                    frontTitle(title: "Total HEX", data: groupAccountData.totalHEX, alignment: .trailing)
+                    frontTotal(title: "Total",
+                               value: groupAccountData.totalBalance,
+                               hex: groupAccountData.totalHEX,
+                               alignment: .trailing)
                 }
             }
             .font(.body.monospacedDigit())
@@ -107,13 +116,33 @@ struct FavoritesStakeCardView: View {
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 
-    func frontTitle(title: String, data: String, alignment: HorizontalAlignment) -> some View {
+    func frontTitle(title: String, value: String, alignment: HorizontalAlignment) -> some View {
         VStack(alignment: alignment) {
-            Text(data)
+            Text(value)
             description(text: title)
         }
     }
 
+    func frontTotal(title: String,
+                    value: String,
+                    hex: String,
+                    alignment: HorizontalAlignment) -> some View {
+        WithViewStore(store) { viewStore in
+            VStack(alignment: alignment) {
+                switch viewStore.shouldShowHEXOnCreditCard {
+                case true:
+                    Label(hex, image: "hex-logo.SFSymbol")
+                        .labelStyle(HEXNumberTextStyle())
+                case false:
+                    Text(value)
+                }
+                description(text: title)
+            }
+            
+        }
+
+    }
+    
     func frontGroup(count: Int) -> some View {
         Text("Favorites: \(count)")
             .font(.subheadline.monospaced())

@@ -11,7 +11,8 @@ struct ChartsView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 VStack {
-                    PriceChartView(timeScale: viewStore.selectedTimeScale,
+                    PriceChartView(chartScale: viewStore.selectedChartScale,
+                                   timeScale: viewStore.selectedTimeScale,
                                    chartType: viewStore.selectedChartType,
                                    ohlcv: viewStore.ohlcv)
                 }
@@ -25,6 +26,19 @@ struct ChartsView: View {
                         }
                     }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Menu {
+                            ForEach(ChartScale.allCases) { timeScale in
+                                Button {
+                                    viewStore.send(.binding(.set(\.selectedChartScale, timeScale)))
+                                } label: {
+                                    Toggle(timeScale.description,
+                                           isOn: .constant(timeScale == viewStore.selectedChartScale))
+                                }
+                            }
+                        } label: {
+                            Text(viewStore.selectedChartScale.description)
+                        }.disabled(viewStore.chartLoading)
+
                         Menu(content: {
                             minuteScale
                             hourScale

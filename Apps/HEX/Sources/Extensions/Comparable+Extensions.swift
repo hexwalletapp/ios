@@ -1,14 +1,10 @@
-//
-//  Comparable+Extensions.swift
-//  HEX
-//
-//  Created by Joe Blau on 1/30/22.
-//
+// Comparable+Extensions.swift
+// Copyright (c) 2022 Joe Blau
 
 import Foundation
 
 extension Comparable {
     func clamp<T: Comparable>(lower: T, _ upper: T) -> T {
-        return min(max(self as! T, lower), upper)
+        min(max(self as! T, lower), upper)
     }
 }

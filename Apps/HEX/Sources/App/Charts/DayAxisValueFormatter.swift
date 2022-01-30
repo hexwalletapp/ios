@@ -1,26 +1,21 @@
-//
-//  DayAxisValueFormatter.swift
-//  ChartsDemo-iOS
-//
-//  Created by Jacob Christie on 2017-07-09.
-//  Copyright © 2017 jc. All rights reserved.
-//
+// DayAxisValueFormatter.swift
+// Copyright (c) 2022 Joe Blau
 
-import Foundation
 import Charts
+import Foundation
 
 class TimeAxisValueFormatter: NSObject, AxisValueFormatter {
     weak var chart: BarLineChartViewBase?
     var timeScale: TimeScale
-    
+
     init(chart: BarLineChartViewBase, timeScale: TimeScale) {
         self.chart = chart
         self.timeScale = timeScale
     }
-    
-    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        guard let maxValues = self.chart?.data?.xMax else { return "" }
-        
+
+    public func stringForValue(_ value: Double, axis _: AxisBase?) -> String {
+        guard let maxValues = chart?.data?.xMax else { return "" }
+
         let timeAgo: Double
         switch timeScale {
         case .day:
