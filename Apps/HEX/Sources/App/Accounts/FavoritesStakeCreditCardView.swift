@@ -29,39 +29,41 @@ struct FavoritesStakeCreditCardView: View {
     }
 
     var front: some View {
-        ZStack {
-            Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors: groupAccountData.gradient),
-                                     startPoint: .bottomLeading,
-                                     endPoint: .topTrailing))
-                .blurEffect()
-                .blurEffectStyle(.systemMaterial)
-            VStack(alignment: .leading) {
-                HStack(alignment: .top) {
-                    frontGroup(count: groupAccountData.accountsData.count)
+        WithViewStore(store) { viewStore in
+            ZStack {
+                Rectangle()
+                    .fill(LinearGradient(gradient: Gradient(colors: groupAccountData.gradient),
+                                         startPoint: .bottomLeading,
+                                         endPoint: .topTrailing))
+                    .blurEffect()
+                    .blurEffectStyle(.systemMaterial)
+                VStack(alignment: .leading) {
+                    HStack(alignment: .top) {
+                        frontGroup(count: groupAccountData.accountsData.count)
+                        Spacer()
+                        frontTotal(title: viewStore.payoutEarnings.description,
+                                   value: groupAccountData.payout(earnings: viewStore.payoutEarnings),
+                                   hex: groupAccountData.payoutHEX(earnings: viewStore.payoutEarnings),
+                                   alignment: .trailing)
+                    }
                     Spacer()
-                    frontTotal(title: "Daily Payout",
-                               value: groupAccountData.dailyPayout,
-                               hex: groupAccountData.dailyPayoutHex,
-                               alignment: .trailing)
+                    HStack(alignment: .bottom) {
+                        frontTitle(title: "Shares",
+                                   value: groupAccountData.totalShares,
+                                   alignment: .leading)
+                        Spacer()
+                        frontTotal(title: "Total",
+                                   value: groupAccountData.totalBalance,
+                                   hex: groupAccountData.totalHEX,
+                                   alignment: .trailing)
+                    }
                 }
-                Spacer()
-                HStack(alignment: .bottom) {
-                    frontTitle(title: "Shares",
-                               value: groupAccountData.totalShares,
-                               alignment: .leading)
-                    Spacer()
-                    frontTotal(title: "Total",
-                               value: groupAccountData.totalBalance,
-                               hex: groupAccountData.totalHEX,
-                               alignment: .trailing)
-                }
+                .font(.body.monospacedDigit())
+                .padding()
             }
-            .font(.body.monospacedDigit())
-            .padding()
+            .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
+            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
-        .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)
-        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
     }
 
     var back: some View {
@@ -130,11 +132,11 @@ struct FavoritesStakeCreditCardView: View {
     {
         WithViewStore(store) { viewStore in
             VStack(alignment: alignment) {
-                switch viewStore.shouldShowHEXOnCreditCard {
-                case true:
+                switch viewStore.creditCardUnits {
+                case .hex:
                     Label(hex, image: "hex-logo.SFSymbol")
                         .labelStyle(HEXNumberTextStyle())
-                case false:
+                case .usd:
                     Text(value)
                 }
                 description(text: title)

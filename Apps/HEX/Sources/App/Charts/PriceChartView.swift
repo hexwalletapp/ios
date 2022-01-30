@@ -68,7 +68,7 @@ struct PriceChartView: UIViewRepresentable {
     private func generateData(ohlcv: [OHLCVData]) -> CandleChartData {
         let candleEntries = ohlcv.enumerated().compactMap { index, entry -> CandleChartDataEntry in
             switch chartScale {
-            case .liner:
+            case .auto:
                 return CandleChartDataEntry(x: Double(index),
                                             shadowH: entry.high,
                                             shadowL: entry.low,
@@ -99,7 +99,7 @@ struct PriceChartView: UIViewRepresentable {
     private func generateData(ohlcv: [OHLCVData]) -> LineChartData {
         let lineEntries = ohlcv.enumerated().compactMap { index, entry -> ChartDataEntry in
             switch chartScale {
-            case .liner:
+            case .auto:
                 return ChartDataEntry(x: Double(index),
                                       y: entry.close)
             case .log:

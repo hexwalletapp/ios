@@ -46,11 +46,26 @@ struct AccountsView: View {
                             }
 
                             Section {
-                                Toggle("Show HEX on Card", isOn: viewStore.binding(\.$shouldShowHEXOnCreditCard).animation())
+                                Picker(viewStore.creditCardUnits.description,
+                                       selection: viewStore.binding(\.$creditCardUnits).animation()) {
+                                    ForEach(CreditCardUnits.allCases) { creditCardUnit in
+                                        Text(creditCardUnit.description).tag(creditCardUnit)
+                                    }
+                                }
+                                .pickerStyle(MenuPickerStyle())
+
+                                Picker(viewStore.payoutEarnings.description,
+                                       selection: viewStore.binding(\.$payoutEarnings).animation()) {
+                                    ForEach(PayoutEarnings.allCases) { payoutEarning in
+                                        Text(payoutEarning.description).tag(payoutEarning)
+                                    }
+                                }
+                                .pickerStyle(MenuPickerStyle())
                             }
 
                             Section {
-                                Toggle("Speculate", isOn: viewStore.binding(\.$shouldSpeculate).animation())
+                                Toggle("Speculate",
+                                       isOn: viewStore.binding(\.$shouldSpeculate).animation())
                                 Button {
                                     viewStore.send(.binding(.set(\.$modalPresent, .speculate)))
                                 } label: { Label("Edit • \(viewStore.speculativePrice.currencyString)",

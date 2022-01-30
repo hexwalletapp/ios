@@ -33,13 +33,14 @@ struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var modalPresent: ModalPresent? = nil
     @BindableState var selectedTab: Tab = .charts
-    @BindableState var selectedChartScale: ChartScale = .liner
+    @BindableState var selectedChartScale: ChartScale = .auto
     @BindableState var selectedTimeScale: TimeScale = .day(.one)
     @BindableState var selectedChartType: ChartType = .candlestick
+    @BindableState var payoutEarnings: PayoutEarnings = .dailyTotal
+    @BindableState var creditCardUnits: CreditCardUnits = .usd
 
     @BindableState var selectedId = ""
     @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
-    @BindableState var shouldShowHEXOnCreditCard = false
     @BindableState var shouldSpeculate = false
     @BindableState var speculativePrice: NSNumber = 1.00
     @BindableState var calculator = Calculator()

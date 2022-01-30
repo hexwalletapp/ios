@@ -41,8 +41,8 @@ struct StakeCreditCardView: View {
                     HStack(alignment: .top) {
                         front(address: accountData.account.address)
                         Spacer()
-                        frontTotal(title: "Daily Payout",
-                                   hearts: accountData.total.interestSevenDayHearts,
+                        frontTotal(title: viewStore.payoutEarnings.description,
+                                   hearts: accountData.total.interest(payout: viewStore.payoutEarnings),
                                    price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice,
                                    alignment: .trailing)
                     }
@@ -132,11 +132,11 @@ struct StakeCreditCardView: View {
     func frontTotal(title: String, hearts: BigUInt, price: Double, alignment: HorizontalAlignment) -> some View {
         WithViewStore(store) { viewStore in
             VStack(alignment: alignment) {
-                switch viewStore.shouldShowHEXOnCreditCard {
-                case true:
+                switch viewStore.creditCardUnits {
+                case .hex:
                     Label(hearts.hex.hexString, image: "hex-logo.SFSymbol")
                         .labelStyle(HEXNumberTextStyle())
-                case false:
+                case .usd:
                     Text(hearts.hexAt(price: price).currencyString)
                 }
                 description(text: title)

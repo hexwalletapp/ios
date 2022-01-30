@@ -23,7 +23,10 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let endDate: Date
     var penaltyHearts: BigUInt
     var interestHearts: BigUInt
-    var interestSevenDayHearts: BigUInt
+//    var interestSevenDayHearts: BigUInt
+    var interestDailyHearts: BigUInt
+    var interestWeeklyHearts: BigUInt
+    var interestMonthlyHearts: BigUInt
     var bigPayDayHearts: BigUInt?
 
     init(stake: StakeLists_Parameter.Response, onChainData: OnChainData) {
@@ -80,14 +83,19 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
         endDate = k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(stakeEndDay) * 86400))
         penaltyHearts = 0
         interestHearts = 0
-        interestSevenDayHearts = 0
+        interestDailyHearts = 0
+        interestWeeklyHearts = 0
+        interestMonthlyHearts = 0
+
         bigPayDayHearts = nil
 
         guard lockedDay <= currentDay else { return }
 
         let startIndex = Int(lockedDay)
         let endIndex = min(Int(stakeEndDay), Int(currentDay))
-        let weekStartIndex = max(endIndex - 7, startIndex)
+        let dayStartIndex = max(endIndex - 2, startIndex)
+        let weekStartIndex = max(endIndex - 8, startIndex)
+        let monthStartIndex = max(endIndex - 31, startIndex)
         let penaltyEndIndex = Int(stake.lockedDay + penaltyDays)
         let recentInterestDays = BigUInt(endIndex - weekStartIndex)
 
@@ -104,7 +112,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
                                                 beginDay: penaltyEndIndex,
                                                 endDay: endIndex,
                                                 dailyData: onChainData.dailyData)
-            // Peanlty
+            // Penalty
             penaltyHearts = penaltyInterest.payout + deltaInterest.payout
 
             // Interest
@@ -114,8 +122,8 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
             switch (penaltyInterest.bigPayDay, deltaInterest.bigPayDay) {
             case let (.some(penaltyBigPayDay), .some(deltaBigPayDay)):
                 bigPayDayHearts = penaltyBigPayDay + deltaBigPayDay
-            case let (.some(penalyBigPayDay), .none):
-                bigPayDayHearts = penalyBigPayDay
+            case let (.some(penaltyBigPayDay), .none):
+                bigPayDayHearts = penaltyBigPayDay
             case let (.none, .some(deltaBigPayDay)):
                 bigPayDayHearts = deltaBigPayDay
             case (.none, .none):
@@ -141,11 +149,18 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
 
         // Seven Day Interest
         if !recentInterestDays.isZero {
-            let sevenDayInterest = calculatePayout(globalInfo: onChainData.globalInfo,
+            interestDailyHearts = calculatePayout(globalInfo: onChainData.globalInfo,
+                                                  beginDay: dayStartIndex,
+                                                  endDay: endIndex,
+                                                  dailyData: onChainData.dailyData).payout
+            interestWeeklyHearts = calculatePayout(globalInfo: onChainData.globalInfo,
                                                    beginDay: weekStartIndex,
                                                    endDay: endIndex,
-                                                   dailyData: onChainData.dailyData)
-            interestSevenDayHearts = sevenDayInterest.payout / recentInterestDays
+                                                   dailyData: onChainData.dailyData).payout
+            interestMonthlyHearts = calculatePayout(globalInfo: onChainData.globalInfo,
+                                                    beginDay: monthStartIndex,
+                                                    endDay: endIndex,
+                                                    dailyData: onChainData.dailyData).payout
         }
     }
 

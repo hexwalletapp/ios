@@ -24,15 +24,26 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
 
     var accountsData = IdentifiedArrayOf<AccountData>()
 
-    var dailyPayout: String {
+    func payout(earnings: PayoutEarnings) -> String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
-            partialResult = NSNumber(value: partialResult.doubleValue + accountData.total.interestSevenDayHearts.hexAt(price: accountData.hexPrice).doubleValue)
+            switch earnings {
+            case .dailyTotal:
+                partialResult = NSNumber(value: partialResult.doubleValue + accountData.total.interestDailyHearts.hexAt(price: accountData.hexPrice).doubleValue)
+            case .weeklyTotal:
+                partialResult = NSNumber(value: partialResult.doubleValue + accountData.total.interestWeeklyHearts.hexAt(price: accountData.hexPrice).doubleValue)
+            case .monthlyTotal:
+                partialResult = NSNumber(value: partialResult.doubleValue + accountData.total.interestMonthlyHearts.hexAt(price: accountData.hexPrice).doubleValue)
+            }
         }.currencyString
     }
 
-    var dailyPayoutHex: String {
+    func payoutHEX(earnings: PayoutEarnings) -> String {
         accountsData.reduce(into: BigUInt(0)) { partialResult, accountData in
-            partialResult += accountData.total.interestSevenDayHearts
+            switch earnings {
+            case .dailyTotal: partialResult += accountData.total.interestDailyHearts
+            case .weeklyTotal: partialResult += accountData.total.interestWeeklyHearts
+            case .monthlyTotal: partialResult += accountData.total.interestMonthlyHearts
+            }
         }.hex.hexString
     }
 

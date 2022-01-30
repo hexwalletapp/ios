@@ -27,7 +27,9 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             partialResult.stakeShares += stake.stakeShares
             partialResult.stakedHearts += stake.stakedHearts
             partialResult.interestHearts += stake.interestHearts
-            partialResult.interestSevenDayHearts += stake.interestSevenDayHearts
+            partialResult.interestDailyHearts += stake.interestDailyHearts
+            partialResult.interestWeeklyHearts += stake.interestWeeklyHearts
+            partialResult.interestMonthlyHearts += stake.interestMonthlyHearts
             partialResult.bigPayDayHearts += stake.bigPayDayHearts ?? 0
         }
 

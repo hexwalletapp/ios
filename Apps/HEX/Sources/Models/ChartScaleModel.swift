@@ -6,12 +6,12 @@ import Foundation
 enum ChartScale: Identifiable, CaseIterable, CustomStringConvertible {
     var id: Self { self }
     case log
-    case liner
+    case auto
 
     var description: String {
         switch self {
-        case .log: return "Log"
-        case .liner: return "Liner"
+        case .log: return "ʟᴏɢ"
+        case .auto: return "ᴀᴜᴛᴏ"
         }
     }
 }
