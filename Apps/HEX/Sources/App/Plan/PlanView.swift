@@ -1,5 +1,5 @@
 // PlanView.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import BigInt
 import ComposableArchitecture
@@ -102,7 +102,7 @@ struct PlanView: View {
                         Button {
                             focusedField = nil
                         } label: { Image(systemName: "keyboard.chevron.compact.down") }
-                        .disabled(focusedField == nil)
+                            .disabled(focusedField == nil)
                     }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Toggle(isOn: viewStore.binding(\.$calculator.showLadder).animation()) {

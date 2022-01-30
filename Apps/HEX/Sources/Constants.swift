@@ -15,7 +15,7 @@ struct k {
     static let SATS_MASK = (BigUInt(1) << SATS_UINT_SHIFT) - BigUInt(1)
     static let ONE_WEEK = BigUInt(7)
     static let ACCOUNTS_KEY = "evm_account_key"
-    static let CARD_PADDING_BOTTOM = CGFloat(48)
+    static let CARD_PADDING_BOTTOM = CGFloat(24)
     static let CARD_PADDING_DEFAULT = CGFloat(20)
     static let HEX_START_DATE = Date(timeIntervalSince1970: 1_575_273_600)
     static let GRACE_PERIOD = BigUInt(14)
@@ -27,7 +27,7 @@ struct k {
     static let EARLY_PENALTY_MIN_DAYS = 90
     static let GRID_SPACING = CGFloat.zero
     static let ACCOUNT_CARD_BACKGROUND_GRADIENT_STOPS = [
-        Gradient.Stop(color: Color(.systemGroupedBackground), location: 0.75),
+        Gradient.Stop(color: Color(.systemGroupedBackground), location: 0.95),
         Gradient.Stop(color: Color(.systemGroupedBackground.withAlphaComponent(0)), location: 1.0),
     ]
 

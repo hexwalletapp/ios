@@ -137,7 +137,8 @@ struct AccountsView: View {
                 }
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .background(LinearGradient(stops: k.ACCOUNT_CARD_BACKGROUND_GRADIENT_STOPS, startPoint: .top, endPoint: .bottom))
+                .background(LinearGradient(stops: k.ACCOUNT_CARD_BACKGROUND_GRADIENT_STOPS,
+                                           startPoint: .top, endPoint: .bottom))
                 .overlay(FavoriteDotsIndexView(store: store))
             case (false, true):
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
@@ -151,7 +152,9 @@ struct AccountsView: View {
                 }
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .background(LinearGradient(stops: k.ACCOUNT_CARD_BACKGROUND_GRADIENT_STOPS, startPoint: .top, endPoint: .bottom))
+                .background(LinearGradient(stops: k.ACCOUNT_CARD_BACKGROUND_GRADIENT_STOPS,
+                                           startPoint: .top,
+                                           endPoint: .bottom))
                 .overlay(FavoriteDotsIndexView(store: store))
             default:
                 VStack {

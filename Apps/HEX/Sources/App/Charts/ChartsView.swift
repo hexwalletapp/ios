@@ -1,5 +1,5 @@
 // ChartsView.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import ComposableArchitecture
 import SwiftUI
@@ -11,9 +11,9 @@ struct ChartsView: View {
         WithViewStore(store) { viewStore in
             NavigationView {
                 VStack {
-                    LightweightChartsViewController(timeScale: viewStore.selectedTimeScale,
-                                                    chartType: viewStore.selectedChartType,
-                                                    ohlcv: viewStore.ohlcv)
+                    PriceChartView(timeScale: viewStore.selectedTimeScale,
+                                   chartType: viewStore.selectedChartType,
+                                   ohlcv: viewStore.ohlcv)
                 }
                 .background(Color(.systemGroupedBackground))
                 .navigationBarTitle("HEX/USDC", displayMode: .inline)

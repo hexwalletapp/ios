@@ -50,7 +50,7 @@ struct FavoriteDotsIndexView: View {
                             }
                         }
                     }
-                }.padding(.bottom, 9)
+                }
             }
         }
     }

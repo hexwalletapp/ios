@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,6 +27,7 @@
 		38ECF3516F587DDB5C816F2B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFCB070A01C6E3E3CB59BB /* App.swift */; };
 		3920D3217BD4AD7C4F21AEE9 /* StakeTotalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */; };
 		3B3676174DF80961300A6289 /* ChartType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11334602E6C56403672EF697 /* ChartType.swift */; };
+		3C836AED2D06CF6F01AC0C60 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 329869A1C233300D07697193 /* Charts */; };
 		52FD3F03A19D6F64F11DC1B9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */; };
 		559A9CC38F7C9CAE8BF88604 /* StakeDetailsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */; };
 		57D651442045B3FC9E2C051E /* DataSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D332F301DA2CB0DA59E63112 /* DataSectionHeaderView.swift */; };
@@ -41,7 +42,6 @@
 		8762623629706852978DE029 /* EVMChain in Frameworks */ = {isa = PBXBuildFile; productRef = 50726FFC7E278845100BD31F /* EVMChain */; };
 		8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF16AEF4214D8E325DB84C2 /* Double+Extensions.swift */; };
 		8E7B1CECCEB39F0A5B0F9700 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 444317EC2D324F520CBE85B9 /* ComposableArchitecture */; };
-		8F9E6D637FDA37CBB3BC00AA /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D694B1DA5DF0377977B34F9C /* ChartsView.swift */; };
 		946DFBDB96848637539D6175 /* DataRowHexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F64B38EBD7222D3B27B357A /* DataRowHexView.swift */; };
 		951557B74017F4F2EAF783FF /* SpeculateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4655D7DA8FAC48D54C19BC82 /* SpeculateView.swift */; };
 		98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97BE07A876D006551CAE25 /* SampleAppStore.swift */; };
@@ -49,20 +49,22 @@
 		B10CD79F49D2B0234DB29740 /* HexContractOnChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC9F6FE02179ADCC850A631 /* HexContractOnChain.swift */; };
 		B3FDC626A1314EDA5EC1194A /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */; };
 		B47647423BAF6BDF59F01BD1 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DFEC316C64640DC5205E43 /* AccountsView.swift */; };
+		B75A092E8DDCEB821773EFD7 /* PriceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B2CC08C7A6E89B0C7F0DD8 /* PriceChartView.swift */; };
 		BA69E57C156F8C0E271D65E1 /* DataRowShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C642EEC1F4E397063D4932C /* DataRowShareView.swift */; };
 		BE94256F6E38266AD8D0FB68 /* StakeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */; };
 		C6DAE61AE40346FBAC8B7C3D /* StakeStatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */; };
-		CB0CF94B08C25BFCA9701669 /* LightweightChartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F009BA928051D9E4DAFEF1C0 /* LightweightChartsViewController.swift */; };
 		CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD673A6150107EFA969E218 /* DailyDataModel.swift */; };
 		D80E9D3E314B4F91B037C7F7 /* FavoritesStakeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7131A18E89E871B0026BFB92 /* FavoritesStakeCardView.swift */; };
 		D853054461F3F7B67E98F857 /* OSLog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E75805BEDE9063DEA0CD2C /* OSLog+Extensions.swift */; };
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
+		EDFF6DC127A660DD00B3E189 /* DayAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFF6DC027A660DD00B3E189 /* DayAxisValueFormatter.swift */; };
+		EDFF6DC327A6620100B3E189 /* Formatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFF6DC227A6620100B3E189 /* Formatter+Extensions.swift */; };
+		EDFF6DC527A672ED00B3E189 /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFF6DC427A672ED00B3E189 /* ChartsView.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F1EC1CC4AA4B71573C662D42 /* DistributionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40072E4B023C31237AA7D7A2 /* DistributionModel.swift */; };
 		F41861C691AFB90ABC10D2F1 /* CalculatorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112C7DF39CBC618E9B42C62E /* CalculatorModel.swift */; };
-		F4AD5D0688882FFE98D8ABBD /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B2BEAF9636D1C0A1E027C3 /* ChartViewController.swift */; };
 		F529BC6F4DA1C825F82C1220 /* UniswapSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 51DB48DC2F99A9F20F65F1CD /* UniswapSmartContract */; };
 		F9D31BABEB128F709FF24E19 /* SampleStakes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D23AAE8F6F76901D1F55EE2 /* SampleStakes.swift */; };
 		F9EB6793DF0FE431A796C85C /* DataHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E50E56967ED34E2F00DC49D /* DataHeaderView.swift */; };
@@ -120,13 +122,14 @@
 		CD97BE07A876D006551CAE25 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
 		D332F301DA2CB0DA59E63112 /* DataSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSectionHeaderView.swift; sourceTree = "<group>"; };
 		D5E75805BEDE9063DEA0CD2C /* OSLog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+Extensions.swift"; sourceTree = "<group>"; };
-		D694B1DA5DF0377977B34F9C /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
-		D8B2BEAF9636D1C0A1E027C3 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		E06E04F90AF5769D9F8F84FF /* DataRowPercentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRowPercentView.swift; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		F009BA928051D9E4DAFEF1C0 /* LightweightChartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightweightChartsViewController.swift; sourceTree = "<group>"; };
+		EDFF6DC027A660DD00B3E189 /* DayAxisValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayAxisValueFormatter.swift; sourceTree = "<group>"; };
+		EDFF6DC227A6620100B3E189 /* Formatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Extensions.swift"; sourceTree = "<group>"; };
+		EDFF6DC427A672ED00B3E189 /* ChartsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAccountDataModel.swift; sourceTree = "<group>"; };
+		F4B2CC08C7A6E89B0C7F0DD8 /* PriceChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceChartView.swift; sourceTree = "<group>"; };
 		F7A7D3C52D8FB595F17191B5 /* FloatingGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingGroupBoxStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -143,6 +146,7 @@
 				8E7B1CECCEB39F0A5B0F9700 /* ComposableArchitecture in Frameworks */,
 				7E0D47B727112D5AA0B76332 /* IdentifiedCollections in Frameworks */,
 				088C68CB1F29BF619A4C50D7 /* SwiftUIVisualEffects in Frameworks */,
+				3C836AED2D06CF6F01AC0C60 /* Charts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +202,7 @@
 				41DE07933240947412BE0800 /* OHLCVData+Extensions.swift.swift */,
 				D5E75805BEDE9063DEA0CD2C /* OSLog+Extensions.swift */,
 				842E13B529FC4BD56E2661A9 /* TimeScale+Extensions.swift */,
+				EDFF6DC227A6620100B3E189 /* Formatter+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -293,9 +298,9 @@
 		C71267E75C8575AF88008CF8 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
-				D694B1DA5DF0377977B34F9C /* ChartsView.swift */,
-				D8B2BEAF9636D1C0A1E027C3 /* ChartViewController.swift */,
-				F009BA928051D9E4DAFEF1C0 /* LightweightChartsViewController.swift */,
+				EDFF6DC427A672ED00B3E189 /* ChartsView.swift */,
+				F4B2CC08C7A6E89B0C7F0DD8 /* PriceChartView.swift */,
+				EDFF6DC027A660DD00B3E189 /* DayAxisValueFormatter.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -357,14 +362,6 @@
 			path = HEX;
 			sourceTree = "<group>";
 		};
-		"TEMP_9F1A6800-4391-4C1A-B00D-E3056FDE44EB" /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -390,6 +387,7 @@
 				444317EC2D324F520CBE85B9 /* ComposableArchitecture */,
 				88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */,
 				F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */,
+				329869A1C233300D07697193 /* Charts */,
 			);
 			productName = HEX;
 			productReference = 210D963E491A8FBE29AF4297 /* HEX.app */;
@@ -418,6 +416,7 @@
 			);
 			mainGroup = 184F9CCBCFA3BF831BBC7ED2;
 			packageReferences = (
+				35A836EFEE05C62C7A88E404 /* XCRemoteSwiftPackageReference "Charts" */,
 				8D214F3A5C611613264F70A7 /* XCRemoteSwiftPackageReference "LightweightChartsIOS" */,
 				95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				0D4F14F86CFAA75A69AE1DA2 /* XCRemoteSwiftPackageReference "swift-identified-collections" */,
@@ -456,9 +455,9 @@
 				641B864855B2593A479F561B /* AppViewReducer.swift in Sources */,
 				2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */,
 				F41861C691AFB90ABC10D2F1 /* CalculatorModel.swift in Sources */,
+				B75A092E8DDCEB821773EFD7 /* PriceChartView.swift in Sources */,
 				3B3676174DF80961300A6289 /* ChartType.swift in Sources */,
-				F4AD5D0688882FFE98D8ABBD /* ChartViewController.swift in Sources */,
-				8F9E6D637FDA37CBB3BC00AA /* ChartsView.swift in Sources */,
+				EDFF6DC327A6620100B3E189 /* Formatter+Extensions.swift in Sources */,
 				E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */,
 				CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */,
 				F9EB6793DF0FE431A796C85C /* DataHeaderView.swift in Sources */,
@@ -479,7 +478,6 @@
 				6100F3757C54FE2778D6E715 /* HEXNumberTextStyle.swift in Sources */,
 				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
 				B10CD79F49D2B0234DB29740 /* HexContractOnChain.swift in Sources */,
-				CB0CF94B08C25BFCA9701669 /* LightweightChartsViewController.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				272BCA8A6709C128A9169BE2 /* OHLCVData+Extensions.swift.swift in Sources */,
 				D853054461F3F7B67E98F857 /* OSLog+Extensions.swift in Sources */,
@@ -496,7 +494,9 @@
 				C6DAE61AE40346FBAC8B7C3D /* StakeStatusModel.swift in Sources */,
 				3920D3217BD4AD7C4F21AEE9 /* StakeTotalModel.swift in Sources */,
 				0113F604E3C5650F1E1AC039 /* TimeScale+Extensions.swift in Sources */,
+				EDFF6DC527A672ED00B3E189 /* ChartsView.swift in Sources */,
 				18BBCBEE60339DE88779C959 /* TimeScaleModel.swift in Sources */,
+				EDFF6DC127A660DD00B3E189 /* DayAxisValueFormatter.swift in Sources */,
 				FA0F5CA852FF0B9A47EB23C4 /* UniswapSmartContractReducer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -699,6 +699,14 @@
 				minimumVersion = 0.3.0;
 			};
 		};
+		35A836EFEE05C62C7A88E404 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 		8D214F3A5C611613264F70A7 /* XCRemoteSwiftPackageReference "LightweightChartsIOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tradingview/LightweightChartsIOS.git";
@@ -726,6 +734,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		329869A1C233300D07697193 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35A836EFEE05C62C7A88E404 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
 		3EE569782E5986401240AA35 /* BitqueryAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BitqueryAPI;

@@ -26,6 +26,9 @@ packages:
   lightweight-charts:
     url: https://github.com/tradingview/LightweightChartsIOS.git
     from: 3.7.0
+  charts:
+    url: https://github.com/danielgindi/Charts.git
+    from: 4.0.1
 
 localPackages:
   - ./Packages/hex-smart-contract/
@@ -67,3 +70,5 @@ targets:
         product: IdentifiedCollections
       - package: swiftui-visual-effects
         product: SwiftUIVisualEffects
+      - package: charts
+        product: Charts
