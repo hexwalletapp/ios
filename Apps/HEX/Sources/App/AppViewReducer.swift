@@ -26,7 +26,7 @@ enum ModalPresent: Identifiable {
 struct PageViewDots: Equatable {
     var hasMinusOne: Bool = false
     var numberOfPages: Int = 0
-    var currentIndex: Int = 0
+    var currentIndex: Int = -1
 }
 
 struct AppState: Equatable {
@@ -46,6 +46,7 @@ struct AppState: Equatable {
 
     var ohlcv = [OHLCVData]()
     var chartLoading = false
+    var didHaveFavorites = false
     var hexContractOnChain = HexContractOnChain()
     var pageViewDots = PageViewDots()
     var activeChains = Set<Chain>()
@@ -185,20 +186,34 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         state.accountsData.filter { $0.account.isFavorite }.forEach { account in
             state.groupAccountData.accountsData.updateOrAppend(account)
         }
-
-        switch state.groupAccountData.hasFavorites {
+        
+        switch (state.groupAccountData.hasFavorites != state.didHaveFavorites) {
         case true:
-            state.pageViewDots.hasMinusOne = true
-            state.pageViewDots.currentIndex = 1
-            state.pageViewDots.numberOfPages = state.accountsData.count + 1
+            let currentIndex = state.pageViewDots.currentIndex
+            let numberOfPages: Int
+            switch state.groupAccountData.hasFavorites {
+            case true:
+                numberOfPages = state.accountsData.count + 1
+                state.pageViewDots.hasMinusOne = true
+                state.pageViewDots.numberOfPages = numberOfPages
+                state.pageViewDots.currentIndex = currentIndex.clamp(lower: 1, numberOfPages)
+                state.selectedId = state.accountsData[state.pageViewDots.currentIndex - 1].id
+            case false:
+                numberOfPages = state.accountsData.count
+                state.pageViewDots.hasMinusOne = false
+                state.pageViewDots.numberOfPages = numberOfPages
+                state.pageViewDots.currentIndex = currentIndex.clamp(lower: 0, numberOfPages)
+                state.selectedId = state.accountsData[state.pageViewDots.currentIndex].id
+            }
+            state.didHaveFavorites = state.groupAccountData.hasFavorites
         case false:
-            state.pageViewDots.hasMinusOne = false
-            state.pageViewDots.currentIndex = 0
-            state.pageViewDots.numberOfPages = state.accountsData.count
+            let numberOfPages: Int
+            switch state.groupAccountData.hasFavorites {
+            case true: numberOfPages = state.accountsData.count + 1
+            case false: numberOfPages = state.accountsData.count
+            }
+            state.pageViewDots.numberOfPages = numberOfPages
         }
-
-        state.selectedId = state.accountsData.first?.id ?? ""
-
         return .none
 
     case .binding(\.$selectedId):

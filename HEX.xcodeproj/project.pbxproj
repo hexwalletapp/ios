@@ -62,6 +62,7 @@
 		EDFF6DC127A660DD00B3E189 /* DayAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFF6DC027A660DD00B3E189 /* DayAxisValueFormatter.swift */; };
 		EDFF6DC327A6620100B3E189 /* Formatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFF6DC227A6620100B3E189 /* Formatter+Extensions.swift */; };
 		EDFF6DC527A672ED00B3E189 /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFF6DC427A672ED00B3E189 /* ChartsView.swift */; };
+		EDFF6DC727A6FDE400B3E189 /* Comparable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFF6DC627A6FDE400B3E189 /* Comparable+Extensions.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F1EC1CC4AA4B71573C662D42 /* DistributionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40072E4B023C31237AA7D7A2 /* DistributionModel.swift */; };
 		F41861C691AFB90ABC10D2F1 /* CalculatorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112C7DF39CBC618E9B42C62E /* CalculatorModel.swift */; };
@@ -128,6 +129,7 @@
 		EDFF6DC027A660DD00B3E189 /* DayAxisValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayAxisValueFormatter.swift; sourceTree = "<group>"; };
 		EDFF6DC227A6620100B3E189 /* Formatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Extensions.swift"; sourceTree = "<group>"; };
 		EDFF6DC427A672ED00B3E189 /* ChartsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
+		EDFF6DC627A6FDE400B3E189 /* Comparable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Extensions.swift"; sourceTree = "<group>"; };
 		F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAccountDataModel.swift; sourceTree = "<group>"; };
 		F4B2CC08C7A6E89B0C7F0DD8 /* PriceChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceChartView.swift; sourceTree = "<group>"; };
 		F7A7D3C52D8FB595F17191B5 /* FloatingGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingGroupBoxStyle.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				D5E75805BEDE9063DEA0CD2C /* OSLog+Extensions.swift */,
 				842E13B529FC4BD56E2661A9 /* TimeScale+Extensions.swift */,
 				EDFF6DC227A6620100B3E189 /* Formatter+Extensions.swift */,
+				EDFF6DC627A6FDE400B3E189 /* Comparable+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				6100F3757C54FE2778D6E715 /* HEXNumberTextStyle.swift in Sources */,
 				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
 				B10CD79F49D2B0234DB29740 /* HexContractOnChain.swift in Sources */,
+				EDFF6DC727A6FDE400B3E189 /* Comparable+Extensions.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				272BCA8A6709C128A9169BE2 /* OHLCVData+Extensions.swift.swift in Sources */,
 				D853054461F3F7B67E98F857 /* OSLog+Extensions.swift in Sources */,
