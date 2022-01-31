@@ -1,5 +1,5 @@
 // AppView.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import ComposableArchitecture
 import SwiftUI
@@ -31,6 +31,7 @@ struct AppView: View {
                     }
                     .tag(Tab.calculator)
             }
+            .preferredColorScheme(viewStore.colorScheme)
             .sheet(item: viewStore.binding(\.$modalPresent), content: { modalPresent in
                 switch modalPresent {
                 case .edit: EditView(store: store)

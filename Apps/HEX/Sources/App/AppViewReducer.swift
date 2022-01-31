@@ -53,6 +53,7 @@ struct AppState: Equatable {
     var hexContractOnChain = HexContractOnChain()
     var pageViewDots = PageViewDots()
     var activeChains = Set<Chain>()
+    var colorScheme: ColorScheme?
 }
 
 enum AppAction: BindableAction, Equatable {
@@ -109,6 +110,14 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .onActive:
+        switch UserDefaults.standard.string(forKey: "appearanceSetting") {
+        case let .some(appearance) where appearance == "1":
+            state.colorScheme = .light
+        case let .some(appearance) where appearance == "2":
+            state.colorScheme = .dark
+        default:
+            state.colorScheme = nil
+        }
         return .merge(
             Effect(value: .getChart),
             Effect(value: .getAccounts),
