@@ -29,7 +29,7 @@ struct ChartsView: View {
                         Menu {
                             ForEach(ChartScale.allCases) { timeScale in
                                 Button {
-                                    viewStore.send(.binding(.set(\.selectedChartScale, timeScale)))
+                                    viewStore.send(.binding(.set(\.$selectedChartScale, timeScale)))
                                 } label: {
                                     Toggle(timeScale.description,
                                            isOn: .constant(timeScale == viewStore.selectedChartScale))

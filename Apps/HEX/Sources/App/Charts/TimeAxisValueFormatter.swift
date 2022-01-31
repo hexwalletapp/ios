@@ -1,4 +1,4 @@
-// DayAxisValueFormatter.swift
+// TimeAxisValueFormatter.swift
 // Copyright (c) 2022 Joe Blau
 
 import Charts

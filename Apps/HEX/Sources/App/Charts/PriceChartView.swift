@@ -38,7 +38,7 @@ struct PriceChartView: UIViewRepresentable {
 
         view.rightAxis.gridColor = .systemGray5
         view.rightAxis.axisLineColor = .systemGray5
-        view.rightAxis.valueFormatter = DefaultAxisValueFormatter(formatter: Formatter.currencyFormatter)
+        view.rightAxis.valueFormatter = PriceAxisValueFormatter(chartScale: chartScale)
         view.rightAxis.labelTextColor = .secondaryLabel
         return view
     }
@@ -63,6 +63,7 @@ struct PriceChartView: UIViewRepresentable {
             combinedView.moveViewToX(Double(ohlcv.count))
         }
         combinedView.xAxis.valueFormatter = TimeAxisValueFormatter(chart: combinedView, timeScale: timeScale)
+        combinedView.rightAxis.valueFormatter = PriceAxisValueFormatter(chartScale: chartScale)
     }
 
     private func generateData(ohlcv: [OHLCVData]) -> CandleChartData {
