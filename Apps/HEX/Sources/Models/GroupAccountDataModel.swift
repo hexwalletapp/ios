@@ -145,11 +145,17 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
 
     // MARK: - Stakes
 
-    var totalAccountStakes: [(Account, Stake)] {
-        accountsData.reduce(into: [(Account, Stake)]()) { partialResult, accountData in
+    var totalAccountStakes: [AccountStake] {
+        accountsData.reduce(into: [AccountStake]()) { partialResult, accountData in
             let accounts = Array(repeating: accountData.account, count: accountData.stakes.count)
-            let accountStakes = zip(accounts, accountData.stakes).map { ($0, $1) }
+            let accountStakes = zip(accounts, accountData.stakes).map { AccountStake(account: $0, stake: $1) }
             partialResult.append(contentsOf: accountStakes)
-        }.sorted { $0.1.stakeEndDay < $1.1.stakeEndDay }
+        }.sorted {  $0.stake.stakeEndDay < $1.stake.stakeEndDay }
     }
+}
+
+struct AccountStake: Identifiable {
+    var id: String { "c:\(account.chain.rawValue)s:\(stake.id)" }
+    var account: Account
+    var stake: Stake
 }

@@ -132,10 +132,10 @@ struct AccountsView: View {
                                          account: accountData.account)
                 }
             case (false, false, .none):
-                ForEach(viewStore.groupAccountData.totalAccountStakes, id: \.self.1.stakeId) { accountStake in
-                    StakeDetailsCardView(price: price(on: accountStake.0.chain),
-                                         stake: accountStake.1,
-                                         account: accountStake.0)
+                ForEach(viewStore.groupAccountData.totalAccountStakes) { accountStake in
+                    StakeDetailsCardView(price: price(on: accountStake.account.chain),
+                                         stake: accountStake.stake,
+                                         account: accountStake.account)
                 }
             default:
                 EmptyView()

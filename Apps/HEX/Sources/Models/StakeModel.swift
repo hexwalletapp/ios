@@ -23,7 +23,6 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let endDate: Date
     var penaltyHearts: BigUInt
     var interestHearts: BigUInt
-//    var interestSevenDayHearts: BigUInt
     var interestDailyHearts: BigUInt
     var interestWeeklyHearts: BigUInt
     var interestMonthlyHearts: BigUInt
