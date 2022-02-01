@@ -42,25 +42,29 @@ struct AccountsView: View {
                             Section {
                                 Button {
                                     viewStore.send(.binding(.set(\.$modalPresent, .edit)))
-                                } label: { Label("Accounts", systemImage: "person") }
+                                } label: { Label("Accounts", systemImage: "person.fill") }
                             }
 
                             Section {
-                                Picker(viewStore.creditCardUnits.description,
-                                       selection: viewStore.binding(\.$creditCardUnits).animation()) {
-                                    ForEach(CreditCardUnits.allCases) { creditCardUnit in
-                                        Text(creditCardUnit.description).tag(creditCardUnit)
-                                    }
-                                }
-                                .pickerStyle(MenuPickerStyle())
+                                Picker(selection: viewStore.binding(\.$creditCardUnits).animation(),
+                                       content: {
+                                           ForEach(CreditCardUnits.allCases) { creditCardUnit in
+                                               creditCardUnit.label.tag(creditCardUnit)
+                                           }
+                                       }, label: {
+                                           viewStore.creditCardUnits.label
+                                       })
+                                    .pickerStyle(MenuPickerStyle())
 
-                                Picker(viewStore.payoutEarnings.description,
-                                       selection: viewStore.binding(\.$payoutEarnings).animation()) {
-                                    ForEach(PayoutEarnings.allCases) { payoutEarning in
-                                        Text(payoutEarning.description).tag(payoutEarning)
-                                    }
-                                }
-                                .pickerStyle(MenuPickerStyle())
+                                Picker(selection: viewStore.binding(\.$payoutEarnings).animation(),
+                                       content: {
+                                           ForEach(PayoutEarnings.allCases) { payoutEarning in
+                                               payoutEarning.label.tag(payoutEarning)
+                                           }
+                                       }, label: {
+                                           viewStore.payoutEarnings.label
+                                       })
+                                    .pickerStyle(MenuPickerStyle())
                             }
 
                             Section {

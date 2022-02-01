@@ -2,6 +2,7 @@
 // Copyright (c) 2022 Joe Blau
 
 import Foundation
+import SwiftUI
 
 enum CreditCardUnits: Identifiable, CaseIterable, CustomStringConvertible {
     var id: Self { self }
@@ -12,6 +13,13 @@ enum CreditCardUnits: Identifiable, CaseIterable, CustomStringConvertible {
         switch self {
         case .usd: return "USD"
         case .hex: return "HEX"
+        }
+    }
+
+    var label: Label<Text, Image> {
+        switch self {
+        case .usd: return Label(description, systemImage: "dollarsign.square.fill")
+        case .hex: return Label(description, image: "hex-logo.SFSymbol")
         }
     }
 }

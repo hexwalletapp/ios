@@ -1,7 +1,7 @@
 // PayoutEarningsModel.swift
 // Copyright (c) 2022 Joe Blau
 
-import Foundation
+import SwiftUI
 
 enum PayoutEarnings: Identifiable, CaseIterable, CustomStringConvertible {
     var id: Self { self }
@@ -14,6 +14,14 @@ enum PayoutEarnings: Identifiable, CaseIterable, CustomStringConvertible {
         case .dailyTotal: return "Daily Payout"
         case .weeklyTotal: return "Weekly Payout"
         case .monthlyTotal: return "Monthly Payout"
+        }
+    }
+
+    var label: Label<Text, Image> {
+        switch self {
+        case .dailyTotal: return Label(description, systemImage: "1.square.fill")
+        case .weeklyTotal: return Label(description, systemImage: "7.square.fill")
+        case .monthlyTotal: return Label(description, systemImage: "30.square.fill")
         }
     }
 
