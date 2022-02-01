@@ -13,15 +13,15 @@ struct AccountsView: View {
         GridItem(.flexible()),
         GridItem(.fixed(92)),
     ]
-    
+
     @State private var favoriteColor = 0
-    
+
     init(store: Store<AppState, AppAction>) {
         self.store = store
         UIPageControl.appearance().currentPageIndicatorTintColor = .tintColor
         UIPageControl.appearance().pageIndicatorTintColor = .tertiaryLabel
     }
-    
+
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
@@ -44,29 +44,29 @@ struct AccountsView: View {
                                     viewStore.send(.binding(.set(\.$modalPresent, .edit)))
                                 } label: { Label("Accounts", systemImage: "person.fill") }
                             }
-                            
+
                             Section {
                                 Picker(selection: viewStore.binding(\.$creditCardUnits).animation(),
                                        content: {
-                                    ForEach(CreditCardUnits.allCases) { creditCardUnit in
-                                        creditCardUnit.label.tag(creditCardUnit)
-                                    }
-                                }, label: {
-                                    viewStore.creditCardUnits.label
-                                })
+                                           ForEach(CreditCardUnits.allCases) { creditCardUnit in
+                                               creditCardUnit.label.tag(creditCardUnit)
+                                           }
+                                       }, label: {
+                                           viewStore.creditCardUnits.label
+                                       })
                                     .pickerStyle(MenuPickerStyle())
-                                
+
                                 Picker(selection: viewStore.binding(\.$payoutEarnings).animation(),
                                        content: {
-                                    ForEach(PayoutEarnings.allCases) { payoutEarning in
-                                        payoutEarning.label.tag(payoutEarning)
-                                    }
-                                }, label: {
-                                    viewStore.payoutEarnings.label
-                                })
+                                           ForEach(PayoutEarnings.allCases) { payoutEarning in
+                                               payoutEarning.label.tag(payoutEarning)
+                                           }
+                                       }, label: {
+                                           viewStore.payoutEarnings.label
+                                       })
                                     .pickerStyle(MenuPickerStyle())
                             }
-                            
+
                             Section {
                                 Toggle("Speculate",
                                        isOn: viewStore.binding(\.$shouldSpeculate).animation())
@@ -79,22 +79,22 @@ struct AccountsView: View {
                             Image(systemName: "line.3.horizontal")
                         }
                     }
-                    
+
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        switch (viewStore.accountsData.isEmpty) {
+                        switch viewStore.accountsData.isEmpty {
                         case false:
                             if viewStore.accountsData[id: viewStore.selectedId]?.account.chain != .pulse {
                                 let ethData = viewStore.hexContractOnChain.ethData
                                 switch viewStore.shouldSpeculate {
-                                case true: toolbarText(heading: ethData.speculativePrice.currencyString + "*"
-                                                       , subheading: "Price",
+                                case true: toolbarText(heading: ethData.speculativePrice.currencyString + "*",
+                                                       subheading: "Price",
                                                        image: Chain.ethereum.image)
                                 case false: toolbarText(heading: ethData.price.currencyString,
                                                         subheading: "Price",
                                                         image: Chain.ethereum.image)
                                 }
                             }
-                            
+
                             if viewStore.accountsData[id: viewStore.selectedId]?.account.chain != .ethereum {
                                 let plsData = viewStore.hexContractOnChain.plsData
                                 switch viewStore.shouldSpeculate {
@@ -106,7 +106,7 @@ struct AccountsView: View {
                                                         image: Chain.pulse.image)
                                 }
                             }
-                            
+
                             toolbarText(heading: viewStore.hexContractOnChain.ethData.currentDay.advanced(by: 1).description,
                                         subheading: "Day")
                         default:
@@ -117,7 +117,7 @@ struct AccountsView: View {
             }
         }
     }
-    
+
     private var accountList: some View {
         WithViewStore(store) { viewStore in
             switch (viewStore.accountsData.isEmpty,
@@ -125,7 +125,7 @@ struct AccountsView: View {
                     viewStore.accountsData[id: viewStore.selectedId])
             {
             case (false, true, let .some(accountData)),
-                (false, false, let .some(accountData)):
+                 (false, false, let .some(accountData)):
                 ForEach(accountData.stakes) { stake in
                     StakeDetailsCardView(price: price(on: accountData.account.chain),
                                          stake: stake,
@@ -142,7 +142,7 @@ struct AccountsView: View {
             }
         }
     }
-    
+
     private var accountHeader: some View {
         WithViewStore(store) { viewStore in
             switch (viewStore.accountsData.isEmpty, viewStore.groupAccountData.accountsData.isEmpty) {
@@ -198,7 +198,7 @@ struct AccountsView: View {
             }
         }
     }
-    
+
     func price(on chain: Chain) -> Double {
         let viewStore = ViewStore(store)
         let chainPrice: Double
@@ -208,7 +208,7 @@ struct AccountsView: View {
         }
         return viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : chainPrice
     }
-    
+
     func toolbarText(heading: String, subheading: String, image: Image? = nil) -> some View {
         VStack(spacing: 0) {
             Text(heading).font(.caption.monospacedDigit())
@@ -230,9 +230,9 @@ struct AccountsView: View {
 }
 
 #if DEBUG
-struct AccountsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountsView(store: sampleAppStore)
+    struct AccountsView_Previews: PreviewProvider {
+        static var previews: some View {
+            AccountsView(store: sampleAppStore)
+        }
     }
-}
 #endif

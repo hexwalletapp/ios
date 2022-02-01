@@ -150,7 +150,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             let accounts = Array(repeating: accountData.account, count: accountData.stakes.count)
             let accountStakes = zip(accounts, accountData.stakes).map { AccountStake(account: $0, stake: $1) }
             partialResult.append(contentsOf: accountStakes)
-        }.sorted {  $0.stake.stakeEndDay < $1.stake.stakeEndDay }
+        }.sorted { $0.stake.stakeEndDay < $1.stake.stakeEndDay }
     }
 }
 

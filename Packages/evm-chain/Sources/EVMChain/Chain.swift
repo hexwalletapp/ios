@@ -1,8 +1,8 @@
 // Chain.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
-import SwiftUI
 import BigInt
+import SwiftUI
 
 public enum Chain: BigUInt, Codable, Identifiable, CaseIterable, CustomStringConvertible {
     public var id: Self { self }

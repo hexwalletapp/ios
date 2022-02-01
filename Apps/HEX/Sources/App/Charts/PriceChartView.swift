@@ -40,6 +40,8 @@ struct PriceChartView: UIViewRepresentable {
         view.rightAxis.axisLineColor = .systemGray5
         view.rightAxis.valueFormatter = PriceAxisValueFormatter(chartScale: chartScale)
         view.rightAxis.labelTextColor = .secondaryLabel
+
+        view.autoScaleMinMaxEnabled = true
         return view
     }
 
@@ -48,16 +50,17 @@ struct PriceChartView: UIViewRepresentable {
 
         switch chartType {
         case .line:
-            combinedData.lineData = generateData(ohlcv: ohlcv)
+            combinedData.lineData = generateData(ohlcv: ohlcv, color: .systemBlue)
         case .candlestick:
             combinedData.candleData = generateData(ohlcv: ohlcv)
+            combinedData.lineData = generateData(ohlcv: ohlcv, color: .clear)
         }
         combinedData.barData = generateData(ohlcv: ohlcv)
         combinedView.data = combinedData
 
         if !ohlcv.isEmpty {
             combinedView.zoom(scaleX: 0, scaleY: 0, x: 0, y: 0)
-            let pointsDisplayed = 60
+            let pointsDisplayed = timeScale.renderElements
             let xScale = Double(ohlcv.count / pointsDisplayed)
             combinedView.zoom(scaleX: xScale, scaleY: 1, x: 0, y: 0)
             combinedView.moveViewToX(Double(ohlcv.count))
@@ -83,7 +86,7 @@ struct PriceChartView: UIViewRepresentable {
                                             close: log10(entry.close))
             }
         }
-        let set = CandleChartDataSet(entries: candleEntries, label: "Price")
+        let set = CandleChartDataSet(entries: candleEntries, label: "PriceCandle")
         set.axisDependency = .right
         set.drawIconsEnabled = false
         set.drawValuesEnabled = false
@@ -97,7 +100,7 @@ struct PriceChartView: UIViewRepresentable {
         return CandleChartData(dataSet: set)
     }
 
-    private func generateData(ohlcv: [OHLCVData]) -> LineChartData {
+    private func generateData(ohlcv: [OHLCVData], color: UIColor) -> LineChartData {
         let lineEntries = ohlcv.enumerated().compactMap { index, entry -> ChartDataEntry in
             switch chartScale {
             case .auto:
@@ -109,11 +112,11 @@ struct PriceChartView: UIViewRepresentable {
             }
         }
 
-        let set = LineChartDataSet(entries: lineEntries, label: "Price")
+        let set = LineChartDataSet(entries: lineEntries, label: "PriceLine")
         set.axisDependency = .right
         set.drawIconsEnabled = false
         set.drawValuesEnabled = false
-        set.setColor(.systemBlue)
+        set.setColor(color)
         set.drawCirclesEnabled = false
         set.lineWidth = 2
 

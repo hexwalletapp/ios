@@ -1,5 +1,5 @@
 // TimeScaleModel.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import Foundation
 
@@ -26,6 +26,14 @@ enum TimeScale: CustomStringConvertible, TimeScaleable {
         case let .minute(minute): return minute.code
         case let .hour(hour): return hour.code
         case let .day(day): return day.code
+        }
+    }
+
+    var renderElements: Int {
+        switch self {
+        case .minute: return 360
+        case .hour: return 120
+        case .day: return 60
         }
     }
 }
