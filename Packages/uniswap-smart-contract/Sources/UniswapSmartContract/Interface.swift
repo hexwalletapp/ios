@@ -23,9 +23,9 @@ public struct UniswapSmartContractManager {
     var destroy: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("destroy") }
 
     var token0: (AnyHashable, Chain, EthereumAddress) -> Effect<Never, Never> = { _, _, _ in _unimplemented("token0") }
-    
+
     var token1: (AnyHashable, Chain, EthereumAddress) -> Effect<Never, Never> = { _, _, _ in _unimplemented("token1") }
-    
+
     var getPairV2: (AnyHashable, Chain, EthereumAddress, EthereumAddress) -> Effect<Never, Never> = { _, _, _, _ in _unimplemented("getPairV2") }
 
     var reserves: (AnyHashable, Chain, EthereumAddress) -> Effect<Never, Never> = { _, _, _ in _unimplemented("reserves") }
@@ -39,7 +39,7 @@ public struct UniswapSmartContractManager {
     var slot0: (AnyHashable, Chain, EthereumAddress) -> Effect<Never, Never> = { _, _, _ in _unimplemented("slot0") }
 
     // MARK: - Shared
-    
+
     public func create(id: AnyHashable) -> Effect<Action, Never> {
         create(id)
     }
@@ -47,11 +47,11 @@ public struct UniswapSmartContractManager {
     public func destroy(id: AnyHashable) -> Effect<Never, Never> {
         destroy(id)
     }
-    
+
     public func token0(id: AnyHashable, chain: Chain, pairAddress: EthereumAddress) -> Effect<Never, Never> {
         token0(id, chain, pairAddress)
     }
-    
+
     public func token1(id: AnyHashable, chain: Chain, pairAddress: EthereumAddress) -> Effect<Never, Never> {
         token1(id, chain, pairAddress)
     }

@@ -1,3 +1,6 @@
+// Token1ABIFunction.swift
+// Copyright (c) 2022 Joe Blau
+
 import BigInt
 import Foundation
 import web3

@@ -13,20 +13,20 @@ struct DEXLiquidity: Equatable, Hashable, Identifiable {
     var version: UniswapVersion
     var tokenA: ERC20Token
     var tokenB: ERC20Token
-    
+
     var pairPool: String {
-        return "\(tokenA.symbol)/\(tokenB.symbol)"
+        "\(tokenA.symbol)/\(tokenB.symbol)"
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(chain)
         hasher.combine(address)
         hasher.combine(version)
     }
-    
+
     static func == (lhs: DEXLiquidity, rhs: DEXLiquidity) -> Bool {
-        return lhs.chain == rhs.chain &&
-        lhs.address == rhs.address &&
-        lhs.version == rhs.version
+        lhs.chain == rhs.chain &&
+            lhs.address == rhs.address &&
+            lhs.version == rhs.version
     }
 }

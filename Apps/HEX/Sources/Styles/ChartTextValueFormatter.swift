@@ -1,19 +1,13 @@
-//
-//  ChartTextValueFormatter.swift
-//  HEX
-//
-//  Created by Joe Blau on 2/5/22.
-//
+// ChartTextValueFormatter.swift
+// Copyright (c) 2022 Joe Blau
 
-import Foundation
 import Charts
+import Foundation
 
-class PieChartTextValueFormatter: ValueFormatter  {
-    func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
+class PieChartTextValueFormatter: ValueFormatter {
+    func stringForValue(_ value: Double, entry _: ChartDataEntry, dataSetIndex _: Int, viewPortHandler _: ViewPortHandler?) -> String {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
-        return numberFormatter.string(from: NSNumber(value:value))!
+        return numberFormatter.string(from: NSNumber(value: value))!
     }
-    
-    
 }

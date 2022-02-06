@@ -38,9 +38,9 @@ struct k {
     static let TOKEN_INFO_DICT = [
         k.WETH: ERC20TokenInfo(decimals: 18, symbol: "WETH"),
         k.USDC: ERC20TokenInfo(decimals: 6, symbol: "USDC"),
-        k.HEX: ERC20TokenInfo(decimals: 8, symbol: "HEX")
+        k.HEX: ERC20TokenInfo(decimals: 8, symbol: "HEX"),
     ]
-    
+
     // Bigger Pays Better
     static let BPB_BONUS_PERCENT = BigUInt(10)
     static let HEARTS_PER_HEX = BigUInt(1e8)

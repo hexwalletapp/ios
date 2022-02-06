@@ -14,15 +14,15 @@ import web3
 public extension UniswapSmartContractManager {
     static let live: UniswapSmartContractManager = { () -> UniswapSmartContractManager in
         var manager = UniswapSmartContractManager()
-        
+
         manager.create = { id in
             Effect.run { subscriber in
                 let delegate = UniswapSmartContractManagerDelegate(subscriber)
-                
+
                 let clients = Chain.allCases.reduce(into: [Chain: EthereumClient]()) { dict, chain in
                     dict[chain.id] = EthereumClient(url: chain.url)
                 }
-                
+
                 dependencies[id] = Dependencies(delegate: delegate,
                                                 clients: clients,
                                                 subscriber: subscriber)
@@ -31,15 +31,14 @@ public extension UniswapSmartContractManager {
                 }
             }
         }
-        
+
         manager.destroy = { id in
-                .fireAndForget {
-                    dependencies[id]?.subscriber.send(completion: .finished)
-                    dependencies[id] = nil
-                }
+            .fireAndForget {
+                dependencies[id]?.subscriber.send(completion: .finished)
+                dependencies[id] = nil
+            }
         }
-        
-        
+
         manager.token0 = { id, chain, pairAddress in
             guard let client = dependencies[id]?.clients[chain.id] else { return .none }
             return .fireAndForget {
@@ -65,7 +64,7 @@ public extension UniswapSmartContractManager {
                 }
             }
         }
-        
+
         manager.token1 = { id, chain, pairAddress in
             guard let client = dependencies[id]?.clients[chain.id] else { return .none }
             return .fireAndForget {
@@ -91,12 +90,12 @@ public extension UniswapSmartContractManager {
                 }
             }
         }
-        
+
         // MARK: - V2
-        
+
         manager.getPairV2 = { id, chain, first, second in
             guard let client = dependencies[id]?.clients[chain.id] else { return .none }
-            
+
             return .fireAndForget {
                 let getPair = GetPair(first: first, second: second)
                 getPair.call(withClient: client,
@@ -118,7 +117,7 @@ public extension UniswapSmartContractManager {
                 }
             }
         }
-        
+
         manager.reserves = { id, chain, pairAddress in
             guard let client = dependencies[id]?.clients[chain.id] else { return .none }
             return .fireAndForget {
@@ -145,10 +144,10 @@ public extension UniswapSmartContractManager {
                 }
             }
         }
-        
+
         manager.getPoolV3 = { id, chain, tokenA, tokenB, fee in
             guard let client = dependencies[id]?.clients[chain.id] else { return .none }
-            
+
             return .fireAndForget {
                 let getPool = GetPool(tokenA: tokenA, tokenB: tokenB, fee: fee)
                 getPool.call(withClient: client,
@@ -167,7 +166,7 @@ public extension UniswapSmartContractManager {
                                 case 10000: tickerSpacing = 200.0
                                 default: tickerSpacing = 60.0
                                 }
-                                
+
                                 dependencies[id]?.subscriber.send(.poolAddrses(chain,
                                                                                response.address,
                                                                                tickerSpacing))
@@ -179,10 +178,10 @@ public extension UniswapSmartContractManager {
                 }
             }
         }
-        
+
         manager.liquidity = { id, chain, poolAddress in
             guard let client = dependencies[id]?.clients[chain.id] else { return .none }
-            
+
             return .fireAndForget {
                 let getLiquidity = LiquidityABIFunction(contract: poolAddress)
                 getLiquidity.call(withClient: client,
@@ -205,10 +204,10 @@ public extension UniswapSmartContractManager {
                 }
             }
         }
-        
+
         manager.observe = { id, chain, poolAddress, secondsAgos in
             guard let client = dependencies[id]?.clients[chain.id] else { return .none }
-            
+
             return .fireAndForget {
                 let getObserve = ObserveABIFunction(contract: poolAddress, secondsAgos: secondsAgos)
                 getObserve.call(withClient: client,
@@ -232,10 +231,10 @@ public extension UniswapSmartContractManager {
                 }
             }
         }
-        
+
         manager.slot0 = { id, chain, poolAddress in
             guard let client = dependencies[id]?.clients[chain.id] else { return .none }
-            
+
             return .fireAndForget {
                 let slot0 = Slot0ABIFunction(contract: poolAddress)
                 slot0.call(withClient: client,
@@ -264,7 +263,7 @@ public extension UniswapSmartContractManager {
                 }
             }
         }
-        
+
         return manager
     }()
 }
@@ -283,7 +282,7 @@ private var dependencies: [AnyHashable: Dependencies] = [:]
 
 private class UniswapSmartContractManagerDelegate: NSObject {
     let subscriber: Effect<UniswapSmartContractManager.Action, Never>.Subscriber
-    
+
     init(_ subscriber: Effect<UniswapSmartContractManager.Action, Never>.Subscriber) {
         self.subscriber = subscriber
     }

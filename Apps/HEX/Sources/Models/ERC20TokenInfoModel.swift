@@ -1,9 +1,5 @@
-//
-//  ERC20TokenInfoModel.swift
-//  HEX
-//
-//  Created by Joe Blau on 2/5/22.
-//
+// ERC20TokenInfoModel.swift
+// Copyright (c) 2022 Joe Blau
 
 import Foundation
 

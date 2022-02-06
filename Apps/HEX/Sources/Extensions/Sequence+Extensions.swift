@@ -1,9 +1,5 @@
-//
-//  Sequence+Extensions.swift
-//  HEX
-//
-//  Created by Joe Blau on 2/5/22.
-//
+// Sequence+Extensions.swift
+// Copyright (c) 2022 Joe Blau
 
 import Foundation
 

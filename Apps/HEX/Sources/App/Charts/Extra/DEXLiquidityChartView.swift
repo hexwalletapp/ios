@@ -6,7 +6,7 @@ import SwiftUI
 
 struct DEXLiquidityChartView: View {
     let store: Store<AppState, AppAction>
-    
+
     var body: some View {
         WithViewStore(store) { viewStore in
             ScrollView {
@@ -15,8 +15,8 @@ struct DEXLiquidityChartView: View {
                                        interaction: true).frame(height: 300)
                     ForEach(viewStore.liquidity.filter { $0.chain == .ethereum }) { liquidity in
                         GroupBox(label:
-                                    Label(liquidity.pairPool ,
-                                          systemImage: "wallet.pass.fill").font(.body.monospaced())
+                            Label(liquidity.pairPool,
+                                  systemImage: "wallet.pass.fill").font(.body.monospaced())
                         ) {
                             VStack(alignment: .trailing, spacing: 8) {
                                 row(token: liquidity.tokenA)
@@ -41,7 +41,7 @@ struct DEXLiquidityChartView: View {
             .navigationTitle("Liquidty")
         }
     }
-    
+
     func row(token: ERC20Token) -> some View {
         HStack {
             Text(token.symbol)
@@ -50,7 +50,7 @@ struct DEXLiquidityChartView: View {
                 .font(.body.monospaced())
         }
     }
-    
+
     var preview: some View {
         WithViewStore(store) { viewStore in
             GroupBox {
