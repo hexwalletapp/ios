@@ -23,6 +23,9 @@ struct PriceChartView: UIViewRepresentable {
                           CombinedChartView.DrawOrder.candle.rawValue]
 
         view.gridBackgroundColor = .clear
+        view.clipDataToContentEnabled = false
+        view.autoScaleMinMaxEnabled = true
+
         view.legend.enabled = false
 
         view.xAxis.labelPosition = .bottom
@@ -30,6 +33,7 @@ struct PriceChartView: UIViewRepresentable {
         view.xAxis.axisLineColor = .clear
         view.xAxis.labelCount = 6
         view.xAxis.labelTextColor = .secondaryLabel
+        view.xAxis.avoidFirstLastClippingEnabled = true
 
         view.leftAxis.drawLabelsEnabled = false
         view.leftAxis.gridColor = .clear
@@ -41,7 +45,6 @@ struct PriceChartView: UIViewRepresentable {
         view.rightAxis.valueFormatter = PriceAxisValueFormatter(chartScale: chartScale)
         view.rightAxis.labelTextColor = .secondaryLabel
 
-        view.autoScaleMinMaxEnabled = true
         return view
     }
 
@@ -57,7 +60,7 @@ struct PriceChartView: UIViewRepresentable {
         }
         combinedData.barData = generateData(ohlcv: ohlcv)
         combinedView.data = combinedData
-
+        
         if !ohlcv.isEmpty {
             combinedView.zoom(scaleX: 0, scaleY: 0, x: 0, y: 0)
             let pointsDisplayed = 32
