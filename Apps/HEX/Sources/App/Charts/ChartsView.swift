@@ -7,59 +7,92 @@ import SwiftUI
 struct ChartsView: View {
     let store: Store<AppState, AppAction>
 
+    let chartHeight = UIScreen.main.bounds.height * 0.6
+
     var body: some View {
-        WithViewStore(store) { viewStore in
-            NavigationView {
-                VStack {
-                    PriceChartView(chartScale: viewStore.selectedChartScale,
-                                   timeScale: viewStore.selectedTimeScale,
-                                   chartType: viewStore.selectedChartType,
-                                   ohlcv: viewStore.ohlcv)
-                }
-                .background(Color(.systemGroupedBackground))
-                .navigationBarTitle("HEX/USDC", displayMode: .inline)
-                .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        switch viewStore.chartLoading {
-                        case true: ProgressView()
-                        case false: EmptyView()
+        NavigationView {
+            ScrollView {
+                LazyVStack(pinnedViews: [.sectionHeaders]) {
+                    Section {
+                        LazyVStack {
+                            handle
+                            DEXLiquidityChartView(store: store).preview.frame(height: 400)
                         }
+                        .background(Color(.tertiarySystemBackground))
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .padding([.horizontal])
+                        .zIndex(1)
+                    } header: {
+                        chart.frame(height: chartHeight).zIndex(0)
                     }
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        Menu {
-                            ForEach(ChartScale.allCases) { timeScale in
-                                Button {
-                                    viewStore.send(.binding(.set(\.$selectedChartScale, timeScale)))
-                                } label: {
-                                    Toggle(timeScale.description,
-                                           isOn: .constant(timeScale == viewStore.selectedChartScale))
-                                }
-                            }
-                        } label: {
-                            Text(viewStore.selectedChartScale.description)
-                        }.disabled(viewStore.chartLoading)
+                }
+            }
+            .background(Color(.systemGroupedBackground))
+        }
+    }
 
-                        Menu(content: {
-                            minuteScale
-                            hourScale
-                            dayScale
-                        }, label: {
-                            Text(viewStore.selectedTimeScale.code)
-                        }).disabled(viewStore.chartLoading)
+    var handle: some View {
+        HStack {
+            Spacer()
+            Rectangle().foregroundColor(Color(.systemGray3))
+                .frame(width: 64, height: 6, alignment: .center)
+                .clipShape(Capsule())
+            Spacer()
+        }.padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
+    }
 
-                        Menu(content: {
-                            ForEach(ChartType.allCases) { chart in
-                                Button {
-                                    viewStore.send(.binding(.set(\.$selectedChartType, chart)))
-                                } label: {
-                                    Toggle(chart.description,
-                                           isOn: .constant(chart == viewStore.selectedChartType))
-                                }
-                            }
-                        }, label: {
-                            viewStore.selectedChartType.icon
-                        }).disabled(viewStore.chartLoading)
+    var chart: some View {
+        WithViewStore(store) { viewStore in
+            VStack {
+                PriceChartView(chartScale: viewStore.selectedChartScale,
+                               timeScale: viewStore.selectedTimeScale,
+                               chartType: viewStore.selectedChartType,
+                               ohlcv: viewStore.ohlcv)
+            }
+            .padding()
+            .background(Color(.systemGroupedBackground))
+            .navigationBarTitle(viewStore.hexContractOnChain.ethData.price.currencyString)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    switch viewStore.chartLoading {
+                    case true: ProgressView()
+                    case false: EmptyView()
                     }
+                }
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Menu {
+                        ForEach(ChartScale.allCases) { timeScale in
+                            Button {
+                                viewStore.send(.binding(.set(\.$selectedChartScale, timeScale)))
+                            } label: {
+                                Toggle(timeScale.description,
+                                       isOn: .constant(timeScale == viewStore.selectedChartScale))
+                            }
+                        }
+                    } label: {
+                        Text(viewStore.selectedChartScale.description)
+                    }.disabled(viewStore.chartLoading)
+
+                    Menu(content: {
+                        minuteScale
+                        hourScale
+                        dayScale
+                    }, label: {
+                        Text(viewStore.selectedTimeScale.code)
+                    }).disabled(viewStore.chartLoading)
+
+                    Menu(content: {
+                        ForEach(ChartType.allCases) { chart in
+                            Button {
+                                viewStore.send(.binding(.set(\.$selectedChartType, chart)))
+                            } label: {
+                                Toggle(chart.description,
+                                       isOn: .constant(chart == viewStore.selectedChartType))
+                            }
+                        }
+                    }, label: {
+                        viewStore.selectedChartType.icon
+                    }).disabled(viewStore.chartLoading)
                 }
             }
         }

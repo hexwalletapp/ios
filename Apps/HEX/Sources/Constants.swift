@@ -31,9 +31,16 @@ struct k {
         Gradient.Stop(color: Color(.systemGroupedBackground.withAlphaComponent(0)), location: 1.0),
     ]
 
+    static let WETH = EthereumAddress("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
     static let USDC = EthereumAddress("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
     static let HEX = EthereumAddress("0x2b591e99afe9f32eaa6214f7b7629768c40eeb39")
 
+    static let TOKEN_INFO_DICT = [
+        k.WETH: ERC20TokenInfo(decimals: 18, symbol: "WETH"),
+        k.USDC: ERC20TokenInfo(decimals: 6, symbol: "USDC"),
+        k.HEX: ERC20TokenInfo(decimals: 8, symbol: "HEX")
+    ]
+    
     // Bigger Pays Better
     static let BPB_BONUS_PERCENT = BigUInt(10)
     static let HEARTS_PER_HEX = BigUInt(1e8)
@@ -94,6 +101,10 @@ struct k {
             lineWidth: .two
         )
     }
+
+    static let LEAGUE_GIRD_3 = [GridItem(.fixed(30), spacing: k.GRID_SPACING, alignment: .leading),
+                                GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .leading),
+                                GridItem(.fixed(100), spacing: k.GRID_SPACING, alignment: .trailing)]
 
     static let GRID_3 = [GridItem(.fixed(80), spacing: k.GRID_SPACING, alignment: .leading),
                          GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .trailing),

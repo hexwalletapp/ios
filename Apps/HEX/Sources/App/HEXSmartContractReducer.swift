@@ -65,13 +65,13 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         let accounts = state.accountsData.filter { $0.account.chain == chain }
         let stakes = accounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
             environment.hexManager.getStakes(id: HexManagerId(),
-                                             address: accountData.account.address,
+                                             address: accountData.account.address.value,
                                              chain: chain).fireAndForget()
         }
 
         let balances = accounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
             environment.hexManager.getBalance(id: HexManagerId(),
-                                              address: accountData.account.address,
+                                              address: accountData.account.address.value,
                                               chain: chain).fireAndForget()
         }
 

@@ -22,12 +22,12 @@ struct PriceChartView: UIViewRepresentable {
                           CombinedChartView.DrawOrder.line.rawValue,
                           CombinedChartView.DrawOrder.candle.rawValue]
 
-        view.gridBackgroundColor = .systemGroupedBackground
+        view.gridBackgroundColor = .clear
         view.legend.enabled = false
 
         view.xAxis.labelPosition = .bottom
-        view.xAxis.gridColor = .systemGray5
-        view.xAxis.axisLineColor = .systemGray5
+        view.xAxis.gridColor = .clear
+        view.xAxis.axisLineColor = .clear
         view.xAxis.labelCount = 6
         view.xAxis.labelTextColor = .secondaryLabel
 
@@ -36,8 +36,8 @@ struct PriceChartView: UIViewRepresentable {
         view.leftAxis.axisLineColor = .clear
         view.leftAxis.axisMinimum = 0.0
 
-        view.rightAxis.gridColor = .systemGray5
-        view.rightAxis.axisLineColor = .systemGray5
+        view.rightAxis.gridColor = .clear
+        view.rightAxis.axisLineColor = .clear
         view.rightAxis.valueFormatter = PriceAxisValueFormatter(chartScale: chartScale)
         view.rightAxis.labelTextColor = .secondaryLabel
 
@@ -60,7 +60,7 @@ struct PriceChartView: UIViewRepresentable {
 
         if !ohlcv.isEmpty {
             combinedView.zoom(scaleX: 0, scaleY: 0, x: 0, y: 0)
-            let pointsDisplayed = timeScale.renderElements
+            let pointsDisplayed = 32
             let xScale = Double(ohlcv.count / pointsDisplayed)
             combinedView.zoom(scaleX: xScale, scaleY: 1, x: 0, y: 0)
             combinedView.moveViewToX(Double(ohlcv.count))
@@ -90,7 +90,7 @@ struct PriceChartView: UIViewRepresentable {
         set.axisDependency = .right
         set.drawIconsEnabled = false
         set.drawValuesEnabled = false
-        set.neutralColor = .secondaryLabel
+        set.neutralColor = .systemGreen
         set.decreasingColor = .systemRed
         set.increasingColor = .systemGreen
         set.shadowColorSameAsCandle = true

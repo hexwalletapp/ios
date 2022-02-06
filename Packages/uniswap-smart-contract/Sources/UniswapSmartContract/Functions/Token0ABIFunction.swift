@@ -1,26 +1,15 @@
-// GetPairABIFunction.swift
-// Copyright (c) 2022 Joe Blau
-
 import BigInt
 import Foundation
 import web3
 
-public struct GetPair: ABIFunction {
-    public static let name = "getPair"
+public struct Token0ABIFunction: ABIFunction {
+    public static let name = "token0"
     public let gasPrice: BigUInt? = nil
     public let gasLimit: BigUInt? = nil
-    public var contract = EthereumAddress("0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f")
+    public var contract: EthereumAddress
     public let from: EthereumAddress? = nil
 
-    // MARK: - Params
-
-    let first: EthereumAddress
-    let second: EthereumAddress
-
-    public func encode(to encoder: ABIFunctionEncoder) throws {
-        try encoder.encode(first)
-        try encoder.encode(second)
-    }
+    public func encode(to _: ABIFunctionEncoder) throws {}
 
     // MARK: - Response
 

@@ -39,7 +39,7 @@ struct StakeCreditCardView: View {
                     .blurEffectStyle(.systemMaterial)
                 VStack(alignment: .leading) {
                     HStack(alignment: .top) {
-                        front(address: accountData.account.address)
+                        front(shortAddress: accountData.account.address.shortAddress)
                         Spacer()
                         frontTotal(title: viewStore.payoutEarnings.description,
                                    hearts: accountData.total.interest(payout: viewStore.payoutEarnings),
@@ -158,8 +158,8 @@ struct StakeCreditCardView: View {
         }
     }
 
-    func front(address: String) -> some View {
-        Text("\(address.prefix(6).description)...\(address.suffix(4).description)")
+    func front(shortAddress: String) -> some View {
+        Text(shortAddress)
             .font(.subheadline.monospaced())
             .padding(8)
             .background(Color(.displayP3, white: 1.0, opacity: 0.2))

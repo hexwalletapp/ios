@@ -5,6 +5,7 @@ import ComposableArchitecture
 import EVMChain
 import HEXSmartContract
 import SwiftUI
+import web3
 
 struct EditView: View {
     let store: Store<AppState, AppAction>
@@ -15,6 +16,16 @@ struct EditView: View {
 
     @FocusState private var focusedField: Field?
     @State private var account = Account()
+
+    private var adapterValue: Binding<String> {
+        Binding<String>(get: {
+//            self.willUpdate()
+            self.account.address.value
+        }, set: {
+            self.account.address = EthereumAddress($0)
+//            self.didModify()
+        })
+    }
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -48,7 +59,7 @@ struct EditView: View {
                                 .submitLabel(.next)
 
                             TextField("Public Key",
-                                      text: $account.address,
+                                      text: adapterValue,
                                       prompt: Text("Public Key"))
                                 .focused($focusedField, equals: .address)
                                 .disableAutocorrection(true)
@@ -78,10 +89,10 @@ struct EditView: View {
                     case .address: break
                     }
 
-                    account.address = account.address.trimmingCharacters(in: .whitespaces).lowercased()
+                    account.address = EthereumAddress(account.address.value.trimmingCharacters(in: .whitespaces).lowercased())
                     account.name = account.name.trimmingCharacters(in: .whitespaces)
 
-                    guard !account.address.isEmpty, !account.name.isEmpty else { return }
+                    guard !account.address.value.isEmpty, !account.name.isEmpty else { return }
 
                     var existingAccounts = viewStore.accountsData
                     existingAccounts.updateOrAppend(AccountData(account: account))
@@ -154,7 +165,7 @@ struct EditView: View {
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(accountData.account.name)
-                    Text("\(accountData.account.address.prefix(6).description)...\(accountData.account.address.suffix(4).description)")
+                    Text(accountData.account.address.shortAddress)
                         .foregroundColor(.secondary)
                         .font(.footnote.monospaced())
                 }
@@ -162,7 +173,7 @@ struct EditView: View {
                 switch viewStore.editMode {
                 case .inactive:
                     Button {
-                        viewStore.send(.copy(accountData.account.address))
+                        viewStore.send(.copy(accountData.account.address.value))
                     } label: {
                         Image(systemName: "doc.on.doc")
                             .foregroundColor(.accentColor)

@@ -4,7 +4,7 @@
 import BigInt
 import SwiftUI
 
-public enum Chain: BigUInt, Codable, Identifiable, CaseIterable, CustomStringConvertible {
+public enum Chain: BigUInt, Codable, Identifiable, CaseIterable, CustomStringConvertible, Hashable {
     public var id: Self { self }
 
     case ethereum, pulse

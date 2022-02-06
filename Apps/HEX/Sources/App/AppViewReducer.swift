@@ -48,6 +48,8 @@ struct AppState: Equatable {
     @BindableState var groupAccountData = GroupAccountData()
 
     var ohlcv = [OHLCVData]()
+    var liquidity = [DEXLiquidity]()
+    var poolSpacing = [String: Double]()
     var chartLoading = false
     var didHaveFavorites = false
     var hexContractOnChain = HexContractOnChain()
@@ -125,9 +127,40 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .getAccounts:
-        let pairs = Array(state.activeChains).compactMap { chain -> Effect<AppAction, Never> in
-            environment.uniswapManager.getPair(id: UniswapManagerId(), chain: chain, token0: k.HEX, token1: k.USDC).fireAndForget()
-        }
+        let pairs = Array(state.activeChains).map { chain -> [Effect<AppAction, Never>] in
+            [
+                environment.uniswapManager
+                    .getPairV2(id: UniswapManagerId(),
+                               chain: chain,
+                               token0: k.HEX,
+                               token1: k.USDC).fireAndForget(),
+                environment.uniswapManager
+                    .getPairV2(id: UniswapManagerId(),
+                               chain: chain,
+                               token0: k.HEX,
+                               token1: k.WETH).fireAndForget(),
+//                environment.uniswapManager
+//                    .getPoolV3(id: UniswapManagerId(),
+//                               chain: chain,
+//                               tokenA: k.HEX,
+//                               tokenB: k.USDC,
+//                               fee: 3000).fireAndForget(),
+//                environment.uniswapManager
+//                    .getPoolV3(id: UniswapManagerId(),
+//                               chain: chain,
+//                               tokenA: k.HEX,
+//                               tokenB: k.WETH,
+//                               fee: 3000)
+//                    .fireAndForget(),
+//                environment.uniswapManager
+//                    .getPoolV3(id: UniswapManagerId(),
+//                               chain: chain,
+//                               tokenA: k.HEX,
+//                               tokenB: k.USDC,
+//                               fee: 10000).fireAndForget(),
+            ]
+        }.flatMap { $0 }
+
         return .merge(
             .merge(pairs),
             Effect.cancel(id: CancelGetAccounts()),
@@ -272,7 +305,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         do {
             let accounts = state.accountsData.map { $0.account }
             if let lastAccount = accounts.last, state.selectedId.isEmpty {
-                state.selectedId = lastAccount.address + lastAccount.chain.description
+                state.selectedId = lastAccount.address.value + lastAccount.chain.description
             }
             let encodedAccounts = try environment.encoder.encode(accounts)
             UserDefaults.standard.setValue(encodedAccounts, forKey: k.ACCOUNTS_KEY)

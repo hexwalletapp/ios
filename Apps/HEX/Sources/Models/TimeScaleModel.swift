@@ -28,14 +28,6 @@ enum TimeScale: CustomStringConvertible, TimeScaleable {
         case let .day(day): return day.code
         }
     }
-
-    var renderElements: Int {
-        switch self {
-        case .minute: return 360
-        case .hour: return 120
-        case .day: return 60
-        }
-    }
 }
 
 enum TimeScaleMinute: Identifiable, CaseIterable, TimeScaleable {
