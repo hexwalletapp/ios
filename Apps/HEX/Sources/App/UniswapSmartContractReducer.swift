@@ -61,27 +61,22 @@ let uniswapReducer = Reducer<AppState, UniswapSmartContractManager.Action, AppEn
         state.liquidity = [DEXLiquidity](set)
 
         let ratio = (reserve0.number.doubleValue / reserve1.number.doubleValue) / 100.0
-        switch chain {
-        case .ethereum:
-
-            switch pairAddress {
-            case EthereumAddress("0xf6dcdce0ac3001b2f67f750bc64ea5beb37b5824"):
+        switch (chain, pairAddress) {
+        case (.ethereum, EthereumAddress("0xf6dcdce0ac3001b2f67f750bc64ea5beb37b5824")):
                 state.hexContractOnChain.ethData.hexUsd = 1.0 / ratio
                 state.calculator.price = 1.0 / ratio
 
                 state.accountsData.filter { $0.account.chain == .ethereum }.forEach { accountData in
                     state.accountsData[id: accountData.id]?.hexPrice = 1.0 / ratio
                 }
-            default:
-                break
-            }
 
-        case .pulse:
+        case (.pulse, EthereumAddress("0xf6dcdce0ac3001b2f67f750bc64ea5beb37b5824")):
             state.hexContractOnChain.plsData.hexUsd = 1.0 / ratio
-
             state.accountsData.filter { $0.account.chain == .pulse }.forEach { accountData in
                 state.accountsData[id: accountData.id]?.hexPrice = 1.0 / ratio
             }
+            default:
+                break
         }
         return .merge(
             environment.uniswapManager.token0(id: UniswapManagerId(),

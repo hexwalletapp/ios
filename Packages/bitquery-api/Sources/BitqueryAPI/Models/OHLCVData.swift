@@ -1,5 +1,5 @@
 // OHLCVData.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import Foundation
 
@@ -10,13 +10,14 @@ public struct OHLCVData: Codable, Equatable {
     public var low: Double
     public var close: Double
     public var volume: Double
-    
+
     public init(time: Date,
-         open: Double,
-         high: Double,
-         low: Double,
-         close: Double,
-         volume: Double) {
+                open: Double,
+                high: Double,
+                low: Double,
+                close: Double,
+                volume: Double)
+    {
         self.time = time
         self.open = open
         self.high = high
