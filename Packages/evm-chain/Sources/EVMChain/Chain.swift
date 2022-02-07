@@ -1,10 +1,9 @@
 // Chain.swift
 // Copyright (c) 2022 Joe Blau
 
-import BigInt
 import SwiftUI
 
-public enum Chain: BigUInt, Codable, Identifiable, CaseIterable, CustomStringConvertible, Hashable {
+public enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible, Hashable {
     public var id: Self { self }
 
     case ethereum, pulse

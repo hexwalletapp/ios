@@ -44,10 +44,17 @@ struct ChartsView: View {
     var chart: some View {
         WithViewStore(store) { viewStore in
             VStack {
-                PriceChartView(chartScale: viewStore.selectedChartScale,
+                PriceChartView(store: store,
+                               chartScale: viewStore.selectedChartScale,
                                timeScale: viewStore.selectedTimeScale,
                                chartType: viewStore.selectedChartType,
                                ohlcv: viewStore.ohlcv)
+                    .overlay(alignment: .trailing) {
+                        Text(NSNumber(value: viewStore.rightAxisLivePrice.price).currencyString)
+                            .padding(2)
+                            .background(Color(viewStore.rightAxisLivePrice.background))
+                            .font(.system(size: 10, design: .monospaced))
+                    }
             }
             .padding()
             .background(Color(.systemGroupedBackground))

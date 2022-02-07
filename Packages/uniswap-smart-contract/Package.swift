@@ -19,7 +19,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "0.17.0"),
-        .package(url: "https://github.com/argentlabs/web3.swift.git", from: "0.8.1"),
+        .package(url: "https://github.com/argentlabs/web3.swift.git", from: "0.9.0"),
         .package(name: "EVMChain", path: "../evm-chain"),
     ],
     targets: [

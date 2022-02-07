@@ -29,6 +29,12 @@ struct PageViewDots: Equatable {
     var currentIndex: Int = -1
 }
 
+struct LivePrice: Equatable {
+    var price: Double = 0
+    var text: UIColor = .label
+    var background: UIColor = .systemBackground
+}
+
 struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var modalPresent: ModalPresent? = nil
@@ -46,10 +52,11 @@ struct AppState: Equatable {
     @BindableState var calculator = Calculator()
 
     @BindableState var groupAccountData = GroupAccountData()
+    @BindableState var rightAxisLivePrice = LivePrice()
 
     var ohlcv = [OHLCVData]()
     var liquidity = [DEXLiquidity]()
-    var poolSpacing = [String: Double]()
+    var poolSpacing = [String: BigInt]()
     var chartLoading = false
     var didHaveFavorites = false
     var hexContractOnChain = HexContractOnChain()

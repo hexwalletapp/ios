@@ -155,7 +155,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
 }
 
 struct AccountStake: Identifiable {
-    var id: String { "c:\(account.chain.rawValue)s:\(stake.id)" }
+    var id: String { "c:\(account.chain)s:\(stake.id)" }
     var account: Account
     var stake: Stake
 }

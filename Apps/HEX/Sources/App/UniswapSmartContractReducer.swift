@@ -95,7 +95,7 @@ let uniswapReducer = Reducer<AppState, UniswapSmartContractManager.Action, AppEn
         )
 
     case let .poolAddrses(chain, poolAddress, tickerSpacing):
-        state.poolSpacing[poolAddress.value] = tickerSpacing
+        state.poolSpacing[poolAddress.value] = BigInt(tickerSpacing)
         return .merge(
             environment.uniswapManager.liquidity(id: UniswapManagerId(),
                                                  chain: chain,
@@ -122,29 +122,27 @@ let uniswapReducer = Reducer<AppState, UniswapSmartContractManager.Action, AppEn
     case .observe:
         return .none
 
-    case let .slot0(chain, poolAddress, _, tick, _, _, _, _, _):
+    case let .slot0(chain, poolAddress, sqrtPriceX96, tick, _, _, _, _, _):
         guard let liquidity = state.hexContractOnChain.ethData.v3Liquidity[poolAddress],
               let tickSpacing = state.poolSpacing[poolAddress.value] else { return .none }
 
-        print(liquidity)
-        let tick = Double(tick)
+        let tickLow = (tick / tickSpacing) * tickSpacing
+        let tickHigh = tickLow + tickSpacing
 
-        let bottom = floor(tick / tickSpacing) * tickSpacing
-        let top = bottom + tickSpacing
-
-        let price = pow(1.0001, tick)
-
-        let sa = pow(1.0001, Double(Int(bottom) / 2))
-        let sb = pow(1.0001, Double(Int(top) / 2))
-        let sp = pow(price, 0.5)
-
-        let amount0 = liquidity.number.doubleValue * (sb - sp) / (sp * sb)
-        let amount1 = liquidity.number.doubleValue * (sp - sa)
-
-//        print(poolAddress.value)
+//        print(tickLow)
+//        print(tickHigh)
+//        print(liquidity)
+//        let tick = Double(tick)
 //
-//                print("Amount0: \(amount0)")
-//                print("Amount1: \(amount1)")
+//        let price = pow(1.0001, tick)
+//
+//        let sa = pow(1.0001, Double(Int(bottom) / 2))
+//        let sb = pow(1.0001, Double(Int(top) / 2))
+//        let sp = pow(price, 0.5)
+//
+//        let amount0 = liquidity.number.doubleValue * (sb - sp) / (sp * sb)
+//        let amount1 = liquidity.number.doubleValue * (sp - sa)
+//        print(poolAddress.value)
 
         // Add to liquidity
 
@@ -154,10 +152,10 @@ let uniswapReducer = Reducer<AppState, UniswapSmartContractManager.Action, AppEn
                                 version: .v3,
                                 tokenA: ERC20Token(symbol: "A",
                                                    address: EthereumAddress(""),
-                                                   amount: BigUInt(amount0)),
+                                                   amount: BigUInt(0)),
                                 tokenB: ERC20Token(symbol: "B",
                                                    address: EthereumAddress(""),
-                                                   amount: BigUInt(amount1))))
+                                                   amount: BigUInt(0))))
         state.liquidity = [DEXLiquidity](set)
 
         return .merge(
