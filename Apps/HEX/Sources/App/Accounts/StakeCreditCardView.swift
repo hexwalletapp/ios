@@ -136,8 +136,12 @@ struct StakeCreditCardView: View {
                 case .hex:
                     Label(hearts.hex.hexString, image: "hex-logo.SFSymbol")
                         .labelStyle(HEXNumberTextStyle())
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                 case .usd:
                     Text(hearts.hexAt(price: price).currencyString)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                 }
                 description(text: title)
             }

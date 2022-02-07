@@ -212,6 +212,8 @@ struct AccountsView: View {
     func toolbarText(heading: String, subheading: String, image: Image? = nil) -> some View {
         VStack(spacing: 0) {
             Text(heading).font(.caption.monospacedDigit())
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
             switch image {
             case let .some(image):
                 HStack(spacing: 4) {
@@ -225,7 +227,7 @@ struct AccountsView: View {
                 Text(subheading).font(.caption2.monospaced()).foregroundColor(.secondary)
             }
         }
-        .frame(width: 48)
+        .frame(maxWidth: 96)
     }
 }
 
