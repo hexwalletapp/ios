@@ -10,4 +10,18 @@ public struct OHLCVData: Codable, Equatable {
     public var low: Double
     public var close: Double
     public var volume: Double
+    
+    public init(time: Date,
+         open: Double,
+         high: Double,
+         low: Double,
+         close: Double,
+         volume: Double) {
+        self.time = time
+        self.open = open
+        self.high = high
+        self.low = low
+        self.close = close
+        self.volume = volume
+    }
 }

@@ -50,7 +50,9 @@ struct ChartsView: View {
                                chartType: viewStore.selectedChartType,
                                ohlcv: viewStore.ohlcv)
                     .overlay(alignment: .trailing) {
-                        Text(NSNumber(value: viewStore.rightAxisLivePrice.price).currencyString)
+                        Text(NSNumber(value:
+                                        viewStore.selectedChartScale == .auto ? viewStore.rightAxisLivePrice.price : pow(10, viewStore.rightAxisLivePrice.price)
+                                        ).currencyString)
                             .padding(2)
                             .background(Color(viewStore.rightAxisLivePrice.background))
                             .font(.system(size: 10, design: .monospaced))
