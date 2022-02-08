@@ -20,7 +20,6 @@ struct ChartsView: View {
                         }
                         .background(Color(.tertiarySystemBackground))
                         .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .padding([.horizontal])
                         .zIndex(1)
                     } header: {
                         chart.frame(height: chartHeight).zIndex(0)
@@ -58,7 +57,7 @@ struct ChartsView: View {
                             .font(.system(size: 10, design: .monospaced))
                     }
             }
-            .padding()
+            .padding([.vertical])
             .background(Color(.systemGroupedBackground))
             .navigationBarTitle(viewStore.hexContractOnChain.ethData.price.currencyString)
             .toolbar {
