@@ -47,6 +47,16 @@ struct PlanView: View {
                                 .keyboardType(.numbersAndPunctuation)
                                 .submitLabel(.done)
                         }
+                    } footer: {
+                        switch viewStore.hexContractOnChain.ethData.dailyData.suffix(7).count {
+                        case 0:
+                            Button {
+                                viewStore.send(.getGlobalInfo)
+                            } label: {
+                                Label("Connect to internet, then tap here to load share data", systemImage: "exclamationmark.triangle.fill")
+                            }
+                        default: EmptyView()
+                        }
                     }
 
                     switch viewStore.calculator.showLadder {
