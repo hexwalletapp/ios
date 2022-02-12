@@ -72,7 +72,7 @@ struct AccountsView: View {
                                        isOn: viewStore.binding(\.$shouldSpeculate).animation())
                                 Button {
                                     viewStore.send(.binding(.set(\.$modalPresent, .speculate)))
-                                } label: { Label("Edit • \(viewStore.speculativePrice.currencyString)",
+                                } label: { Label("Edit • \(viewStore.speculativePrice.currencyString())",
                                                  systemImage: "square.and.pencil") }
                             }
                         } label: {
@@ -86,10 +86,10 @@ struct AccountsView: View {
                             if viewStore.accountsData[id: viewStore.selectedId]?.account.chain != .pulse {
                                 let ethData = viewStore.hexContractOnChain.ethData
                                 switch viewStore.shouldSpeculate {
-                                case true: toolbarText(heading: ethData.speculativePrice.currencyString + "*",
+                                case true: toolbarText(heading: ethData.speculativePrice.currencyString() + "*",
                                                        subheading: "Price",
                                                        image: Chain.ethereum.image)
-                                case false: toolbarText(heading: ethData.price.currencyString,
+                                case false: toolbarText(heading: ethData.price.currencyString(),
                                                         subheading: "Price",
                                                         image: Chain.ethereum.image)
                                 }
@@ -98,10 +98,10 @@ struct AccountsView: View {
                             if viewStore.accountsData[id: viewStore.selectedId]?.account.chain != .ethereum {
                                 let plsData = viewStore.hexContractOnChain.plsData
                                 switch viewStore.shouldSpeculate {
-                                case true: toolbarText(heading: plsData.speculativePrice.currencyString + "*",
+                                case true: toolbarText(heading: plsData.speculativePrice.currencyString() + "*",
                                                        subheading: "Price",
                                                        image: Chain.pulse.image)
-                                case false: toolbarText(heading: plsData.price.currencyString,
+                                case false: toolbarText(heading: plsData.price.currencyString(),
                                                         subheading: "Price",
                                                         image: Chain.pulse.image)
                                 }

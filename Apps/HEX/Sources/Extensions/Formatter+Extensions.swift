@@ -4,10 +4,10 @@
 import Foundation
 
 extension Formatter {
-    static var currencyFormatter: NumberFormatter {
+    static func currencyFormatter(maxFraction: Int = 2) -> NumberFormatter {
         let f = NumberFormatter()
         f.minimumFractionDigits = 2
-        f.maximumFractionDigits = 2
+        f.maximumFractionDigits = maxFraction
         f.negativePrefix = " $"
         f.positivePrefix = " $"
         return f

@@ -17,6 +17,6 @@ class PriceAxisValueFormatter: NSObject, AxisValueFormatter {
         case .log: number = NSNumber(value: pow(10, value))
         case .auto: number = NSNumber(value: value)
         }
-        return Formatter.currencyFormatter.string(from: number) ?? ""
+        return Formatter.currencyFormatter(maxFraction: 4).string(from: number) ?? ""
     }
 }

@@ -51,15 +51,16 @@ struct ChartsView: View {
                     .overlay(alignment: .trailing) {
                         Text(NSNumber(value:
                             viewStore.selectedChartScale == .auto ? viewStore.rightAxisLivePrice.price : pow(10, viewStore.rightAxisLivePrice.price)
-                        ).currencyString)
+                        ).currencyString())
                             .padding(2)
+                            .foregroundColor(.white)
                             .background(Color(viewStore.rightAxisLivePrice.background))
                             .font(.system(size: 10, design: .monospaced))
                     }
             }
             .padding([.vertical])
             .background(Color(.systemGroupedBackground))
-            .navigationBarTitle(viewStore.hexContractOnChain.ethData.price.currencyString)
+            .navigationBarTitle(viewStore.hexContractOnChain.ethData.price.currencyString(maxFraction: 4))
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
                     switch viewStore.chartLoading {

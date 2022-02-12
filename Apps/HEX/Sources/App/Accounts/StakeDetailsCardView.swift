@@ -26,7 +26,7 @@ struct StakeDetailsCardView: View {
                     Spacer()
                     Text(stake.balanceHearts
                         .hexAt(price: price)
-                        .currencyString).foregroundColor(.primary)
+                        .currencyString()).foregroundColor(.primary)
                     Label(stake.balanceHearts.hex.hexString, image: "hex-logo.SFSymbol")
                         .labelStyle(HEXNumberTextStyle())
                         .foregroundColor(.secondary)

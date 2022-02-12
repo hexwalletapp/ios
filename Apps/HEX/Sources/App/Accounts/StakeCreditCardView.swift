@@ -139,7 +139,7 @@ struct StakeCreditCardView: View {
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
                 case .usd:
-                    Text(hearts.hexAt(price: price).currencyString)
+                    Text(hearts.hexAt(price: price).currencyString())
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
                 }

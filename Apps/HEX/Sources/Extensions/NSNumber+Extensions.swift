@@ -50,9 +50,10 @@ extension NSNumber {
         return formatter.string(from: self) ?? ""
     }
 
-    var currencyString: String {
+    func currencyString(maxFraction: Int = 2) -> String {
         let formatter = NSNumber.usLocaleFormatter
         formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = maxFraction
         return formatter.string(from: self) ?? ""
     }
 

@@ -34,7 +34,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             case .monthlyTotal:
                 partialResult = NSNumber(value: partialResult.doubleValue + accountData.total.interestMonthlyHearts.hexAt(price: accountData.hexPrice).doubleValue)
             }
-        }.currencyString
+        }.currencyString()
     }
 
     func payoutHEX(earnings: PayoutEarnings) -> String {
@@ -52,7 +52,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             let totalBalance = accountData.total.balanceHearts + accountData.liquidBalanceHearts
 
             partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
-        }.currencyString
+        }.currencyString()
     }
 
     var totalHEX: String {
@@ -74,7 +74,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             let totalBalance = accountData.liquidBalanceHearts
 
             partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
-        }.currencyString
+        }.currencyString()
     }
 
     var totalLiquidHEX: String {
@@ -90,7 +90,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             let totalBalance = accountData.total.stakedHearts
 
             partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
-        }.currencyString
+        }.currencyString()
     }
 
     var totalStakedHEX: String {
@@ -106,7 +106,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             let totalBalance = accountData.total.interestHearts
 
             partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
-        }.currencyString
+        }.currencyString()
     }
 
     var totalInterestHEX: String {
@@ -122,7 +122,7 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
             let totalBalance = accountData.total.bigPayDayHearts
 
             partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
-        }.currencyString
+        }.currencyString()
     }
 
     var totalBigPayDayHEX: String {
