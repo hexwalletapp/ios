@@ -133,7 +133,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .getAccounts:
-        let pairs = Array(state.activeChains).map { chain -> [Effect<AppAction, Never>] in
+        let pairs = Array(Chain.allCases).map { chain -> [Effect<AppAction, Never>] in
             [
                 environment.uniswapManager
                     .getPairV2(id: UniswapManagerId(),
