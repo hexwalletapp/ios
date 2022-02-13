@@ -6,6 +6,8 @@ import ComposableArchitecture
 import Foundation
 
 struct Calculator: Equatable {
+    var planUnit: PlanUnit = .USD
+    var stakeAmountDollar: Double? = nil
     var stakeAmountHex: Int? = nil
     var stakeDays: Int? = nil
     var price: Double? = nil
@@ -33,17 +35,30 @@ struct Calculator: Equatable {
         }
     }
 
+    var isAmountValid: Bool {
+        return stakeAmountDollar != nil || stakeAmountHex != nil
+    }
+    
     var disableForm: Bool {
-        stakeAmountHex?.words.isEmpty == nil ||
+        !isAmountValid ||
             stakeDays?.words.isEmpty == nil ||
             price?.description.isEmpty == nil
     }
 
     var stakeAmountHearts: BigUInt {
-        switch stakeAmountHex {
-        case let .some(amount): return BigUInt(amount) * k.HEARTS_PER_HEX
-        case .none: return 0
+        switch planUnit {
+        case .USD:
+            switch (stakeAmountDollar, price) {
+            case (let .some(amount), let .some(price)): return BigUInt(amount / price) * k.HEARTS_PER_HEX
+            default: return 0
+            }
+        case .HEX:
+            switch stakeAmountHex {
+            case let .some(amount): return BigUInt(amount) * k.HEARTS_PER_HEX
+            case .none: return 0
+            }
         }
+
     }
 }
 

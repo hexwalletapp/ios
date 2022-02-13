@@ -176,7 +176,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .getGlobalInfo:
-        let globalInfos = Array(state.activeChains).compactMap { chain -> Effect<AppAction, Never> in
+        let globalInfos = Array(Chain.allCases).compactMap { chain -> Effect<AppAction, Never> in
             environment.hexManager.getGlobalInfo(id: HexManagerId(), chain: chain).fireAndForget()
         }
         return .merge(globalInfos)
@@ -320,17 +320,27 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         return .none
 
-    case .binding(\.$calculator.stakeAmountHex),
+    case .binding(\.$calculator.stakeAmountDollar),
+         .binding(\.$calculator.stakeAmountHex),
          .binding(\.$calculator.stakeDays),
          .binding(\.$calculator.price),
          .binding(\.$calculator.ladderSteps),
          .binding(\.$calculator.ladderDistribution):
 
         let recentDailyData = state.hexContractOnChain.ethData.dailyData.suffix(7)
-
+        
+        switch state.calculator.planUnit {
+        case .USD:
+            state.calculator.stakeAmountHex = Int(state.calculator.stakeAmountHearts / k.HEARTS_PER_HEX)
+        case .HEX:
+            if let price = state.calculator.price {
+                state.calculator.stakeAmountDollar = Double(state.calculator.stakeAmountHearts / k.HEARTS_PER_HEX) * price
+            }
+        }
+        
         guard let totalStakeDays = state.calculator.stakeDays,
-              let stakeAmount = state.calculator.stakeAmountHex,
               state.calculator.stakeDaysValid,
+              state.calculator.isAmountValid,
               !recentDailyData.isEmpty else { return .none }
 
         let averageShareRateHex = recentDailyData.map { ($0.payout * k.HEARTS_PER_HEX) / $0.shares }.reduce(BigUInt(0), +) / BigUInt(recentDailyData.count)

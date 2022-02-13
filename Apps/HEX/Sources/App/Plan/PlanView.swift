@@ -25,26 +25,48 @@ struct PlanView: View {
             NavigationView {
                 Form {
                     Section {
-                        HStack {
-                            Image("hex-logo.SFSymbol").frame(width: k.FORM_ICON_WIDTH).foregroundColor(.secondary)
-                            TextField("HEX Stake Amount", value: viewStore.binding(\.$calculator.stakeAmountHex).animation(), format: .number)
-                                .focused($focusedField, equals: .stakeAmount)
-                                .keyboardType(.numbersAndPunctuation)
-                                .submitLabel(.next)
+                        Picker("Plan Input", selection: viewStore.binding(\.$calculator.planUnit).animation() ) {
+                            ForEach(PlanUnit.allCases) {
+                                Text($0.description)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        
+                        switch viewStore.calculator.planUnit {
+                        case .USD:
+                            HStack {
+                                PlanUnit.USD.image.frame(width: k.FORM_ICON_WIDTH).foregroundColor(.secondary)
+                                TextField("\(PlanUnit.USD.description) Stake Amount", value: viewStore.binding(\.$calculator.stakeAmountDollar).animation(),
+                                          format: .number)
+                                    .focused($focusedField, equals: .stakeAmount)
+                                    .keyboardType(.decimalPad)
+                                    .submitLabel(.next)
+                            }
+                        case .HEX:
+                            HStack {
+                                PlanUnit.HEX.image.frame(width: k.FORM_ICON_WIDTH).foregroundColor(.secondary)
+                                TextField("\(PlanUnit.HEX.description) Stake Amount", value: viewStore.binding(\.$calculator.stakeAmountHex).animation(),
+                                          format: .number)
+                                    .focused($focusedField, equals: .stakeAmount)
+                                    .keyboardType(.numberPad)
+                                    .submitLabel(.next)
+                            }
                         }
                         HStack {
                             Image(systemName: "calendar.badge.clock").frame(width: k.FORM_ICON_WIDTH).foregroundColor(.secondary)
-                            TextField("Days", value: viewStore.binding(\.$calculator.stakeDays).animation(), format: .number)
+                            TextField("Days", value: viewStore.binding(\.$calculator.stakeDays).animation(),
+                                      format: .number)
                                 .focused($focusedField, equals: .stakeDays)
-                                .keyboardType(.numbersAndPunctuation)
+                                .keyboardType(.numberPad)
                                 .submitLabel(.next)
                                 .foregroundColor(viewStore.calculator.stakeDaysValid ? .primary : .red)
                         }
                         HStack {
                             Image(systemName: "dollarsign.square").frame(width: k.FORM_ICON_WIDTH).foregroundColor(.secondary)
-                            TextField("Price Prediction", value: viewStore.binding(\.$calculator.price).animation(), format: .currency(code: "en_US"))
+                            TextField("Price Prediction", value: viewStore.binding(\.$calculator.price).animation(),
+                                      format: .currency(code: "en_US"))
                                 .focused($focusedField, equals: .price)
-                                .keyboardType(.numbersAndPunctuation)
+                                .keyboardType(.decimalPad)
                                 .submitLabel(.done)
                         }
                     } footer: {
