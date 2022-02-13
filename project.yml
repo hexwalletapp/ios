@@ -23,9 +23,6 @@ packages:
   swiftui-visual-effects:
     url: https://github.com/lucasbrown/swiftui-visual-effects.git
     from: 1.0.3
-  lightweight-charts:
-    url: https://github.com/tradingview/LightweightChartsIOS.git
-    from: 3.7.0
   charts:
     url: https://github.com/danielgindi/Charts.git
     from: 4.0.1
@@ -62,8 +59,6 @@ targets:
         product: BitqueryAPI
       - package: evm-chain
         product: EVMChain
-      - package: lightweight-charts
-        product: LightweightCharts
       - package: swift-composable-architecture
         product: ComposableArchitecture
       - package: swift-identified-collections
@@ -72,3 +67,20 @@ targets:
         product: SwiftUIVisualEffects
       - package: charts
         product: Charts
+  #     - target: StakeExtension
+
+  # StakeExtension:
+  #   type: app-extension
+  #   platform: iOS
+  #   sources:
+  #     - path: Apps/StakeExtension
+  #   settings:
+  #     PRODUCT_BUNDLE_IDENTIFIER: com.joeblau.HEX.StakeExtension
+  #     TARGETED_DEVICE_FAMILY: 1
+  #   dependencies:
+  #     - package: evm-chain
+  #       product: EVMChain
+  #     - package: swiftui-visual-effects
+  #       product: SwiftUIVisualEffects
+  #     - sdk: SwiftUI.framework
+  #     - sdk: WidgetKit.framework

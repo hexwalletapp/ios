@@ -8,7 +8,6 @@ import EVMChain
 import Foundation
 import HEXSmartContract
 import IdentifiedCollections
-import LightweightCharts
 import os.log
 import SwiftUI
 import UniswapSmartContract
@@ -332,7 +331,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         guard let totalStakeDays = state.calculator.stakeDays,
               let stakeAmount = state.calculator.stakeAmountHex,
               state.calculator.stakeDaysValid,
-              recentDailyData.count != 0 else { return .none }
+              !recentDailyData.isEmpty else { return .none }
 
         let averageShareRateHex = recentDailyData.map { ($0.payout * k.HEARTS_PER_HEX) / $0.shares }.reduce(BigUInt(0), +) / BigUInt(recentDailyData.count)
         let stakeDays = BigUInt(totalStakeDays) / BigUInt(state.calculator.ladderSteps)

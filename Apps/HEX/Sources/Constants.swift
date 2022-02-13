@@ -4,7 +4,6 @@
 import BigInt
 import Combine
 import Foundation
-import LightweightCharts
 import SwiftUI
 import web3
 
@@ -56,51 +55,6 @@ struct k {
 
     static let SHARE_RATE_SCALE = BigUInt(1e5)
     static let FORM_ICON_WIDTH = CGFloat(20)
-
-    static func chartOptions() -> ChartOptions {
-        ChartOptions(
-            layout: LayoutOptions(backgroundColor: ChartColor(.systemGroupedBackground),
-                                  textColor: ChartColor(.secondaryLabel)),
-            rightPriceScale: VisiblePriceScaleOptions(borderColor: ChartColor(UIColor.systemGray6)),
-            timeScale: TimeScaleOptions(borderColor: ChartColor(UIColor.systemGray5)),
-            crosshair: CrosshairOptions(mode: .normal),
-            grid: GridOptions(
-                verticalLines: GridLineOptions(color: ChartColor(UIColor.systemGray5)),
-                horizontalLines: GridLineOptions(color: ChartColor(UIColor.systemGray5))
-            ),
-            localization: LocalizationOptions(priceFormatter: .closure {
-                NSNumber(value: $0).currencyShortString
-            }
-            )
-        )
-    }
-
-    static func volumeSeriesOptions() -> HistogramSeriesOptions {
-        HistogramSeriesOptions(
-            priceScaleId: "123",
-            priceLineVisible: false,
-            priceFormat: .builtIn(BuiltInPriceFormat(type: .volume, precision: nil, minMove: nil)),
-            color: ChartColor(UIColor.systemGray4)
-        )
-    }
-
-    static func candleStickSeriesOptions() -> CandlestickSeriesOptions {
-        CandlestickSeriesOptions(
-            upColor: ChartColor(UIColor.systemGreen),
-            downColor: ChartColor(UIColor.systemRed),
-            borderUpColor: ChartColor(UIColor.systemGreen),
-            borderDownColor: ChartColor(UIColor.systemRed),
-            wickUpColor: ChartColor(UIColor.systemGreen),
-            wickDownColor: ChartColor(UIColor.systemRed)
-        )
-    }
-
-    static func lineSeriesOptoins() -> LineSeriesOptions {
-        LineSeriesOptions(
-            color: ChartColor(.accentColor),
-            lineWidth: .two
-        )
-    }
 
     static let LEAGUE_GIRD_3 = [GridItem(.fixed(30), spacing: k.GRID_SPACING, alignment: .leading),
                                 GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .leading),
