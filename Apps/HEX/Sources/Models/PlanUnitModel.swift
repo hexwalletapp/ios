@@ -1,9 +1,5 @@
-//
-//  PlanTypeModel.swift
-//  HEX
-//
-//  Created by Joe Blau on 2/13/22.
-//
+// PlanUnitModel.swift
+// Copyright (c) 2022 Joe Blau
 
 import SwiftUI
 
@@ -11,25 +7,25 @@ enum PlanUnit: CaseIterable, Equatable, Hashable, Identifiable, CustomStringConv
     var id: Self { self }
     case USD
     case HEX
-    
+
     var description: String {
         switch self {
         case .USD: return "Dollar"
         case .HEX: return "HEX"
         }
     }
-    
+
     var image: Image {
         switch self {
         case .USD: return Image(systemName: "dollarsign.circle.fill")
         case .HEX: return Image("hex-logo.SFSymbol")
         }
     }
-    
-    var label: Label<Text,Image> {
+
+    var label: Label<Text, Image> {
         switch self {
-        case .USD: return Label(self.description, systemImage: "dollarsign.circle.fill")
-        case .HEX: return Label(self.description, image: "hex-logo.SFSymbol")
+        case .USD: return Label(description, systemImage: "dollarsign.circle.fill")
+        case .HEX: return Label(description, image: "hex-logo.SFSymbol")
         }
     }
 }

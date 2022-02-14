@@ -328,7 +328,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
          .binding(\.$calculator.ladderDistribution):
 
         let recentDailyData = state.hexContractOnChain.ethData.dailyData.suffix(7)
-        
+
         switch state.calculator.planUnit {
         case .USD:
             state.calculator.stakeAmountHex = Int(state.calculator.stakeAmountHearts / k.HEARTS_PER_HEX)
@@ -337,7 +337,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                 state.calculator.stakeAmountDollar = Double(state.calculator.stakeAmountHearts / k.HEARTS_PER_HEX) * price
             }
         }
-        
+
         guard let totalStakeDays = state.calculator.stakeDays,
               state.calculator.stakeDaysValid,
               state.calculator.isAmountValid,

@@ -25,13 +25,13 @@ struct PlanView: View {
             NavigationView {
                 Form {
                     Section {
-                        Picker("Plan Input", selection: viewStore.binding(\.$calculator.planUnit).animation() ) {
+                        Picker("Plan Input", selection: viewStore.binding(\.$calculator.planUnit).animation()) {
                             ForEach(PlanUnit.allCases) {
                                 Text($0.description)
                             }
                         }
                         .pickerStyle(.segmented)
-                        
+
                         switch viewStore.calculator.planUnit {
                         case .USD:
                             HStack {

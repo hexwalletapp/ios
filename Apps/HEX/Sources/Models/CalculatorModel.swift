@@ -1,5 +1,5 @@
 // CalculatorModel.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import BigInt
 import ComposableArchitecture
@@ -36,9 +36,9 @@ struct Calculator: Equatable {
     }
 
     var isAmountValid: Bool {
-        return stakeAmountDollar != nil || stakeAmountHex != nil
+        stakeAmountDollar != nil || stakeAmountHex != nil
     }
-    
+
     var disableForm: Bool {
         !isAmountValid ||
             stakeDays?.words.isEmpty == nil ||
@@ -49,7 +49,7 @@ struct Calculator: Equatable {
         switch planUnit {
         case .USD:
             switch (stakeAmountDollar, price) {
-            case (let .some(amount), let .some(price)): return BigUInt(amount / price) * k.HEARTS_PER_HEX
+            case let (.some(amount), .some(price)): return BigUInt(amount / price) * k.HEARTS_PER_HEX
             default: return 0
             }
         case .HEX:
@@ -58,7 +58,6 @@ struct Calculator: Equatable {
             case .none: return 0
             }
         }
-
     }
 }
 
