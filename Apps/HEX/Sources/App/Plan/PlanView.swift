@@ -25,13 +25,6 @@ struct PlanView: View {
             NavigationView {
                 Form {
                     Section {
-                        Picker("Plan Input", selection: viewStore.binding(\.$calculator.planUnit).animation()) {
-                            ForEach(PlanUnit.allCases) {
-                                Text($0.description)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-
                         switch viewStore.calculator.planUnit {
                         case .USD:
                             HStack {
@@ -136,6 +129,14 @@ struct PlanView: View {
                         } label: { Image(systemName: "keyboard.chevron.compact.down") }
                             .disabled(focusedField == nil)
                     }
+                    ToolbarItemGroup(placement: .principal) {
+                        Picker("Plan Input", selection: viewStore.binding(\.$calculator.planUnit).animation()) {
+                            ForEach(PlanUnit.allCases) {
+                                Text($0.description)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Toggle(isOn: viewStore.binding(\.$calculator.showLadder).animation()) {
                             Label("Ladder", image: "ladder.SFSymbol")
@@ -152,32 +153,14 @@ struct PlanView: View {
             ForEach(viewStore.binding(\.$calculator.ladderRungs)) { rung in
                 Section {
                     VStack {
-                        DatePicker(
-                            "Stake \(rung.id + 1)",
-                            selection: rung.date,
-                            displayedComponents: [.date]
-                        )
-                        .disabled(true)
-//                        Slider(value: rung.stakePercentage, in: 0 ... 1) {
-//                            Text("Stake Percent")
-//                        } minimumValueLabel: {
-//                            Text(NSNumber(value: rung.stakePercentage.wrappedValue).percentageFractionString)
-//                        } maximumValueLabel: {
-//                            Text("")
-//                        }
-//                        .font(.caption.monospaced())
-//                        .disabled(viewStore.calculator.ladderRungs.count == 1)
-
                         bonuses(rung: rung.wrappedValue)
                         projected(rung: rung.wrappedValue)
                     }
-                    .padding([.vertical], 12)
                 } header: {
-                    if rung.id == 0 {
-                        switch viewStore.calculator.ladderRungs.count {
-                        case 1: Text("Stake")
-                        default: Text("Stakes")
-                        }
+                    HStack {
+                        Text("Stake \(rung.id + 1)")
+                        Spacer()
+                        Text(rung.wrappedValue.date.longDateString)
                     }
                 }
             }

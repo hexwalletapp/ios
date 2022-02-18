@@ -197,7 +197,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
                                                      bigPayDay: BigUInt?)
     {
         guard !dailyData.isEmpty else { return (0, nil) }
-        let payout = dailyData[beginDay ..< endDay - 1].reduce(0) { $0 + ((stakeShares * $1.payout) / $1.shares) }
+        let payout = dailyData[beginDay ..< endDay].reduce(0) { $0 + ((stakeShares * $1.payout) / $1.shares) }
 
         var bigPayDay: BigUInt?
         if beginDay ..< endDay ~= Int(k.BIG_PAY_DAY) {
