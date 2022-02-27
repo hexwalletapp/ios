@@ -1,5 +1,5 @@
 // SampleAppStore.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import ComposableArchitecture
 import HEXSmartContract
@@ -11,6 +11,7 @@ import HEXSmartContract
     let sampleAppStore = Store(initialState: AppState(),
                                reducer: appReducer,
                                environment: AppEnvironment(hexManager: .mock(),
+                                                           hedronManager: .mock(),
                                                            uniswapManager: .mock(),
                                                            mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
 #endif

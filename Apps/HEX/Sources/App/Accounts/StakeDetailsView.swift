@@ -1,5 +1,5 @@
 // StakeDetailsView.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import BigInt
 import SwiftUI
@@ -14,7 +14,7 @@ struct StakeDetailsView: View {
             GroupBox {
                 VStack(spacing: 20) {
                     HStack(alignment: .top) {
-                        Label(stake.status.description, systemImage: stake.status.systemName)
+                        Label(stake.statusType, systemImage: stake.status.systemName)
                             .padding(.vertical, 8)
                             .padding(.horizontal, 16)
                             .background(Color(.systemGray5))
@@ -23,6 +23,7 @@ struct StakeDetailsView: View {
                     headerView
                     earningsView
                     HStack(alignment: .top) {
+                        Text(stake.type.description).font(.caption.monospaced())
                         Spacer()
                         Text("sᴛᴀᴋᴇ ɪᴅ:").font(.caption)
                         Text(stake.stakeId.description).font(.caption.monospaced())

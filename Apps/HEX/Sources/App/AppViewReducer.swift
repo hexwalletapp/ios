@@ -6,6 +6,7 @@ import BitqueryAPI
 import ComposableArchitecture
 import EVMChain
 import Foundation
+import HedronSmartContract
 import HEXSmartContract
 import IdentifiedCollections
 import os.log
@@ -67,6 +68,7 @@ struct AppState: Equatable {
 enum AppAction: BindableAction, Equatable {
     case hexManager(HEXSmartContractManager.Action)
     case uniswapManager(UniswapSmartContractManager.Action)
+    case hedronManager(HedronSmartContractManager.Action)
 
     case applicationDidFinishLaunching
     case onBackground
@@ -86,6 +88,7 @@ enum AppAction: BindableAction, Equatable {
 
 struct AppEnvironment {
     var hexManager: HEXSmartContractManager
+    var hedronManager: HedronSmartContractManager
     var uniswapManager: UniswapSmartContractManager
     var mainQueue: AnySchedulerOf<DispatchQueue>
     let bitquery = BitqueryAPI()
@@ -114,6 +117,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         return .merge(
             environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager),
+            environment.hedronManager.create(id: HedronManagerId()).map(AppAction.hedronManager),
             environment.uniswapManager.create(id: UniswapManagerId()).map(AppAction.uniswapManager)
         )
 
@@ -393,7 +397,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         return .none
 
-    case .binding, .hexManager, .uniswapManager, .onBackground, .onInactive:
+    case .binding, .hexManager, .hedronManager, .uniswapManager, .onBackground, .onInactive:
         return .none
     }
 }
@@ -401,6 +405,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 .combined(with: hexReducer.pullback(state: \.self,
                                     action: /AppAction.hexManager,
                                     environment: { $0 }))
+.combined(with: hedronReducer.pullback(state: \.self,
+                                       action: /AppAction.hedronManager,
+                                       environment: { $0 }))
 .combined(with: uniswapReducer.pullback(state: \.self,
                                         action: /AppAction.uniswapManager,
                                         environment: { $0 }))

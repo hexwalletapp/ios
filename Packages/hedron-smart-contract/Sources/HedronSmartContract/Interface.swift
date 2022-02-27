@@ -7,18 +7,17 @@ import EVMChain
 import Foundation
 import web3
 
-public struct HEXSmartContractManager {
+public struct HedronSmartContractManager {
     public enum Action: Equatable {
+        case hedronStakes(Chain)
         case stakeList([StakeLists_Parameter.Response], EthereumAddress, Chain)
-        case dailyData([BigUInt], Chain)
-        case currentDay(BigUInt, Chain)
-        case globalInfo(GlobalInfo.Response, Chain)
-        case balance(BigUInt, EthereumAddress, Chain)
     }
 
     var create: (AnyHashable) -> Effect<Action, Never> = { _ in _unimplemented("create") }
 
     var destroy: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("destroy") }
+
+    var getHedronStakes: (AnyHashable, Chain) -> Void = { _, _ in _unimplemented("getHedronStakes") }
 
     var getStakes: (AnyHashable, String, Chain) -> Effect<Never, Never> = { _, _, _ in _unimplemented("getStakes") }
 
@@ -28,20 +27,16 @@ public struct HEXSmartContractManager {
 
     var updateStakeCache: (AnyHashable, EthereumAddress, Chain, StakeLists_Parameter.Response, BigUInt) -> Void = { _, _, _, _, _ in _unimplemented("updateStakeCache") }
 
-    var getDailyDataRange: (AnyHashable, Chain, UInt16, UInt16) -> Effect<Never, Never> = { _, _, _, _ in _unimplemented("getDailyDataRange") }
-
-    var getCurrentDay: (AnyHashable, Chain) -> Effect<Never, Never> = { _, _ in _unimplemented("getCurrentDay") }
-
-    var getGlobalInfo: (AnyHashable, Chain) -> Effect<Never, Never> = { _, _ in _unimplemented("getGlobalInfo") }
-
-    var getBalance: (AnyHashable, String, Chain) -> Effect<Never, Never> = { _, _, _ in _unimplemented("getBalance") }
-
     public func create(id: AnyHashable) -> Effect<Action, Never> {
         create(id)
     }
 
     public func destroy(id: AnyHashable) -> Effect<Never, Never> {
         destroy(id)
+    }
+
+    public func getHedronStakes(id: AnyHashable, chain: Chain) {
+        getHedronStakes(id, chain)
     }
 
     public func getStakes(id: AnyHashable, address: String, chain: Chain) -> Effect<Never, Never> {
@@ -58,21 +53,5 @@ public struct HEXSmartContractManager {
 
     func updateStakeCache(id: AnyHashable, address: EthereumAddress, chain: Chain, stake: StakeLists_Parameter.Response, stakeCount: BigUInt) {
         updateStakeCache(id, address, chain, stake, stakeCount)
-    }
-
-    public func getDailyDataRange(id: AnyHashable, chain: Chain, begin: UInt16, end: UInt16) -> Effect<Never, Never> {
-        getDailyDataRange(id, chain, begin, end)
-    }
-
-    public func getCurrentDay(id: AnyHashable, chain: Chain) -> Effect<Never, Never> {
-        getCurrentDay(id, chain)
-    }
-
-    public func getGlobalInfo(id: AnyHashable, chain: Chain) -> Effect<Never, Never> {
-        getGlobalInfo(id, chain)
-    }
-
-    public func getBalance(id: AnyHashable, address: String, chain: Chain) -> Effect<Never, Never> {
-        getBalance(id, address, chain)
     }
 }

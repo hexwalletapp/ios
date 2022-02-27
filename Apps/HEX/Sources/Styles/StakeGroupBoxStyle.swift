@@ -1,12 +1,12 @@
 // StakeGroupBoxStyle.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import SwiftUI
 
 struct StakeGroupBoxStyle<V: View>: GroupBoxStyle {
     var color: Color
     var destination: V
-    var stakeStatus: StakeStatus
+    var status: String
 
     @ScaledMetric var size: CGFloat = 1
 
@@ -15,7 +15,7 @@ struct StakeGroupBoxStyle<V: View>: GroupBoxStyle {
             GroupBox(label: HStack {
                 configuration.label.foregroundColor(color)
                 Spacer()
-                Text(stakeStatus.description)
+                Text(status)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 Image(systemName: "chevron.right").foregroundColor(.secondary).imageScale(.small)

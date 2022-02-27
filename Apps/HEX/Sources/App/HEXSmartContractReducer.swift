@@ -5,6 +5,7 @@ import BigInt
 import ComposableArchitecture
 import Dispatch
 import EVMChain
+import HedronSmartContract
 import HEXSmartContract
 
 let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironment> { state, action, environment in
@@ -14,14 +15,20 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
         let onChainData = state.hexContractOnChain.data(from: chain)
 
-        let stakes = stakeList.sorted(by: {
+        let stakes = stakeList.map { Stake(stake: $0.response, onChainData: onChainData) }
+
+        let combinedStakes: Set<Stake>
+        switch state.accountsData[id: accountDataKey]?.stakes {
+        case let .some(existingStakes): combinedStakes = Set(existingStakes).union(stakes)
+        case .none: combinedStakes = Set(stakes)
+        }
+        let totalStakes = combinedStakes.sorted(by: {
             let firstStake = [BigUInt($0.lockedDay + $0.stakedDays), $0.stakeId]
             let secondStake = [BigUInt($1.lockedDay + $1.stakedDays), $1.stakeId]
             return firstStake.lexicographicallyPrecedes(secondStake)
         })
-            .map { Stake(stake: $0, onChainData: onChainData) }
 
-        state.accountsData[id: accountDataKey]?.stakes = IdentifiedArray(uniqueElements: stakes)
+        state.accountsData[id: accountDataKey]?.stakes = IdentifiedArray(uniqueElements: totalStakes)
 
         let total = stakes.reduce(into: StakeTotal()) { partialResult, stake in
             partialResult.stakeShares += stake.stakeShares
@@ -81,7 +88,10 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
         return .merge(
             .merge(stakes),
-            .merge(balances)
+            .merge(balances),
+            .fireAndForget {
+                environment.hedronManager.getHedronStakes(id: HedronManagerId(), chain: .ethereum)
+            }
         )
 
     case let .currentDay(day, chain):

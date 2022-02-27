@@ -29,6 +29,7 @@ packages:
 
 localPackages:
   - ./Packages/hex-smart-contract/
+  - ./Packages/hedron-smart-contract/
   - ./Packages/uniswap-smart-contract/
   - ./Packages/bitquery-api/
   - ./Packages/evm-chain/
@@ -51,6 +52,8 @@ targets:
       TARGETED_DEVICE_FAMILY: 1
       VALIDATE_WORKSPACE: true
     dependencies:
+      - package: hedron-smart-contract
+        product: HedronSmartContract
       - package: hex-smart-contract
         product: HEXSmartContract
       - package: uniswap-smart-contract

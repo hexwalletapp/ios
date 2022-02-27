@@ -1,5 +1,5 @@
 // App.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import ComposableArchitecture
 import SwiftUI
@@ -35,6 +35,7 @@ struct HEXApp: App {
                           reducer: appReducer,
                           environment: AppEnvironment(
                               hexManager: .live,
+                              hedronManager: .live,
                               uniswapManager: .live,
                               mainQueue: DispatchQueue.main.eraseToAnyScheduler()
                           ))

@@ -3,6 +3,7 @@
 
 import BigInt
 import Foundation
+import HedronSmartContract
 import HEXSmartContract
 
 struct Stake: Codable, Hashable, Equatable, Identifiable {
@@ -21,6 +22,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let status: StakeStatus
     let startDate: Date
     let endDate: Date
+    let type: StakeType
     var penaltyHearts: BigUInt
     var interestHearts: BigUInt
     var interestDailyHearts: BigUInt
@@ -28,7 +30,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     var interestMonthlyHearts: BigUInt
     var bigPayDayHearts: BigUInt?
 
-    init(stake: StakeLists_Parameter.Response, onChainData: OnChainData) {
+    init(stake: StakeResponse, onChainData: OnChainData) {
         let stakeUnlockDay = BigUInt(stake.unlockedDay)
         let stakeLockedDay = BigUInt(stake.lockedDay)
         let currentDay = onChainData.currentDay
@@ -78,6 +80,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
         self.percentComplete = percentComplete
         self.servedDays = servedDays
         self.status = status
+        type = stake.stakeType
         startDate = k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(stakeLockedDay) * 86400))
         endDate = k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(stakeEndDay) * 86400))
         penaltyHearts = 0
@@ -161,6 +164,10 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
                                                     endDay: endIndex,
                                                     dailyData: onChainData.dailyData).payout
         }
+    }
+
+    var statusType: String {
+        "\(status.description) \(type.shortName)"
     }
 
     var balanceHearts: BigUInt {

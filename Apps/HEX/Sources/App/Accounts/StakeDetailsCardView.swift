@@ -43,7 +43,7 @@ struct StakeDetailsCardView: View {
                                           destination: StakeDetailsView(price: price,
                                                                         stake: stake,
                                                                         account: account),
-                                          stakeStatus: stake.status))
+                                          status: stake.statusType))
     }
 }
 
