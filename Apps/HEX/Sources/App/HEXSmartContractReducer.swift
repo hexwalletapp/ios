@@ -30,7 +30,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
         state.accountsData[id: accountDataKey]?.stakes = IdentifiedArray(uniqueElements: totalStakes)
 
-        let total = stakes.reduce(into: StakeTotal()) { partialResult, stake in
+        let total = totalStakes.reduce(into: StakeTotal()) { partialResult, stake in
             partialResult.stakeShares += stake.stakeShares
             partialResult.stakedHearts += stake.stakedHearts
             partialResult.interestHearts += stake.interestHearts
@@ -90,7 +90,9 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             .merge(stakes),
             .merge(balances),
             .fireAndForget {
-                environment.hedronManager.getHedronStakes(id: HedronManagerId(), chain: .ethereum)
+                Chain.allCases.forEach { chain in
+                    environment.hedronManager.getHedronStakes(id: HedronManagerId(), chain: chain)
+                }
             }
         )
 

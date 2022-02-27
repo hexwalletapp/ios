@@ -38,7 +38,7 @@ let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvi
         })
         state.accountsData[id: accountDataKey]?.stakes = IdentifiedArray(uniqueElements: totalStakes)
 
-        let total = stakes.reduce(into: StakeTotal()) { partialResult, stake in
+        let total = totalStakes.reduce(into: StakeTotal()) { partialResult, stake in
             partialResult.stakeShares += stake.stakeShares
             partialResult.stakedHearts += stake.stakedHearts
             partialResult.interestHearts += stake.interestHearts
