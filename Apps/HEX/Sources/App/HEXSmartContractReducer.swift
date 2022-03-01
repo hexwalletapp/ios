@@ -13,7 +13,11 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
     case let .stakeList(stakeList, address, chain):
         let accountDataKey = address.value + chain.description
 
-        let onChainData = state.hexContractOnChain.data(from: chain)
+        let onChainData: OnChainData
+        switch chain {
+        case .ethereum: onChainData = state.hexContractOnChain.ethData
+        case .pulse: onChainData = state.hexContractOnChain.plsData
+        }
 
         let stakes = stakeList.map { Stake(stake: $0.response, onChainData: onChainData) }
 
@@ -97,14 +101,19 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         )
 
     case let .currentDay(day, chain):
+        let dailyDataCount: BigUInt
         switch chain {
-        case .ethereum: state.hexContractOnChain.ethData.currentDay = day
-        case .pulse: state.hexContractOnChain.plsData.currentDay = day
+        case .ethereum:
+            state.hexContractOnChain.ethData.currentDay = day
+            dailyDataCount = state.hexContractOnChain.ethData.globalInfo.dailyDataCount
+        case .pulse:
+            state.hexContractOnChain.plsData.currentDay = day
+            dailyDataCount = state.hexContractOnChain.plsData.globalInfo.dailyDataCount
         }
         return environment.hexManager.getDailyDataRange(id: HexManagerId(),
                                                         chain: chain,
                                                         begin: 0,
-                                                        end: UInt16(state.hexContractOnChain.data(from: chain).globalInfo.dailyDataCount))
+                                                        end: UInt16(dailyDataCount))
             .fireAndForget()
 
     case let .globalInfo(globalInfo, chain):

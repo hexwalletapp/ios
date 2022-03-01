@@ -8,12 +8,12 @@ import HEXSmartContract
 import web3
 
 struct HexContractOnChain: Equatable {
-    func data(from chain: Chain) -> OnChainData {
-        switch chain {
-        case .pulse: return plsData
-        case .ethereum: return ethData
-        }
-    }
+//    func data(from chain: Chain) -> OnChainData {
+//        switch chain {
+//        case .pulse: return plsData
+//        case .ethereum: return ethData
+//        }
+//    }
 
     var ethData = OnChainData()
     var plsData = OnChainData()

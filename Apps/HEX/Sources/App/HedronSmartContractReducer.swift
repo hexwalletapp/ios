@@ -22,7 +22,11 @@ let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvi
     case let .stakeList(stakeList, address, chain):
         let accountDataKey = address.value + chain.description
 
-        let onChainData = state.hexContractOnChain.data(from: chain)
+        let onChainData: OnChainData
+        switch chain {
+        case .ethereum: onChainData = state.hexContractOnChain.ethData
+        case .pulse: onChainData = state.hexContractOnChain.plsData
+        }
 
         let stakes = stakeList.map { Stake(stake: $0.response, onChainData: onChainData) }
 
