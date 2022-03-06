@@ -64,7 +64,7 @@ let uniswapReducer = Reducer<AppState, UniswapSmartContractManager.Action, AppEn
         switch (chain, pairAddress) {
         case (.ethereum, EthereumAddress("0xf6dcdce0ac3001b2f67f750bc64ea5beb37b5824")):
             state.hexContractOnChain.ethData.hexUsd = 1.0 / ratio
-            state.calculator.price = 1.0 / ratio
+            state.calculator.currentPrice = 1.0 / ratio
 
             state.accountsData.filter { $0.account.chain == .ethereum }.forEach { accountData in
                 state.accountsData[id: accountData.id]?.hexPrice = 1.0 / ratio

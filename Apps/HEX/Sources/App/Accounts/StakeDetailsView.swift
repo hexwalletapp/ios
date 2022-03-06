@@ -100,8 +100,8 @@ struct StakeDetailsView: View {
 //            }
             VStack {
                 Divider()
-                DataRowPercentView(title: "ʀᴏɪ", hex: stake.roiPercent, usd: stake.roiPercent(price: price))
-                DataRowPercentView(title: "ᴀᴘʏ", hex: stake.apyPercent, usd: stake.apyPercent(price: price))
+                DataRowPercentView(title: "ʀᴏɪ", usd: stake.roiPercent(price: price), hex: stake.roiPercent)
+                DataRowPercentView(title: "ᴀᴘʏ", usd: stake.apyPercent(price: price), hex: stake.apyPercent)
             }
         }
     }

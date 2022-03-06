@@ -383,7 +383,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 
             let final = Double(averageShareRateHex) * pow(3.69 / 100.0 + 1.0, Double(stakeDaysForRung) / 365.25)
             let averageSharePayout = (averageShareRateHex + BigUInt(final)) / 2
-
+            
             let interestHearts = shares * stakeDaysForRung * averageSharePayout / k.HEARTS_PER_HEX
 
             let interval = Double(stakeDaysForRung) * 86400

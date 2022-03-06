@@ -169,7 +169,7 @@ struct PlanView: View {
 
     func bonuses(rung: Rung) -> some View {
         WithViewStore(store) { viewStore in
-            switch viewStore.calculator.price {
+            switch viewStore.calculator.currentPrice {
             case let .some(price):
                 VStack {
                     DataSectionHeaderView(title: "Bonus")
@@ -191,8 +191,9 @@ struct PlanView: View {
 
     func projected(rung: Rung) -> some View {
         WithViewStore(store) { viewStore in
-            switch viewStore.calculator.price {
-            case let .some(price):
+            switch (viewStore.calculator.price,
+                    viewStore.calculator.currentPrice) {
+            case let (.some(price), .some(currentPrice)):
                 VStack {
                     DataSectionHeaderView(title: "Earnings")
                     DataHeaderView()
@@ -202,10 +203,10 @@ struct PlanView: View {
                     Divider()
                     DataRowHexView(title: "ᴛᴏᴛᴀʟ", units: rung.totalPayoutHearts, price: price)
                     Divider()
-                    DataRowPercentView(title: "ʀᴏɪ", hex: rung.roiPercent, usd: rung.roiPercent(price: price))
-                    DataRowPercentView(title: "ᴀᴘʏ", hex: rung.apyPercent, usd: rung.apyPercent(price: price))
+                    DataRowPercentView(title: "ʀᴏɪ", usd: rung.roiPercent(price: price, currentPrice: currentPrice), hex: rung.roiPercent)
+                    DataRowPercentView(title: "ᴀᴘʏ", usd: rung.apyPercent(price: price, currentPrice: currentPrice), hex: rung.apyPercent)
                 }
-            case .none:
+            default:
                 EmptyView()
             }
         }

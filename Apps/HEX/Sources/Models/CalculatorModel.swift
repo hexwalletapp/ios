@@ -10,6 +10,11 @@ struct Calculator: Equatable {
     var stakeAmountDollar: Double? = nil
     var stakeAmountHex: Int? = nil
     var stakeDays: Int? = nil
+    var currentPrice: Double? = nil {
+        didSet {
+            self.price = currentPrice
+        }
+    }
     var price: Double? = nil
     var showLadder: Bool = false
 
@@ -49,7 +54,7 @@ struct Calculator: Equatable {
         switch planUnit {
         case .USD:
             switch (stakeAmountDollar, price) {
-            case let (.some(amount), .some(price)): return BigUInt(amount / price) * k.HEARTS_PER_HEX
+            case let (.some(amount), .some(price)) where price != 0:  return BigUInt(amount / price) * k.HEARTS_PER_HEX
             default: return 0
             }
         case .HEX:
@@ -78,16 +83,19 @@ struct Rung: Equatable, Identifiable {
         interestHearts.hex.doubleValue / principalHearts.hex.doubleValue
     }
 
-    func roiPercent(price: Double) -> Double {
-        interestHearts.hexAt(price: price).doubleValue / principalHearts.hexAt(price: price).doubleValue
+    func roiPercent(price: Double, currentPrice: Double) -> Double {
+        let current = principalHearts.hexAt(price: currentPrice).doubleValue
+        guard current != 0 else { return 0 }
+        let projected = interestHearts.hexAt(price: price).doubleValue + principalHearts.hexAt(price: price).doubleValue
+        return (projected - current) / current
     }
 
     var apyPercent: Double {
         roiPercent * (Double(k.ONE_YEAR) / Double(stakeDays))
     }
 
-    func apyPercent(price: Double) -> Double {
-        roiPercent(price: price) * (Double(k.ONE_YEAR) / Double(stakeDays))
+    func apyPercent(price: Double, currentPrice: Double) -> Double {
+        roiPercent(price: price, currentPrice: currentPrice) * (Double(k.ONE_YEAR) / Double(stakeDays))
     }
 
     var stakeDays: Int {

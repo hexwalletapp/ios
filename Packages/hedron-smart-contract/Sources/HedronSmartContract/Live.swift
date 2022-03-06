@@ -46,7 +46,11 @@ public extension HedronSmartContractManager {
         manager.getStakes = { id, address, chain in
             let accountDataKey = address + chain.description
 
-            dependencies[id]?.stakesCache[accountDataKey] = IdentifiedArrayOf<StakeLists_Parameter.Response>()
+            switch dependencies[id]?.stakesCache[accountDataKey] == nil {
+            case true: dependencies[id]?.stakesCache[accountDataKey] = IdentifiedArrayOf<StakeLists_Parameter.Response>()
+            case false: dependencies[id]?.stakesCache[accountDataKey]?.removeAll()
+            }
+            
             return manager.getStakeCount(id: id, address: EthereumAddress(address), chain: chain).receive(on: DispatchQueue.main).eraseToEffect()
         }
 

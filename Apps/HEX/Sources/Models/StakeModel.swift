@@ -203,11 +203,13 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
                          dailyData: [DailyData]) -> (payout: BigUInt,
                                                      bigPayDay: BigUInt?)
     {
-        guard !dailyData.isEmpty else { return (0, nil) }
-        let payout = dailyData[beginDay ..< endDay].reduce(0) { $0 + ((stakeShares * $1.payout) / $1.shares) }
+        let clampedEndDay = endDay.clamp(lower: beginDay, endDay)
+        guard !dailyData.isEmpty && beginDay < clampedEndDay else { return (0, nil) }
+        
+        let payout = dailyData[beginDay ..< clampedEndDay].reduce(0) { $0 + ((stakeShares * $1.payout) / $1.shares) }
 
         var bigPayDay: BigUInt?
-        if beginDay ..< endDay ~= Int(k.BIG_PAY_DAY) {
+        if beginDay ..< clampedEndDay ~= Int(k.BIG_PAY_DAY) {
             let stakeSharesTotal = dailyData[Int(k.BIG_PAY_DAY)].shares
 
             let bigPaySlice = globalInfo.unclaimedSatoshisTotal * k.HEARTS_PER_SATOSHI * stakeShares / stakeSharesTotal
