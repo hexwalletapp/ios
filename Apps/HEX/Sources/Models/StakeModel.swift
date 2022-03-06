@@ -204,8 +204,8 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
                                                      bigPayDay: BigUInt?)
     {
         let clampedEndDay = endDay.clamp(lower: beginDay, endDay)
-        guard !dailyData.isEmpty && beginDay < clampedEndDay else { return (0, nil) }
-        
+        guard !dailyData.isEmpty, beginDay < clampedEndDay else { return (0, nil) }
+
         let payout = dailyData[beginDay ..< clampedEndDay].reduce(0) { $0 + ((stakeShares * $1.payout) / $1.shares) }
 
         var bigPayDay: BigUInt?

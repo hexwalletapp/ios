@@ -12,9 +12,10 @@ struct Calculator: Equatable {
     var stakeDays: Int? = nil
     var currentPrice: Double? = nil {
         didSet {
-            self.price = currentPrice
+            price = currentPrice
         }
     }
+
     var price: Double? = nil
     var showLadder: Bool = false
 
@@ -54,7 +55,7 @@ struct Calculator: Equatable {
         switch planUnit {
         case .USD:
             switch (stakeAmountDollar, price) {
-            case let (.some(amount), .some(price)) where price != 0:  return BigUInt(amount / price) * k.HEARTS_PER_HEX
+            case let (.some(amount), .some(price)) where price != 0: return BigUInt(amount / price) * k.HEARTS_PER_HEX
             default: return 0
             }
         case .HEX:

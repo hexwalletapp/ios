@@ -192,7 +192,8 @@ struct PlanView: View {
     func projected(rung: Rung) -> some View {
         WithViewStore(store) { viewStore in
             switch (viewStore.calculator.price,
-                    viewStore.calculator.currentPrice) {
+                    viewStore.calculator.currentPrice)
+            {
             case let (.some(price), .some(currentPrice)):
                 VStack {
                     DataSectionHeaderView(title: "Earnings")
