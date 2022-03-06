@@ -42,6 +42,7 @@ struct HEXApp: App {
 
             super.init()
             ViewStore(store).send(.applicationDidFinishLaunching)
+            UITextField.appearance().clearButtonMode = .whileEditing
         }
     }
 }
