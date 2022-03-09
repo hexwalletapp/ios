@@ -19,7 +19,7 @@ struct PlanView: View {
     let step = 1
     let range = 1 ... 15
     @FocusState private var focusedField: Field?
-    
+
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {

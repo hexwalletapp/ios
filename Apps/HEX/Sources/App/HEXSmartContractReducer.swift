@@ -101,19 +101,16 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         )
 
     case let .currentDay(day, chain):
-        let dailyDataCount: BigUInt
         switch chain {
         case .ethereum:
             state.hexContractOnChain.ethData.currentDay = day
-            dailyDataCount = state.hexContractOnChain.ethData.globalInfo.dailyDataCount
         case .pulse:
             state.hexContractOnChain.plsData.currentDay = day
-            dailyDataCount = state.hexContractOnChain.plsData.globalInfo.dailyDataCount
         }
         return environment.hexManager.getDailyDataRange(id: HexManagerId(),
                                                         chain: chain,
                                                         begin: 0,
-                                                        end: UInt16(dailyDataCount))
+                                                        end: UInt16(day))
             .fireAndForget()
 
     case let .globalInfo(globalInfo, chain):

@@ -95,9 +95,9 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
 
         let startIndex = Int(lockedDay)
         let endIndex = min(Int(stakeEndDay), Int(currentDay))
-        let dayStartIndex = max(endIndex - 2, startIndex)
-        let weekStartIndex = max(endIndex - 8, startIndex)
-        let monthStartIndex = max(endIndex - 31, startIndex)
+        let dayStartIndex = max(endIndex - 1, startIndex)
+        let weekStartIndex = max(endIndex - 7, startIndex)
+        let monthStartIndex = max(endIndex - 30, startIndex)
         let penaltyEndIndex = Int(stake.lockedDay + penaltyDays)
         let recentInterestDays = BigUInt(endIndex - weekStartIndex)
 
@@ -203,13 +203,12 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
                          dailyData: [DailyData]) -> (payout: BigUInt,
                                                      bigPayDay: BigUInt?)
     {
-        let clampedEndDay = endDay.clamp(lower: beginDay, endDay)
-        guard !dailyData.isEmpty, beginDay < clampedEndDay else { return (0, nil) }
+        guard !dailyData.isEmpty, dailyData.count == globalInfo.dailyDataCount else { return (0, nil) }
 
-        let payout = dailyData[beginDay ..< clampedEndDay].reduce(0) { $0 + ((stakeShares * $1.payout) / $1.shares) }
+        let payout = dailyData[beginDay ..< endDay].reduce(0) { $0 + ((stakeShares * $1.payout) / $1.shares) }
 
         var bigPayDay: BigUInt?
-        if beginDay ..< clampedEndDay ~= Int(k.BIG_PAY_DAY) {
+        if beginDay ..< endDay ~= Int(k.BIG_PAY_DAY) {
             let stakeSharesTotal = dailyData[Int(k.BIG_PAY_DAY)].shares
 
             let bigPaySlice = globalInfo.unclaimedSatoshisTotal * k.HEARTS_PER_SATOSHI * stakeShares / stakeSharesTotal
