@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -82,12 +82,14 @@
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E7FC8876920AC4073C1BD709 /* Sequence+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004838DD4C09F1C333501116 /* Sequence+Extensions.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HedronSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 155AF4FB7E79424032220832 /* HedronSmartContract */; };
+		EDBB069A27D982380022FA34 /* OHLCVData+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBB069927D982380022FA34 /* OHLCVData+Extensions.swift */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F1EC1CC4AA4B71573C662D42 /* DistributionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40072E4B023C31237AA7D7A2 /* DistributionModel.swift */; };
 		F41861C691AFB90ABC10D2F1 /* CalculatorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112C7DF39CBC618E9B42C62E /* CalculatorModel.swift */; };
 		F47F8F1944593C21BD508240 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB034DB4604F28233B47C3C6 /* Settings.bundle */; };
 		F529BC6F4DA1C825F82C1220 /* HEXSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 91CFA55A0676A6312247857C /* HEXSmartContract */; };
+		F7A331B19D091BD42672DA52 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 0D48CB4967838946D47C2100 /* GRDB */; };
 		F9D31BABEB128F709FF24E19 /* SampleStakes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D23AAE8F6F76901D1F55EE2 /* SampleStakes.swift */; };
 		F9EB6793DF0FE431A796C85C /* DataHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E50E56967ED34E2F00DC49D /* DataHeaderView.swift */; };
 		FA0F5CA852FF0B9A47EB23C4 /* UniswapSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CCA2D0A62AA14D7C06C085 /* UniswapSmartContractReducer.swift */; };
@@ -172,6 +174,7 @@
 		E4C52F01F325415202C68EC2 /* Comparable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Extensions.swift"; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EB6C2F1592966BC2252D73B9 /* DEXLiquidityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEXLiquidityModel.swift; sourceTree = "<group>"; };
+		EDBB069927D982380022FA34 /* OHLCVData+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OHLCVData+Extensions.swift"; sourceTree = "<group>"; };
 		EEA202CCAFB9C53F2E1E4A5B /* TopRoundedCardShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRoundedCardShape.swift; sourceTree = "<group>"; };
 		F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAccountDataModel.swift; sourceTree = "<group>"; };
 		F79BEE16878B492362DB65A8 /* Formatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -192,6 +195,7 @@
 				7E0D47B727112D5AA0B76332 /* IdentifiedCollections in Frameworks */,
 				088C68CB1F29BF619A4C50D7 /* SwiftUIVisualEffects in Frameworks */,
 				3C836AED2D06CF6F01AC0C60 /* Charts in Frameworks */,
+				F7A331B19D091BD42672DA52 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +348,7 @@
 		914DAE34AA3B7586609FAD81 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				EDBB069827D9818E0022FA34 /* DatabaseExtensions */,
 				7EFFCB070A01C6E3E3CB59BB /* App.swift */,
 				6C4EC50004741C666AA20180 /* AppView.swift */,
 				12DBF49D004E00EE95C96479 /* AppViewReducer.swift */,
@@ -435,6 +440,14 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		EDBB069827D9818E0022FA34 /* DatabaseExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				EDBB069927D982380022FA34 /* OHLCVData+Extensions.swift */,
+			);
+			path = DatabaseExtensions;
+			sourceTree = "<group>";
+		};
 		FA53A81348801277D5DFC836 /* HEX */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,14 +457,6 @@
 				0274987511660F32ADBD8FAF /* SupportingFiles */,
 			);
 			path = HEX;
-			sourceTree = "<group>";
-		};
-		"TEMP_F38095E8-CBEC-4300-8A0D-68E113EDF595" /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -480,6 +485,7 @@
 				88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */,
 				F2D7B3273C82ACD51E9052BE /* SwiftUIVisualEffects */,
 				329869A1C233300D07697193 /* Charts */,
+				0D48CB4967838946D47C2100 /* GRDB */,
 			);
 			productName = HEX;
 			productReference = 210D963E491A8FBE29AF4297 /* HEX.app */;
@@ -509,6 +515,7 @@
 			mainGroup = 184F9CCBCFA3BF831BBC7ED2;
 			packageReferences = (
 				35A836EFEE05C62C7A88E404 /* XCRemoteSwiftPackageReference "Charts" */,
+				C9A9294C5A12E8DE1F9710E9 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 				95A2C2A67C6B840800B6487B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				0D4F14F86CFAA75A69AE1DA2 /* XCRemoteSwiftPackageReference "swift-identified-collections" */,
 				C75F4C07C428F5C67C9471FF /* XCRemoteSwiftPackageReference "swiftui-visual-effects" */,
@@ -611,6 +618,7 @@
 				BE5D2D54031DC3224FC24B1C /* TopRoundedCardShape.swift in Sources */,
 				FA0F5CA852FF0B9A47EB23C4 /* UniswapSmartContractReducer.swift in Sources */,
 				1EFFBBFE814058DE5E9B1313 /* UniswapVersionModel.swift in Sources */,
+				EDBB069A27D982380022FA34 /* OHLCVData+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -836,9 +844,22 @@
 				minimumVersion = 1.0.3;
 			};
 		};
+		C9A9294C5A12E8DE1F9710E9 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0D48CB4967838946D47C2100 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C9A9294C5A12E8DE1F9710E9 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
+		};
 		155AF4FB7E79424032220832 /* HedronSmartContract */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HedronSmartContract;

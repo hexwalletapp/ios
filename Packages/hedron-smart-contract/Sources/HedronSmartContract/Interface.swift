@@ -10,7 +10,7 @@ import web3
 public struct HedronSmartContractManager {
     public enum Action: Equatable {
         case hedronStakes(Chain)
-        case stakeList([StakeLists_Parameter.Response], EthereumAddress, Chain)
+        case stakeList(StakeLists_Parameter.Response, EthereumAddress, Chain)
     }
 
     var create: (AnyHashable) -> Effect<Action, Never> = { _ in _unimplemented("create") }
@@ -24,8 +24,6 @@ public struct HedronSmartContractManager {
     var getStakeCount: (AnyHashable, EthereumAddress, Chain) -> Effect<Never, Never> = { _, _, _ in _unimplemented("getStakeCount") }
 
     var getStakeList: (AnyHashable, EthereumAddress, Chain, BigUInt) -> Void = { _, _, _, _ in _unimplemented("getStakeList") }
-
-    var updateStakeCache: (AnyHashable, EthereumAddress, Chain, StakeLists_Parameter.Response, BigUInt) -> Void = { _, _, _, _, _ in _unimplemented("updateStakeCache") }
 
     public func create(id: AnyHashable) -> Effect<Action, Never> {
         create(id)
@@ -49,9 +47,5 @@ public struct HedronSmartContractManager {
 
     internal func getStakeList(id: AnyHashable, address: EthereumAddress, chain: Chain, stakeCount: BigUInt) {
         getStakeList(id, address, chain, stakeCount)
-    }
-
-    func updateStakeCache(id: AnyHashable, address: EthereumAddress, chain: Chain, stake: StakeLists_Parameter.Response, stakeCount: BigUInt) {
-        updateStakeCache(id, address, chain, stake, stakeCount)
     }
 }
