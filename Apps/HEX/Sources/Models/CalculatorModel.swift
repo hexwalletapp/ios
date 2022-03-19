@@ -54,8 +54,8 @@ struct Calculator: Equatable {
     var stakeAmountHearts: BigUInt {
         switch planUnit {
         case .USD:
-            switch (stakeAmountDollar, price) {
-            case let (.some(amount), .some(price)) where price != 0: return BigUInt(amount / price) * k.HEARTS_PER_HEX
+            switch (stakeAmountDollar, currentPrice) {
+            case let (.some(amount), .some(currentPrice)) where price != 0: return BigUInt(amount / currentPrice) * k.HEARTS_PER_HEX
             default: return 0
             }
         case .HEX:

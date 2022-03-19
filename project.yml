@@ -26,6 +26,9 @@ packages:
   charts:
     url: https://github.com/danielgindi/Charts.git
     from: 4.0.1
+  grdb:
+    url: https://github.com/groue/GRDB.swift.git
+    from: 5.21.0
 
 localPackages:
   - ./Packages/hex-smart-contract/
@@ -70,6 +73,8 @@ targets:
         product: SwiftUIVisualEffects
       - package: charts
         product: Charts
+      - package: grdb
+        product: GRDB
   #     - target: StakeExtension
 
   # StakeExtension:

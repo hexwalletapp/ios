@@ -8,7 +8,7 @@ protocol TimeScaleable: Equatable, CustomStringConvertible {
     var code: String { get }
 }
 
-enum TimeScale: CustomStringConvertible, TimeScaleable {
+enum TimeScale: Codable, CustomStringConvertible, TimeScaleable {
     case minute(TimeScaleMinute)
     case hour(TimeScaleHour)
     case day(TimeScaleDay)
@@ -30,7 +30,7 @@ enum TimeScale: CustomStringConvertible, TimeScaleable {
     }
 }
 
-enum TimeScaleMinute: Identifiable, CaseIterable, TimeScaleable {
+enum TimeScaleMinute: Codable, Identifiable, CaseIterable, TimeScaleable {
     var id: Self { self }
     case five
     case fifteen
@@ -53,7 +53,7 @@ enum TimeScaleMinute: Identifiable, CaseIterable, TimeScaleable {
     }
 }
 
-enum TimeScaleHour: Identifiable, CaseIterable, TimeScaleable {
+enum TimeScaleHour: Codable, Identifiable, CaseIterable, TimeScaleable {
     var id: Self { self }
     case one
     case two
@@ -76,7 +76,7 @@ enum TimeScaleHour: Identifiable, CaseIterable, TimeScaleable {
     }
 }
 
-enum TimeScaleDay: Identifiable, CaseIterable, TimeScaleable {
+enum TimeScaleDay: Codable, Identifiable, CaseIterable, TimeScaleable {
     var id: Self { self }
     case one
     case seven
