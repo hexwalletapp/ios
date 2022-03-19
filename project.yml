@@ -31,6 +31,7 @@ localPackages:
   - ./Packages/hex-smart-contract/
   - ./Packages/hedron-smart-contract/
   - ./Packages/uniswap-smart-contract/
+  - ./Packages/pulsex-smart-contract/
   - ./Packages/bitquery-api/
   - ./Packages/evm-chain/
 
@@ -58,6 +59,8 @@ targets:
         product: HEXSmartContract
       - package: uniswap-smart-contract
         product: UniswapSmartContract
+      - package: pulsex-smart-contract
+        product: PulseXSmartContract
       - package: bitquery-api
         product: BitqueryAPI
       - package: evm-chain

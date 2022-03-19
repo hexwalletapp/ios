@@ -12,6 +12,7 @@ import IdentifiedCollections
 import os.log
 import SwiftUI
 import UniswapSmartContract
+import PulseXSmartContract
 
 enum Tab {
     case charts, accounts, calculator
@@ -69,6 +70,7 @@ enum AppAction: BindableAction, Equatable {
     case hexManager(HEXSmartContractManager.Action)
     case uniswapManager(UniswapSmartContractManager.Action)
     case hedronManager(HedronSmartContractManager.Action)
+    case pulseXManager(PulseXSmartContractManager.Action)
 
     case applicationDidFinishLaunching
     case onBackground
@@ -90,6 +92,7 @@ struct AppEnvironment {
     var hexManager: HEXSmartContractManager
     var hedronManager: HedronSmartContractManager
     var uniswapManager: UniswapSmartContractManager
+    var pulseXManager: PulseXSmartContractManager
     var mainQueue: AnySchedulerOf<DispatchQueue>
     let bitquery = BitqueryAPI()
     let encoder = JSONEncoder()
@@ -118,7 +121,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .merge(
             environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager),
             environment.hedronManager.create(id: HedronManagerId()).map(AppAction.hedronManager),
-            environment.uniswapManager.create(id: UniswapManagerId()).map(AppAction.uniswapManager)
+            environment.uniswapManager.create(id: UniswapManagerId()).map(AppAction.uniswapManager),
+            environment.pulseXManager.create(id: PulseXManagerId()).map(AppAction.pulseXManager)
         )
 
     case .onActive:
@@ -137,18 +141,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .getAccounts:
-        let pairs = Array(Chain.allCases).map { chain -> [Effect<AppAction, Never>] in
-            [
-                environment.uniswapManager
-                    .getPairV2(id: UniswapManagerId(),
-                               chain: chain,
-                               token0: k.HEX,
-                               token1: k.USDC).fireAndForget(),
-                environment.uniswapManager
-                    .getPairV2(id: UniswapManagerId(),
-                               chain: chain,
-                               token0: k.HEX,
-                               token1: k.WETH).fireAndForget(),
+//        let pairs = Array(Chain.allCases).map { chain -> [Effect<AppAction, Never>] in
+//            [
 //                environment.uniswapManager
 //                    .getPoolV3(id: UniswapManagerId(),
 //                               chain: chain,
@@ -168,11 +162,29 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 //                               tokenA: k.HEX,
 //                               tokenB: k.USDC,
 //                               fee: 10000).fireAndForget(),
-            ]
-        }.flatMap { $0 }
+//            ]
+//        }.flatMap { $0 }
 
         return .merge(
-            .merge(pairs),
+            environment.uniswapManager
+                .getPairV2(id: UniswapManagerId(),
+                           chain: .ethereum,
+                           token0: k.HEX,
+                           token1: k.USDC).fireAndForget(),
+            environment.uniswapManager
+                .getPairV2(id: UniswapManagerId(),
+                           chain: .pulse,
+                           token0: k.HEX,
+                           token1: k.USDC).fireAndForget(),
+            environment.uniswapManager
+                .getPairV2(id: UniswapManagerId(),
+                           chain: .ethereum,
+                           token0: k.HEX,
+                           token1: k.WETH).fireAndForget(),
+//            environment.pulseXManager
+//                .getPairV2(id: PulseXManagerId(),
+//                           token0: k.HEX,
+//                           token1: k.USDC).fireAndForget(),
             Effect.cancel(id: CancelGetAccounts()),
             Effect(value: .getGlobalInfo)
                 .throttle(id: GetAccountsThorttleId(), for: .seconds(6), scheduler: environment.mainQueue, latest: true)
@@ -397,7 +409,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         return .none
 
-    case .binding, .hexManager, .hedronManager, .uniswapManager, .onBackground, .onInactive:
+    case .binding, .hexManager, .hedronManager, .uniswapManager, .pulseXManager, .onBackground, .onInactive:
         return .none
     }
 }
@@ -410,4 +422,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                                        environment: { $0 }))
 .combined(with: uniswapReducer.pullback(state: \.self,
                                         action: /AppAction.uniswapManager,
+                                        environment: { $0 }))
+.combined(with: pulseXReducer.pullback(state: \.self,
+                                        action: /AppAction.pulseXManager,
                                         environment: { $0 }))

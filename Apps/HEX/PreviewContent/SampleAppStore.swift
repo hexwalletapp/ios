@@ -13,5 +13,6 @@ import HEXSmartContract
                                environment: AppEnvironment(hexManager: .mock(),
                                                            hedronManager: .mock(),
                                                            uniswapManager: .mock(),
+                                                           pulseXManager: .mock(),
                                                            mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
 #endif

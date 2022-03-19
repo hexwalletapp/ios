@@ -95,9 +95,9 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
 
         let startIndex = Int(lockedDay)
         let endIndex = min(Int(stakeEndDay), Int(currentDay))
-        let dayStartIndex = max(endIndex - 1, startIndex)
-        let weekStartIndex = max(endIndex - 7, startIndex)
-        let monthStartIndex = max(endIndex - 30, startIndex)
+        let dayStartIndex = max(endIndex - 1, startIndex - 1)
+        let weekStartIndex = max(endIndex - 7, startIndex - 1)
+        let monthStartIndex = max(endIndex - 30, startIndex - 1)
         let penaltyEndIndex = Int(stake.lockedDay + penaltyDays)
         let recentInterestDays = BigUInt(endIndex - weekStartIndex)
 

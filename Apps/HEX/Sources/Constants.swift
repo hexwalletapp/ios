@@ -75,6 +75,7 @@ struct GetChartThrottleId: Hashable {}
 struct HexManagerId: Hashable {}
 struct HedronManagerId: Hashable {}
 struct UniswapManagerId: Hashable {}
+struct PulseXManagerId: Hashable {}
 
 struct CancelGetAccounts: Hashable {}
 struct GetAccountsThorttleId: Hashable {}

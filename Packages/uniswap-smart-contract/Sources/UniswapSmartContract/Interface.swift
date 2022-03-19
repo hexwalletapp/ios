@@ -56,7 +56,7 @@ public struct UniswapSmartContractManager {
         token1(id, chain, pairAddress)
     }
 
-    // MARK: - Uniswaap V2
+    // MARK: - Uniswap V2
 
     public func getPairV2(id: AnyHashable, chain: Chain, token0: EthereumAddress, token1: EthereumAddress) -> Effect<Never, Never> {
         getPairV2(id, chain, token0, token1)

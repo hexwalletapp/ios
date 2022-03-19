@@ -30,7 +30,7 @@ public enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible,
     public var description: String {
         switch self {
         case .ethereum: return "Ethereum"
-        case .pulse: return "Pulse Testnet V2"
+        case .pulse: return "Pulse Testnet V2b"
         }
     }
 
@@ -44,7 +44,7 @@ public enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible,
     public var url: URL {
         switch self {
         case .ethereum: return URL(string: "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213")!
-        case .pulse: return URL(string: "https://rpc.v2.testnet.pulsechain.com")!
+        case .pulse: return URL(string: "https://rpc.v2b.testnet.pulsechain.com")!
         }
     }
 }

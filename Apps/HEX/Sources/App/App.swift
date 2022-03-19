@@ -37,6 +37,7 @@ struct HEXApp: App {
                               hexManager: .live,
                               hedronManager: .live,
                               uniswapManager: .live,
+                              pulseXManager: .live,
                               mainQueue: DispatchQueue.main.eraseToAnyScheduler()
                           ))
 
