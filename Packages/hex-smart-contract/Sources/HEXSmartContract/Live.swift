@@ -42,11 +42,6 @@ public extension HEXSmartContractManager {
         manager.getStakes = { id, address, chain in
             let accountDataKey = address + chain.description
 
-            switch dependencies[id]?.stakesCache[accountDataKey] == nil {
-            case true: dependencies[id]?.stakesCache[accountDataKey] = IdentifiedArrayOf<StakeLists_Parameter.Response>()
-            case false: dependencies[id]?.stakesCache[accountDataKey]?.removeAll()
-            }
-
             return manager.getStakeCount(id: id, address: EthereumAddress(address), chain: chain).receive(on: DispatchQueue.main).eraseToEffect()
         }
 
@@ -89,27 +84,13 @@ public extension HEXSmartContractManager {
                         switch response {
                         case let .some(stake):
                             DispatchQueue.main.async {
-                                manager.updateStakeCache(id, address, chain, stake, stakeCount)
+                                dependencies[id]?.subscriber.send(.stake(stake, address, chain, stakeCount))
                             }
                         case .none:
                             os_log("No stake list", log: .hexSmartContract, type: .error)
                         }
                     }
                 }
-            }
-        }
-
-        manager.updateStakeCache = { id, address, chain, stake, stakeCount in
-            let accountDataKey = address.value + chain.description
-
-            dependencies[id]?.stakesCache[accountDataKey]?.updateOrAppend(stake)
-            switch dependencies[id]?.stakesCache[accountDataKey] {
-            case let .some(stakes) where stakes.count == Int(stakeCount):
-                DispatchQueue.main.async {
-                    dependencies[id]?.subscriber.send(Action.stakeList(Array(stakes), address, chain))
-                }
-            default:
-                return
             }
         }
 
@@ -218,7 +199,6 @@ private struct Dependencies {
     let delegate: HEXSmartContractManagerDelegate
     let clients: [Chain: EthereumClient]
     let subscriber: Effect<HEXSmartContractManager.Action, Never>.Subscriber
-    var stakesCache = [String: IdentifiedArrayOf<StakeLists_Parameter.Response>]()
 }
 
 private var dependencies: [AnyHashable: Dependencies] = [:]

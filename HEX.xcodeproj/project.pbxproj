@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -35,6 +35,7 @@
 		436239B10320C1F6F04AF661 /* FavoritesStakeCreditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1285840CD2767AD301CE70B1 /* FavoritesStakeCreditCardView.swift */; };
 		4932AE166A85E04FFAFDD997 /* Stake+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3927EAA2C6099A93C3FB5F4D /* Stake+Extensions.swift */; };
 		516656AA29175D85F397BD1F /* ERC20TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC7294615D79A84B9063BAF /* ERC20TokenModel.swift */; };
+		51CAEF2A0241972388CE4D09 /* PulseXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E16F93B459631DEC0C9F4C /* PulseXSmartContractReducer.swift */; };
 		52FD3F03A19D6F64F11DC1B9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */; };
 		559A9CC38F7C9CAE8BF88604 /* StakeDetailsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */; };
 		57D651442045B3FC9E2C051E /* DataSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D332F301DA2CB0DA59E63112 /* DataSectionHeaderView.swift */; };
@@ -83,7 +84,6 @@
 		E7FC8876920AC4073C1BD709 /* Sequence+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004838DD4C09F1C333501116 /* Sequence+Extensions.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HedronSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 155AF4FB7E79424032220832 /* HedronSmartContract */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
-		EDFF447427E5954C00F4EE10 /* PulseXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFF447327E5954C00F4EE10 /* PulseXSmartContractReducer.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F1EC1CC4AA4B71573C662D42 /* DistributionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40072E4B023C31237AA7D7A2 /* DistributionModel.swift */; };
 		F41861C691AFB90ABC10D2F1 /* CalculatorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112C7DF39CBC618E9B42C62E /* CalculatorModel.swift */; };
@@ -169,13 +169,13 @@
 		D332F301DA2CB0DA59E63112 /* DataSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSectionHeaderView.swift; sourceTree = "<group>"; };
 		D5E75805BEDE9063DEA0CD2C /* OSLog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+Extensions.swift"; sourceTree = "<group>"; };
 		D694B1DA5DF0377977B34F9C /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
+		D8E16F93B459631DEC0C9F4C /* PulseXSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseXSmartContractReducer.swift; sourceTree = "<group>"; };
 		DAF2B793361284975810B229 /* PayoutEarningsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayoutEarningsModel.swift; sourceTree = "<group>"; };
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		E06E04F90AF5769D9F8F84FF /* DataRowPercentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRowPercentView.swift; sourceTree = "<group>"; };
 		E4C52F01F325415202C68EC2 /* Comparable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Extensions.swift"; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EB6C2F1592966BC2252D73B9 /* DEXLiquidityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEXLiquidityModel.swift; sourceTree = "<group>"; };
-		EDFF447327E5954C00F4EE10 /* PulseXSmartContractReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PulseXSmartContractReducer.swift; sourceTree = "<group>"; };
 		EEA202CCAFB9C53F2E1E4A5B /* TopRoundedCardShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRoundedCardShape.swift; sourceTree = "<group>"; };
 		F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAccountDataModel.swift; sourceTree = "<group>"; };
 		F79BEE16878B492362DB65A8 /* Formatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Extensions.swift"; sourceTree = "<group>"; };
@@ -354,8 +354,8 @@
 				12DBF49D004E00EE95C96479 /* AppViewReducer.swift */,
 				C14C90C53DD3953E5CDDCD43 /* HedronSmartContractReducer.swift */,
 				A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */,
+				D8E16F93B459631DEC0C9F4C /* PulseXSmartContractReducer.swift */,
 				01CCA2D0A62AA14D7C06C085 /* UniswapSmartContractReducer.swift */,
-				EDFF447327E5954C00F4EE10 /* PulseXSmartContractReducer.swift */,
 				CBF66A67479E6E83DD335C7F /* Accounts */,
 				C71267E75C8575AF88008CF8 /* Charts */,
 				7E984C05DCAE3E0B5507A314 /* Plan */,
@@ -451,6 +451,14 @@
 				0274987511660F32ADBD8FAF /* SupportingFiles */,
 			);
 			path = HEX;
+			sourceTree = "<group>";
+		};
+		"TEMP_25F38A21-A029-4CC7-BE92-0880650B0864" /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -584,13 +592,13 @@
 				B56CCFF590734DEE188FE881 /* LiquidityChartView.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				D853054461F3F7B67E98F857 /* OSLog+Extensions.swift in Sources */,
-				EDFF447427E5954C00F4EE10 /* PulseXSmartContractReducer.swift in Sources */,
 				6914319581C0B44419BA3583 /* PayoutEarningsModel.swift in Sources */,
 				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
 				7B460704719BB91CBA058A2D /* PlanUnitModel.swift in Sources */,
 				79C1FC79027AAF73DF6F3318 /* PlanView.swift in Sources */,
 				DA1ACDCFDF81739CDA933FA9 /* PriceAxisValueFormatter.swift in Sources */,
 				68A6812022C16264D49C833F /* PriceChartView.swift in Sources */,
+				51CAEF2A0241972388CE4D09 /* PulseXSmartContractReducer.swift in Sources */,
 				98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */,
 				F9D31BABEB128F709FF24E19 /* SampleStakes.swift in Sources */,
 				E7FC8876920AC4073C1BD709 /* Sequence+Extensions.swift in Sources */,
@@ -671,7 +679,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = K78G42H4U2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -737,7 +745,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 44;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = K78G42H4U2;
 				ENABLE_NS_ASSERTIONS = NO;

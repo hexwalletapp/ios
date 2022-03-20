@@ -10,9 +10,9 @@ import HedronSmartContract
 import HEXSmartContract
 import IdentifiedCollections
 import os.log
+import PulseXSmartContract
 import SwiftUI
 import UniswapSmartContract
-import PulseXSmartContract
 
 enum Tab {
     case charts, accounts, calculator
@@ -424,5 +424,5 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                                         action: /AppAction.uniswapManager,
                                         environment: { $0 }))
 .combined(with: pulseXReducer.pullback(state: \.self,
-                                        action: /AppAction.pulseXManager,
-                                        environment: { $0 }))
+                                       action: /AppAction.pulseXManager,
+                                       environment: { $0 }))

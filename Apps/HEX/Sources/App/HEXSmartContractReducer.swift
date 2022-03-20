@@ -10,7 +10,7 @@ import HEXSmartContract
 
 let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironment> { state, action, environment in
     switch action {
-    case let .stakeList(stakeList, address, chain):
+    case let .stake(stake, address, chain, stakeCount):
         let accountDataKey = address.value + chain.description
 
         let onChainData: OnChainData
@@ -19,38 +19,34 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         case .pulse: onChainData = state.hexContractOnChain.plsData
         }
 
-        let stakes = stakeList.map { Stake(stake: $0.response, onChainData: onChainData) }
+        guard let accountData = state.accountsData[id: accountDataKey] else { return .none }
 
-        let combinedStakes: Set<Stake>
-        switch state.accountsData[id: accountDataKey]?.stakes {
-        case let .some(existingStakes): combinedStakes = Set(existingStakes).union(stakes)
-        case .none: combinedStakes = Set(stakes)
-        }
-        let totalStakes = combinedStakes.sorted(by: {
-            let firstStake = [BigUInt($0.lockedDay + $0.stakedDays), $0.stakeId]
-            let secondStake = [BigUInt($1.lockedDay + $1.stakedDays), $1.stakeId]
-            return firstStake.lexicographicallyPrecedes(secondStake)
-        })
+        let stake = Stake(stake: stake.response, onChainData: onChainData)
+        state.accountsData[id: accountDataKey]?.stakes.append(stake)
 
-        state.accountsData[id: accountDataKey]?.stakes = IdentifiedArray(uniqueElements: totalStakes)
+        switch accountData.stakes.count {
+        case Int(stakeCount):
+            let total = accountData.stakes
+                .reduce(into: StakeTotal()) { partialResult, stake in
+                    partialResult.stakeShares += stake.stakeShares
+                    partialResult.stakedHearts += stake.stakedHearts
+                    partialResult.interestHearts += stake.interestHearts
+                    partialResult.interestDailyHearts += stake.interestDailyHearts
+                    partialResult.interestWeeklyHearts += stake.interestWeeklyHearts
+                    partialResult.interestMonthlyHearts += stake.interestMonthlyHearts
+                    partialResult.bigPayDayHearts += stake.bigPayDayHearts ?? 0
+                }
+            state.accountsData[id: accountDataKey]?.total = total
+            state.accountsData[id: accountDataKey]?.stakes.sort(by: {
+                let firstStake = [BigUInt($0.lockedDay + $0.stakedDays), $0.stakeId]
+                let secondStake = [BigUInt($1.lockedDay + $1.stakedDays), $1.stakeId]
+                return firstStake.lexicographicallyPrecedes(secondStake)
+            })
+            state.accountsData[id: accountDataKey]?.isLoading = false
 
-        let total = totalStakes.reduce(into: StakeTotal()) { partialResult, stake in
-            partialResult.stakeShares += stake.stakeShares
-            partialResult.stakedHearts += stake.stakedHearts
-            partialResult.interestHearts += stake.interestHearts
-            partialResult.interestDailyHearts += stake.interestDailyHearts
-            partialResult.interestWeeklyHearts += stake.interestWeeklyHearts
-            partialResult.interestMonthlyHearts += stake.interestMonthlyHearts
-            partialResult.bigPayDayHearts += stake.bigPayDayHearts ?? 0
-        }
-
-        state.accountsData[id: accountDataKey]?.total = total
-
-        state.accountsData[id: accountDataKey]?.isLoading = false
-
-        switch state.accountsData[id: accountDataKey] {
-        case let .some(accountData) where accountData.account.isFavorite == true:
-            state.groupAccountData.accountsData.updateOrAppend(accountData)
+            if accountData.account.isFavorite {
+                state.groupAccountData.accountsData.updateOrAppend(accountData)
+            }
             return .none
         default:
             return .none
