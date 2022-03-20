@@ -141,30 +141,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .getAccounts:
-//        let pairs = Array(Chain.allCases).map { chain -> [Effect<AppAction, Never>] in
-//            [
-//                environment.uniswapManager
-//                    .getPoolV3(id: UniswapManagerId(),
-//                               chain: chain,
-//                               tokenA: k.HEX,
-//                               tokenB: k.USDC,
-//                               fee: 3000).fireAndForget(),
-//                environment.uniswapManager
-//                    .getPoolV3(id: UniswapManagerId(),
-//                               chain: chain,
-//                               tokenA: k.HEX,
-//                               tokenB: k.WETH,
-//                               fee: 3000)
-//                    .fireAndForget(),
-//                environment.uniswapManager
-//                    .getPoolV3(id: UniswapManagerId(),
-//                               chain: chain,
-//                               tokenA: k.HEX,
-//                               tokenB: k.USDC,
-//                               fee: 10000).fireAndForget(),
-//            ]
-//        }.flatMap { $0 }
-
         return .merge(
             environment.uniswapManager
                 .getPairV2(id: UniswapManagerId(),
@@ -181,10 +157,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                            chain: .ethereum,
                            token0: k.HEX,
                            token1: k.WETH).fireAndForget(),
-//            environment.pulseXManager
-//                .getPairV2(id: PulseXManagerId(),
-//                           token0: k.HEX,
-//                           token1: k.USDC).fireAndForget(),
             Effect.cancel(id: CancelGetAccounts()),
             Effect(value: .getGlobalInfo)
                 .throttle(id: GetAccountsThorttleId(), for: .seconds(6), scheduler: environment.mainQueue, latest: true)
