@@ -14,6 +14,7 @@ public struct HEXSmartContractManager {
         case globalInfo(GlobalInfo.Response, Chain)
         case balance(BigUInt, EthereumAddress, Chain)
         case stake(StakeLists_Parameter.Response, EthereumAddress, Chain, BigUInt)
+        case noStakes(EthereumAddress, Chain)
     }
 
     var create: (AnyHashable) -> Effect<Action, Never> = { _ in _unimplemented("create") }

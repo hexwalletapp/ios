@@ -21,11 +21,16 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
         guard let accountData = state.accountsData[id: accountDataKey] else { return .none }
 
-        let stake = Stake(stake: stake.response, onChainData: onChainData)
-        state.accountsData[id: accountDataKey]?.stakes.append(stake)
+        let nativeStake = Stake(stake: stake.response, onChainData: onChainData)
+        state.accountsData[id: accountDataKey]?.stakes.append(nativeStake)
 
-        switch accountData.stakes.count {
+        switch accountData.stakes.filter({ $0.type == .native }).count {
         case Int(stakeCount):
+            // Cleanup dirty stakes
+            state.accountsData[id: accountData.id]?.stakes.filter { $0.isDirty }.forEach { stake in
+                state.accountsData[id: accountData.id]?.stakes.remove(stake)
+            }
+
             let total = accountData.stakes
                 .reduce(into: StakeTotal()) { partialResult, stake in
                     partialResult.stakeShares += stake.stakeShares
@@ -51,6 +56,11 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         default:
             return .none
         }
+        
+    case let .noStakes(address, chain):
+        let accountDataKey = address.value + chain.description
+        state.accountsData[id: accountDataKey]?.isLoading = false
+        return .none
 
     case let .dailyData(dailyDataEncoded, chain):
         let dailyData = dailyDataEncoded.map { dailyData -> DailyData in
@@ -69,17 +79,23 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         case .pulse: state.hexContractOnChain.plsData.dailyData = dailyData
         }
 
-        let accounts = state.accountsData.filter { $0.account.chain == chain }
-        let stakes = accounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
+        let accountsData = state.accountsData.filter { $0.account.chain == chain }
+        let stakes = accountsData.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
             environment.hexManager.getStakes(id: HexManagerId(),
                                              address: accountData.account.address.value,
                                              chain: chain).fireAndForget()
         }
 
-        let balances = accounts.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
+        let balances = accountsData.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
             environment.hexManager.getBalance(id: HexManagerId(),
                                               address: accountData.account.address.value,
                                               chain: chain).fireAndForget()
+        }
+
+        state.accountsData.filter { $0.account.chain == chain }.forEach { accountData in
+            state.accountsData[id: accountData.id]?.stakes.forEach { stake in
+                state.accountsData[id: accountData.id]?.stakes[id: stake.id]?.isDirty = true
+            }
         }
 
         state.accountsData.forEach { accountData in

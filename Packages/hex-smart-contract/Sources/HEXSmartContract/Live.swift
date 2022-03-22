@@ -57,6 +57,10 @@ public extension HEXSmartContractManager {
                         os_log("%@", log: .hexSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch response?.stakeCount {
+                        case let .some(count) where count == 0:
+                            DispatchQueue.main.async {
+                                dependencies[id]?.subscriber.send(.noStakes(address, chain))
+                            }
                         case let .some(count):
                             DispatchQueue.main.async {
                                 manager.getStakeList(id, address, chain, count)

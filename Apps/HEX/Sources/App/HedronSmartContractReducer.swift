@@ -30,11 +30,16 @@ let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvi
 
         guard let accountData = state.accountsData[id: accountDataKey] else { return .none }
 
-        let stake = Stake(stake: stake.response, onChainData: onChainData)
-        state.accountsData[id: accountDataKey]?.stakes.append(stake)
+        var hedronStake = Stake(stake: stake.response, onChainData: onChainData)
+        state.accountsData[id: accountDataKey]?.stakes.append(hedronStake)
 
-        switch accountData.stakes.count {
+        switch accountData.stakes.filter({ $0.type == .hedron }).count {
         case Int(stakeCount):
+            // Cleanup dirty stakes
+            state.accountsData[id: accountData.id]?.stakes.filter { $0.isDirty }.forEach { stake in
+                state.accountsData[id: accountData.id]?.stakes.remove(stake)
+            }
+
             let total = accountData.stakes
                 .reduce(into: StakeTotal()) { partialResult, stake in
                     partialResult.stakeShares += stake.stakeShares
@@ -47,10 +52,10 @@ let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvi
                 }
             state.accountsData[id: accountDataKey]?.total = total
             state.accountsData[id: accountDataKey]?.stakes.sort(by: {
-                    let firstStake = [BigUInt($0.lockedDay + $0.stakedDays), $0.stakeId]
-                    let secondStake = [BigUInt($1.lockedDay + $1.stakedDays), $1.stakeId]
-                    return firstStake.lexicographicallyPrecedes(secondStake)
-                })
+                let firstStake = [BigUInt($0.lockedDay + $0.stakedDays), $0.stakeId]
+                let secondStake = [BigUInt($1.lockedDay + $1.stakedDays), $1.stakeId]
+                return firstStake.lexicographicallyPrecedes(secondStake)
+            })
             state.accountsData[id: accountDataKey]?.isLoading = false
 
             if accountData.account.isFavorite {
@@ -60,5 +65,12 @@ let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvi
         default:
             return .none
         }
+        
+    case let .noStakes(address, chain):
+        let accountDataKey = address.value + chain.description
+        state.accountsData[id: accountDataKey]?.isLoading = false
+        return .none
     }
+    
+    
 }

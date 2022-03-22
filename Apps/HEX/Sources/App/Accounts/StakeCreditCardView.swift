@@ -64,7 +64,15 @@ struct StakeCreditCardView: View {
                 case true: ProgressView()
                     .vibrancyEffect()
                     .vibrancyEffectStyle(.fill)
-                case false: EmptyView()
+                case false:
+                    switch accountData.stakes.isEmpty {
+                    case true:
+                        Text("No stakes for this account")
+                            .vibrancyEffect()
+                            .vibrancyEffectStyle(.fill)
+                    case false:
+                        EmptyView()
+                    }
                 }
             }
             .frame(maxWidth: .infinity, idealHeight: (UIScreen.main.bounds.width) / 1.586)

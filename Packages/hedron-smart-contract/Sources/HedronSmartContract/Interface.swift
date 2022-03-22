@@ -11,6 +11,7 @@ public struct HedronSmartContractManager {
     public enum Action: Equatable {
         case hedronStakes(Chain)
         case stake(StakeLists_Parameter.Response, EthereumAddress, Chain, BigUInt)
+        case noStakes(EthereumAddress, Chain)
     }
 
     var create: (AnyHashable) -> Effect<Action, Never> = { _ in _unimplemented("create") }

@@ -29,12 +29,14 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     var interestWeeklyHearts: BigUInt
     var interestMonthlyHearts: BigUInt
     var bigPayDayHearts: BigUInt?
+    var isDirty: Bool
 
     init(stake: StakeResponse, onChainData: OnChainData) {
         let stakeUnlockDay = BigUInt(stake.unlockedDay)
         let stakeLockedDay = BigUInt(stake.lockedDay)
         let currentDay = onChainData.currentDay
 
+        isDirty = false
         let servedDays: UInt16
         switch stake.lockedDay {
         case let x where x <= currentDay:
