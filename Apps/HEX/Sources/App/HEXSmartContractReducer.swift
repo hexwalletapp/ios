@@ -56,7 +56,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         default:
             return .none
         }
-        
+
     case let .noStakes(address, chain):
         let accountDataKey = address.value + chain.description
         state.accountsData[id: accountDataKey]?.isLoading = false

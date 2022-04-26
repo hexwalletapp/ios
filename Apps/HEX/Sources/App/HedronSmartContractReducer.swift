@@ -65,12 +65,10 @@ let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvi
         default:
             return .none
         }
-        
+
     case let .noStakes(address, chain):
         let accountDataKey = address.value + chain.description
         state.accountsData[id: accountDataKey]?.isLoading = false
         return .none
     }
-    
-    
 }

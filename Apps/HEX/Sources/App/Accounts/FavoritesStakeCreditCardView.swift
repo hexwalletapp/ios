@@ -36,7 +36,7 @@ struct FavoritesStakeCreditCardView: View {
                                          startPoint: .bottomLeading,
                                          endPoint: .topTrailing))
                     .blurEffect()
-                    .blurEffectStyle(.systemMaterial)
+                    .blurEffectStyle(.systemThinMaterial)
                 VStack(alignment: .leading) {
                     HStack(alignment: .top) {
                         frontGroup(count: groupAccountData.accountsData.count)

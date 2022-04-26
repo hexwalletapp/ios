@@ -33,6 +33,7 @@ struct k {
     static let WETH = EthereumAddress("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
     static let USDC = EthereumAddress("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
     static let HEX = EthereumAddress("0x2b591e99afe9f32eaa6214f7b7629768c40eeb39")
+    static let WPLS = EthereumAddress("0x8a810ea8b121d08342e9e7696f4a9915cbe494b7")
 
     static let TOKEN_INFO_DICT = [
         k.WETH: ERC20TokenInfo(decimals: 18, symbol: "WETH"),

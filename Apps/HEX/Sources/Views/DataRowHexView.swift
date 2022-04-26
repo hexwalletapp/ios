@@ -1,5 +1,5 @@
 // DataRowHexView.swift
-// Copyright (c) 2021 Joe Blau
+// Copyright (c) 2022 Joe Blau
 
 import BigInt
 import SwiftUI
