@@ -58,6 +58,7 @@ struct AppState: Equatable {
 }
 
 enum AppAction: BindableAction, Equatable {
+    case hexPriceManager(HexPriceManager.Action)
     case hexManager(HEXSmartContractManager.Action)
     case hedronManager(HedronSmartContractManager.Action)
 
@@ -76,6 +77,7 @@ enum AppAction: BindableAction, Equatable {
 }
 
 struct AppEnvironment {
+    var hexPriceManager: HexPriceManager
     var hexManager: HEXSmartContractManager
     var hedronManager: HedronSmartContractManager
     var mainQueue: AnySchedulerOf<DispatchQueue>
@@ -103,6 +105,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             break
         }
         return .merge(
+            environment.hexPriceManager.create(id: HexPriceManagerId()).map(AppAction.hexPriceManager),
             environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager),
             environment.hedronManager.create(id: HedronManagerId()).map(AppAction.hedronManager)
         )
@@ -130,10 +133,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         )
 
     case .getGlobalInfo:
-        let globalInfos = Array(Chain.allCases).compactMap { chain -> Effect<AppAction, Never> in
-            environment.hexManager.getGlobalInfo(id: HexManagerId(), chain: chain).fireAndForget()
-        }
-        return .merge(globalInfos)
+        return .merge(
+            environment.hexPriceManager.getPriceETH(id: HexPriceManagerId()).fireAndForget(),
+            environment.hexPriceManager.getPricePLS(id: HexPriceManagerId()).fireAndForget(),
+            environment.hexManager.getGlobalInfo(id: HexManagerId(), chain: .ethereum).fireAndForget(),
+            environment.hexManager.getGlobalInfo(id: HexManagerId(), chain: .pulse).fireAndForget()
+        )
 
     case .dismiss:
         state.modalPresent = nil
@@ -317,11 +322,14 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         return .none
 
-    case .binding, .hexManager, .hedronManager, .onBackground, .onInactive:
+    case .binding, .hexPriceManager, .hexManager, .hedronManager, .onBackground, .onInactive:
         return .none
     }
 }
 .binding()
+.combined(with: hexPriceReducer.pullback(state: \.self,
+                                         action: /AppAction.hexPriceManager,
+                                         environment: { $0 }))
 .combined(with: hexReducer.pullback(state: \.self,
                                     action: /AppAction.hexManager,
                                     environment: { $0 }))

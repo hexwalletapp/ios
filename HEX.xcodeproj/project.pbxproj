@@ -10,6 +10,7 @@
 		00EEFB341D4FBCA3FA35F5B5 /* DataRowPercentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06E04F90AF5769D9F8F84FF /* DataRowPercentView.swift */; };
 		024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */; };
 		0632C27A5D5B4F5FC6F9294B /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707199CFAF4B74C473DFC14 /* Date+Extensions.swift */; };
+		086720F77AFD916D750C6211 /* HexPriceManagerReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8C2A0D875F088DF77CD3CE /* HexPriceManagerReducer.swift */; };
 		093834D12AD89D7AE1EB5E35 /* FavoriteDotsIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E37ACE9AB44ACACD36C306 /* FavoriteDotsIndexView.swift */; };
 		15A5B14F56E424F987EB628D /* EVMChain in Frameworks */ = {isa = PBXBuildFile; productRef = 50726FFC7E278845100BD31F /* EVMChain */; };
 		18BBCBEE60339DE88779C959 /* TimeScaleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65EEF7F70A480DE512954C /* TimeScaleModel.swift */; };
@@ -19,6 +20,7 @@
 		2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */; };
 		2564BD942660791DCB2F2459 /* DEXLiquidityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6C2F1592966BC2252D73B9 /* DEXLiquidityModel.swift */; };
 		272864C27D707302918465AF /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EC50004741C666AA20180 /* AppView.swift */; };
+		27D6AA37FB8263969A358AAA /* HexPriceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0A8FA437237E633627D4A4 /* HexPriceManager.swift */; };
 		281CDE7E994671A7D59FDB7D /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */; };
 		2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */; };
 		342A1C83EC0A9A0554C79285 /* AccountDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */; };
@@ -37,6 +39,7 @@
 		6100F3757C54FE2778D6E715 /* HEXNumberTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B111C6AD69FEB6A0AC0F16DC /* HEXNumberTextStyle.swift */; };
 		641B864855B2593A479F561B /* AppViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DBF49D004E00EE95C96479 /* AppViewReducer.swift */; };
 		6914319581C0B44419BA3583 /* PayoutEarningsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2B793361284975810B229 /* PayoutEarningsModel.swift */; };
+		69633924CE72D838926A956F /* DEXPairPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5A4E8A1BB8391C4B45F8DE /* DEXPairPrice.swift */; };
 		737EC9222204FB7981A231F6 /* GroupAccountDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */; };
 		79C1FC79027AAF73DF6F3318 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FE5AC3DBF047D3C2A56368 /* PlanView.swift */; };
 		7A4040552920730E14F2A863 /* HedronSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14C90C53DD3953E5CDDCD43 /* HedronSmartContractReducer.swift */; };
@@ -98,6 +101,7 @@
 		332B166F9B34E04D138B45F9 /* FavoriteDataRowHexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDataRowHexView.swift; sourceTree = "<group>"; };
 		33E37ACE9AB44ACACD36C306 /* FavoriteDotsIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDotsIndexView.swift; sourceTree = "<group>"; };
 		3927EAA2C6099A93C3FB5F4D /* Stake+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stake+Extensions.swift"; sourceTree = "<group>"; };
+		3A8C2A0D875F088DF77CD3CE /* HexPriceManagerReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexPriceManagerReducer.swift; sourceTree = "<group>"; };
 		3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeStatusModel.swift; sourceTree = "<group>"; };
 		3F64B38EBD7222D3B27B357A /* DataRowHexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRowHexView.swift; sourceTree = "<group>"; };
 		40072E4B023C31237AA7D7A2 /* DistributionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistributionModel.swift; sourceTree = "<group>"; };
@@ -123,6 +127,7 @@
 		8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		95AD4C7459F0A5F35C779C6E /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataModel.swift; sourceTree = "<group>"; };
+		9F5A4E8A1BB8391C4B45F8DE /* DEXPairPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEXPairPrice.swift; sourceTree = "<group>"; };
 		A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageRingView.swift; sourceTree = "<group>"; };
 		A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXSmartContractReducer.swift; sourceTree = "<group>"; };
 		A984876D2EB22C9A31CAC866 /* PlanUnitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanUnitModel.swift; sourceTree = "<group>"; };
@@ -130,6 +135,7 @@
 		B111C6AD69FEB6A0AC0F16DC /* HEXNumberTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXNumberTextStyle.swift; sourceTree = "<group>"; };
 		B707199CFAF4B74C473DFC14 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BC0A8FA437237E633627D4A4 /* HexPriceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexPriceManager.swift; sourceTree = "<group>"; };
 		C14C90C53DD3953E5CDDCD43 /* HedronSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HedronSmartContractReducer.swift; sourceTree = "<group>"; };
 		C3EC967E3D3687676AB2EE95 /* hedron-smart-contract */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hedron-smart-contract"; path = "Packages/hedron-smart-contract"; sourceTree = SOURCE_ROOT; };
 		C4D0A553A7648F87C0BD0017 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -236,6 +242,7 @@
 				CA483FEDDBEE0FF6B03D6AE9 /* CreditCardUnitsModel.swift */,
 				7AD673A6150107EFA969E218 /* DailyDataModel.swift */,
 				EB6C2F1592966BC2252D73B9 /* DEXLiquidityModel.swift */,
+				9F5A4E8A1BB8391C4B45F8DE /* DEXPairPrice.swift */,
 				40072E4B023C31237AA7D7A2 /* DistributionModel.swift */,
 				4EB8CC668FCDBDD90A84F514 /* ERC20TokenInfoModel.swift */,
 				4DC7294615D79A84B9063BAF /* ERC20TokenModel.swift */,
@@ -297,6 +304,7 @@
 				6C4EC50004741C666AA20180 /* AppView.swift */,
 				12DBF49D004E00EE95C96479 /* AppViewReducer.swift */,
 				C14C90C53DD3953E5CDDCD43 /* HedronSmartContractReducer.swift */,
+				3A8C2A0D875F088DF77CD3CE /* HexPriceManagerReducer.swift */,
 				A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */,
 				CBF66A67479E6E83DD335C7F /* Accounts */,
 				7E984C05DCAE3E0B5507A314 /* Plan */,
@@ -354,6 +362,14 @@
 			path = Edit;
 			sourceTree = "<group>";
 		};
+		E8A7394FB3A199E6B6B1A061 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				BC0A8FA437237E633627D4A4 /* HexPriceManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		E8A88478808885F930928A06 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,6 +377,7 @@
 				A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */,
 				914DAE34AA3B7586609FAD81 /* App */,
 				2189B6BB95D20E18D61637A1 /* Extensions */,
+				E8A7394FB3A199E6B6B1A061 /* Manager */,
 				2E0E3972D291E010FA3D2F8A /* Models */,
 				90BE8DA6D5A1BF4EF796BA89 /* Styles */,
 				0FB23BF886800078AAFE1752 /* Views */,
@@ -379,7 +396,7 @@
 			path = HEX;
 			sourceTree = "<group>";
 		};
-		"TEMP_69D2320C-E484-48ED-BD23-2B96DD365A2A" /* Resources */ = {
+		"TEMP_842FD67C-98BF-411F-B673-1CAF0E612F06" /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
@@ -484,6 +501,7 @@
 				E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */,
 				BEC11AC0468EA22A0BBBACD9 /* CreditCardUnitsModel.swift in Sources */,
 				2564BD942660791DCB2F2459 /* DEXLiquidityModel.swift in Sources */,
+				69633924CE72D838926A956F /* DEXPairPrice.swift in Sources */,
 				CDBABE47A59A501263373340 /* DailyDataModel.swift in Sources */,
 				F9EB6793DF0FE431A796C85C /* DataHeaderView.swift in Sources */,
 				946DFBDB96848637539D6175 /* DataRowHexView.swift in Sources */,
@@ -507,6 +525,8 @@
 				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
 				7A4040552920730E14F2A863 /* HedronSmartContractReducer.swift in Sources */,
 				B10CD79F49D2B0234DB29740 /* HexContractOnChain.swift in Sources */,
+				27D6AA37FB8263969A358AAA /* HexPriceManager.swift in Sources */,
+				086720F77AFD916D750C6211 /* HexPriceManagerReducer.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				D853054461F3F7B67E98F857 /* OSLog+Extensions.swift in Sources */,
 				6914319581C0B44419BA3583 /* PayoutEarningsModel.swift in Sources */,

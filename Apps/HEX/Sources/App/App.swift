@@ -34,6 +34,7 @@ struct HEXApp: App {
             store = Store(initialState: AppState(),
                           reducer: appReducer,
                           environment: AppEnvironment(
+                              hexPriceManager: .live,
                               hexManager: .live,
                               hedronManager: .live,
                               mainQueue: DispatchQueue.main.eraseToAnyScheduler()

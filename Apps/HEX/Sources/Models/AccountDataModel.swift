@@ -11,6 +11,6 @@ struct AccountData: Codable, Hashable, Equatable, Identifiable {
     var stakes = IdentifiedArrayOf<Stake>()
     var total = StakeTotal()
     var liquidBalanceHearts: BigUInt = 0
-    var hexPrice: Double = 0
+    var hexPrice: Double = 0.0
     var isLoading = false
 }

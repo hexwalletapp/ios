@@ -50,7 +50,6 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
     var totalBalance: String {
         accountsData.reduce(into: NSNumber(0)) { partialResult, accountData in
             let totalBalance = accountData.total.balanceHearts + accountData.liquidBalanceHearts
-
             partialResult = NSNumber(value: partialResult.doubleValue + totalBalance.hexAt(price: accountData.hexPrice).doubleValue)
         }.currencyString()
     }

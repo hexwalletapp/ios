@@ -68,10 +68,9 @@ struct k {
 
 struct GetChartId: Hashable {}
 struct GetChartThrottleId: Hashable {}
+struct HexPriceManagerId: Hashable {}
 struct HexManagerId: Hashable {}
 struct HedronManagerId: Hashable {}
-struct UniswapManagerId: Hashable {}
-struct PulseXManagerId: Hashable {}
 
 struct CancelGetAccounts: Hashable {}
 struct GetAccountsThorttleId: Hashable {}

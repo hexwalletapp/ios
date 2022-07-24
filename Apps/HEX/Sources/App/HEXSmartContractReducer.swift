@@ -20,8 +20,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         }
 
         guard let accountData = state.accountsData[id: accountDataKey] else { return .none }
-
-//        print(stakeCount)
+        
         let nativeStake = Stake(stake: stake.response, onChainData: onChainData)
         state.accountsData[id: accountDataKey]?.stakes.append(nativeStake)
 
