@@ -35,12 +35,6 @@ struct k {
     static let HEX = EthereumAddress("0x2b591e99afe9f32eaa6214f7b7629768c40eeb39")
     static let WPLS = EthereumAddress("0x8a810ea8b121d08342e9e7696f4a9915cbe494b7")
 
-    static let TOKEN_INFO_DICT = [
-        k.WETH: ERC20TokenInfo(decimals: 18, symbol: "WETH"),
-        k.USDC: ERC20TokenInfo(decimals: 6, symbol: "USDC"),
-        k.HEX: ERC20TokenInfo(decimals: 8, symbol: "HEX"),
-    ]
-
     // Bigger Pays Better
     static let BPB_BONUS_PERCENT = BigUInt(10)
     static let HEARTS_PER_HEX = BigUInt(1e8)
@@ -57,6 +51,7 @@ struct k {
     static let SHARE_RATE_SCALE = BigUInt(1e5)
     static let FORM_ICON_WIDTH = CGFloat(20)
 
+    // Grids
     static let LEAGUE_GIRD_3 = [GridItem(.fixed(30), spacing: k.GRID_SPACING, alignment: .leading),
                                 GridItem(.flexible(), spacing: k.GRID_SPACING, alignment: .leading),
                                 GridItem(.fixed(100), spacing: k.GRID_SPACING, alignment: .trailing)]

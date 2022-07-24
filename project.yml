@@ -23,16 +23,13 @@ packages:
   swiftui-visual-effects:
     url: https://github.com/lucasbrown/swiftui-visual-effects.git
     from: 1.0.3
-  charts:
-    url: https://github.com/danielgindi/Charts.git
-    from: 4.0.1
+  lightweight-charts:
+    url: https://github.com/tradingview/LightweightChartsIOS.git
+    from: 3.8.0
 
 localPackages:
   - ./Packages/hex-smart-contract/
   - ./Packages/hedron-smart-contract/
-  - ./Packages/uniswap-smart-contract/
-  - ./Packages/pulsex-smart-contract/
-  - ./Packages/bitquery-api/
   - ./Packages/evm-chain/
 
 targets:
@@ -57,12 +54,6 @@ targets:
         product: HedronSmartContract
       - package: hex-smart-contract
         product: HEXSmartContract
-      - package: uniswap-smart-contract
-        product: UniswapSmartContract
-      - package: pulsex-smart-contract
-        product: PulseXSmartContract
-      - package: bitquery-api
-        product: BitqueryAPI
       - package: evm-chain
         product: EVMChain
       - package: swift-composable-architecture
@@ -71,8 +62,6 @@ targets:
         product: IdentifiedCollections
       - package: swiftui-visual-effects
         product: SwiftUIVisualEffects
-      - package: charts
-        product: Charts
   #     - target: StakeExtension
 
   # StakeExtension:

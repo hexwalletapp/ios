@@ -10,13 +10,6 @@ struct AppView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             TabView(selection: viewStore.binding(\.$selectedTab)) {
-                ChartsView(store: store)
-                    .tabItem {
-                        Image(systemName: "chart.line.uptrend.xyaxis")
-                        Text("Chart")
-                    }
-                    .tag(Tab.charts)
-
                 AccountsView(store: store)
                     .tabItem {
                         Image(systemName: "creditcard.fill")

@@ -11,9 +11,11 @@ struct GroupAccountData: Hashable, Equatable, Identifiable {
     var id: String { "FavoriteAccountDataId" }
 
     var gradient: [Color] = [
-        Color(red: 0.220, green: 0.871, blue: 1.000, opacity: 1.000),
-        Color(red: 0.933, green: 0.561, blue: 1.000, opacity: 1.000),
-        Color(red: 1.000, green: 0.812, blue: 0.078, opacity: 1.000),
+        Color(red: 0.059, green: 0.910, blue: 1.000, opacity: 1.000),
+        Color(red: 0.384, green: 0.600, blue: 1.000, opacity: 1.000),
+        Color(red: 0.725, green: 0.282, blue: 1.000, opacity: 1.000),
+        Color(red: 1.000, green: 0.024, blue: 1.000, opacity: 1.000),
+        Color(red: 1.000, green: 1.000, blue: 0.031, opacity: 1.000),
     ]
 
     var hasFavorites: Bool {
