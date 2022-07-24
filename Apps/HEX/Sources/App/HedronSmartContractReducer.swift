@@ -33,7 +33,7 @@ let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvi
         var hedronStake = Stake(stake: stake.response, onChainData: onChainData)
         state.accountsData[id: accountDataKey]?.stakes.append(hedronStake)
 
-        switch accountData.stakes.filter({ $0.type == .hedron }).count {
+        switch state.accountsData[id: accountDataKey]?.stakes.filter({ $0.type == .hedron }).count {
         case Int(stakeCount):
             // Cleanup dirty stakes
             state.accountsData[id: accountData.id]?.stakes.filter { $0.isDirty }.forEach { stake in

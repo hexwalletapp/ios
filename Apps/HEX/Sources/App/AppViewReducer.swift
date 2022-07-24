@@ -117,9 +117,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             state.colorScheme = nil
         }
         return .merge(
-            Effect(value: .getAccounts)
-//            ,
-//            Effect(value: .updateFavorites)
+            Effect(value: .getAccounts),
+            Effect(value: .updateFavorites)
         )
 
     case .getAccounts:

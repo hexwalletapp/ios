@@ -43,7 +43,7 @@ public enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible,
 
     public var url: URL {
         switch self {
-        case .ethereum: return URL(string: "")!
+        case .ethereum: return URL(string: "https://eth-mainnet.alchemyapi.io/v2/***REMOVED***")!
         case .pulse: return URL(string: "https://rpc.v2b.testnet.pulsechain.com")!
         }
     }

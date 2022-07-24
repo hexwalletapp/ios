@@ -21,10 +21,11 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
         guard let accountData = state.accountsData[id: accountDataKey] else { return .none }
 
+//        print(stakeCount)
         let nativeStake = Stake(stake: stake.response, onChainData: onChainData)
         state.accountsData[id: accountDataKey]?.stakes.append(nativeStake)
 
-        switch accountData.stakes.filter({ $0.type == .native }).count {
+        switch state.accountsData[id: accountDataKey]?.stakes.filter({ $0.type == .native }).count {
         case Int(stakeCount):
             // Cleanup dirty stakes
             state.accountsData[id: accountData.id]?.stakes.filter { $0.isDirty }.forEach { stake in

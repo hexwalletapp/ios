@@ -58,7 +58,7 @@ public extension HedronSmartContractManager {
                             responseType: StakeCount_Parameter.Response.self) { error, response in
                     switch error {
                     case let .some(err):
-                        os_log("%@", log: .hexSmartContract, type: .error, err.localizedDescription)
+                        os_log("%@", log: .hedronSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch response?.stakeCount {
                         case let .some(count) where count == 0:
@@ -70,7 +70,7 @@ public extension HedronSmartContractManager {
                                 manager.getStakeList(id, address, chain, count)
                             }
                         case .none:
-                            os_log("No stake count", log: .hexSmartContract, type: .error)
+                            os_log("No stake count", log: .hedronSmartContract, type: .error)
                         }
                     }
                 }
@@ -87,7 +87,7 @@ public extension HedronSmartContractManager {
                               responseType: StakeLists_Parameter.Response.self) { error, response in
                     switch error {
                     case let .some(err):
-                        os_log("%@", log: .hexSmartContract, type: .error, err.localizedDescription)
+                        os_log("%@", log: .hedronSmartContract, type: .error, err.localizedDescription)
                     case .none:
                         switch response {
                         case let .some(stake):
@@ -95,7 +95,7 @@ public extension HedronSmartContractManager {
                                 dependencies[id]?.subscriber.send(.stake(stake, address, chain, stakeCount))
                             }
                         case .none:
-                            os_log("No stake list", log: .hexSmartContract, type: .error)
+                            os_log("No stake list", log: .hedronSmartContract, type: .error)
                         }
                     }
                 }
