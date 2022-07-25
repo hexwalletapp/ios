@@ -24,7 +24,6 @@ struct PulseDexPrice: Codable {
     var data: DexData
 }
 
-
 struct CommunityDexPrice: Codable {
     var lastUpdated: String
     var hexEth: String

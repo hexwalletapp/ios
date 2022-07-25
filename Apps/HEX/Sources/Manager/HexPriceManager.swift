@@ -16,7 +16,7 @@ public struct HexPriceManager {
     var destroy: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("destroy") }
 
     var getPriceETH: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("getPriceETH") }
-    
+
     var getPricePLS: (AnyHashable) -> Effect<Never, Never> = { _ in _unimplemented("getPricePLS") }
 
     public func create(id: AnyHashable) -> Effect<Action, Never> {
@@ -30,7 +30,7 @@ public struct HexPriceManager {
     public func getPriceETH(id: AnyHashable) -> Effect<Never, Never> {
         getPriceETH(id)
     }
-    
+
     public func getPricePLS(id: AnyHashable) -> Effect<Never, Never> {
         getPricePLS(id)
     }
@@ -81,7 +81,7 @@ public extension HexPriceManager {
                 session.finishTasksAndInvalidate()
             }
         }
-        
+
         manager.getPricePLS = { id in
             .fireAndForget {
                 let session = URLSession(configuration: URLSessionConfiguration.default, delegate: nil, delegateQueue: nil)
