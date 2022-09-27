@@ -8,7 +8,7 @@ import SwiftUIVisualEffects
 
 struct StakeCreditCardView: View {
     let store: Store<AppState, AppAction>
-    @Binding var accountData: AccountData
+    @Binding var account: Account
 
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
     private let MAGNETIC_STRIPE_PADDING = CGFloat(24)
@@ -32,40 +32,40 @@ struct StakeCreditCardView: View {
         WithViewStore(store) { viewStore in
             ZStack {
                 Rectangle()
-                    .fill(LinearGradient(gradient: Gradient(colors: accountData.account.chain.gradient),
+                    .fill(LinearGradient(gradient: Gradient(colors: account.chain.gradient),
                                          startPoint: .bottomLeading,
                                          endPoint: .topTrailing))
                     .blurEffect()
                     .blurEffectStyle(.systemMaterial)
                 VStack(alignment: .leading) {
                     HStack(alignment: .top) {
-                        front(shortAddress: accountData.account.address.shortAddress)
+                        front(shortAddress: account.address.shortAddress)
                         Spacer()
-                        frontTotal(title: viewStore.payoutEarnings.description,
-                                   hearts: accountData.total.interest(payout: viewStore.payoutEarnings),
-                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice,
+                        frontTotal(title: viewStore.payPeriod.description,
+                                   hearts: account.summary.interestPayPeriodHearts[viewStore.payPeriod] ?? 0,
+                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : account.assetPrice.HEX_USD,
                                    alignment: .trailing)
                     }
                     Spacer()
                     HStack(alignment: .bottom) {
                         frontTotal(title: "Total Shares",
-                                   shares: accountData.total.stakeShares,
+                                   shares: account.summary.stakeShares,
                                    alignment: .leading)
                         Spacer()
                         frontTotal(title: "Total",
-                                   hearts: accountData.total.balanceHearts + accountData.liquidBalanceHearts,
-                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice,
+                                   hearts: account.summary.balanceHearts,
+                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : account.assetPrice.HEX_USD,
                                    alignment: .trailing)
                     }
                 }
                 .font(.body.monospacedDigit())
                 .padding()
-                switch accountData.isLoading {
+                switch account.isLoading {
                 case true: ProgressView()
                     .vibrancyEffect()
                     .vibrancyEffectStyle(.fill)
                 case false:
-                    switch accountData.stakes.isEmpty {
+                    switch account.stakes.isEmpty {
                     case true:
                         Text("No stakes for this account")
                             .vibrancyEffect()
@@ -84,7 +84,7 @@ struct StakeCreditCardView: View {
         WithViewStore(store) { viewStore in
             ZStack(alignment: .topLeading) {
                 Rectangle()
-                    .fill(LinearGradient(gradient: Gradient(colors: accountData.account.chain.gradient),
+                    .fill(LinearGradient(gradient: Gradient(colors: account.chain.gradient),
                                          startPoint: .bottomLeading,
                                          endPoint: .topTrailing))
                     .blurEffect()
@@ -97,30 +97,30 @@ struct StakeCreditCardView: View {
                 VStack(alignment: .leading) {
                     DataHeaderView()
                     DataRowHexView(title: "ʟɪᴏ̨ᴜɪᴅ",
-                                   units: accountData.liquidBalanceHearts,
-                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice)
+                                   units: account.summary.liquidHearts,
+                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : account.assetPrice.HEX_USD)
                     DataRowHexView(title: "sᴛᴀᴋᴇᴅ",
-                                   units: accountData.total.stakedHearts,
-                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice)
+                                   units: account.summary.stakedHearts,
+                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : account.assetPrice.HEX_USD)
                     DataRowHexView(title: "ɪɴᴛᴇʀᴇsᴛ",
-                                   units: accountData.total.interestHearts,
-                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice)
+                                   units: account.summary.interestHearts,
+                                   price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : account.assetPrice.HEX_USD)
 
-                    if !accountData.total.bigPayDayHearts.isZero {
+                    if !account.summary.bigPayDayHearts.isZero {
                         DataRowHexView(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ",
-                                       units: accountData.total.bigPayDayHearts,
-                                       price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : accountData.hexPrice)
+                                       units: account.summary.bigPayDayHearts,
+                                       price: viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : account.assetPrice.HEX_USD)
                     }
 
                     Spacer()
                     HStack(alignment: .bottom) {
                         VStack(alignment: .leading) {
                             Spacer()
-                            Text(accountData.account.name)
-                            description(text: accountData.account.chain.description)
+                            Text(account.name)
+                            description(text: account.chain.description)
                         }
                         Spacer()
-                        accountData.account.chain.image
+                        account.chain.image
                             .resizable()
                             .scaledToFit()
                             .frame(height: 32)

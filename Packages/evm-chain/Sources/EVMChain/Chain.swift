@@ -6,11 +6,11 @@ import SwiftUI
 public enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible, Hashable {
     public var id: Self { self }
 
-    case ethereum, pulse
+    case ethereum, pulse, ethereumpow, ethereumfair
 
     public var gradient: [Color] {
         switch self {
-        case .ethereum: return [
+        case .ethereum, .ethereumpow, .ethereumfair: return [
                 Color(red: 1.000, green: 0.859, blue: 0.004, opacity: 1.000),
                 Color(red: 1.000, green: 0.522, blue: 0.122, opacity: 1.000),
                 Color(red: 1.000, green: 0.239, blue: 0.239, opacity: 1.000),
@@ -26,17 +26,19 @@ public enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible,
             ]
         }
     }
-
+    
     public var description: String {
         switch self {
         case .ethereum: return "Ethereum"
         case .pulse: return "Pulse Testnet V2b"
+        case .ethereumpow: return "Ethereum PoW"
+        case .ethereumfair: return "Ethereum Fair"
         }
     }
 
     public var image: Image {
         switch self {
-        case .ethereum: return Image("ethereum", bundle: Bundle.module)
+        case .ethereum, .ethereumpow, .ethereumfair: return Image("ethereum", bundle: Bundle.module)
         case .pulse: return Image("pulse", bundle: Bundle.module)
         }
     }
@@ -45,6 +47,8 @@ public enum Chain: Codable, Identifiable, CaseIterable, CustomStringConvertible,
         switch self {
         case .ethereum: return URL(string: "https://eth-mainnet.alchemyapi.io/v2/")!
         case .pulse: return URL(string: "https://rpc.v2b.testnet.pulsechain.com")!
+        case .ethereumpow: return URL(string: "https://mainnet.ethereumpow.org/")!
+        case .ethereumfair: return URL(string: "https://rpc.etherfair.org/")!
         }
     }
 }

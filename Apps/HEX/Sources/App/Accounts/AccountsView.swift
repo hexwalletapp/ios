@@ -13,15 +13,15 @@ struct AccountsView: View {
         GridItem(.flexible()),
         GridItem(.fixed(92)),
     ]
-
+    
     @State private var favoriteColor = 0
-
+    
     init(store: Store<AppState, AppAction>) {
         self.store = store
         UIPageControl.appearance().currentPageIndicatorTintColor = .tintColor
         UIPageControl.appearance().pageIndicatorTintColor = .tertiaryLabel
     }
-
+    
     var body: some View {
         WithViewStore(store) { viewStore in
             NavigationView {
@@ -48,23 +48,23 @@ struct AccountsView: View {
                             Section {
                                 Picker(selection: viewStore.binding(\.$creditCardUnits).animation(),
                                        content: {
-                                           ForEach(CreditCardUnits.allCases) { creditCardUnit in
-                                               creditCardUnit.label.tag(creditCardUnit)
-                                           }
-                                       }, label: {
-                                           viewStore.creditCardUnits.label
-                                       })
-                                    .pickerStyle(MenuPickerStyle())
+                                    ForEach(CreditCardUnits.allCases) { creditCardUnit in
+                                        creditCardUnit.label.tag(creditCardUnit)
+                                    }
+                                }, label: {
+                                    viewStore.creditCardUnits.label
+                                })
+                                .pickerStyle(MenuPickerStyle())
 
-                                Picker(selection: viewStore.binding(\.$payoutEarnings).animation(),
+                                Picker(selection: viewStore.binding(\.$payPeriod).animation(),
                                        content: {
-                                           ForEach(PayoutEarnings.allCases) { payoutEarning in
-                                               payoutEarning.label.tag(payoutEarning)
-                                           }
-                                       }, label: {
-                                           viewStore.payoutEarnings.label
-                                       })
-                                    .pickerStyle(MenuPickerStyle())
+                                    ForEach(PayPeriod.allCases) { payPeriod in
+                                        payPeriod.label.tag(payPeriod)
+                                    }
+                                }, label: {
+                                    viewStore.payPeriod.label
+                                })
+                                .pickerStyle(MenuPickerStyle())
                             }
 
                             Section {
@@ -81,33 +81,34 @@ struct AccountsView: View {
                     }
 
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        switch viewStore.accountsData.isEmpty {
+                        switch viewStore.accounts.isEmpty {
                         case false:
-                            if viewStore.accountsData[id: viewStore.selectedId]?.account.chain != .pulse {
-                                let ethData = viewStore.hexContractOnChain.ethData
-                                switch viewStore.shouldSpeculate {
-                                case true: toolbarText(heading: ethData.speculativePrice.currencyString() + "*",
-                                                       subheading: "Price",
-                                                       image: Chain.ethereum.image)
-                                case false: toolbarText(heading: ethData.price.currencyString(),
-                                                        subheading: "Price",
-                                                        image: Chain.ethereum.image)
-                                }
-                            }
-
-                            if viewStore.accountsData[id: viewStore.selectedId]?.account.chain != .ethereum {
-                                let plsData = viewStore.hexContractOnChain.plsData
-                                switch viewStore.shouldSpeculate {
-                                case true: toolbarText(heading: plsData.speculativePrice.currencyString() + "*",
-                                                       subheading: "Price",
-                                                       image: Chain.pulse.image)
-                                case false: toolbarText(heading: plsData.price.currencyString(),
-                                                        subheading: "Price",
-                                                        image: Chain.pulse.image)
-                                }
-                            }
-
-                            toolbarText(heading: viewStore.hexContractOnChain.ethData.currentDay.advanced(by: 1).description,
+//                            if let ethData = viewStore.hexContractOnChain.data[.ethereum],
+//                               viewStore.accounts[id: viewStore.selectedId]?.account.chain != .pulse {
+//
+//                                switch viewStore.shouldSpeculate {
+//                                case true: toolbarText(heading: ethData.speculativePrice.currencyString() + "*",
+//                                                       subheading: "Price",
+//                                                       image: Chain.ethereum.image)
+//                                case false: toolbarText(heading: ethData.price.currencyString(),
+//                                                        subheading: "Price",
+//                                                        image: Chain.ethereum.image)
+//                                }
+//                            }
+//
+//                            if let plsData = viewStore.hexContractOnChain.data[.pulse],
+//                               viewStore.accounts[id: viewStore.selectedId]?.account.chain != .ethereum {
+//
+//                                switch viewStore.shouldSpeculate {
+//                                case true: toolbarText(heading: plsData.speculativePrice.currencyString() + "*",
+//                                                       subheading: "Price",
+//                                                       image: Chain.pulse.image)
+//                                case false: toolbarText(heading: plsData.price.currencyString(),
+//                                                        subheading: "Price",
+//                                                        image: Chain.pulse.image)
+//                                }
+//                            }
+                            toolbarText(heading: viewStore.hexContractOnChain.data[.ethereum]?.currentDay.advanced(by: 1).description ?? "0",
                                         subheading: "Day")
                         default:
                             EmptyView()
@@ -117,48 +118,48 @@ struct AccountsView: View {
             }
         }
     }
-
+    
     private var accountList: some View {
         WithViewStore(store) { viewStore in
-            switch (viewStore.accountsData.isEmpty,
-                    viewStore.groupAccountData.accountsData.isEmpty,
-                    viewStore.accountsData[id: viewStore.selectedId])
+            switch (viewStore.accounts.isEmpty,
+                    viewStore.favoriteAccounts.accounts.isEmpty,
+                    viewStore.accounts[id: viewStore.selectedId])
             {
-            case (false, true, let .some(accountData)),
-                 (false, false, let .some(accountData)):
-                ForEach(accountData.stakes) { stake in
-                    StakeDetailsCardView(price: price(on: accountData.account.chain),
+            case (false, true, let .some(account)),
+                (false, false, let .some(account)):
+                ForEach(account.stakes) { stake in
+                    StakeDetailsCardView(price: price(on: account.chain),
                                          stake: stake,
-                                         account: accountData.account)
+                                         account: account)
                 }
             case (false, false, .none):
-                ForEach(viewStore.groupAccountData.totalAccountStakes) { accountStake in
-                    StakeDetailsCardView(price: price(on: accountStake.account.chain),
-                                         stake: accountStake.stake,
-                                         account: accountStake.account)
+                ForEach(viewStore.favoriteAccounts.totalAccountStakes) { stake in
+                    StakeDetailsCardView(price: price(on: stake.account.chain),
+                                         stake: stake.stake,
+                                         account: stake.account)
                 }
             default:
                 EmptyView()
             }
         }
     }
-
+    
     private var accountHeader: some View {
         WithViewStore(store) { viewStore in
-            switch (viewStore.accountsData.isEmpty, viewStore.groupAccountData.accountsData.isEmpty) {
+            switch (viewStore.accounts.isEmpty, viewStore.favoriteAccounts.accounts.isEmpty) {
             case (false, false):
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
                     FavoritesStakeCreditCardView(store: store,
-                                                 groupAccountData: viewStore.groupAccountData)
+                                                 favoriteAccounts: viewStore.favoriteAccounts)
+                    .padding([.horizontal, .top])
+                    .padding(.bottom, k.CARD_PADDING_BOTTOM)
+                    .tag(viewStore.favoriteAccounts.id)
+                    ForEach(viewStore.accounts) { account in
+                        StakeCreditCardView(store: store,
+                                            account: .constant(account))
                         .padding([.horizontal, .top])
                         .padding(.bottom, k.CARD_PADDING_BOTTOM)
-                        .tag(viewStore.groupAccountData.id)
-                    ForEach(viewStore.accountsData) { accountData in
-                        StakeCreditCardView(store: store,
-                                            accountData: .constant(accountData))
-                            .padding([.horizontal, .top])
-                            .padding(.bottom, k.CARD_PADDING_BOTTOM)
-                            .tag(accountData.id)
+                        .tag(account.id)
                     }
                 }
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
@@ -168,12 +169,12 @@ struct AccountsView: View {
                 .overlay(FavoriteDotsIndexView(store: store))
             case (false, true):
                 TabView(selection: viewStore.binding(\.$selectedId).animation()) {
-                    ForEach(viewStore.accountsData) { accountData in
+                    ForEach(viewStore.accounts) { account in
                         StakeCreditCardView(store: store,
-                                            accountData: .constant(accountData))
-                            .padding([.horizontal, .top])
-                            .padding(.bottom, k.CARD_PADDING_BOTTOM)
-                            .tag(accountData.id)
+                                            account: .constant(account))
+                        .padding([.horizontal, .top])
+                        .padding(.bottom, k.CARD_PADDING_BOTTOM)
+                        .tag(account.id)
                     }
                 }
                 .frame(height: ((UIScreen.main.bounds.width) / 1.586) + k.CARD_PADDING_BOTTOM + k.CARD_PADDING_DEFAULT)
@@ -198,17 +199,13 @@ struct AccountsView: View {
             }
         }
     }
-
+    
     func price(on chain: Chain) -> Double {
         let viewStore = ViewStore(store)
-        let chainPrice: Double
-        switch chain {
-        case .ethereum: chainPrice = viewStore.hexContractOnChain.ethData.price.doubleValue
-        case .pulse: chainPrice = viewStore.hexContractOnChain.plsData.price.doubleValue
-        }
+        let chainPrice: Double = viewStore.hexContractOnChain.data[chain]?.price.doubleValue ?? 0.0
         return viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : chainPrice
     }
-
+    
     func toolbarText(heading: String, subheading: String, image: Image? = nil) -> some View {
         VStack(spacing: 0) {
             Text(heading).font(.caption.monospacedDigit())
@@ -232,9 +229,9 @@ struct AccountsView: View {
 }
 
 #if DEBUG
-    struct AccountsView_Previews: PreviewProvider {
-        static var previews: some View {
-            AccountsView(store: sampleAppStore)
-        }
+struct AccountsView_Previews: PreviewProvider {
+    static var previews: some View {
+        AccountsView(store: sampleAppStore)
     }
+}
 #endif

@@ -11,55 +11,50 @@ import HEXSmartContract
 let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvironment> { state, action, environment in
     switch action {
     case let .hedronStakes(chain):
-        let accounts = state.accountsData.filter { $0.account.chain == chain }
-        let stakes = accounts.compactMap { accountData -> Effect<HedronSmartContractManager.Action, Never> in
+        let accounts = state.accounts.filter { $0.chain == chain }
+        let stakes = accounts.compactMap { account -> Effect<HedronSmartContractManager.Action, Never> in
             environment.hedronManager.getStakes(id: HedronManagerId(),
-                                                address: accountData.account.address.value,
+                                                address: account.address.value,
                                                 chain: chain).fireAndForget()
         }
         return .merge(stakes)
 
     case let .stake(stake, address, chain, stakeCount):
-        let accountDataKey = address.value + chain.description
-
-        let onChainData: OnChainData
-        switch chain {
-        case .ethereum: onChainData = state.hexContractOnChain.ethData
-        case .pulse: onChainData = state.hexContractOnChain.plsData
-        }
-
-        guard let accountData = state.accountsData[id: accountDataKey] else { return .none }
+        let accountKey = Account.genId(address: address, chain: chain)
+        
+        guard let onChainData = state.hexContractOnChain.data[chain],
+              let account = state.accounts[id: accountKey] else { return .none }
 
         var hedronStake = Stake(stake: stake.response, onChainData: onChainData)
-        state.accountsData[id: accountDataKey]?.stakes.append(hedronStake)
+        state.accounts[id: accountKey]?.stakes.append(hedronStake)
 
-        switch state.accountsData[id: accountDataKey]?.stakes.filter({ $0.type == .hedron }).count {
+        switch state.accounts[id: accountKey]?.stakes.filter({ $0.type == .hedron }).count {
         case Int(stakeCount):
             // Cleanup dirty stakes
-            state.accountsData[id: accountData.id]?.stakes.filter { $0.isDirty }.forEach { stake in
-                state.accountsData[id: accountData.id]?.stakes.remove(stake)
+            state.accounts[id: account.id]?.stakes.filter { $0.isDirty }.forEach { stake in
+//                state.accounts[id: account.id]?.stakes.remove(at: stake)
             }
 
-            let total = accountData.stakes
-                .reduce(into: StakeTotal()) { partialResult, stake in
+            let summary = account.stakes
+                .reduce(into: Summary()) { partialResult, stake in
                     partialResult.stakeShares += stake.stakeShares
                     partialResult.stakedHearts += stake.stakedHearts
                     partialResult.interestHearts += stake.interestHearts
-                    partialResult.interestDailyHearts += stake.interestDailyHearts
-                    partialResult.interestWeeklyHearts += stake.interestWeeklyHearts
-                    partialResult.interestMonthlyHearts += stake.interestMonthlyHearts
+                    PayPeriod.allCases.forEach { payPeriod in
+                        partialResult.interestPayPeriodHearts[payPeriod]? += stake.interestPayPeriodHearts[payPeriod] ?? 0
+                    }
                     partialResult.bigPayDayHearts += stake.bigPayDayHearts ?? 0
                 }
-            state.accountsData[id: accountDataKey]?.total = total
-            state.accountsData[id: accountDataKey]?.stakes.sort(by: {
+            state.accounts[id: accountKey]?.summary = summary
+            state.accounts[id: accountKey]?.stakes.sort(by: {
                 let firstStake = [BigUInt($0.lockedDay + $0.stakedDays), $0.stakeId]
                 let secondStake = [BigUInt($1.lockedDay + $1.stakedDays), $1.stakeId]
                 return firstStake.lexicographicallyPrecedes(secondStake)
             })
-            state.accountsData[id: accountDataKey]?.isLoading = false
+            state.accounts[id: accountKey]?.isLoading = false
 
-            if accountData.account.isFavorite {
-                state.groupAccountData.accountsData.updateOrAppend(accountData)
+            if account.isFavorite {
+                state.favoriteAccounts.accounts.updateOrAppend(account)
             }
             return .none
         default:
@@ -67,8 +62,8 @@ let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvi
         }
 
     case let .noStakes(address, chain):
-        let accountDataKey = address.value + chain.description
-        state.accountsData[id: accountDataKey]?.isLoading = false
+        let accountKey = Account.genId(address: address, chain: chain)
+        state.accounts[id: accountKey]?.isLoading = false
         return .none
     }
 }

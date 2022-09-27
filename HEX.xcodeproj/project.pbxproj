@@ -3,14 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		00EEFB341D4FBCA3FA35F5B5 /* DataRowPercentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06E04F90AF5769D9F8F84FF /* DataRowPercentView.swift */; };
 		024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */; };
 		0632C27A5D5B4F5FC6F9294B /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B707199CFAF4B74C473DFC14 /* Date+Extensions.swift */; };
-		086720F77AFD916D750C6211 /* HexPriceManagerReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8C2A0D875F088DF77CD3CE /* HexPriceManagerReducer.swift */; };
 		093834D12AD89D7AE1EB5E35 /* FavoriteDotsIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E37ACE9AB44ACACD36C306 /* FavoriteDotsIndexView.swift */; };
 		15A5B14F56E424F987EB628D /* EVMChain in Frameworks */ = {isa = PBXBuildFile; productRef = 50726FFC7E278845100BD31F /* EVMChain */; };
 		18BBCBEE60339DE88779C959 /* TimeScaleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65EEF7F70A480DE512954C /* TimeScaleModel.swift */; };
@@ -20,7 +19,6 @@
 		2378D61661CAA4E8463F734D /* BigUInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 117EDA4ED3A2230383DCFA41 /* BigUInt+Extensions.swift */; };
 		2564BD942660791DCB2F2459 /* DEXLiquidityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6C2F1592966BC2252D73B9 /* DEXLiquidityModel.swift */; };
 		272864C27D707302918465AF /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EC50004741C666AA20180 /* AppView.swift */; };
-		27D6AA37FB8263969A358AAA /* HexPriceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0A8FA437237E633627D4A4 /* HexPriceManager.swift */; };
 		281CDE7E994671A7D59FDB7D /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */; };
 		2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */; };
 		342A1C83EC0A9A0554C79285 /* AccountDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */; };
@@ -38,9 +36,9 @@
 		5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */; };
 		6100F3757C54FE2778D6E715 /* HEXNumberTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B111C6AD69FEB6A0AC0F16DC /* HEXNumberTextStyle.swift */; };
 		641B864855B2593A479F561B /* AppViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DBF49D004E00EE95C96479 /* AppViewReducer.swift */; };
-		6914319581C0B44419BA3583 /* PayoutEarningsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2B793361284975810B229 /* PayoutEarningsModel.swift */; };
+		6914319581C0B44419BA3583 /* PayPeriodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2B793361284975810B229 /* PayPeriodModel.swift */; };
 		69633924CE72D838926A956F /* DEXPairPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5A4E8A1BB8391C4B45F8DE /* DEXPairPrice.swift */; };
-		737EC9222204FB7981A231F6 /* GroupAccountDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */; };
+		737EC9222204FB7981A231F6 /* FavoriteAccountsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39A536A567EBB37D5595EDB /* FavoriteAccountsModel.swift */; };
 		79C1FC79027AAF73DF6F3318 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FE5AC3DBF047D3C2A56368 /* PlanView.swift */; };
 		7A4040552920730E14F2A863 /* HedronSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14C90C53DD3953E5CDDCD43 /* HedronSmartContractReducer.swift */; };
 		7B460704719BB91CBA058A2D /* PlanUnitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A984876D2EB22C9A31CAC866 /* PlanUnitModel.swift */; };
@@ -56,7 +54,7 @@
 		98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD97BE07A876D006551CAE25 /* SampleAppStore.swift */; };
 		9C190C6B408A7F61CBE23804 /* ChartScaleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A83CB3CDDAFC5CCD5E67265 /* ChartScaleModel.swift */; };
 		AD018BBA56BEB9A160EC670B /* FloatingGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A7D3C52D8FB595F17191B5 /* FloatingGroupBoxStyle.swift */; };
-		B10CD79F49D2B0234DB29740 /* HexContractOnChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC9F6FE02179ADCC850A631 /* HexContractOnChain.swift */; };
+		B10CD79F49D2B0234DB29740 /* HEXERC20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC9F6FE02179ADCC850A631 /* HEXERC20.swift */; };
 		B3FDC626A1314EDA5EC1194A /* StakeGroupBoxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495C84A3A16231ACBE6D36A /* StakeGroupBoxStyle.swift */; };
 		B47647423BAF6BDF59F01BD1 /* AccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DFEC316C64640DC5205E43 /* AccountsView.swift */; };
 		BA69E57C156F8C0E271D65E1 /* DataRowShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C642EEC1F4E397063D4932C /* DataRowShareView.swift */; };
@@ -72,6 +70,8 @@
 		E5EE0F940D58DE021A3A99C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */; };
 		E7FC8876920AC4073C1BD709 /* Sequence+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004838DD4C09F1C333501116 /* Sequence+Extensions.swift */; };
 		E99D45F4EB2E62F81E4C417D /* HedronSmartContract in Frameworks */ = {isa = PBXBuildFile; productRef = 155AF4FB7E79424032220832 /* HedronSmartContract */; };
+		EDA8B22828E26AE2002E1D97 /* SummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA8B22728E26AE2002E1D97 /* SummaryModel.swift */; };
+		EDA8B22D28E2753A002E1D97 /* AssetPrices.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA8B22C28E2753A002E1D97 /* AssetPrices.swift */; };
 		EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */; };
 		EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */; };
 		F1EC1CC4AA4B71573C662D42 /* DistributionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40072E4B023C31237AA7D7A2 /* DistributionModel.swift */; };
@@ -91,7 +91,7 @@
 		1285840CD2767AD301CE70B1 /* FavoritesStakeCreditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesStakeCreditCardView.swift; sourceTree = "<group>"; };
 		12DBF49D004E00EE95C96479 /* AppViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewReducer.swift; sourceTree = "<group>"; };
 		14F2B64E913DEBB7D7EA0FFA /* ChartGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartGroupBoxStyle.swift; sourceTree = "<group>"; };
-		1AC9F6FE02179ADCC850A631 /* HexContractOnChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexContractOnChain.swift; sourceTree = "<group>"; };
+		1AC9F6FE02179ADCC850A631 /* HEXERC20.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXERC20.swift; sourceTree = "<group>"; };
 		1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsCardView.swift; sourceTree = "<group>"; };
 		1BDB91A74D5AF1314D87CA3A /* StakeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeType.swift; sourceTree = "<group>"; };
 		210D963E491A8FBE29AF4297 /* HEX.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,7 +101,6 @@
 		332B166F9B34E04D138B45F9 /* FavoriteDataRowHexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDataRowHexView.swift; sourceTree = "<group>"; };
 		33E37ACE9AB44ACACD36C306 /* FavoriteDotsIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDotsIndexView.swift; sourceTree = "<group>"; };
 		3927EAA2C6099A93C3FB5F4D /* Stake+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stake+Extensions.swift"; sourceTree = "<group>"; };
-		3A8C2A0D875F088DF77CD3CE /* HexPriceManagerReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexPriceManagerReducer.swift; sourceTree = "<group>"; };
 		3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeStatusModel.swift; sourceTree = "<group>"; };
 		3F64B38EBD7222D3B27B357A /* DataRowHexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRowHexView.swift; sourceTree = "<group>"; };
 		40072E4B023C31237AA7D7A2 /* DistributionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistributionModel.swift; sourceTree = "<group>"; };
@@ -135,7 +134,6 @@
 		B111C6AD69FEB6A0AC0F16DC /* HEXNumberTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXNumberTextStyle.swift; sourceTree = "<group>"; };
 		B707199CFAF4B74C473DFC14 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		BC0A8FA437237E633627D4A4 /* HexPriceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexPriceManager.swift; sourceTree = "<group>"; };
 		C14C90C53DD3953E5CDDCD43 /* HedronSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HedronSmartContractReducer.swift; sourceTree = "<group>"; };
 		C3EC967E3D3687676AB2EE95 /* hedron-smart-contract */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "hedron-smart-contract"; path = "Packages/hedron-smart-contract"; sourceTree = SOURCE_ROOT; };
 		C4D0A553A7648F87C0BD0017 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -145,14 +143,16 @@
 		CD97BE07A876D006551CAE25 /* SampleAppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleAppStore.swift; sourceTree = "<group>"; };
 		D332F301DA2CB0DA59E63112 /* DataSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSectionHeaderView.swift; sourceTree = "<group>"; };
 		D5E75805BEDE9063DEA0CD2C /* OSLog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+Extensions.swift"; sourceTree = "<group>"; };
-		DAF2B793361284975810B229 /* PayoutEarningsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayoutEarningsModel.swift; sourceTree = "<group>"; };
+		DAF2B793361284975810B229 /* PayPeriodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayPeriodModel.swift; sourceTree = "<group>"; };
 		DF4755BB8ACA35B11DD0DBE0 /* StakeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeDetailsView.swift; sourceTree = "<group>"; };
 		E06E04F90AF5769D9F8F84FF /* DataRowPercentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRowPercentView.swift; sourceTree = "<group>"; };
 		E4C52F01F325415202C68EC2 /* Comparable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Extensions.swift"; sourceTree = "<group>"; };
 		EB0066F4C337E2DEAEF7927D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		EB6C2F1592966BC2252D73B9 /* DEXLiquidityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEXLiquidityModel.swift; sourceTree = "<group>"; };
+		EDA8B22728E26AE2002E1D97 /* SummaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryModel.swift; sourceTree = "<group>"; };
+		EDA8B22C28E2753A002E1D97 /* AssetPrices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetPrices.swift; sourceTree = "<group>"; };
 		EEA202CCAFB9C53F2E1E4A5B /* TopRoundedCardShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRoundedCardShape.swift; sourceTree = "<group>"; };
-		F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAccountDataModel.swift; sourceTree = "<group>"; };
+		F39A536A567EBB37D5595EDB /* FavoriteAccountsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteAccountsModel.swift; sourceTree = "<group>"; };
 		F79BEE16878B492362DB65A8 /* Formatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Extensions.swift"; sourceTree = "<group>"; };
 		F7A7D3C52D8FB595F17191B5 /* FloatingGroupBoxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingGroupBoxStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -234,28 +234,22 @@
 		2E0E3972D291E010FA3D2F8A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EDA8B22B28E27511002E1D97 /* Price */,
+				EDA8B22A28E26D9D002E1D97 /* Settings */,
+				EDA8B22928E26AFE002E1D97 /* Account */,
 				9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */,
-				7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */,
 				112C7DF39CBC618E9B42C62E /* CalculatorModel.swift */,
 				6A83CB3CDDAFC5CCD5E67265 /* ChartScaleModel.swift */,
 				11334602E6C56403672EF697 /* ChartType.swift */,
-				CA483FEDDBEE0FF6B03D6AE9 /* CreditCardUnitsModel.swift */,
 				7AD673A6150107EFA969E218 /* DailyDataModel.swift */,
 				EB6C2F1592966BC2252D73B9 /* DEXLiquidityModel.swift */,
 				9F5A4E8A1BB8391C4B45F8DE /* DEXPairPrice.swift */,
-				40072E4B023C31237AA7D7A2 /* DistributionModel.swift */,
 				4EB8CC668FCDBDD90A84F514 /* ERC20TokenInfoModel.swift */,
 				4DC7294615D79A84B9063BAF /* ERC20TokenModel.swift */,
 				742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */,
-				F39A536A567EBB37D5595EDB /* GroupAccountDataModel.swift */,
-				1AC9F6FE02179ADCC850A631 /* HexContractOnChain.swift */,
-				DAF2B793361284975810B229 /* PayoutEarningsModel.swift */,
-				A984876D2EB22C9A31CAC866 /* PlanUnitModel.swift */,
-				CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */,
+				1AC9F6FE02179ADCC850A631 /* HEXERC20.swift */,
 				3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */,
 				7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */,
-				1BDB91A74D5AF1314D87CA3A /* StakeType.swift */,
-				6E65EEF7F70A480DE512954C /* TimeScaleModel.swift */,
 				81E9535F725045747BF99D78 /* UniswapVersionModel.swift */,
 			);
 			path = Models;
@@ -304,7 +298,6 @@
 				6C4EC50004741C666AA20180 /* AppView.swift */,
 				12DBF49D004E00EE95C96479 /* AppViewReducer.swift */,
 				C14C90C53DD3953E5CDDCD43 /* HedronSmartContractReducer.swift */,
-				3A8C2A0D875F088DF77CD3CE /* HexPriceManagerReducer.swift */,
 				A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */,
 				CBF66A67479E6E83DD335C7F /* Accounts */,
 				7E984C05DCAE3E0B5507A314 /* Plan */,
@@ -362,14 +355,6 @@
 			path = Edit;
 			sourceTree = "<group>";
 		};
-		E8A7394FB3A199E6B6B1A061 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				BC0A8FA437237E633627D4A4 /* HexPriceManager.swift */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
 		E8A88478808885F930928A06 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -377,12 +362,43 @@
 				A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */,
 				914DAE34AA3B7586609FAD81 /* App */,
 				2189B6BB95D20E18D61637A1 /* Extensions */,
-				E8A7394FB3A199E6B6B1A061 /* Manager */,
 				2E0E3972D291E010FA3D2F8A /* Models */,
 				90BE8DA6D5A1BF4EF796BA89 /* Styles */,
 				0FB23BF886800078AAFE1752 /* Views */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		EDA8B22928E26AFE002E1D97 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */,
+				EDA8B22728E26AE2002E1D97 /* SummaryModel.swift */,
+				CA83C661AB7EFE0A4EC029C3 /* StakeModel.swift */,
+				F39A536A567EBB37D5595EDB /* FavoriteAccountsModel.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		EDA8B22A28E26D9D002E1D97 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				CA483FEDDBEE0FF6B03D6AE9 /* CreditCardUnitsModel.swift */,
+				40072E4B023C31237AA7D7A2 /* DistributionModel.swift */,
+				6E65EEF7F70A480DE512954C /* TimeScaleModel.swift */,
+				1BDB91A74D5AF1314D87CA3A /* StakeType.swift */,
+				A984876D2EB22C9A31CAC866 /* PlanUnitModel.swift */,
+				DAF2B793361284975810B229 /* PayPeriodModel.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		EDA8B22B28E27511002E1D97 /* Price */ = {
+			isa = PBXGroup;
+			children = (
+				EDA8B22C28E2753A002E1D97 /* AssetPrices.swift */,
+			);
+			path = Price;
 			sourceTree = "<group>";
 		};
 		FA53A81348801277D5DFC836 /* HEX */ = {
@@ -394,14 +410,6 @@
 				0274987511660F32ADBD8FAF /* SupportingFiles */,
 			);
 			path = HEX;
-			sourceTree = "<group>";
-		};
-		"TEMP_968D54B3-B8A4-4EB1-A2D2-F61DAB442377" /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -512,24 +520,24 @@
 				F1EC1CC4AA4B71573C662D42 /* DistributionModel.swift in Sources */,
 				8DD05BBC427D187E1D1BDE7E /* Double+Extensions.swift in Sources */,
 				90311E16D9C1E2D421BACFC4 /* ERC20TokenInfoModel.swift in Sources */,
+				EDA8B22D28E2753A002E1D97 /* AssetPrices.swift in Sources */,
 				516656AA29175D85F397BD1F /* ERC20TokenModel.swift in Sources */,
 				384453310AFABC584F1147F7 /* EditView.swift in Sources */,
+				EDA8B22828E26AE2002E1D97 /* SummaryModel.swift in Sources */,
 				20F838FB57D3C9C40B387EAA /* FavoriteDataRowHexView.swift in Sources */,
 				093834D12AD89D7AE1EB5E35 /* FavoriteDotsIndexView.swift in Sources */,
 				436239B10320C1F6F04AF661 /* FavoritesStakeCreditCardView.swift in Sources */,
 				AD018BBA56BEB9A160EC670B /* FloatingGroupBoxStyle.swift in Sources */,
 				E259D48121D258478F73A687 /* Formatter+Extensions.swift in Sources */,
 				024667252BDAE1E0907FCE69 /* GlobalInfoModel.swift in Sources */,
-				737EC9222204FB7981A231F6 /* GroupAccountDataModel.swift in Sources */,
+				737EC9222204FB7981A231F6 /* FavoriteAccountsModel.swift in Sources */,
 				6100F3757C54FE2778D6E715 /* HEXNumberTextStyle.swift in Sources */,
 				EEEA4923339FB235A944FD39 /* HEXSmartContractReducer.swift in Sources */,
 				7A4040552920730E14F2A863 /* HedronSmartContractReducer.swift in Sources */,
-				B10CD79F49D2B0234DB29740 /* HexContractOnChain.swift in Sources */,
-				27D6AA37FB8263969A358AAA /* HexPriceManager.swift in Sources */,
-				086720F77AFD916D750C6211 /* HexPriceManagerReducer.swift in Sources */,
+				B10CD79F49D2B0234DB29740 /* HEXERC20.swift in Sources */,
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				D853054461F3F7B67E98F857 /* OSLog+Extensions.swift in Sources */,
-				6914319581C0B44419BA3583 /* PayoutEarningsModel.swift in Sources */,
+				6914319581C0B44419BA3583 /* PayPeriodModel.swift in Sources */,
 				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
 				7B460704719BB91CBA058A2D /* PlanUnitModel.swift in Sources */,
 				79C1FC79027AAF73DF6F3318 /* PlanView.swift in Sources */,

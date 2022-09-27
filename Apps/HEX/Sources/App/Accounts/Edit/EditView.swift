@@ -67,15 +67,15 @@ struct EditView: View {
                         }
 
                         Section {
-                            ForEach(viewStore.accountsData) { accountData in
-                                accountFrom(accountData: accountData)
+                            ForEach(viewStore.accounts) { account in
+                                accountFrom(account: account)
                             }
                             .onDelete(perform: delete)
                             .onMove(perform: move)
                         } header: {
                             Text("Accounts")
                         } footer: {
-                            switch viewStore.accountsData.count {
+                            switch viewStore.accounts.count {
                             case 0: Text("No accounts")
                             default: EmptyView()
                             }
@@ -94,10 +94,10 @@ struct EditView: View {
 
                     guard !account.address.value.isEmpty, !account.name.isEmpty else { return }
 
-                    var existingAccounts = viewStore.accountsData
-                    existingAccounts.updateOrAppend(AccountData(account: account))
+                    var existingAccounts = viewStore.accounts
+                    existingAccounts.updateOrAppend(account)
 
-                    viewStore.send(.binding(.set(\.$accountsData, existingAccounts)))
+                    viewStore.send(.binding(.set(\.$accounts, existingAccounts)))
 
                     account = Account()
                 }
@@ -128,44 +128,46 @@ struct EditView: View {
 
     func delete(at indices: IndexSet) {
         let viewStore = ViewStore(store)
-        var accountsData = viewStore.accountsData
-        accountsData.remove(atOffsets: indices)
-        viewStore.send(.binding(.set(\.$accountsData, accountsData)))
+        var accounts = viewStore.accounts
+
+        accounts.remove(atOffsets: indices)
+        viewStore.send(.binding(.set(\.$accounts, accounts)))
     }
 
     func move(indices: IndexSet, newOffset: Int) {
         let viewStore = ViewStore(store)
-        var accountsData = viewStore.accountsData
-        accountsData.move(fromOffsets: indices, toOffset: newOffset)
-        viewStore.send(.binding(.set(\.$accountsData, accountsData)))
+        var accounts = viewStore.accounts
+
+        accounts.move(fromOffsets: indices, toOffset: newOffset)
+        viewStore.send(.binding(.set(\.$accounts, accounts)))
     }
 
-    func toggleFavorite(accountData: AccountData) {
+    func toggleFavorite(account: Account) {
         let viewStore = ViewStore(store)
-        var accountsData = viewStore.accountsData
-
-        var accountData = accountData
-        accountData.account.isFavorite.toggle()
-
-        accountsData.updateOrAppend(accountData)
-        viewStore.send(.binding(.set(\.$accountsData, accountsData)))
+        var accounts = viewStore.accounts
+        
+        var account = account
+        account.isFavorite.toggle()
+        
+        accounts.updateOrAppend(account)
+        viewStore.send(.binding(.set(\.$accounts, accounts)))
     }
 
-    func accountFrom(accountData: AccountData) -> some View {
+    func accountFrom(account: Account) -> some View {
         WithViewStore(store) { viewStore in
             HStack(spacing: 16) {
-                LinearGradient(gradient: Gradient(colors: accountData.account.chain.gradient),
+                LinearGradient(gradient: Gradient(colors: account.chain.gradient),
                                startPoint: .bottomLeading,
                                endPoint: .topTrailing)
                     .mask(
-                        accountData.account.chain.image
+                        account.chain.image
                             .resizable()
                             .scaledToFit()
                     ).frame(width: 24, height: 24)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(accountData.account.name)
-                    Text(accountData.account.address.shortAddress)
+                    Text(account.name)
+                    Text(account.address.shortAddress)
                         .foregroundColor(.secondary)
                         .font(.footnote.monospaced())
                 }
@@ -173,16 +175,16 @@ struct EditView: View {
                 switch viewStore.editMode {
                 case .inactive:
                     Button {
-                        viewStore.send(.copy(accountData.account.address.value))
+                        viewStore.send(.copy(account.address.value))
                     } label: {
                         Image(systemName: "doc.on.doc")
                             .foregroundColor(.accentColor)
                     }
                     Button {
-                        toggleFavorite(accountData: accountData)
+                        toggleFavorite(account: account)
                         viewStore.send(.updateFavorites)
                     } label: {
-                        Image(systemName: accountData.account.isFavorite ? "star.fill" : "star")
+                        Image(systemName: account.isFavorite ? "star.fill" : "star")
                             .foregroundColor(.orange)
                     }
                 default:

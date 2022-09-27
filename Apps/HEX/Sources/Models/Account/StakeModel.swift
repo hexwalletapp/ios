@@ -25,9 +25,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
     let type: StakeType
     var penaltyHearts: BigUInt
     var interestHearts: BigUInt
-    var interestDailyHearts: BigUInt
-    var interestWeeklyHearts: BigUInt
-    var interestMonthlyHearts: BigUInt
+    var interestPayPeriodHearts: [PayPeriod: BigUInt]
     var bigPayDayHearts: BigUInt?
     var isDirty: Bool
 
@@ -87,9 +85,7 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
         endDate = k.HEX_START_DATE.addingTimeInterval(TimeInterval(Int(stakeEndDay) * 86400))
         penaltyHearts = 0
         interestHearts = 0
-        interestDailyHearts = 0
-        interestWeeklyHearts = 0
-        interestMonthlyHearts = 0
+        interestPayPeriodHearts = [PayPeriod: BigUInt]()
 
         bigPayDayHearts = nil
 
@@ -153,15 +149,16 @@ struct Stake: Codable, Hashable, Equatable, Identifiable {
 
         // Seven Day Interest
         if !recentInterestDays.isZero {
-            interestDailyHearts = calculatePayout(globalInfo: onChainData.globalInfo,
+            
+            interestPayPeriodHearts[.daily] = calculatePayout(globalInfo: onChainData.globalInfo,
                                                   beginDay: dayStartIndex,
                                                   endDay: endIndex,
                                                   dailyData: onChainData.dailyData).payout
-            interestWeeklyHearts = calculatePayout(globalInfo: onChainData.globalInfo,
+            interestPayPeriodHearts[.weekly] = calculatePayout(globalInfo: onChainData.globalInfo,
                                                    beginDay: weekStartIndex,
                                                    endDay: endIndex,
                                                    dailyData: onChainData.dailyData).payout
-            interestMonthlyHearts = calculatePayout(globalInfo: onChainData.globalInfo,
+            interestPayPeriodHearts[.monthly] = calculatePayout(globalInfo: onChainData.globalInfo,
                                                     beginDay: monthStartIndex,
                                                     endDay: endIndex,
                                                     dailyData: onChainData.dailyData).payout

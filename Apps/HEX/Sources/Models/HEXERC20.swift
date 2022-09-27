@@ -7,14 +7,12 @@ import Foundation
 import HEXSmartContract
 import web3
 
-struct HexContractOnChain: Equatable {
-    var ethData = OnChainData()
-    var plsData = OnChainData()
+struct HEXERC20: Equatable {
+    var data = [Chain: OnChainData]()
 }
 
 struct OnChainData: Equatable {
     var hexUsd: Double = 0
-    var v3Liquidity = [EthereumAddress: BigUInt]()
     var price: NSNumber { NSNumber(value: hexUsd) }
     var speculativePrice = NSNumber(1)
     var currentDay: BigUInt = 0

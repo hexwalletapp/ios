@@ -8,7 +8,7 @@ import SwiftUIVisualEffects
 
 struct FavoritesStakeCreditCardView: View {
     let store: Store<AppState, AppAction>
-    let groupAccountData: GroupAccountData
+    let favoriteAccounts: FavoriteAccounts
 
     private let MAGNETIC_STRIPE_HEIGHT = CGFloat(32)
     private let MAGNETIC_STRIPE_PADDING = CGFloat(24)
@@ -32,29 +32,29 @@ struct FavoritesStakeCreditCardView: View {
         WithViewStore(store) { viewStore in
             ZStack {
                 Rectangle()
-                    .fill(LinearGradient(gradient: Gradient(colors: groupAccountData.gradient),
+                    .fill(LinearGradient(gradient: Gradient(colors: favoriteAccounts.gradient),
                                          startPoint: .bottomLeading,
                                          endPoint: .topTrailing))
                     .blurEffect()
                     .blurEffectStyle(.systemThinMaterial)
                 VStack(alignment: .leading) {
                     HStack(alignment: .top) {
-                        frontGroup(count: groupAccountData.accountsData.count)
+                        frontGroup(count: favoriteAccounts.accounts.count)
                         Spacer()
-                        frontTotal(title: viewStore.payoutEarnings.description,
-                                   value: groupAccountData.payout(earnings: viewStore.payoutEarnings),
-                                   hex: groupAccountData.payoutHEX(earnings: viewStore.payoutEarnings),
+                        frontTotal(title: viewStore.payPeriod.description,
+                                   value: favoriteAccounts.payout(payPeriod: viewStore.payPeriod),
+                                   hex: favoriteAccounts.payoutHEX(payPeriod: viewStore.payPeriod),
                                    alignment: .trailing)
                     }
                     Spacer()
                     HStack(alignment: .bottom) {
                         frontTitle(title: "Shares",
-                                   value: groupAccountData.totalShares,
+                                   value: favoriteAccounts.totalShares,
                                    alignment: .leading)
                         Spacer()
                         frontTotal(title: "Total",
-                                   value: groupAccountData.totalBalance,
-                                   hex: groupAccountData.totalHEX,
+                                   value: favoriteAccounts.totalBalance,
+                                   hex: favoriteAccounts.totalHEX,
                                    alignment: .trailing)
                     }
                 }
@@ -69,7 +69,7 @@ struct FavoritesStakeCreditCardView: View {
     var back: some View {
         ZStack(alignment: .topLeading) {
             Rectangle()
-                .fill(LinearGradient(gradient: Gradient(colors: groupAccountData.gradient),
+                .fill(LinearGradient(gradient: Gradient(colors: favoriteAccounts.gradient),
                                      startPoint: .bottomLeading,
                                      endPoint: .topTrailing))
                 .blurEffect()
@@ -82,25 +82,25 @@ struct FavoritesStakeCreditCardView: View {
             VStack(alignment: .leading) {
                 DataHeaderView()
                 FavoriteDataRowHexView(title: "ʟɪᴏ̨ᴜɪᴅ",
-                                       usdTotal: groupAccountData.totalLiquidUSD,
-                                       hexTotal: groupAccountData.totalLiquidHEX)
+                                       usdTotal: favoriteAccounts.totalLiquidUSD,
+                                       hexTotal: favoriteAccounts.totalLiquidHEX)
                 FavoriteDataRowHexView(title: "sᴛᴀᴋᴇᴅ",
-                                       usdTotal: groupAccountData.totalStakedUSD,
-                                       hexTotal: groupAccountData.totalStakedHEX)
+                                       usdTotal: favoriteAccounts.totalStakedUSD,
+                                       hexTotal: favoriteAccounts.totalStakedHEX)
                 FavoriteDataRowHexView(title: "ɪɴᴛᴇʀᴇsᴛ",
-                                       usdTotal: groupAccountData.totalInterestUSD,
-                                       hexTotal: groupAccountData.totalInterestHEX)
+                                       usdTotal: favoriteAccounts.totalInterestUSD,
+                                       hexTotal: favoriteAccounts.totalInterestHEX)
 
-                if !groupAccountData.totalBigPayday.isZero {
+                if !favoriteAccounts.totalBigPayday.isZero {
                     FavoriteDataRowHexView(title: "ʙɪɢ ᴘᴀʏ ᴅᴀʏ",
-                                           usdTotal: groupAccountData.totalBigPayDayUSD,
-                                           hexTotal: groupAccountData.totalBigPayDayHEX)
+                                           usdTotal: favoriteAccounts.totalBigPayDayUSD,
+                                           hexTotal: favoriteAccounts.totalBigPayDayHEX)
                 }
 
                 Spacer()
                 HStack(alignment: .bottom, spacing: 16) {
                     Spacer()
-                    ForEach(Array(groupAccountData.totalChains).sorted { $0.description < $1.description }) { chain in
+                    ForEach(Array(favoriteAccounts.totalChains).sorted { $0.description < $1.description }) { chain in
                         chain.image
                             .resizable()
                             .scaledToFit()

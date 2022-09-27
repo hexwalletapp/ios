@@ -11,46 +11,42 @@ import HEXSmartContract
 let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironment> { state, action, environment in
     switch action {
     case let .stake(stake, address, chain, stakeCount):
-        let accountDataKey = address.value + chain.description
+        let accountKey = Account.genId(address: address, chain: chain)
 
-        let onChainData: OnChainData
-        switch chain {
-        case .ethereum: onChainData = state.hexContractOnChain.ethData
-        case .pulse: onChainData = state.hexContractOnChain.plsData
-        }
-
-        guard let accountData = state.accountsData[id: accountDataKey] else { return .none }
+        guard let onChainData: OnChainData = state.hexContractOnChain.data[chain],
+              let account: Account = state.accounts[id: accountKey] else { return .none }
 
         let nativeStake = Stake(stake: stake.response, onChainData: onChainData)
-        state.accountsData[id: accountDataKey]?.stakes.append(nativeStake)
+        state.accounts[id: accountKey]?.stakes.append(nativeStake)
 
-        switch state.accountsData[id: accountDataKey]?.stakes.filter({ $0.type == .native }).count {
+        switch state.accounts[id: accountKey]?.stakes.filter({ $0.type == .native }).count {
         case Int(stakeCount):
             // Cleanup dirty stakes
-            state.accountsData[id: accountData.id]?.stakes.filter { $0.isDirty }.forEach { stake in
-                state.accountsData[id: accountData.id]?.stakes.remove(stake)
-            }
+            // TODO: Fix cleanup dirty stakes
+//            state.accounts[id: account.id]?.stakes.filter { $0.isDirty }.forEach { stake in
+//                state.accounts[id: account.id]?.stakes.remove(at: stake)
+//            }
 
-            let total = accountData.stakes
-                .reduce(into: StakeTotal()) { partialResult, stake in
+            let summary = account.stakes
+                .reduce(into: Summary()) { partialResult, stake in
                     partialResult.stakeShares += stake.stakeShares
                     partialResult.stakedHearts += stake.stakedHearts
                     partialResult.interestHearts += stake.interestHearts
-                    partialResult.interestDailyHearts += stake.interestDailyHearts
-                    partialResult.interestWeeklyHearts += stake.interestWeeklyHearts
-                    partialResult.interestMonthlyHearts += stake.interestMonthlyHearts
+                    PayPeriod.allCases.forEach { payPeriod in
+                        partialResult.interestPayPeriodHearts[payPeriod]? += stake.interestPayPeriodHearts[payPeriod] ?? 0
+                    }
                     partialResult.bigPayDayHearts += stake.bigPayDayHearts ?? 0
                 }
-            state.accountsData[id: accountDataKey]?.total = total
-            state.accountsData[id: accountDataKey]?.stakes.sort(by: {
+            state.accounts[id: accountKey]?.summary = summary
+            state.accounts[id: accountKey]?.stakes.sort(by: {
                 let firstStake = [BigUInt($0.lockedDay + $0.stakedDays), $0.stakeId]
                 let secondStake = [BigUInt($1.lockedDay + $1.stakedDays), $1.stakeId]
                 return firstStake.lexicographicallyPrecedes(secondStake)
             })
-            state.accountsData[id: accountDataKey]?.isLoading = false
+            state.accounts[id: accountKey]?.isLoading = false
 
-            if accountData.account.isFavorite {
-                state.groupAccountData.accountsData.updateOrAppend(accountData)
+            if account.isFavorite {
+                state.favoriteAccounts.accounts.updateOrAppend(account)
             }
             return .none
         default:
@@ -58,8 +54,8 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         }
 
     case let .noStakes(address, chain):
-        let accountDataKey = address.value + chain.description
-        state.accountsData[id: accountDataKey]?.isLoading = false
+        let accountKey = Account.genId(address: address, chain: chain)
+        state.accounts[id: accountKey]?.isLoading = false
         return .none
 
     case let .dailyData(dailyDataEncoded, chain):
@@ -74,32 +70,29 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             return DailyData(payout: payout, shares: shares, sats: sats)
         }
 
-        switch chain {
-        case .ethereum: state.hexContractOnChain.ethData.dailyData = dailyData
-        case .pulse: state.hexContractOnChain.plsData.dailyData = dailyData
-        }
+        state.hexContractOnChain.data[chain]?.dailyData = dailyData
 
-        let accountsData = state.accountsData.filter { $0.account.chain == chain }
-        let stakes = accountsData.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
+        let accounts = state.accounts.filter { $0.chain == chain }
+        let stakes = accounts.compactMap { account -> Effect<HEXSmartContractManager.Action, Never> in
             environment.hexManager.getStakes(id: HexManagerId(),
-                                             address: accountData.account.address.value,
+                                             address: account.address.value,
                                              chain: chain).fireAndForget()
         }
 
-        let balances = accountsData.compactMap { accountData -> Effect<HEXSmartContractManager.Action, Never> in
+        let balances = accounts.compactMap { account -> Effect<HEXSmartContractManager.Action, Never> in
             environment.hexManager.getBalance(id: HexManagerId(),
-                                              address: accountData.account.address.value,
+                                              address: account.address.value,
                                               chain: chain).fireAndForget()
         }
 
-        state.accountsData.filter { $0.account.chain == chain }.forEach { accountData in
-            state.accountsData[id: accountData.id]?.stakes.forEach { stake in
-                state.accountsData[id: accountData.id]?.stakes[id: stake.id]?.isDirty = true
+        state.accounts.filter { $0.chain == chain }.forEach { account in
+            state.accounts[id: account.id]?.stakes.forEach { stake in
+                state.accounts[id: account.id]?.stakes[Int(stake.id)].isDirty = true
             }
         }
 
-        state.accountsData.forEach { accountData in
-            state.accountsData[id: accountData.id]?.isLoading = true
+        state.accounts.forEach { account in
+            state.accounts[id: account.id]?.isLoading = true
         }
 
         return .merge(
@@ -113,12 +106,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         )
 
     case let .currentDay(day, chain):
-        switch chain {
-        case .ethereum:
-            state.hexContractOnChain.ethData.currentDay = day
-        case .pulse:
-            state.hexContractOnChain.plsData.currentDay = day
-        }
+        state.hexContractOnChain.data[chain]?.currentDay = day
         return environment.hexManager.getDailyDataRange(id: HexManagerId(),
                                                         chain: chain,
                                                         begin: 0,
@@ -126,22 +114,16 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             .fireAndForget()
 
     case let .globalInfo(globalInfo, chain):
-        switch chain {
-        case .ethereum:
-            state.hexContractOnChain.ethData.globalInfo = GlobalInfo(globalInfo: globalInfo)
-        case .pulse:
-            state.hexContractOnChain.plsData.globalInfo = GlobalInfo(globalInfo: globalInfo)
-        }
-
+        state.hexContractOnChain.data[chain]?.globalInfo = GlobalInfo(globalInfo: globalInfo)
         return environment.hexManager.getCurrentDay(id: HexManagerId(), chain: chain).fireAndForget()
 
     case let .balance(balance, address, chain):
-        let accountDataKey = address.value + chain.description
-        state.accountsData[id: accountDataKey]?.liquidBalanceHearts = balance
+        let accountKey = Account.genId(address: address, chain: chain)
+        state.accounts[id: accountKey]?.summary.liquidHearts = balance
 
-        switch state.accountsData[id: accountDataKey] {
-        case let .some(accountData) where accountData.account.isFavorite == true:
-            state.groupAccountData.accountsData.updateOrAppend(accountData)
+        switch state.accounts[id: accountKey] {
+        case let .some(account) where account.isFavorite == true:
+            state.favoriteAccounts.accounts.updateOrAppend(account)
             return .none
         default:
             return .none

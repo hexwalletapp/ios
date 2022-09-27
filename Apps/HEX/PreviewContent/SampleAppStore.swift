@@ -10,8 +10,7 @@ import HEXSmartContract
 
     let sampleAppStore = Store(initialState: AppState(),
                                reducer: appReducer,
-                               environment: AppEnvironment(hexPriceManager: .mock(),
-                                                           hexManager: .mock(),
+                               environment: AppEnvironment(hexManager: .mock(),
                                                            hedronManager: .mock(),
                                                            mainQueue: DispatchQueue.main.eraseToAnyScheduler()))
 #endif

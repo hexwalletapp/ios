@@ -37,28 +37,28 @@ struct AppState: Equatable {
     @BindableState var editMode: EditMode = .inactive
     @BindableState var modalPresent: ModalPresent? = nil
     @BindableState var selectedTab: Tab = .accounts
-    @BindableState var payoutEarnings: PayoutEarnings = .dailyTotal
+    @BindableState var payPeriod: PayPeriod = .daily
     @BindableState var creditCardUnits: CreditCardUnits = .usd
 
     @BindableState var selectedId = ""
-    @BindableState var accountsData = IdentifiedArrayOf<AccountData>()
     @BindableState var shouldSpeculate = false
     @BindableState var speculativePrice: NSNumber = 1.00
     @BindableState var calculator = Calculator()
 
-    @BindableState var groupAccountData = GroupAccountData()
+    @BindableState var accounts = IdentifiedArrayOf<Account>()
+    @BindableState var favoriteAccounts = FavoriteAccounts()
+    
     @BindableState var rightAxisLivePrice = LivePrice()
 
     var poolSpacing = [String: BigInt]()
     var didHaveFavorites = false
-    var hexContractOnChain = HexContractOnChain()
+    var hexContractOnChain = HEXERC20()
     var pageViewDots = PageViewDots()
     var activeChains = Set<Chain>()
     var colorScheme: ColorScheme?
 }
 
 enum AppAction: BindableAction, Equatable {
-    case hexPriceManager(HexPriceManager.Action)
     case hexManager(HEXSmartContractManager.Action)
     case hedronManager(HedronSmartContractManager.Action)
 
@@ -72,12 +72,11 @@ enum AppAction: BindableAction, Equatable {
     case getGlobalInfo
     case binding(BindingAction<AppState>)
     case copy(String)
-    case delete(AccountData)
+    case delete(Account)
     case updateFavorites
 }
 
 struct AppEnvironment {
-    var hexPriceManager: HexPriceManager
     var hexManager: HEXSmartContractManager
     var hedronManager: HedronSmartContractManager
     var mainQueue: AnySchedulerOf<DispatchQueue>
@@ -93,8 +92,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             do {
                 let decodedAccounts = try environment.decoder.decode([Account].self,
                                                                      from: encodedAccounts)
-                state.accountsData = IdentifiedArray(uniqueElements: decodedAccounts.map { AccountData(account: $0) })
-                state.activeChains = Set<Chain>(state.accountsData.map { $0.account.chain })
+                state.accounts = IdentifiedArray(uniqueElements: decodedAccounts)
+                state.activeChains = Set<Chain>(state.accounts.map { $0.chain })
                 state.pageViewDots.numberOfPages = decodedAccounts.count
                 state.selectedId = decodedAccounts.first?.id ?? ""
             } catch {
@@ -105,7 +104,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
             break
         }
         return .merge(
-            environment.hexPriceManager.create(id: HexPriceManagerId()).map(AppAction.hexPriceManager),
             environment.hexManager.create(id: HexManagerId()).map(AppAction.hexManager),
             environment.hedronManager.create(id: HedronManagerId()).map(AppAction.hedronManager)
         )
@@ -134,15 +132,13 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
 
     case .getGlobalInfo:
         return .merge(
-            environment.hexPriceManager.getPriceETH(id: HexPriceManagerId()).fireAndForget(),
-            environment.hexPriceManager.getPricePLS(id: HexPriceManagerId()).fireAndForget(),
             environment.hexManager.getGlobalInfo(id: HexManagerId(), chain: .ethereum).fireAndForget(),
             environment.hexManager.getGlobalInfo(id: HexManagerId(), chain: .pulse).fireAndForget()
         )
 
     case .dismiss:
         state.modalPresent = nil
-        state.activeChains = Set<Chain>(state.accountsData.map { $0.account.chain })
+        state.activeChains = Set<Chain>(state.accounts.map { $0.chain })
         return .merge(
             Effect(value: .updateFavorites),
             Effect(value: .getAccounts)
@@ -153,10 +149,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .none
 
     case let .delete(account):
-        state.accountsData.remove(account)
-        let accounts = state.accountsData.map { $0.account }
+        state.accounts.remove(account)
         do {
-            let encodedAccounts = try environment.encoder.encode(accounts)
+            let encodedAccounts = try environment.encoder.encode(state.accounts)
             UserDefaults.standard.setValue(encodedAccounts, forKey: k.ACCOUNTS_KEY)
             return .none
         } catch {
@@ -165,60 +160,62 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
 
     case .updateFavorites:
-        state.accountsData.filter { !$0.account.isFavorite }.forEach { account in
-            state.groupAccountData.accountsData.remove(account)
+        state.accounts.filter { !$0.isFavorite }.forEach { account in
+            state.favoriteAccounts.accounts.remove(account)
         }
-        state.accountsData.filter { $0.account.isFavorite }.forEach { account in
-            state.groupAccountData.accountsData.updateOrAppend(account)
+        state.accounts.filter { $0.isFavorite }.forEach { account in
+            state.favoriteAccounts.accounts.updateOrAppend(account)
         }
 
-        switch state.groupAccountData.hasFavorites != state.didHaveFavorites {
+        switch state.favoriteAccounts.hasFavorites != state.didHaveFavorites {
         case true:
             let currentIndex = state.pageViewDots.currentIndex
             let numberOfPages: Int
-            switch state.groupAccountData.hasFavorites {
+            switch state.favoriteAccounts.hasFavorites {
             case true:
-                numberOfPages = state.accountsData.count + 1
+                numberOfPages = state.accounts.count + 1
                 state.pageViewDots.hasMinusOne = true
                 state.pageViewDots.numberOfPages = numberOfPages
                 state.pageViewDots.currentIndex = currentIndex.clamp(lower: 1, numberOfPages)
-                state.selectedId = state.accountsData[state.pageViewDots.currentIndex - 1].id
+                state.selectedId = state.accounts[state.pageViewDots.currentIndex - 1].id
             case false:
-                numberOfPages = state.accountsData.count
+                numberOfPages = state.accounts.count
                 state.pageViewDots.hasMinusOne = false
                 state.pageViewDots.numberOfPages = numberOfPages
                 state.pageViewDots.currentIndex = currentIndex.clamp(lower: 0, numberOfPages)
-                state.selectedId = state.accountsData[state.pageViewDots.currentIndex].id
+                state.selectedId = state.accounts[state.pageViewDots.currentIndex].id
             }
-            state.didHaveFavorites = state.groupAccountData.hasFavorites
+            state.didHaveFavorites = state.favoriteAccounts.hasFavorites
         case false:
             let numberOfPages: Int
-            switch state.groupAccountData.hasFavorites {
-            case true: numberOfPages = state.accountsData.count + 1
-            case false: numberOfPages = state.accountsData.count
+            switch state.favoriteAccounts.hasFavorites {
+            case true: numberOfPages = state.accounts.count + 1
+            case false: numberOfPages = state.accounts.count
             }
             state.pageViewDots.numberOfPages = numberOfPages
         }
         return .none
 
     case .binding(\.$selectedId):
-        switch state.groupAccountData.hasFavorites {
+        switch state.favoriteAccounts.hasFavorites {
         case true:
-            switch (state.groupAccountData.id == state.selectedId,
-                    state.accountsData.index(id: state.selectedId))
+            switch (state.favoriteAccounts.id == state.selectedId,
+                    state.accounts.index(id: state.selectedId))
             {
             case (true, .none): state.pageViewDots.currentIndex = 0
             case (false, let .some(index)): state.pageViewDots.currentIndex = index + 1
             default: state.pageViewDots.currentIndex = 1
             }
         case false:
-            state.pageViewDots.currentIndex = state.accountsData.index(id: state.selectedId) ?? 0
+            state.pageViewDots.currentIndex = state.accounts.index(id: state.selectedId) ?? 0
         }
         return .none
 
     case .binding(\.$speculativePrice):
-        state.hexContractOnChain.ethData.speculativePrice = state.speculativePrice
-        state.hexContractOnChain.plsData.speculativePrice = state.speculativePrice
+        state.hexContractOnChain.data.keys.forEach { chain in
+            // TODO: Fix this to make it optional
+            state.hexContractOnChain.data[chain]!.speculativePrice = state.speculativePrice
+        }
         return .none
 
     case .binding(\.$shouldSpeculate):
@@ -236,13 +233,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         case .none: return Effect(value: .dismiss)
         }
 
-    case .binding(\.$accountsData):
+    case .binding(\.$accounts):
         do {
-            let accounts = state.accountsData.map { $0.account }
-            if let lastAccount = accounts.last, state.selectedId.isEmpty {
+            if let lastAccount = state.accounts.last, state.selectedId.isEmpty {
                 state.selectedId = lastAccount.address.value + lastAccount.chain.description
             }
-            let encodedAccounts = try environment.encoder.encode(accounts)
+            let encodedAccounts = try environment.encoder.encode(state.accounts)
             UserDefaults.standard.setValue(encodedAccounts, forKey: k.ACCOUNTS_KEY)
         } catch {
             UserDefaults.standard.removeObject(forKey: k.ACCOUNTS_KEY)
@@ -256,7 +252,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
          .binding(\.$calculator.ladderSteps),
          .binding(\.$calculator.ladderDistribution):
 
-        let recentDailyData = state.hexContractOnChain.ethData.dailyData.suffix(7)
+        guard let recentDailyData = state.hexContractOnChain.data[.ethereum]?.dailyData.suffix(7) else {
+            return .none
+        }
 
         switch state.calculator.planUnit {
         case .USD:
@@ -268,6 +266,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
 
         guard let totalStakeDays = state.calculator.stakeDays,
+              let globalShareRate = state.hexContractOnChain.data[.ethereum]?.globalInfo.shareRate,
               state.calculator.stakeDaysValid,
               state.calculator.isAmountValid,
               !recentDailyData.isEmpty else { return .none }
@@ -304,7 +303,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                               bonusHearts: bonusHearts)
 
             let effectiveHearts = principalHearts + bonusHearts
-            let shares = (effectiveHearts * k.SHARE_RATE_SCALE / state.hexContractOnChain.ethData.globalInfo.shareRate)
+            let shares = (effectiveHearts * k.SHARE_RATE_SCALE / globalShareRate)
 
             let final = Double(averageShareRateHex) * pow(3.69 / 100.0 + 1.0, Double(stakeDaysForRung) / 365.25)
             let averageSharePayout = (averageShareRateHex + BigUInt(final)) / 2
@@ -322,14 +321,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
         return .none
 
-    case .binding, .hexPriceManager, .hexManager, .hedronManager, .onBackground, .onInactive:
+    case .binding, .hexManager, .hedronManager, .onBackground, .onInactive:
         return .none
     }
 }
 .binding()
-.combined(with: hexPriceReducer.pullback(state: \.self,
-                                         action: /AppAction.hexPriceManager,
-                                         environment: { $0 }))
 .combined(with: hexReducer.pullback(state: \.self,
                                     action: /AppAction.hexManager,
                                     environment: { $0 }))
