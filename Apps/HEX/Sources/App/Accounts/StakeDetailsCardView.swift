@@ -8,19 +8,24 @@ struct StakeDetailsCardView: View {
     let stake: Stake
     let account: Account
 
+    @State private var current = 3000.0
+
+    
+    let gradient = Gradient(colors: [.blue, .green, .pink])
+
+    
     var body: some View {
+        
         GroupBox {
             HStack(alignment: .top) {
-                ZStack {
-                    PercentageRingView(
-                        ringWidth: 8, percent: stake.percentComplete * 100,
-                        backgroundColor: account.chain.gradient.first?.opacity(0.15) ?? .clear,
-                        foregroundColors: account.chain.gradient
-                    )
-                    .frame(width: 56, height: 56)
-                    Text(NSNumber(value: stake.percentComplete).percentageString)
-                        .font(.caption.monospacedDigit())
-                }
+                Gauge(value: stake.percentComplete, in: 0...1) {
+                    } currentValueLabel: {
+                        Text(NSNumber(value: stake.percentComplete).percentageString)
+                            .font(.caption.monospacedDigit())
+                    }
+                    .scaleEffect(1.2)
+                    .tint(Gradient(colors: account.chain.gradient))
+                    .gaugeStyle(.accessoryCircular)
                 Spacer()
                 VStack(alignment: .trailing, spacing: 4) {
                     Spacer()

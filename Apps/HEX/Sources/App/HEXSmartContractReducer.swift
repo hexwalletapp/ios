@@ -13,7 +13,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
     case let .stake(stake, address, chain, stakeCount):
         let accountKey = Account.genId(address: address, chain: chain)
 
-        guard let onChainData: OnChainData = state.hexContractOnChain.data[chain],
+        guard let onChainData: OnChainData = state.hexERC20.data[chain],
               let account: Account = state.accounts[id: accountKey] else { return .none }
 
         let nativeStake = Stake(stake: stake.response, onChainData: onChainData)
@@ -22,10 +22,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         switch state.accounts[id: accountKey]?.stakes.filter({ $0.type == .native }).count {
         case Int(stakeCount):
             // Cleanup dirty stakes
-            // TODO: Fix cleanup dirty stakes
-//            state.accounts[id: account.id]?.stakes.filter { $0.isDirty }.forEach { stake in
-//                state.accounts[id: account.id]?.stakes.remove(at: stake)
-//            }
+            state.accounts[id: accountKey]?.stakes.removeAll { $0.isDirty }
 
             let summary = account.stakes
                 .reduce(into: Summary()) { partialResult, stake in
@@ -70,7 +67,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             return DailyData(payout: payout, shares: shares, sats: sats)
         }
 
-        state.hexContractOnChain.data[chain]?.dailyData = dailyData
+        state.hexERC20.data[chain]?.dailyData = dailyData
 
         let accounts = state.accounts.filter { $0.chain == chain }
         let stakes = accounts.compactMap { account -> Effect<HEXSmartContractManager.Action, Never> in
@@ -87,7 +84,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
 
         state.accounts.filter { $0.chain == chain }.forEach { account in
             state.accounts[id: account.id]?.stakes.forEach { stake in
-                state.accounts[id: account.id]?.stakes[Int(stake.id)].isDirty = true
+                state.accounts[id: account.id]?.stakes[id: stake.id]?.isDirty = true
             }
         }
 
@@ -106,7 +103,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
         )
 
     case let .currentDay(day, chain):
-        state.hexContractOnChain.data[chain]?.currentDay = day
+        state.hexERC20.data[chain]?.currentDay = day
         return environment.hexManager.getDailyDataRange(id: HexManagerId(),
                                                         chain: chain,
                                                         begin: 0,
@@ -114,7 +111,7 @@ let hexReducer = Reducer<AppState, HEXSmartContractManager.Action, AppEnvironmen
             .fireAndForget()
 
     case let .globalInfo(globalInfo, chain):
-        state.hexContractOnChain.data[chain]?.globalInfo = GlobalInfo(globalInfo: globalInfo)
+        state.hexERC20.data[chain]?.globalInfo = GlobalInfo(globalInfo: globalInfo)
         return environment.hexManager.getCurrentDay(id: HexManagerId(), chain: chain).fireAndForget()
 
     case let .balance(balance, address, chain):

@@ -21,11 +21,9 @@
 		272864C27D707302918465AF /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4EC50004741C666AA20180 /* AppView.swift */; };
 		281CDE7E994671A7D59FDB7D /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 88FB0DEE7DC2C6500CEAB1C5 /* IdentifiedCollections */; };
 		2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */; };
-		342A1C83EC0A9A0554C79285 /* AccountDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */; };
 		35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7254A74580879CE1D57F0B5B /* NSNumber+Extensions.swift */; };
 		384453310AFABC584F1147F7 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AD4C7459F0A5F35C779C6E /* EditView.swift */; };
 		38ECF3516F587DDB5C816F2B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFFCB070A01C6E3E3CB59BB /* App.swift */; };
-		3920D3217BD4AD7C4F21AEE9 /* StakeTotalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */; };
 		3B3676174DF80961300A6289 /* ChartType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11334602E6C56403672EF697 /* ChartType.swift */; };
 		436239B10320C1F6F04AF661 /* FavoritesStakeCreditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1285840CD2767AD301CE70B1 /* FavoritesStakeCreditCardView.swift */; };
 		4932AE166A85E04FFAFDD997 /* Stake+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3927EAA2C6099A93C3FB5F4D /* Stake+Extensions.swift */; };
@@ -33,7 +31,6 @@
 		52FD3F03A19D6F64F11DC1B9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B943BC8CAA654CD77AC17BB6 /* Preview Assets.xcassets */; };
 		559A9CC38F7C9CAE8BF88604 /* StakeDetailsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2B559E0B447BFDE40C9A83 /* StakeDetailsCardView.swift */; };
 		57D651442045B3FC9E2C051E /* DataSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D332F301DA2CB0DA59E63112 /* DataSectionHeaderView.swift */; };
-		5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */; };
 		6100F3757C54FE2778D6E715 /* HEXNumberTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B111C6AD69FEB6A0AC0F16DC /* HEXNumberTextStyle.swift */; };
 		641B864855B2593A479F561B /* AppViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DBF49D004E00EE95C96479 /* AppViewReducer.swift */; };
 		6914319581C0B44419BA3583 /* PayPeriodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF2B793361284975810B229 /* PayPeriodModel.swift */; };
@@ -119,15 +116,12 @@
 		742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalInfoModel.swift; sourceTree = "<group>"; };
 		7AD673A6150107EFA969E218 /* DailyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDataModel.swift; sourceTree = "<group>"; };
 		7B6D29EB96DF7F45527A1B63 /* AccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
-		7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StakeTotalModel.swift; sourceTree = "<group>"; };
 		7D1A1CE19F9E8D799B4DF822 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7EFFCB070A01C6E3E3CB59BB /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		81E9535F725045747BF99D78 /* UniswapVersionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniswapVersionModel.swift; sourceTree = "<group>"; };
 		8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		95AD4C7459F0A5F35C779C6E /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
-		9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDataModel.swift; sourceTree = "<group>"; };
 		9F5A4E8A1BB8391C4B45F8DE /* DEXPairPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEXPairPrice.swift; sourceTree = "<group>"; };
-		A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentageRingView.swift; sourceTree = "<group>"; };
 		A67E4E1ECDC940575A73C758 /* HEXSmartContractReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HEXSmartContractReducer.swift; sourceTree = "<group>"; };
 		A984876D2EB22C9A31CAC866 /* PlanUnitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanUnitModel.swift; sourceTree = "<group>"; };
 		AB034DB4604F28233B47C3C6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cfbundle; path = Settings.bundle; sourceTree = "<group>"; };
@@ -237,7 +231,6 @@
 				EDA8B22B28E27511002E1D97 /* Price */,
 				EDA8B22A28E26D9D002E1D97 /* Settings */,
 				EDA8B22928E26AFE002E1D97 /* Account */,
-				9DF19B2713CBC4A8CC617ABF /* AccountDataModel.swift */,
 				112C7DF39CBC618E9B42C62E /* CalculatorModel.swift */,
 				6A83CB3CDDAFC5CCD5E67265 /* ChartScaleModel.swift */,
 				11334602E6C56403672EF697 /* ChartType.swift */,
@@ -249,7 +242,6 @@
 				742E6293C5A9BD56DBD3B995 /* GlobalInfoModel.swift */,
 				1AC9F6FE02179ADCC850A631 /* HEXERC20.swift */,
 				3DE055FCC0D78326BF0FC194 /* StakeStatusModel.swift */,
-				7D13F362565A7A84548CD5C7 /* StakeTotalModel.swift */,
 				81E9535F725045747BF99D78 /* UniswapVersionModel.swift */,
 			);
 			path = Models;
@@ -359,7 +351,6 @@
 			isa = PBXGroup;
 			children = (
 				8DDA3C6DE67FF4B6FD8C092D /* Constants.swift */,
-				A672A5263983DB026DCE2BC3 /* PercentageRingView.swift */,
 				914DAE34AA3B7586609FAD81 /* App */,
 				2189B6BB95D20E18D61637A1 /* Extensions */,
 				2E0E3972D291E010FA3D2F8A /* Models */,
@@ -494,7 +485,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				342A1C83EC0A9A0554C79285 /* AccountDataModel.swift in Sources */,
 				2D3529C7DA87C7E84708A236 /* AccountModel.swift in Sources */,
 				B47647423BAF6BDF59F01BD1 /* AccountsView.swift in Sources */,
 				38ECF3516F587DDB5C816F2B /* App.swift in Sources */,
@@ -538,7 +528,6 @@
 				35C2290E97BD9E7CC88A6EC0 /* NSNumber+Extensions.swift in Sources */,
 				D853054461F3F7B67E98F857 /* OSLog+Extensions.swift in Sources */,
 				6914319581C0B44419BA3583 /* PayPeriodModel.swift in Sources */,
-				5FD289EE96E5D54053AC59D0 /* PercentageRingView.swift in Sources */,
 				7B460704719BB91CBA058A2D /* PlanUnitModel.swift in Sources */,
 				79C1FC79027AAF73DF6F3318 /* PlanView.swift in Sources */,
 				98F2F8BC8CAC9051A6FEEC7F /* SampleAppStore.swift in Sources */,
@@ -552,7 +541,6 @@
 				B3FDC626A1314EDA5EC1194A /* StakeGroupBoxStyle.swift in Sources */,
 				EDD511738280863DAEDA64DE /* StakeModel.swift in Sources */,
 				C6DAE61AE40346FBAC8B7C3D /* StakeStatusModel.swift in Sources */,
-				3920D3217BD4AD7C4F21AEE9 /* StakeTotalModel.swift in Sources */,
 				BFE59CE522373C0493B24C37 /* StakeType.swift in Sources */,
 				207AEAC7D4B2BC987448E96E /* String+Extensions.swift in Sources */,
 				18BBCBEE60339DE88779C959 /* TimeScaleModel.swift in Sources */,
@@ -636,7 +624,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -696,7 +684,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

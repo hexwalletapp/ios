@@ -22,7 +22,7 @@ let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvi
     case let .stake(stake, address, chain, stakeCount):
         let accountKey = Account.genId(address: address, chain: chain)
         
-        guard let onChainData = state.hexContractOnChain.data[chain],
+        guard let onChainData = state.hexERC20.data[chain],
               let account = state.accounts[id: accountKey] else { return .none }
 
         var hedronStake = Stake(stake: stake.response, onChainData: onChainData)
@@ -31,9 +31,8 @@ let hedronReducer = Reducer<AppState, HedronSmartContractManager.Action, AppEnvi
         switch state.accounts[id: accountKey]?.stakes.filter({ $0.type == .hedron }).count {
         case Int(stakeCount):
             // Cleanup dirty stakes
-            state.accounts[id: account.id]?.stakes.filter { $0.isDirty }.forEach { stake in
-//                state.accounts[id: account.id]?.stakes.remove(at: stake)
-            }
+            state.accounts[id: account.id]?.stakes.removeAll { $0.isDirty }
+
 
             let summary = account.stakes
                 .reduce(into: Summary()) { partialResult, stake in

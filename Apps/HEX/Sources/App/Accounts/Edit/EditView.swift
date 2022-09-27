@@ -97,6 +97,7 @@ struct EditView: View {
                     var existingAccounts = viewStore.accounts
                     existingAccounts.updateOrAppend(account)
 
+                    
                     viewStore.send(.binding(.set(\.$accounts, existingAccounts)))
 
                     account = Account()

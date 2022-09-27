@@ -52,7 +52,7 @@ struct AppState: Equatable {
 
     var poolSpacing = [String: BigInt]()
     var didHaveFavorites = false
-    var hexContractOnChain = HEXERC20()
+    var hexERC20 = HEXERC20()
     var pageViewDots = PageViewDots()
     var activeChains = Set<Chain>()
     var colorScheme: ColorScheme?
@@ -94,6 +94,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
                                                                      from: encodedAccounts)
                 state.accounts = IdentifiedArray(uniqueElements: decodedAccounts)
                 state.activeChains = Set<Chain>(state.accounts.map { $0.chain })
+                state.activeChains.forEach {
+                    state.hexERC20.data[$0] = OnChainData()
+                }
                 state.pageViewDots.numberOfPages = decodedAccounts.count
                 state.selectedId = decodedAccounts.first?.id ?? ""
             } catch {
@@ -212,9 +215,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         return .none
 
     case .binding(\.$speculativePrice):
-        state.hexContractOnChain.data.keys.forEach { chain in
+        state.hexERC20.data.keys.forEach { chain in
             // TODO: Fix this to make it optional
-            state.hexContractOnChain.data[chain]!.speculativePrice = state.speculativePrice
+            state.hexERC20.data[chain]!.speculativePrice = state.speculativePrice
         }
         return .none
 
@@ -252,7 +255,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
          .binding(\.$calculator.ladderSteps),
          .binding(\.$calculator.ladderDistribution):
 
-        guard let recentDailyData = state.hexContractOnChain.data[.ethereum]?.dailyData.suffix(7) else {
+        guard let recentDailyData = state.hexERC20.data[.ethereum]?.dailyData.suffix(7) else {
             return .none
         }
 
@@ -266,7 +269,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, e
         }
 
         guard let totalStakeDays = state.calculator.stakeDays,
-              let globalShareRate = state.hexContractOnChain.data[.ethereum]?.globalInfo.shareRate,
+              let globalShareRate = state.hexERC20.data[.ethereum]?.globalInfo.shareRate,
               state.calculator.stakeDaysValid,
               state.calculator.isAmountValid,
               !recentDailyData.isEmpty else { return .none }

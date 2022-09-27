@@ -108,7 +108,7 @@ struct AccountsView: View {
 //                                                        image: Chain.pulse.image)
 //                                }
 //                            }
-                            toolbarText(heading: viewStore.hexContractOnChain.data[.ethereum]?.currentDay.advanced(by: 1).description ?? "0",
+                            toolbarText(heading: viewStore.hexERC20.data[.ethereum]?.currentDay.advanced(by: 1).description ?? "0",
                                         subheading: "Day")
                         default:
                             EmptyView()
@@ -202,7 +202,7 @@ struct AccountsView: View {
     
     func price(on chain: Chain) -> Double {
         let viewStore = ViewStore(store)
-        let chainPrice: Double = viewStore.hexContractOnChain.data[chain]?.price.doubleValue ?? 0.0
+        let chainPrice: Double = viewStore.hexERC20.data[chain]?.price.doubleValue ?? 0.0
         return viewStore.shouldSpeculate ? viewStore.speculativePrice.doubleValue : chainPrice
     }
     

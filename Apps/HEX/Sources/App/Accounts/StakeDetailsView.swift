@@ -40,22 +40,15 @@ struct StakeDetailsView: View {
 
     var headerView: some View {
         HStack(alignment: .top) {
-            ZStack {
-                PercentageRingView(
-                    ringWidth: 16,
-                    percent: stake.percentComplete * 100,
-                    backgroundColor: account.chain.gradient.first?.opacity(0.15) ?? .clear,
-                    foregroundColors: account.chain.gradient
-                )
-                VStack {
-                    Text(NSNumber(value: stake.percentComplete).percentageFractionString)
-                        .font(.body.monospacedDigit())
-                    Text("Complete")
-                        .font(.caption.monospaced())
-                        .foregroundColor(.secondary)
+            Gauge(value: stake.percentComplete, in: 0...1) {
+                } currentValueLabel: {
+                    Text(NSNumber(value: stake.percentComplete).percentageString)
+                        .font(.caption.monospacedDigit())
                 }
-            }
-            .frame(width: 128, height: 128)
+                .scaleEffect(2.3)
+                .tint(Gradient(colors: account.chain.gradient))
+                .gaugeStyle(.accessoryCircular)
+                .frame(width: 128, height: 128)
             Spacer()
             VStack(alignment: .trailing, spacing: 8) {
                 headerDetails(headline: stake.startDate.longDateString, subheading: "Stake Start Date")

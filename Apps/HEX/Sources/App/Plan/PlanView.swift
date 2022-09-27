@@ -63,7 +63,7 @@ struct PlanView: View {
                                 .submitLabel(.done)
                         }
                     } footer: {
-                        switch viewStore.hexContractOnChain.data[.ethereum]?.dailyData.suffix(7).count {
+                        switch viewStore.hexERC20.data[.ethereum]?.dailyData.suffix(7).count {
                         case 0:
                             Button {
                                 viewStore.send(.getGlobalInfo)
